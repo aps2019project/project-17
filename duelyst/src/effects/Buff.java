@@ -3,7 +3,7 @@ package effects;
 public abstract class Buff {
     private String desc;
     private int effectTime;
-    private BuffEnum buffData;
+    private BuffData buffData;
 
     public void setDesc(String desc) {
         this.desc = desc;
@@ -13,11 +13,40 @@ public abstract class Buff {
         this.effectTime = effectTime;
     }
 
+    public class HolyBuff extends Buff {
+        public HolyBuff() {
+            super.buffData.setHaveHolyBuff(true);
+        }
+    }
 
-    public abstract void action();
-    public class dectrementDamage extends Buff{
-        @Override
-        public void action() {
+    public class PowerBuff extends Buff {
+        public PowerBuff(int value, BuffData.HealthOrAttack healthOrAttack) {
+            super.buffData.getPowerBuff().setValue(value);
+            super.buffData.getPowerBuff().setHealthOrAttack(healthOrAttack);
+        }
+    }
+
+    public class PoisonBuff extends Buff {
+        public PoisonBuff() {
+            super.buffData.setHavePoisonBuff(true);
+        }
+    }
+
+    public class WeaknessBuff extends Buff {
+        public WeaknessBuff() {
+            super.buffData.setHaveWeaknessBuff(true);
+        }
+    }
+
+    public class StunBuff extends Buff {
+        public StunBuff() {
+            super.buffData.setHaveStunBuff(true);
+        }
+    }
+
+    public class Disarm extends Buff {
+        public Disarm() {
+            super.buffData.setHaveDisarmBuff(true);
         }
     }
 }
