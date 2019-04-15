@@ -13,7 +13,7 @@ public class Account {
     private Collection collection;
     private int darik;
     private ArrayList<Deck> decks = new ArrayList<>();
-    //    private MatchHistory matchHistory;
+    private MatchHistory matchHistory;
     private String userName;
     private String passWord;
     private int numbOfWins;
@@ -29,9 +29,8 @@ public class Account {
 
     public static void login(String userName, String passWord) {
         for (Account account : accounts) {
-            if (account.userName.equals(userName)) {
-                if (account.passWord.equals(passWord))
-                    loginUser = account;
+            if (account.userName.equals(userName) && account.passWord.equals(passWord)) {
+                loginUser = account;
                 return;
             }
         }
@@ -42,11 +41,21 @@ public class Account {
     }
 
     public static ArrayList<Account> getLeaderBoard() {
+        sortAccounts();
         return accounts;
-        // return is optional to ignore error
     }
 
-    public static void sortAccounts() {
+    private static void sortAccounts() {
+        accounts.sort((o1, o2) -> {
+            if(o1.numbOfWins > o2.numbOfWins)
+                return -1;
+            else if(o1.numbOfWins == o2.numbOfWins){
+                if(o1.userName. compareTo(o2.userName) > 0){
+                    return -1;
+                }
+            }
+            return 0;
+        });
     }
 
     public static Collection getCollection() {
@@ -58,5 +67,7 @@ public class Account {
         return getAllDecks();
         // return is for ignore error
     }
+
+
 
 }
