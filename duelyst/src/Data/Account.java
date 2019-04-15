@@ -30,7 +30,7 @@ public class Account {
         this.numbOfDraw = 0;
         this.numbOfLose = 0;
         this.darik = 0;
-        // ...
+        // ..
     }
 
     public static void addUser(Account account) {
