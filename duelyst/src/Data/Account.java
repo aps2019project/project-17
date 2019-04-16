@@ -22,18 +22,21 @@ public class Account {
     private static ArrayList<Account> accounts = new ArrayList<>();
     private static Account loginUser;
 
-    public Account(String userName, String passWord) {
-        // will complete
+    private Account(String userName, String passWord) {
         this.userName = userName;
         this.passWord = passWord;
         this.numbOfWins = 0;
         this.numbOfDraw = 0;
         this.numbOfLose = 0;
         this.darik = 0;
-        // ..
+        // TODO: player
+        // TODO: collection
+        // TODO: decks
+        // TODO: matchHistory
     }
 
     public static String addUser(String userName, String passWord) {
+
         Account account = new Account(userName, passWord);
 
         for (Account account1 : accounts) {
@@ -57,9 +60,9 @@ public class Account {
         return "username is Wrong! Please Try again";
     }
 
-
-    public static void logout() {
+    public static String logout() {
         loginUser = null;
+        return "logout successfully done";
     }
 
     public static ArrayList<Account> getLeaderBoard() {
@@ -106,24 +109,24 @@ public class Account {
         return darik;
     }
 
-    public void setDarik(int darik) {
-        this.darik = darik;
+    public void incrementDarik(int darik) {
+        this.darik += darik;
     }
 
     public ArrayList<Deck> getDecks() {
         return decks;
     }
 
-    public void setDecks(ArrayList<Deck> decks) {
-        this.decks = decks;
+    public void addDecks(Deck deck) {
+        this.decks.add(deck);
     }
 
     public MatchHistory getMatchHistory() {
         return matchHistory;
     }
 
-    public void setMatchHistory(MatchHistory matchHistory) {
-        this.matchHistory = matchHistory;
+    public void setMatchHistory(GameData gameData) {
+        this.matchHistory.addGameData(gameData);
     }
 
     public String getUserName() {
@@ -139,7 +142,7 @@ public class Account {
     }
 
     public void incrementNumbOfWins(int numbOfWins) {
-        this.numbOfWins += 1;
+        this.numbOfWins++;
     }
 
     public int getNumbOfDraw() {
@@ -147,7 +150,7 @@ public class Account {
     }
 
     public void incrementNumbOfDraw(int numbOfDraw) {
-        this.numbOfDraw += 1;
+        this.numbOfDraw++;
     }
 
     public int getNumbOfLose() {
@@ -155,15 +158,11 @@ public class Account {
     }
 
     public void incrementNumbOfLose(int numbOfLose) {
-        this.numbOfLose += 1;
+        this.numbOfLose++;
     }
 
     public static ArrayList<Account> getAccounts() {
         return accounts;
-    }
-
-    public static void setAccounts(ArrayList<Account> accounts) {
-        Account.accounts = accounts;
     }
 
     public static Account getLoginUser() {
