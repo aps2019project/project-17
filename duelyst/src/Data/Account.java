@@ -33,18 +33,30 @@ public class Account {
         // ..
     }
 
-    public static void addUser(Account account) {
+    public static String addUser(String userName, String passWord) {
+        Account account = new Account(userName, passWord);
+
+        for (Account account1 : accounts) {
+            if (account1.userName.equals(account.userName))
+                return "UserName Already Exist! Please Try again with another UserName.";
+        }
         accounts.add(account);
+        return "Account Successfully created";
     }
 
-    public static void login(String userName, String passWord) {
+    public static String login(String userName, String passWord) {
         for (Account account : accounts) {
-            if (account.userName.equals(userName) && account.passWord.equals(passWord)) {
-                loginUser = account;
-                return;
+            if (account.userName.equals(userName)) {
+                if (account.passWord.equals(passWord)) {
+                    loginUser = account;
+                    return "login successfully done :) Enjoy the game";
+                }
+                return "your password is wrong! Please Try again";
             }
         }
+        return "username is Wrong! Please Try again";
     }
+
 
     public static void logout() {
         loginUser = null;
