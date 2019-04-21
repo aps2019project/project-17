@@ -28,11 +28,11 @@ public class Account {
         this.numbOfWins = 0;
         this.numbOfDraw = 0;
         this.numbOfLose = 0;
-        this.darik = 0;
+        this.darik = 15000;
+        this.matchHistory = new MatchHistory();
         // TODO: player
         // TODO: collection
         // TODO: decks
-        // TODO: matchHistory
     }
 
     public static String addUser(String userName, String passWord) {
@@ -57,7 +57,7 @@ public class Account {
                 return "your password is wrong! Please Try again";
             }
         }
-        return "username is Wrong! Please Try again";
+        return "username doesnt exist! Please Try again";
     }
 
     public static String logout() {
@@ -89,8 +89,7 @@ public class Account {
     }
 
     public ArrayList<Deck> getAllDecks() {
-        return getAllDecks();
-        // return is for ignore error
+        return decks;
     }
 
     public Player getPlayer() {
@@ -109,8 +108,12 @@ public class Account {
         return darik;
     }
 
-    public void incrementDarik(int darik) {
-        this.darik += darik;
+    public void incrementDarik(int change) {
+        this.darik += change;
+    }
+
+    public void decrementDarik(int change) {
+        this.darik -= change;
     }
 
     public ArrayList<Deck> getDecks() {
@@ -141,7 +144,7 @@ public class Account {
         return numbOfWins;
     }
 
-    public void incrementNumbOfWins(int numbOfWins) {
+    public void incrementNumbOfWins() {
         this.numbOfWins++;
     }
 
@@ -149,7 +152,7 @@ public class Account {
         return numbOfDraw;
     }
 
-    public void incrementNumbOfDraw(int numbOfDraw) {
+    public void incrementNumbOfDraw() {
         this.numbOfDraw++;
     }
 
@@ -157,7 +160,7 @@ public class Account {
         return numbOfLose;
     }
 
-    public void incrementNumbOfLose(int numbOfLose) {
+    public void incrementNumbOfLose() {
         this.numbOfLose++;
     }
 
@@ -167,5 +170,9 @@ public class Account {
 
     public static Account getLoginUser() {
         return loginUser;
+    }
+
+    public static String save() {
+        return "Saved!";
     }
 }

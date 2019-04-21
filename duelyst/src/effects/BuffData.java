@@ -6,6 +6,8 @@ public class BuffData {
     private boolean haveWeaknessBuff;
     private boolean haveStunBuff;
     private boolean haveDisarmBuff;
+
+
     private PowerBuff powerBuff;
     enum HealthOrAttack{HEALTH,ATTACK}
     enum TypeOfEffect{DECREMENT,INCREMENT}
