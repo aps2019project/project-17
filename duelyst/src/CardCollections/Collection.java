@@ -2,10 +2,15 @@ package CardCollections;
 import effects.*;
 import java.util.ArrayList;
 
+import effects.Cards;
+
+import java.util.ArrayList;
+
 public class Collection {
     private ArrayList<Cards> cards;
     private ArrayList<Item> items;
     private static ArrayList<Deck> decks = new ArrayList<>();
+
 
     public ArrayList<Cards> getCards() {
         return cards;
@@ -14,6 +19,7 @@ public class Collection {
     public ArrayList<Item> getItems() {
         return items;
     }
+
 
     public String search(String name){
         if(findCardByName(name)!=null){
@@ -30,6 +36,7 @@ public class Collection {
             if(cards.get(i).getName().equals(cardName)){
                 return cards.get(i);
             }
+
         }
         return null;
     }
@@ -39,6 +46,7 @@ public class Collection {
             if(items.get(i).getName().equals(itemName)){
                 return items.get(i);
             }
+
         }
         return null;
     }
@@ -130,4 +138,5 @@ public class Collection {
 //            findDeck(deckName).getCards().add(findCardByID(ID));
 //        }
     }
+
 }
