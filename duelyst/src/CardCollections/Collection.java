@@ -112,7 +112,7 @@ public class Collection {
         if(findDeck(deckName)==null || findItemByID(itemID)==null){
             return false;
         }
-        if(findDeck(deckName).getItems().contains(findItemByID(itemID))){
+        if(findDeck(deckName).getItem().getName().equals(findItemByID(itemID).getName())){
             return true;
         }
         return false;
