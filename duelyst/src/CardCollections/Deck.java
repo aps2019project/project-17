@@ -40,13 +40,13 @@ public class Deck {
         return hero;
     }
 
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
     public static boolean isDeckValidate(String deckName){
         for (Deck deck : decks) {
             if (deck.getName().equals(deckName))
                 return deck.cards.size() == 20;
-    public void setHero(Hero hero) {
-        this.hero = hero;
-    }
 
         }
         return false;
