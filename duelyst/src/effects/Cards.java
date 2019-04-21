@@ -17,6 +17,7 @@ public class Cards {
         return price;
     }
 
+
     public Cards(String name, String id, int price) {
         this.name = name;
         this.id = id;
