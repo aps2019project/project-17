@@ -1,8 +1,7 @@
 package CardCollections;
 
 
-import effects.Cards;
-import effects.Hero;
+import effects.*;
 
 
 import java.util.ArrayList;
