@@ -45,10 +45,14 @@ public class Deck {
     public static boolean isDeckValidate(String deckName){
         for (Deck deck : decks) {
             if (deck.getName().equals(deckName))
-                return deck.cards.size() == 20;
+                return deck.isDeckValidate();
 
         }
         return false;
+    }
+
+    public boolean isDeckValidate(){
+        return cards.size() == 20;
     }
 
 
