@@ -1,9 +1,21 @@
 package effects;
 
+import java.util.ArrayList;
+
 public abstract class Buff {
     private String desc;
     private int effectTime;
     private BuffData buffData;
+    private ArrayList<Enum> buffEnums;
+
+    private static enum BuffType {
+        HOYLBUFF,
+        POWERBUFF,
+        POISONBUFF,
+        WEAKNESSBUFF,
+        STUNBUFF,
+        DISARMBUFF
+    }
 
     public void setDesc(String desc) {
         this.desc = desc;

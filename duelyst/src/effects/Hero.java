@@ -1,6 +1,6 @@
 package effects;
 
-public class Hero extends Cards{
+public class Hero extends Cards {
 
     private int attackPower;
     private int healthPoint;

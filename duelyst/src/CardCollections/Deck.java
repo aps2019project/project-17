@@ -18,7 +18,6 @@ public class Deck {
         this.name = name;
         this.cards = new ArrayList<>();
 
-
     }
 
     public String getName() {
@@ -42,7 +41,8 @@ public class Deck {
     public void setHero(Hero hero) {
         this.hero = hero;
     }
-    public static boolean isDeckValidate(String deckName){
+
+    public static boolean isDeckValidate(String deckName) {
         for (Deck deck : decks) {
             if (deck.getName().equals(deckName))
                 return deck.isDeckValidate();
@@ -51,15 +51,15 @@ public class Deck {
         return false;
     }
 
-    public boolean isDeckValidate(){
+    public boolean isDeckValidate() {
         return cards.size() == 20;
     }
 
 
-    public static void setMainDeck(String deckName){
+    public static void setMainDeck(String deckName) {
     }
 
-    public int getNumberOfDeckCards(){
+    public int getNumberOfDeckCards() {
         return this.cards.size();
     }
 
