@@ -75,11 +75,9 @@ public class Account {
             if (o1.numbOfWins > o2.numbOfWins)
                 return -1;
             else if (o1.numbOfWins == o2.numbOfWins) {
-                if (o1.userName.compareTo(o2.userName) > 0) {
-                    return -1;
-                }
+                return o1.userName.compareTo(o2.userName);
             }
-            return 0;
+            return 1;
         });
     }
 
