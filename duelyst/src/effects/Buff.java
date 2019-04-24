@@ -4,32 +4,62 @@ import GameGround.Cell;
 
 import java.util.ArrayList;
 
-enum BuffType {POWER,}
-
 public class Buff {
     private String desc;
-    private int effectTime;
-    private BuffData buffData;
-    private ArrayList<Enum> buffEnums;
+    private ArrayList<BuffDetail> buffDetails;
 
-    private static enum BuffType {
-        HOYLBUFF,
-        POWERBUFF,
-        POISONBUFF,
-        WEAKNESSBUFF,
-        STUNBUFF,
-        DISARMBUFF
+    public Buff(String desc) {
+        this.desc = desc;
     }
 
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    public void setEffectTime(int effectTime) {
-        this.effectTime = effectTime;
+    public void action(ArrayList<Cell> cells) {
+        for (BuffDetail buffdetail : buffDetails) {
+            for (Cell cell : cells) {
+                switch (buffdetail.getBuffType()) {
+                    case HOYLBUFF:
+                        break;
+                    case WEAKNESSBUFF:
+                        break;
+                    case STUNBUFF:
+                        break;
+                    case DISARMBUFF:
+                        break;
+                }
+            }
+        }
+
     }
 
-    public void action(ArrayList<Cell> cells) {
+    public void deletingWeaknessBuff(Minion minion, int time) {
+        minion.changeHealth(time);
+    }
 
+    public void addBuff(BuffType buffType, int effectTime) {
+        BuffDetail buffDetail = new BuffDetail(buffType, effectTime);
+        this.buffDetails.add(buffDetail);
+    }
+
+    public void holyBuff(Minion minion) {
+        minion.activeHolyBuff();
+    }
+
+    public void changeHealth(Minion minion, int changingValue) {
+        minion.changeHealth(changingValue);
+    }
+
+    public void changeAttackPower(Minion minion, int changingValue) {
+        minion.changeAttackPower(changingValue);
+    }
+
+    public void stunBuff(Minion minion) {
+        minion.setCanMove(false);
+    }
+
+    public void disarmBuff(Minion minion) {
+        minion.setCanCounterAttack(false);
     }
 }
