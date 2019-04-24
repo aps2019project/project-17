@@ -5,7 +5,7 @@ public class Cell {
     //coordination of the cell
     private int row;
     private int col;
-    private Cards card;//show which card is un the cell/if null there no card on the cell
+    private Card card;//show which card is un the cell/if null there no card on the cell
     private boolean hasFlag;//show if there is any flag on the cell
     private Buff buff;//if it was null the cell doesn't have buff
 
@@ -30,11 +30,11 @@ public class Cell {
         this.col = col;
     }
 
-    public Cards getCard() {
+    public Card getCard() {
         return card;
     }
 
-    public void setCard(Cards card) {
+    public void setCard(Card card) {
         this.card = card;
     }
 

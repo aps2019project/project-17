@@ -1,7 +1,7 @@
 package Data;
 
 import CardCollections.*;
-import effects.Cards;
+import effects.Card;
 import effects.Item;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Player {
     private Hand hand;
     private int mana;
     private ArrayList<Item> collectableItems;
-    private ArrayList<Cards> graveYard;
+    private ArrayList<Card> graveYard;
 
     public Player() {}
 
@@ -28,11 +28,11 @@ public class Player {
         return mana;
     }
 
-    public ArrayList<Cards> getGraveYard() {
+    public ArrayList<Card> getGraveYard() {
         return this.graveYard;
     }
 
-    public void addCardToGraveYard(Cards card){
+    public void addCardToGraveYard(Card card){
         this.graveYard.add(card);
     }
 
@@ -48,12 +48,12 @@ public class Player {
         this.mana -= change;
     }
 
-    public void addCardToHand(Cards card){
+    public void addCardToHand(Card card){
         hand.addCard(card);
         // or it might handle in controller!
         // or here we can inputting String and pass the Card related to that String!
     }
-    public void removeCardFromHand(Cards card){
+    public void removeCardFromHand(Card card){
         hand.removeCard(card);
         // or it might handle in controller!
         // or here we can inputting String and pass the Card related to that String!

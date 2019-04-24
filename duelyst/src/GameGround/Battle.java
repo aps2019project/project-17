@@ -2,7 +2,7 @@ package GameGround;
 
 
 import Data.Player;
-import effects.Cards;
+import effects.Card;
 import effects.Item;
 
 public class Battle {
@@ -11,7 +11,7 @@ public class Battle {
     private Board board;
     private Enum TurnEnum;
     private int turn;
-    private Cards selectedCard;
+    private Card selectedCard;
     private Item selectedItem;
 
 }

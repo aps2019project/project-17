@@ -4,15 +4,15 @@ import effects.*;
 
 import java.util.ArrayList;
 
-import effects.Cards;
+import effects.Card;
 
 public class Collection {
-    private ArrayList<Cards> cards;
+    private ArrayList<Card> cards;
     private ArrayList<Item> items;
     private static ArrayList<Deck> decks = new ArrayList<>();
 
 
-    public ArrayList<Cards> getCards() {
+    public ArrayList<Card> getCards() {
         return cards;
     }
 
@@ -30,8 +30,8 @@ public class Collection {
         return null;
     }
 
-    private Cards findCard(String cardNameID) {
-        for (Cards card : cards) {
+    private Card findCard(String cardNameID) {
+        for (Card card : cards) {
             if (card.getName().equals(cardNameID))
                 return card;
 
