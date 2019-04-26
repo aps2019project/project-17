@@ -11,6 +11,10 @@ public class Collection {
     private ArrayList<Item> items;
     private static ArrayList<Deck> decks = new ArrayList<>();
 
+    public Collection() {
+        this.cards = new ArrayList<>();
+        this.items = new ArrayList<>();
+    }
 
     public ArrayList<Card> getCards() {
         return cards;

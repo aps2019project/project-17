@@ -1,18 +1,18 @@
 package Data;
 
 import effects.*;
+import CardCollections.Collection;
 import CardCollections.*;
 import GameGround.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Account implements Comparable<Account> {
 
     private Player player;
     private Collection collection;
     private int darik;
-    private ArrayList<Deck> decks = new ArrayList<>();
+    private ArrayList<Deck> decks;
     private MatchHistory matchHistory;
     private String userName;
     private String passWord;
@@ -30,19 +30,20 @@ public class Account implements Comparable<Account> {
         this.numbOfLose = 0;
         this.darik = 15000;
         this.matchHistory = new MatchHistory();
-        // TODO: player
-        // TODO: collection
-        // TODO: decks
+        this.player = new Player();
+        this.collection = new Collection();
+        this.decks = new ArrayList<>();
     }
 
     public static String addUser(String userName, String passWord) {
 
-        Account account = new Account(userName, passWord);
-
-        for (Account account1 : accounts) {
-            if (account1.userName.equals(account.userName))
+        for (Account account : accounts) {
+            if (account.userName.equals(userName))
                 return "UserName Already Exist! Please Try again with another UserName.";
         }
+
+        Account account = new Account(userName, passWord);
+
         accounts.add(account);
         return "Account Successfully created";
     }
@@ -84,6 +85,16 @@ public class Account implements Comparable<Account> {
     public static Collection getCollection() {
         return getCollection();
         // return is for ignore error
+    }
+
+    public String setMainDeck(String deckName) {
+        for (Deck deck : decks) {
+            if (deck.getName().equals(deckName)) {
+                player.setMainDeck(deck);
+                return "main deck successfully choose";
+            }
+        }
+        return "this deck doesnt exist";
     }
 
     public ArrayList<Deck> getAllDecks() {
@@ -179,8 +190,8 @@ public class Account implements Comparable<Account> {
      */
     @Override
     public int compareTo(Account o) {
-        Integer firstNumOfWins=this.numbOfWins;
-        Integer secondNumOfWins=o.numbOfWins;
+        Integer firstNumOfWins = this.numbOfWins;
+        Integer secondNumOfWins = o.numbOfWins;
         return firstNumOfWins.compareTo(secondNumOfWins);
     }
 }

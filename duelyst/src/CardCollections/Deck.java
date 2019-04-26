@@ -20,6 +20,15 @@ public class Deck {
 
     }
 
+    public String addCard(Card card){
+        for (Card card1 : cards) {
+            if (card1.getName().equals(card.getName()))
+                return "this card already exist";
+        }
+        cards.add(card);
+        return "card successfully add";
+    }
+
     public String getName() {
         return name;
     }
