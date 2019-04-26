@@ -1,6 +1,6 @@
 package effects;
 
-public class Minion {
+public class Minion extends Card{
     private Enum type;
     private Spell specialPower;
     private Enum classType;
@@ -12,6 +12,10 @@ public class Minion {
     private boolean isHolyBuffActive;
     private boolean canMove;
     private boolean canCounterAttack;
+
+    public Minion(String name, String id, int price) {
+        super(name, id, price);
+    }
 
     public void attack(String id) {
     }

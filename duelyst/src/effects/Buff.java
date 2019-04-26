@@ -15,18 +15,21 @@ public class Buff {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-
     public void action(ArrayList<Cell> cells) {
         for (BuffDetail buffdetail : buffDetails) {
             for (Cell cell : cells) {
                 switch (buffdetail.getBuffType()) {
                     case HOYLBUFF:
+                        holyBuff((Minion)cell.getCard());
                         break;
                     case WEAKNESSBUFF:
+
                         break;
                     case STUNBUFF:
+                        stunBuff((Minion)cell.getCard());
                         break;
                     case DISARMBUFF:
+                        disarmBuff((Minion)cell.getCard());
                         break;
                 }
             }
