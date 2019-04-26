@@ -12,7 +12,6 @@ public class Account implements Comparable<Account> {
     private Player player;
     private Collection collection;
     private int darik;
-    private ArrayList<Deck> decks;
     private MatchHistory matchHistory;
     private String userName;
     private String passWord;
@@ -32,7 +31,6 @@ public class Account implements Comparable<Account> {
         this.matchHistory = new MatchHistory();
         this.player = new Player();
         this.collection = new Collection();
-        this.decks = new ArrayList<>();
     }
 
     public static String addUser(String userName, String passWord) {
@@ -55,10 +53,10 @@ public class Account implements Comparable<Account> {
                     loginUser = account;
                     return "login successfully done :) Enjoy the game";
                 }
-                return "your password is wrong! Please Try again";
+                return "your password is wrong!";
             }
         }
-        return "username doesnt exist! Please Try again";
+        return "username doesnt exist!";
     }
 
     public static String logout() {
@@ -88,17 +86,15 @@ public class Account implements Comparable<Account> {
     }
 
     public String setMainDeck(String deckName) {
-        for (Deck deck : decks) {
-            if (deck.getName().equals(deckName)) {
-                player.setMainDeck(deck);
-                return "main deck successfully choose";
-            }
-        }
-        return "this deck doesnt exist";
-    }
+        Deck deck = this.collection.findDeck(deckName);
 
-    public ArrayList<Deck> getAllDecks() {
-        return decks;
+        if (deck == null) {
+            return "cannot find deck with this name";
+        }
+
+        this.player.setMainDeck(deck);
+        this.collection.setMainDeck(deck);
+        return "set main deck successfully done";
     }
 
     public Player getPlayer() {
@@ -123,14 +119,6 @@ public class Account implements Comparable<Account> {
 
     public void decrementDarik(int change) {
         this.darik -= change;
-    }
-
-    public ArrayList<Deck> getDecks() {
-        return decks;
-    }
-
-    public void addDecks(Deck deck) {
-        this.decks.add(deck);
     }
 
     public MatchHistory getMatchHistory() {
@@ -192,6 +180,7 @@ public class Account implements Comparable<Account> {
     public int compareTo(Account o) {
         Integer firstNumOfWins = this.numbOfWins;
         Integer secondNumOfWins = o.numbOfWins;
+
         return firstNumOfWins.compareTo(secondNumOfWins);
     }
 }
