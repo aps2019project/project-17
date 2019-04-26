@@ -5,6 +5,11 @@ import effects.Card;
 import java.util.ArrayList;
 
 public class Hand {
+
+    public Hand() {
+        this.cards = new ArrayList<>();
+    }
+
     private ArrayList<Card> cards;
 
     public ArrayList<Card> getCards() {
