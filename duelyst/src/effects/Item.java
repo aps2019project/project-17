@@ -28,4 +28,7 @@ public class Item {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+    public void showItem(){
+        System.out.println("Name : "+this.name+" - Desc : "+this.desc);
+    }
 }

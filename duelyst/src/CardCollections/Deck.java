@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Deck {
     private String name;
 
-    private ArrayList<Cards> cards;
+    private ArrayList<Card> cards;
     private Item item;
     private Hero hero;
     private static ArrayList<Deck> decks;
@@ -24,7 +24,7 @@ public class Deck {
         return name;
     }
 
-    public ArrayList<Cards> getCards() {
+    public ArrayList<Card> getCards() {
         return cards;
     }
 
