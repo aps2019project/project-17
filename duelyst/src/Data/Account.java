@@ -7,7 +7,7 @@ import GameGround.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Account {
+public class Account implements Comparable<Account> {
 
     private Player player;
     private Collection collection;
@@ -172,5 +172,15 @@ public class Account {
 
     public static String save() {
         return "Saved!";
+    }
+
+    /**
+     * for comparing accounts according to their num of wins in increasing order
+     */
+    @Override
+    public int compareTo(Account o) {
+        Integer firstNumOfWins=this.numbOfWins;
+        Integer secondNumOfWins=o.numbOfWins;
+        return firstNumOfWins.compareTo(secondNumOfWins);
     }
 }
