@@ -12,4 +12,7 @@ public class Hero extends Card {
         this.attackPower = attackPower;
         this.healthPoint = healthPoint;
     }
+    public void showHero(){
+        System.out.println("Name : "+this.name+" - AP : "+this.attackPower+" - HP : "+this.healthPoint+" - Class : "+this.classType+" - Special power : "+this.specialPower);
+    }
 }
