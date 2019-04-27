@@ -3,10 +3,19 @@ package view;
 import java.util.Scanner;
 
 public class Request {
+    protected Scanner scanner = new Scanner(System.in);
+    protected String command;
+    protected ErrorType error = null;
 
-    protected  static Scanner input = new Scanner(System.in);
+    public void getNewCommand() {
+        command = scanner.nextLine();
+    }
 
-    protected static String command;
+    public ErrorType getError() {
+        return error;
+    }
 
-    public Request(){}
+    public void setError(ErrorType error) {
+        this.error = error;
+    }
 }
