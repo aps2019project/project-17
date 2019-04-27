@@ -20,6 +20,10 @@ public class Deck {
 
     }
 
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     public String addCard(Card card){
         for (Card card1 : cards) {
             if (card1.getName().equals(card.getName()))

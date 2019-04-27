@@ -7,9 +7,6 @@ import java.util.Comparator;
 
 public class AccountView extends View {
 
-    /**
-     * sorts accounts in decreasing order
-     */
     public static void showLeaderBoard() {
         Account.getAccounts().sort(new Comparator<Account>() {
             @Override
@@ -17,10 +14,9 @@ public class AccountView extends View {
                 return o2.compareTo(o1);
             }
         });
-        int counter = 1;
-        for (Account account : Account.getAccounts()) {
-            System.out.println(counter + " - UserName : " + account.getUserName() + " - Wins : " + account.getNumbOfWins());
-            counter++;
+        for (int i = 0; i < Account.getAccounts().size(); i++) {
+            Account account = Account.getAccounts().get(i);
+            System.out.printf("%d - UserNAme: %s - Wins: %d", i,account.getUserName(), account.getNumbOfWins());
         }
     }
 
@@ -34,5 +30,13 @@ public class AccountView extends View {
         System.out.println("save");
         System.out.println("logout");
         System.out.println("help");
+    }
+
+    public static void help(){
+        System.out.println("create account with this command ->    \"create account [user name]\"");
+        System.out.println("login with this command ->      \"login [user name]\"");
+        System.out.println("show leader bord with this command ->    \"show leaderboard\"");
+        System.out.println("save your account with this command -> \"save\"");
+        System.out.println("logout with this command -> \"logout\"");
     }
 }

@@ -9,7 +9,8 @@ import effects.Card;
 public class Collection {
     private ArrayList<Card> cards;
     private ArrayList<Item> items;
-    private static ArrayList<Deck> decks = new ArrayList<>();
+    private ArrayList<Deck> decks = new ArrayList<>();
+    private Deck mainDeck;
 
     public Collection() {
         this.cards = new ArrayList<>();
@@ -24,6 +25,17 @@ public class Collection {
         return items;
     }
 
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
+    public Deck getMainDeck() {
+        return mainDeck;
+    }
+
+    public void setMainDeck(Deck mainDeck) {
+        this.mainDeck = mainDeck;
+    }
 
     public String search(String name) {
         if (findCard(name) != null)
@@ -57,12 +69,12 @@ public class Collection {
     }
 
     public String createDeck(String deckName) {
-        Deck deck = new Deck(deckName);
         for (Deck deck1 : decks) {
             if (deck1.getName().equals(deckName)) {
-                return "Deck Already Exist! Please Try again with another DeckName.";
+                return "this Deck name Already Exist! Please Try again with another DeckName.";
             }
         }
+        Deck deck = new Deck(deckName);
         decks.add(deck);
         return "Deck Successfully created";
     }
@@ -83,39 +95,130 @@ public class Collection {
         }
     }
 
-    public boolean isCardInDeck(String cardID, String deckName) {
-        if (findDeck(deckName) == null || findCard(cardID) == null) {
-            return false;
+    private boolean isCardInDeck(String cardID, String deckName) {
+        Deck deck = findDeck(deckName);
+
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            Card card = deck.getCards().get(i);
+            if (card.getId().equals(cardID))
+                return true;
         }
-        return findDeck(deckName).getCards().contains(findCard(cardID));
+        return false;
     }
 
-    public boolean isItemInDeck(String itemID, String deckName) {
-        if (findDeck(deckName) == null || findItem(itemID) == null) {
-            return false;
-        }
-        return findDeck(deckName).getItem().getName().equals(findItem(itemID).getName());
+    private boolean deckCardsHasStorage(String deckName) {
+        Deck deck = findDeck(deckName);
+        return deck.getCards().size() < 20;
     }
 
-    public String addToDeck(String ID, String deckName) {
-        if (findCard(ID) == null || findItem(ID) == null)
-            return "No such Card/Item ID found in collection";
+    private boolean deckHasItem(String deckName) {
+        Deck deck = findDeck(deckName);
 
-        if (!isCardInDeck(ID, deckName) || !isItemInDeck(ID, deckName))
-            return "This Card/Item ID doesn't exist in this deck!";
-
-        if (findDeck(deckName).getNumberOfDeckCards() + 1 > 20)
-            return "The Deck card storage is full.";
-
-        if (findDeck(deckName).getHero() != null)
-            return "This deck has hero";
-        else {
-            findDeck(deckName).setHero((Hero) findCard(ID));
-            return "Hero added successfully";
-        }
-//        if(findCardByID(ID)!=null){
-//            findDeck(deckName).getCards().add(findCardByID(ID));
-//        }
+        return deck.getItem() != null;
     }
 
+    private boolean deckHasHero(String deckName) {
+        Deck deck = findDeck(deckName);
+        return deck.getHero() != null;
+    }
+
+    public String addToDeck(String cardID, String deckName) {
+        Deck deck = findDeck(deckName);
+
+        if (deck == null)
+            return "cannot find deck with this name";
+
+        Card card = findCard(cardID);
+        Item item = findItem(cardID);
+
+        if (card == null && item == null)
+            return "invalid card\\item";
+
+        if (card != null) {
+            if (card.getClass().toString().equals("class Hero")) {
+                if (deckHasHero(deckName))
+                    return "deck already has hero";
+
+                addHeroToDeck(card, deck);
+                return "hero successfully add";
+            }
+
+            if (isCardInDeck(cardID, deckName))
+                return "deck already has this card";
+
+            if (deckCardsHasStorage(deckName))
+                return "deck Card storage is full";
+
+            addCardToDeck(card, deck);
+            return "card successfully add";
+        }
+
+        if (deckHasItem(deckName))
+            return "deck already has item";
+
+        addItemToDeck(item, deck);
+        return "item successfully add";
+
+    }
+
+    private void addHeroToDeck(Card card, Deck deck) {
+        deck.setHero((Hero) card);
+    }
+
+    private void addCardToDeck(Card card, Deck deck) {
+        deck.addCard(card);
+    }
+
+    private void addItemToDeck(Item item, Deck deck) {
+        deck.setItem(item);
+    }
+
+    public String deleteFromDeck(String cardID, String deckName) {
+        Deck deck = findDeck(deckName);
+        Item item = findItem(cardID);
+        Card card = findCard(cardID);
+
+        if (deck == null)
+            return "cannot find deck with this name";
+
+        if (item == null && card == null)
+            return "invalid card\\item";
+
+        if (card != null) {
+            if (card.getClass().toString().equals("class Hero")) {
+                if (card.getName().equals(deck.getHero().getName())) {
+                    deck.setHero(null);
+                    return "removing hero from deck successfully done";
+                }
+                return "invalid Hero card";
+            }
+            if (!isCardInDeck(cardID, deckName))
+                return "card does not exist in this deck";
+            deck.getCards().remove(card);
+            return "card successfully removed from deck";
+        }
+
+        if (item.getName().equals(deck.getItem().getName())) {
+            deck.setItem(null);
+            return "deck item successfully removed";
+        }
+
+        return "item does not exist in this deck";
+    }
+
+    public String save() {
+        return "successfully saved";
+    }
+
+    public String isDeckValidate(String deckName){
+        Deck deck = findDeck(deckName);
+
+        if (deck == null)
+            return "cannot find deck with this name";
+
+        if (deck.getCards().size() == 20 && deck.getHero() != null)
+            return "deck is validate";
+
+        return "deck is not validate";
+    }
 }
