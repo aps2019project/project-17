@@ -6,8 +6,11 @@ public class Item {
     private String desc;
     private int price;
 
-    public int getPrice() {
-        return price;
+    public Item(String name, String id, int price) {
+        this.name = name;
+        this.id = id;
+        this.price = price;
+
     }
 
     public String getName() {
@@ -33,7 +36,12 @@ public class Item {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public void showItem(){
-        System.out.println("Name : "+this.name+" - Desc : "+this.desc);
+
+    public void showItem() {
+        System.out.println("Name : " + this.name + " - Desc : " + this.desc);
+    }
+
+    public int getPrice() {
+        return price;
     }
 }

@@ -1,9 +1,7 @@
 package Data;
 
-import effects.*;
 import CardCollections.Collection;
 import CardCollections.*;
-import GameGround.*;
 
 import java.util.ArrayList;
 
@@ -11,13 +9,14 @@ public class Account implements Comparable<Account> {
 
     private Player player;
     private Collection collection;
-    private int darik;
     private MatchHistory matchHistory;
     private String userName;
     private String passWord;
     private int numbOfWins;
     private int numbOfDraw;
     private int numbOfLose;
+    private int daric;
+    private Shop shop;
     private static ArrayList<Account> accounts = new ArrayList<>();
     private static Account loginUser;
 
@@ -27,10 +26,17 @@ public class Account implements Comparable<Account> {
         this.numbOfWins = 0;
         this.numbOfDraw = 0;
         this.numbOfLose = 0;
-        this.darik = 15000;
+        this.daric = 15000;
         this.matchHistory = new MatchHistory();
         this.player = new Player();
         this.collection = new Collection();
+        Collection.addCollection(this.collection);
+        this.shop = new Shop(this.collection);
+    }
+
+    public int getDaric() {
+        this.daric = this.collection.getDaric();
+        return daric;
     }
 
     public static String addUser(String userName, String passWord) {
@@ -80,11 +86,6 @@ public class Account implements Comparable<Account> {
         });
     }
 
-    public static Collection getCollection() {
-        return getCollection();
-        // return is for ignore error
-    }
-
     public String setMainDeck(String deckName) {
         Deck deck = this.collection.findDeck(deckName);
 
@@ -107,18 +108,6 @@ public class Account implements Comparable<Account> {
 
     public void setCollection(Collection collection) {
         this.collection = collection;
-    }
-
-    public int getDarik() {
-        return darik;
-    }
-
-    public void incrementDarik(int change) {
-        this.darik += change;
-    }
-
-    public void decrementDarik(int change) {
-        this.darik -= change;
     }
 
     public MatchHistory getMatchHistory() {

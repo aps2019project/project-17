@@ -11,10 +11,37 @@ public class Collection {
     private ArrayList<Item> items;
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
+    private int daric;
+    private static ArrayList<Collection> collections = new ArrayList<>();
 
     public Collection() {
         this.cards = new ArrayList<>();
         this.items = new ArrayList<>();
+        this.daric = 15000;
+    }
+
+    public int getDaric() {
+        return daric;
+    }
+
+    public void addCardToCollection(Card card){
+        this.cards.add(card);
+    }
+
+    public void addItemToCollection(Item item){
+        this.items.add(item);
+    }
+
+    public static ArrayList<Collection> getCollections() {
+        return collections;
+    }
+
+    public void changeDaric(int value){
+        this.daric += value;
+    }
+
+    public static void addCollection(Collection collection){
+        collections.add(collection);
     }
 
     public ArrayList<Card> getCards() {
@@ -185,7 +212,7 @@ public class Collection {
             return "invalid card\\item";
 
         if (card != null) {
-            if (card.getClass().toString().equals("class Hero")) {
+            if (card instanceof Hero) {
                 if (card.getName().equals(deck.getHero().getName())) {
                     deck.setHero(null);
                     return "removing hero from deck successfully done";
@@ -210,7 +237,7 @@ public class Collection {
         return "successfully saved";
     }
 
-    public String isDeckValidate(String deckName){
+    public String isDeckValidate(String deckName) {
         Deck deck = findDeck(deckName);
 
         if (deck == null)
@@ -220,5 +247,9 @@ public class Collection {
             return "deck is validate";
 
         return "deck is not validate";
+    }
+
+    public int numberOfItems(){
+        return this.items.size();
     }
 }
