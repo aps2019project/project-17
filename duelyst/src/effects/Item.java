@@ -4,6 +4,11 @@ public class Item {
     private String name;
     private String id;
     private String desc;
+    private int price;
+
+    public int getPrice() {
+        return price;
+    }
 
     public String getName() {
         return name;
