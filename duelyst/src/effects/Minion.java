@@ -3,6 +3,7 @@ package effects;
 public class Minion extends Card{
     private Enum type;
     private Spell specialPower;
+    private Buff buff;
     private Enum classType;
     private int attackPower;
     private int healthPoint;
@@ -21,6 +22,10 @@ public class Minion extends Card{
     }
 
     public void move(int x, int y) {
+    }
+
+    public Buff getBuff() {
+        return buff;
     }
 
     public void activeHolyBuff() {
