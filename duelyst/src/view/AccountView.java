@@ -8,10 +8,10 @@ import java.util.Comparator;
 public class AccountView extends View {
 
     public static void showLeaderBoard() {
-        Account.getAccounts().sort((o1, o2) -> o2.compareTo(o1));
+        Account.getAccounts().sort(Comparator.reverseOrder());
         for (int i = 0; i < Account.getAccounts().size(); i++) {
             Account account = Account.getAccounts().get(i);
-            System.out.printf("%d - UserNAme: %s - Wins: %d", i,account.getUserName(), account.getNumbOfWins());
+            System.out.printf("%d - UserNAme: %s - Wins: %d", i, account.getUserName(), account.getNumbOfWins());
         }
     }
 
