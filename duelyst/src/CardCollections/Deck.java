@@ -24,6 +24,10 @@ public class Deck {
         this.item = item;
     }
 
+    public static ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
     public String addCard(Card card){
         for (Card card1 : cards) {
             if (card1.getName().equals(card.getName()))

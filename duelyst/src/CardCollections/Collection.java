@@ -11,10 +11,37 @@ public class Collection {
     private ArrayList<Item> items;
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
+    private int daric;
+    private static ArrayList<Collection> collections = new ArrayList<>();
 
     public Collection() {
         this.cards = new ArrayList<>();
         this.items = new ArrayList<>();
+        this.daric = 15000;
+    }
+
+    public int getDaric() {
+        return daric;
+    }
+
+    public void addCardToCollection(Card card){
+        this.cards.add(card);
+    }
+
+    public void addItemToCollection(Item item){
+        this.items.add(item);
+    }
+
+    public static ArrayList<Collection> getCollections() {
+        return collections;
+    }
+
+    public void changeDaric(int value){
+        this.daric += value;
+    }
+
+    public static void addCollection(Collection collection){
+        collections.add(collection);
     }
 
     public ArrayList<Card> getCards() {
@@ -220,5 +247,9 @@ public class Collection {
             return "deck is validate";
 
         return "deck is not validate";
+    }
+
+    public int numberOfItems(){
+        return this.items.size();
     }
 }
