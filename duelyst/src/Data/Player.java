@@ -13,15 +13,21 @@ public class Player {
     private Deck copyMainDeck;
     private Hand hand;
     private int mana;
+    private String userName;
     private ArrayList<Item> collectAbleItems;
     private ArrayList<Card> graveYard;
 
-    public Player() {
+    public Player(String userName) {
         this.mana = 9;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
         this.copyMainDeck = new Deck(mainDeck.getName());
         this.hand = new Hand();
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public Deck getMainDeck() {
@@ -47,6 +53,14 @@ public class Player {
             this.hand.addCard(copyMainDeck.getCards().get(n));
             this.copyMainDeck.getCards().remove(n);
         }
+    }
+
+    public Card getCardFromHand(String cardName){
+        for (int i = 0; i < hand.getCards().size(); i++) {
+            if (hand.getCards().get(i).getName().equals(cardName))
+                return hand.getCards().get(i);
+        }
+        return null;
     }
 
     public Hand getHand() {
@@ -77,7 +91,7 @@ public class Player {
         this.mana -= change;
     }
 
-    public void addCardToHand(Card card) {
+    public void addCardToHand() {
         Random random = new Random();
         int n = random.nextInt(this.copyMainDeck.getCards().size());
         hand.addCard(this.copyMainDeck.getCards().get(n));
@@ -90,5 +104,9 @@ public class Player {
     public void removeCardFromHand(Card card) {
         hand.removeCard(card);
         graveYard.add(card);
+    }
+
+    public boolean equals(Player player){
+        return this.userName.equals(player.userName);
     }
 }

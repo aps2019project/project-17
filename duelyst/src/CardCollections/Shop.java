@@ -33,7 +33,7 @@ public class Shop {
         return itemsInShop;
     }
 
-    public Card returnCardFromShop(String cardName) {
+    private Card returnCardFromShop(String cardName) {
         for (Card card : cardsInShop) {
             if (card.getName().equals(cardName))
                 return card;
@@ -41,7 +41,7 @@ public class Shop {
         return null;
     }
 
-    public Item returnItemFromShop(String itemName) {
+    private Item returnItemFromShop(String itemName) {
         for (Item item : itemsInShop) {
             if (item.getName().equals(itemName))
                 return item;
