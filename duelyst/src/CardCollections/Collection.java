@@ -185,7 +185,7 @@ public class Collection {
             return "invalid card\\item";
 
         if (card != null) {
-            if (card.getClass().toString().equals("class Hero")) {
+            if (card instanceof Hero) {
                 if (card.getName().equals(deck.getHero().getName())) {
                     deck.setHero(null);
                     return "removing hero from deck successfully done";
@@ -210,7 +210,7 @@ public class Collection {
         return "successfully saved";
     }
 
-    public String isDeckValidate(String deckName){
+    public String isDeckValidate(String deckName) {
         Deck deck = findDeck(deckName);
 
         if (deck == null)

@@ -80,11 +80,6 @@ public class Account implements Comparable<Account> {
         });
     }
 
-    public static Collection getCollection() {
-        return getCollection();
-        // return is for ignore error
-    }
-
     public String setMainDeck(String deckName) {
         Deck deck = this.collection.findDeck(deckName);
 
