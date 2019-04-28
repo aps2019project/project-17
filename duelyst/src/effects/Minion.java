@@ -13,6 +13,7 @@ public class Minion extends Card{
     private int xCoordinate;
     private int yCoordinate;
     private int distanceCanMove;
+    private int maxRangeToInput;
     private boolean isHolyBuffActive;
     private boolean canMove;
     private boolean canCounterAttack;
@@ -33,10 +34,19 @@ public class Minion extends Card{
         this.canMove = true;
         this.canCounterAttack = true;
         this.distanceCanMove = 2;
+        this.maxRangeToInput = 1;
     }
 
     public int getManaPoint() {
         return manaPoint;
+    }
+
+    public int getMaxRangeToInput() {
+        return maxRangeToInput;
+    }
+
+    public void setMaxRangeToInput(int maxRangeToInput) {
+        this.maxRangeToInput = maxRangeToInput;
     }
 
     public int getDistanceCanMove() {

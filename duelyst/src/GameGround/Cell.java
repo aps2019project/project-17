@@ -5,20 +5,46 @@ import effects.*;
 import java.util.regex.Matcher;
 
 public class Cell {
-    //coordination of the cell
     private int row;
     private int col;
-    private Card card;//show which card is un the cell/if null there no card on the cell
-    private boolean hasFlag;//show if there is any flag on the cell
-    private Buff buff;//if it was null the cell doesn't have buff
+    private Card card;
+    private boolean hasFlag;
+    private Item item;
 
-    public Cell(int row, int col) {
+    Cell(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
+    public static Cell getCell(Board board, int x, int y) {
+        for (int i = 0; i < board.getCells().length; i++) {
+            for (int j = 0; j < board.getCells()[i].length; j++) {
+                Cell cell = board.getCells()[i][j];
+                if (i == x && j == y)
+                    return cell;
+            }
+        }
+        return null;
+    }
+
     public int getRow() {
         return row;
+    }
+
+    public void setHasFlag(boolean hasFlag) {
+        this.hasFlag = hasFlag;
+    }
+
+    public boolean isHasFlag() {
+        return hasFlag;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public void setRow(int row) {
@@ -41,23 +67,19 @@ public class Cell {
         this.card = card;
     }
 
-    public boolean isHasFlag() {
+    public boolean hasFlag() {
         return hasFlag;
     }
 
-    public void setHasFlag(boolean hasFlag) {
+    public void setFlag(boolean hasFlag) {
         this.hasFlag = hasFlag;
     }
 
-    public Buff getBuff() {
-        return buff;
-    }
-
-    public void setBuff(Buff buff) {
-        this.buff = buff;
-    }
-
-    public static int distance(int x1, int y1, int x2, int y2){
-        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    static int distance(Cell cell, Cell cell1) {
+        int x0 = cell.getRow();
+        int y0 = cell.getCol();
+        int x1 = cell1.getRow();
+        int y1 = cell1.getCol();
+        return Math.abs(x0 - x1) + Math.abs(y0 - y1);
     }
 }
