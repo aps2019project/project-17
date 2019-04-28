@@ -193,6 +193,7 @@ public class Battle {
             playerOne.addMana(9);
             playerTwo.lessMana(playerTwo.getMana());
             playerTwo.addMana(9);
+
         }
     }
 
