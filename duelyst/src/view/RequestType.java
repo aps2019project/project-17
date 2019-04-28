@@ -7,5 +7,5 @@ public enum RequestType {
     SHOW_LEADER_BOARD,
     SAVE,
     LOGOUT,
-    HELP;
+    HELP
 }
