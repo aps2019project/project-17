@@ -18,7 +18,7 @@ public class GameController {
         accounts.add(account);
     }
 
-    public void main() {
+    public static void main() {
         boolean isFinish = false;
         do {
             Request request=new Request();

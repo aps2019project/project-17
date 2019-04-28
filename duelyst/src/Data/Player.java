@@ -2,6 +2,7 @@ package Data;
 
 import CardCollections.*;
 import effects.Card;
+import effects.Hero;
 import effects.Item;
 
 import java.util.ArrayList;
@@ -28,6 +29,14 @@ public class Player {
         this.userName = userName;
         this.holdingFlags = 0;
         this.playerHasFlag = false;
+    }
+
+    public Item getItemFromHand(String itemName){
+        for (Item item : this.collectAbleItems) {
+            if (item.getName().equals(itemName))
+                return item;
+        }
+        return null;
     }
 
     public String getUserName() {
@@ -64,15 +73,17 @@ public class Player {
 
     public void setMainDeck(Deck deck) {
         this.mainDeck = deck;
-        setCopyMainDeck();
+        setCopyMainDeck(true);
         setHand();
         collectAbleItems.add(this.mainDeck.getItem());
     }
 
-    private void setCopyMainDeck() {
+    private void setCopyMainDeck(boolean addHero) {
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
+        if (addHero)
+            copyMainDeck.addCard(mainDeck.getHero());
     }
 
     private void setHand() {
@@ -126,13 +137,17 @@ public class Player {
         hand.addCard(this.copyMainDeck.getCards().get(n));
         this.copyMainDeck.getCards().remove(n);
 
-        if (copyMainDeck.getCards().size() == 0)
-            setCopyMainDeck();
+        if (copyMainDeck.getCards().size() == 1)
+            setCopyMainDeck(false);
     }
 
     public void removeCardFromHand(Card card) {
         hand.removeCard(card);
         graveYard.add(card);
+    }
+
+    public Deck getCopyMainDeck() {
+        return copyMainDeck;
     }
 
     public boolean equals(Player player){
