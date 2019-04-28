@@ -4,6 +4,7 @@ import CardCollections.*;
 import effects.Card;
 import effects.Hero;
 import effects.Item;
+import effects.Minion;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,7 +32,21 @@ public class Player {
         this.playerHasFlag = false;
     }
 
-    public Item getItemFromHand(String itemName){
+    public void allMinionsReset() {
+        for (int i = 0; i < this.mainDeck.getCards().size(); i++) {
+            if (this.mainDeck.getCards().get(i) instanceof Minion) {
+                Minion minion = (Minion) this.mainDeck.getCards().get(i);
+                minion.setCanAttack(true);
+                minion.setCanMove(true);
+                minion.setCanCounterAttack(true);
+            }
+        }
+        this.mainDeck.getHero().setCanAttack(true);
+        this.mainDeck.getHero().setCanMove(true);
+        this.mainDeck.getHero().setCanCounterAttack(true);
+    }
+
+    public Item getItemFromHand(String itemName) {
         for (Item item : this.collectAbleItems) {
             if (item.getName().equals(itemName))
                 return item;
@@ -95,7 +110,7 @@ public class Player {
         }
     }
 
-    public Card getCardFromHand(String cardName){
+    public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
             if (hand.getCards().get(i).getName().equals(cardName))
                 return hand.getCards().get(i);
@@ -150,7 +165,7 @@ public class Player {
         return copyMainDeck;
     }
 
-    public boolean equals(Player player){
+    public boolean equals(Player player) {
         return this.userName.equals(player.userName);
     }
 }

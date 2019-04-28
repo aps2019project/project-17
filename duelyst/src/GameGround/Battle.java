@@ -1,6 +1,8 @@
 package GameGround;
 
 
+import CardCollections.Hand;
+import Data.GameData;
 import Data.Player;
 import effects.Card;
 import effects.Hero;
@@ -18,6 +20,7 @@ public class Battle {
     private Card selectedCard;
     private BattleType battleType;
     private Item selectedItem;
+    private GameData gameData;
 
     public Battle(Player playerOne, Player playerTwo, Board board, GameMode gameMode, BattleType battleType) {
         this.playerOne = playerOne;
@@ -45,6 +48,22 @@ public class Battle {
                     toReturn.append(whoHasFlag().getUserName()).append(" has flag");
                 break;
             case CAPTURE_FLAG:
+
+                for (int i = 0; i < this.board.getCells().length; i++) {
+                    for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                        Card card = this.board.getCells()[i][j].getCard();
+                        if (card == null)
+                            continue;
+                        if (((Minion) card).isHasFlag()) {
+                            if (cardIsMine(card, playerOne)) {
+                                toReturn.append(card.getName()).append(" from ").append(playerOne.getUserName()).append(" has flag");
+                                continue;
+                            }
+                            toReturn.append(card.getName()).append(" from ").append(playerTwo.getUserName()).append(" has flag");
+                        }
+                    }
+                }
+
                 break;
         }
         return toReturn.toString();
@@ -163,8 +182,9 @@ public class Battle {
     public void endTurn() {
         this.turn++;
         this.selectedCard = null;
+        playerOne.allMinionsReset();
+        playerTwo.allMinionsReset();
         // TODO: mana
-        // TODO: can move attack counterattack
     }
 
     public String movingCard(int x, int y) {
@@ -224,6 +244,10 @@ public class Battle {
         whoseTurn().removeCardFromHand(card);
         whoseTurn().addCardToHand();
         return "card successfully inserted";
+    }
+
+    public Hand showHand() {
+        return whoseTurn().getHand();
     }
 
 }
