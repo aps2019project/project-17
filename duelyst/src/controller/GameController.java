@@ -7,7 +7,16 @@ import view.*;
 import java.util.ArrayList;
 
 public class GameController {
-    private View view = View.getInstance();
+    private static View view = View.getInstance();
+    private static ArrayList<Account> accounts;
+
+    public static ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
+    public static void addUser(Account account){
+        accounts.add(account);
+    }
 
     public void main() {
         boolean isFinish = false;

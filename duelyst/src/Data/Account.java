@@ -2,6 +2,7 @@ package Data;
 
 import CardCollections.Collection;
 import CardCollections.*;
+import controller.GameController;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,6 @@ public class Account implements Comparable<Account> {
     private int numbOfLose;
     private int daric;
     private Shop shop;
-    private static ArrayList<Account> accounts = new ArrayList<>();
     private static Account loginUser;
 
     private Account(String userName, String passWord) {
@@ -41,19 +41,19 @@ public class Account implements Comparable<Account> {
 
     public static String addUser(String userName, String passWord) {
 
-        for (Account account : accounts) {
+        for (Account account : GameController.getAccounts()) {
             if (account.userName.equals(userName))
                 return "UserName Already Exist! Please Try again with another UserName.";
         }
 
         Account account = new Account(userName, passWord);
 
-        accounts.add(account);
+        GameController.getAccounts().add(account);
         return "Account Successfully created";
     }
 
     public static String login(String userName, String passWord) {
-        for (Account account : accounts) {
+        for (Account account : GameController.getAccounts()) {
             if (account.userName.equals(userName)) {
                 if (account.passWord.equals(passWord)) {
                     loginUser = account;
@@ -72,11 +72,11 @@ public class Account implements Comparable<Account> {
 
     public static ArrayList<Account> getLeaderBoard() {
         sortAccounts();
-        return accounts;
+        return GameController.getAccounts();
     }
 
     private static void sortAccounts() {
-        accounts.sort((o1, o2) -> {
+        GameController.getAccounts().sort((o1, o2) -> {
             if (o1.numbOfWins > o2.numbOfWins)
                 return -1;
             else if (o1.numbOfWins == o2.numbOfWins) {
@@ -151,7 +151,7 @@ public class Account implements Comparable<Account> {
     }
 
     public static ArrayList<Account> getAccounts() {
-        return accounts;
+        return GameController.getAccounts();
     }
 
     public static Account getLoginUser() {
