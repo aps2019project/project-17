@@ -22,7 +22,7 @@ public class Player {
     private boolean playerHasFlag;
 
     public Player(String userName) {
-        this.mana = 9;
+        this.mana = 2;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
         this.copyMainDeck = new Deck(mainDeck.getName());

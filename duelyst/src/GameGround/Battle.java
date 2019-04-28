@@ -26,7 +26,7 @@ public class Battle {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         this.board = board;
-        this.turn = 0;
+        this.turn = 1;
         this.gameMode = gameMode;
         this.selectedCard = null;
         this.selectedItem = null;
@@ -102,7 +102,7 @@ public class Battle {
     }
 
     private Player whoseTurn() {
-        if (this.turn % 2 == 0)
+        if (this.turn % 2 == 1)
             return this.playerOne;
         return this.playerTwo;
     }
@@ -180,11 +180,20 @@ public class Battle {
     }
 
     public void endTurn() {
-        this.turn++;
         this.selectedCard = null;
         playerOne.allMinionsReset();
         playerTwo.allMinionsReset();
-        // TODO: mana
+        this.turn++;
+        if (turn % 2 == 0 && turn <= 14)
+            playerTwo.addMana(1);
+        else if (turn % 2 == 1 && turn <= 14)
+            playerOne.addMana(1);
+        else{
+            playerOne.lessMana(playerOne.getMana());
+            playerOne.addMana(9);
+            playerTwo.lessMana(playerTwo.getMana());
+            playerTwo.addMana(9);
+        }
     }
 
     public String movingCard(int x, int y) {
