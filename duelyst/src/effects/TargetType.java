@@ -6,5 +6,6 @@ public enum TargetType {
     ENEMY_HERO,
     INSIDER_HERO,
     CELL,
+    PLAYER,
     NONE
 }

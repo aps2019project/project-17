@@ -7,46 +7,63 @@ import java.util.ArrayList;
 public class Buff {
     private String desc;
     private ArrayList<BuffDetail> buffDetails;
-    private ArrayList<Minion> targetMinions = null;
-    private ArrayList<BuffDetail> buffDetailsToRemove = null;
+    private ArrayList<Minion> targetMinions;
 
-    public Buff(String desc) {
-        this.desc = desc;
+    public Buff() {
+        this.targetMinions = new ArrayList<>();
+        this.buffDetails = new ArrayList<>();
     }
 
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    public void action(ArrayList<Cell> cells) {
-        for (BuffDetail buffDetail : this.buffDetails) {
-            for (Cell cell : cells) {
-                switch (buffDetail.getBuffType()) {
-                    case HOYLBUFF:
-                        holyBuff((Minion) cell.getCard());
-                        break;
-                    case STUNBUFF:
-                        stunBuff((Minion) cell.getCard());
-                        break;
-                    case DISARMBUFF:
-                        disarmBuff((Minion) cell.getCard());
-                        break;
-                    case WEAKNESSBUFF:
-                        targetMinions.add((Minion) cell.getCard());
-                    case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
-                        changeHealthOrAttack((Minion) cell.getCard(), buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
-                        break;
-                    case CLEAR:
-                        clearBuff((Minion) cell.getCard());
-                        break;
-                }
-            }
-            if (buffDetail.increaseEffectTime()) {
-                buffDetailsToRemove.add(buffDetail);
+    public void action(ArrayList<Object> objects, TargetType targetType) {
+        for (Object object : objects) {
+            switch (targetType) {
+                case ENEMY:
+                case INSIDER:
+                    actionForMinion((Minion) object);
+                    break;
+                case ENEMY_HERO:
+                    break;
+                case INSIDER_HERO:
+                    break;
+                case CELL:
+                    break;
+                case PLAYER:
+                    break;
+                case NONE:
+                    break;
             }
         }
-        removeBuffs(buffDetailsToRemove);
     }
+
+    private void actionForMinion(Minion minion) {
+        for (BuffDetail buffDetail : this.buffDetails) {
+            switch (buffDetail.getBuffType()) {
+                case HOYLBUFF:
+                    holyBuff(minion);
+                    break;
+                case STUNBUFF:
+                    stunBuff(minion);
+                    break;
+                case DISARMBUFF:
+                    disarmBuff(minion);
+                    break;
+                case WEAKNESSBUFF:
+                    targetMinions.add(minion);
+                case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
+                    changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
+                    break;
+                case CLEAR:
+                    clearBuff(minion);
+                    break;
+            }
+        }
+
+    }
+
 
     private void removeBuffs(ArrayList<BuffDetail> buffDetails) {
         for (BuffDetail buffDetail : buffDetails) {
@@ -56,7 +73,7 @@ public class Buff {
                 }
             }
         }
-        this.buffDetails.removeAll(buffDetailsToRemove);
+        this.buffDetails.removeAll(buffDetails);
     }
 
     public void deletingWeaknessBuff(Minion minion, int time) {
