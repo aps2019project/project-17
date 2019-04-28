@@ -1,7 +1,6 @@
 package GameGround;
 
 
-import CardCollections.Hand;
 import Data.Player;
 import effects.Card;
 import effects.Item;
@@ -15,7 +14,9 @@ public class Battle {
     private Board board;
     private Enum TurnEnum;
     private int turn;
+    private GameMode gameMode;
     private Card selectedCard;
+    private BattleType battleType;
     private Item selectedItem;
 
     public Player getPlayerOne() {
@@ -44,6 +45,10 @@ public class Battle {
 
     public Item getSelectedItem() {
         return selectedItem;
+    }
+
+    public void gameInfo() {
+
     }
 
     private Player whoseTurn() {
@@ -93,7 +98,7 @@ public class Battle {
         return null;
     }
 
-    private boolean cardIsMine(Card card, Player player) {
+    public boolean cardIsMine(Card card, Player player) {
         for (int i = 0; i < player.getMainDeck().getCards().size(); i++) {
             Card card1 = player.getMainDeck().getCards().get(i);
             if (card.getId().equals(card1.getId()))
@@ -117,7 +122,7 @@ public class Battle {
         return "invalid card id";
     }
 
-    public void nextTurn() {
+    public void endTurn() {
         this.turn++;
         this.selectedCard = null;
     }
@@ -128,9 +133,10 @@ public class Battle {
         int x0 = minion.getXCoordinate();
         int y0 = minion.getYCoordinate();
 
-        int distance = Cell.distance(x, y, x0, y0);
         Cell cell = board.getCells()[x - 1][y - 1];
         Cell cell1 = board.getCells()[x0 - 1][y0 - 1];
+
+        int distance = Cell.distance(cell, cell1);
 
         if (distance > minion.getDistanceCanMove())
             return "invalid target";
@@ -140,6 +146,16 @@ public class Battle {
         cell.setCard(this.selectedCard);
         cell1.setCard(null);
         ((Minion) this.selectedCard).setCoordinate(x, y);
+        if (cell.hasFlag()) {
+            whoseTurn().changeNumberOfHoldingFlags(1);
+            whoseTurn().setPlayerHasFlag(true);
+            cell.setFlag(false);
+        }
+
+        if (cell.getItem() != null) {
+            whoseTurn().addItemToCollectAbleItems(cell.getItem());
+            cell.setItem(null);
+        }
         return this.selectedCard.getId() + " moved to " + x + " " + y;
     }
 
@@ -157,7 +173,8 @@ public class Battle {
         if (player.getMana() < ((Minion) card).getManaPoint())
             return "no enough mana";
 
-        // TODO: max distance = 1 !
+        if (board.isCoordinateAvailable((Minion) card, cell, whoseTurn(), this))
+            return "invalid target";
 
         player.lessMana(((Minion) card).getManaPoint());
         cell.setCard(card);

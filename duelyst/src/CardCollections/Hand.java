@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class Hand {
 
+    private ArrayList<Card> cards;
+
     public Hand() {
         this.cards = new ArrayList<>();
     }
-
-    private ArrayList<Card> cards;
 
     public ArrayList<Card> getCards() {
         return cards;

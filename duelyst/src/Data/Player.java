@@ -16,6 +16,8 @@ public class Player {
     private String userName;
     private ArrayList<Item> collectAbleItems;
     private ArrayList<Card> graveYard;
+    private int holdingFlags;
+    private boolean playerHasFlag;
 
     public Player(String userName) {
         this.mana = 9;
@@ -24,10 +26,36 @@ public class Player {
         this.copyMainDeck = new Deck(mainDeck.getName());
         this.hand = new Hand();
         this.userName = userName;
+        this.holdingFlags = 0;
+        this.playerHasFlag = false;
     }
 
     public String getUserName() {
         return userName;
+    }
+
+    public ArrayList<Item> getCollectAbleItems() {
+        return collectAbleItems;
+    }
+
+    public int getHoldingFlags() {
+        return holdingFlags;
+    }
+
+    public boolean isPlayerHasFlag() {
+        return playerHasFlag;
+    }
+
+    public void addItemToCollectAbleItems(Item item) {
+        this.collectAbleItems.add(item);
+    }
+
+    public void changeNumberOfHoldingFlags(int value) {
+        this.holdingFlags += value;
+    }
+
+    public void setPlayerHasFlag(boolean playerHasFlag) {
+        this.playerHasFlag = playerHasFlag;
     }
 
     public Deck getMainDeck() {
@@ -38,6 +66,7 @@ public class Player {
         this.mainDeck = deck;
         setCopyMainDeck();
         setHand();
+        collectAbleItems.add(this.mainDeck.getItem());
     }
 
     private void setCopyMainDeck() {
