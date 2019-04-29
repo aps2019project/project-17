@@ -1,6 +1,6 @@
 package effects;
 
-public class Minion extends Card{
+public class Minion extends Card {
     protected Spell specialPower;
     protected Buff buff;
     protected int attackPower;
@@ -15,6 +15,7 @@ public class Minion extends Card{
     protected boolean isHolyBuffActive;
     protected boolean canMove;
     protected boolean canCounterAttack;
+    private boolean isStun;
     protected boolean canAttack;
     protected MinionType minionType;
     protected boolean hasFlag;
@@ -31,6 +32,9 @@ public class Minion extends Card{
         this.isHolyBuffActive = true;
         this.canMove = true;
         this.canCounterAttack = true;
+        this.distanceCanMove = 2;
+        this.maxRangeToInput = 1;
+        this.isStun = false;
         this.canAttack = true;
         this.distanceCanMove = distanceCanMove;
         this.maxRangeToInput = maxRangeToInput;
@@ -38,7 +42,7 @@ public class Minion extends Card{
         setMinionType();
     }
 
-    private String minionTpeShow(){
+    private String minionTpeShow() {
         switch (minionType) {
             case MELLEE:
                 return "MELEE";
@@ -46,8 +50,8 @@ public class Minion extends Card{
                 return "RANGED";
             case HYBRID:
                 return "HYBRID";
-                default:
-                    return "";
+            default:
+                return "";
         }
     }
 
@@ -102,6 +106,14 @@ public class Minion extends Card{
     public void move(int x, int y) {
     }
 
+    public boolean isStun() {
+        return isStun;
+    }
+
+    public void setStun(boolean stun) {
+        isStun = stun;
+    }
+
     public Buff getBuff() {
         return buff;
     }
@@ -111,6 +123,8 @@ public class Minion extends Card{
     }
 
     public void setCanMove(boolean canMove) {
+        if (isStun)
+            return;
         this.canMove = canMove;
     }
 
@@ -118,17 +132,15 @@ public class Minion extends Card{
         this.canCounterAttack = canCounterAttack;
     }
 
-    public void changeHealth(int changingValue)
-    {
+    public void changeHealth(int changingValue) {
         this.healthPoint += changingValue;
     }
 
-    public void changeAttackPower(int changingValue)
-    {
+    public void changeAttackPower(int changingValue) {
         this.attackPower += changingValue;
     }
 
-    public void setCoordinate(int x, int y){
+    public void setCoordinate(int x, int y) {
         this.xCoordinate = x;
         this.yCoordinate = y;
     }
@@ -141,8 +153,8 @@ public class Minion extends Card{
         return yCoordinate;
     }
 
-    public void show(){
-        System.out.println("Name : "+this.name+" - Class : "+this.minionTpeShow()+" - AP : "+this.attackPower+" - HP : "+this.healthPoint+" - MP : "+this.manaPoint+" - Special Power : "+this.specialPower);
+    public void show() {
+        System.out.println("Name : " + this.name + " - Class : " + this.minionTpeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
         //todo toString for minionType and specialPower must be overriden and if the minion doesn't have it must print nothing
     }
 }

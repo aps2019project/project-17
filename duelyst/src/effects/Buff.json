@@ -1,41 +1,189 @@
 [
   {
-    "name": "Total Disarm",
-    "id": "1",
-    "price": 1000,
-    "manaPoint": 0,
-    "desc": "Make Enemy Minion Disarm For All Rounds",
+    "id": 1,
+    "buffType": "DISARM",
     "targetType": "ENEMY",
     "targetRange": "ONE",
-    "buffTypes": [
-      "DISARMBUFF"
-    ],
     "effectTime": -1
   },
   {
-    "name": "Area Dipel",
-    "id": "2",
-    "price": 1500,
-    "manaPoint": 2,
-    "desc": "",
+    "id": 2,
+    "buffType": "CLEAR",
     "targetType": "CELL",
     "targetRange": "TWO",
-    "buffTypes": [
-      "CLEAR"
-    ],
     "effectTime": 0
   },
   {
-    "name": "Empower",
-    "id": "3",
-    "price": 250,
-    "manaPoint": 1,
-    "desc": "",
+    "id": 3,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "INSIDER",
-    "targetRange": "one",
-    "buffTypes": [
-      "CLEAR"
-    ],
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 2,
+    "changeHealth": 0
+  },
+  {
+    "id": 4,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -4
+  },
+  {
+    "id": 5,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER_HERO",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 4,
+    "changeHealth": 0
+  },
+  {
+    "id": 6,
+    "buffType": "FIRE_CELL",
+    "targetType": "CELL",
+    "targetRange": "TWO",
+    "effectTime": 2
+  },
+  {
+    "id": 7,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY_HERO",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -8
+  },
+  {
+    "id": 8,
+    "buffType": "POISON",
+    "targetType": "CELL",
+    "targetRange": "THREE",
+    "effectTime": 1
+  },
+  {
+    "id": 9,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "ONE",
+    "effectTime": 3,
+    "changeAttackPower": 4,
+    "changeHealth": 0
+  },
+  {
+    "id": 9,
+    "buffType": "DISARM",
+    "targetType": "INSIDER",
+    "targetRange": "ONE",
     "effectTime": 0
+  },
+  {
+    "id": 10,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "ALL",
+    "effectTime": 1
+  },
+  {
+    "id": 11,
+    "buffType": "POISON",
+    "targetType": "ENEMY",
+    "targetRange": "ALL",
+    "effectTime": 4
+  },
+  {
+    "id": 12,
+    "buffType": "CLEAR",
+    "targetType": "NONE",
+    "targetRange": "ALL",
+    "effectTime": 0
+  },
+  {
+    "id": 13,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "ONE",
+    "effectTime": 3,
+    "changeAttackPower": 0,
+    "changeHealth": -6
+  },
+  {
+    "id": 13,
+    "buffType": "HOLY",
+    "targetType": "INSIDER",
+    "targetRange": "ONE",
+    "effectTime": 3
+  },
+  {
+    "id": 14,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 6,
+    "changeHealth": 0
+  },
+  {
+    "id": 15,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "ALL",
+    "effectTime": 0,
+    "changeAttackPower": 2,
+    "changeHealth": 0
+  },
+  {
+    "id": 16,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
+    "targetRange": "ALL_IN_COLUMN",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -6
+  },
+  {
+    "id": 17,
+    "buffType": "WEAKNESS",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -4
+  },
+  {
+    "id": 18,
+    "buffType": "WEAKNESS",
+    "targetType": "INSIDER",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -6
+  },
+  {
+    "id": 18,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 8,
+    "changeHealth": 0
+  },
+  {
+    "id": 19,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
+    "targetRange": "AROUND",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -100
+  },
+  {
+    "id": 20,
+    "buffType": "STUN",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 2
   }
 ]

@@ -1,7 +1,5 @@
 package effects;
 
-import GameGround.Cell;
-
 import java.util.ArrayList;
 
 public class Buff {
@@ -33,21 +31,21 @@ public class Buff {
     private void actionForMinion(Minion minion) {
         for (BuffDetail buffDetail : this.buffDetails) {
             switch (buffDetail.getBuffType()) {
-                case HOYLBUFF:
+                case HOYL:
                     holyBuff(minion);
                     break;
-                case STUNBUFF:
+                case STUN:
                     stunBuff(minion);
                     break;
-                case DISARMBUFF:
+                case DISARM:
                     disarmBuff(minion);
                     break;
-                case WEAKNESSBUFF:
+                case WEAKNESS:
                     targetMinions.add(minion);
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
                     break;
-                case CLEAR://mosbat boodan lahaz nashode
+                case CLEAR://mosbat manfi boodan lahaz nashode
                     clearBuff(minion);
                     break;
             }
@@ -58,7 +56,7 @@ public class Buff {
 
     private void removeBuffs(ArrayList<BuffDetail> buffDetails) {
         for (BuffDetail buffDetail : buffDetails) {
-            if (buffDetail.getBuffType() == BuffType.WEAKNESSBUFF) {
+            if (buffDetail.getBuffType() == BuffType.WEAKNESS) {
                 for (Minion targetMinion : targetMinions) {
                     deletingWeaknessBuff(targetMinion, buffDetail.getEffectTime());
                 }
@@ -85,7 +83,9 @@ public class Buff {
     }
 
     public void stunBuff(Minion minion) {
+        minion.setStun(true);
         minion.setCanMove(false);
+        minion.setCanAttack(false);
     }
 
     public void disarmBuff(Minion minion) {
