@@ -15,11 +15,13 @@ public class Buff {
         for (Object object : objects) {
             switch (targetType) {
                 case NONE:
-                case ENEMY:
-                case INSIDER:
                 case ENEMY_HERO:
+                case ENEMY:
+                    actionForMinion((Minion) object, true);
+                    break;
+                case INSIDER:
                 case INSIDER_HERO:
-                    actionForMinion((Minion) object);
+                    actionForMinion((Minion) object, false);
                     break;
                 case CELL:
                     break;
@@ -29,7 +31,7 @@ public class Buff {
         }
     }
 
-    private void actionForMinion(Minion minion) {
+    private void actionForMinion(Minion minion, boolean isEnemy) {
         for (BuffDetail buffDetail : this.buffDetails) {
             switch (buffDetail.getBuffType()) {
                 case HOYL:
@@ -46,24 +48,27 @@ public class Buff {
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
                     break;
-                case CLEAR://mosbat manfi boodan lahaz nashode
-                    clearBuff(minion);
+                case CLEAR:
+                    clearBuff(minion, isEnemy);
                     break;
             }
         }
-
     }
 
-
-    private void removeBuffs(ArrayList<BuffDetail> buffDetails) {
-        for (BuffDetail buffDetail : buffDetails) {
-            if (buffDetail.getBuffType() == BuffType.WEAKNESS) {
-                for (Minion targetMinion : targetMinions) {
-                    deletingWeaknessBuff(targetMinion, buffDetail.getEffectTime());
-                }
+    private void removeBuff(BuffDetail buffDetail) {
+        if (buffDetail.getBuffType() == BuffType.WEAKNESS) {
+            for (Minion targetMinion : targetMinions) {
+                deletingWeaknessBuff(targetMinion, buffDetail.getEffectTime());
             }
         }
-        this.buffDetails.removeAll(buffDetails);
+        buffDetails.remove(buffDetail);
+    }
+
+    public void removeBuffs() {
+        for (BuffDetail buffDetail : buffDetails) {
+            if (buffDetail.getEffectTime() <= 0)
+                removeBuff(buffDetail);
+        }
     }
 
     public void deletingWeaknessBuff(Minion minion, int time) {
@@ -93,11 +98,12 @@ public class Buff {
         minion.setCanCounterAttack(false);
     }
 
-    public void clearBuff(Minion minion) {
-        minion.getBuff().clear();
-    }
-
-    private void clear() {
-        this.buffDetails.clear();
+    public void clearBuff(Minion minion, boolean isEnemy) {
+        for (BuffDetail buffDetail : minion.getBuff().buffDetails) {
+            if (!isEnemy && (buffDetail.getBuffType() == BuffType.DISARM || buffDetail.getBuffType() == BuffType.STUN || buffDetail.getBuffType() == BuffType.WEAKNESS))
+                removeBuff(buffDetail);
+            else if (isEnemy && (buffDetail.getBuffType() == BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF && (buffDetail.getChangeAttackPowerValue() > 0 || buffDetail.getChangeHealthValue() > 0)))
+                removeBuff(buffDetail);
+        }
     }
 }

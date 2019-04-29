@@ -47,4 +47,5 @@ public class BuffDetail {
     public BuffType getBuffType() {
         return buffType;
     }
+
 }
