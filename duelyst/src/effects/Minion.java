@@ -38,6 +38,19 @@ public class Minion extends Card{
         setMinionType();
     }
 
+    private String minionTpeShow(){
+        switch (minionType) {
+            case MELLEE:
+                return "MELEE";
+            case RANGED:
+                return "RANGED";
+            case HYBRID:
+                return "HYBRID";
+                default:
+                    return "";
+        }
+    }
+
     public boolean isHasFlag() {
         return hasFlag;
     }
@@ -129,7 +142,7 @@ public class Minion extends Card{
     }
 
     public void show(){
-        System.out.println("Name : "+this.name+" - Class : "+this.minionType+" - AP : "+this.attackPower+" - HP : "+this.healthPoint+" - MP : "+this.manaPoint+" - Special Power : "+this.specialPower);
+        System.out.println("Name : "+this.name+" - Class : "+this.minionTpeShow()+" - AP : "+this.attackPower+" - HP : "+this.healthPoint+" - MP : "+this.manaPoint+" - Special Power : "+this.specialPower);
         //todo toString for minionType and specialPower must be overriden and if the minion doesn't have it must print nothing
     }
 }

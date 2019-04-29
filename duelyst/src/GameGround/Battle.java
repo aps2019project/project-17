@@ -188,7 +188,7 @@ public class Battle {
             playerTwo.addMana(1);
         else if (turn % 2 == 1 && turn <= 14)
             playerOne.addMana(1);
-        else{
+        else {
             playerOne.lessMana(playerOne.getMana());
             playerOne.addMana(9);
             playerTwo.lessMana(playerTwo.getMana());
@@ -260,4 +260,7 @@ public class Battle {
         return whoseTurn().getHand();
     }
 
+    public String attack() {
+        return "attack successfully done";
+    }
 }
