@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Total Disarm",
+    "id": "1",
+    "price": 1000,
+    "manaPoint": 0,
+    "desc": "Make Enemy Minion Disarm For All Rounds",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "buffTypes": [
+      "DISARMBUFF"
+    ],
+    "effectTime": -1
+  },
+  {
+    "name": "Area Dipel",
+    "id": "2",
+    "price": 1500,
+    "manaPoint": 2,
+    "desc": "",
+    "targetType": "CELL",
+    "targetRange": "TWO",
+    "buffTypes": [
+      "CLEAR"
+    ],
+    "effectTime": 0
+  },
+  {
+    "name": "Empower",
+    "id": "3",
+    "price": 250,
+    "manaPoint": 1,
+    "desc": "",
+    "targetType": "INSIDER",
+    "targetRange": "one",
+    "buffTypes": [
+      "CLEAR"
+    ],
+    "effectTime": 0
+  }
+]
