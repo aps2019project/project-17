@@ -47,7 +47,12 @@ public class CollectionView extends View {
     }
 
     public static void showAllDecks(Account account) {
-
+        int counter=1;
+        for (Deck deck:account.getCollection().getDecks()) {
+            System.out.println(counter+" : "+deck.getName());
+            showDeck(deck);
+            counter++;
+        }
     }
 
     public static void showDeck(Deck deck) {
@@ -67,12 +72,12 @@ public class CollectionView extends View {
         int counter = 1;
         for (Card card : deck.getCards()) {
             System.out.print(counter + " : ");
-            if (card instanceof Minion) {
-                System.out.print("Type : Minion - ");
-                card.show();//todo does it work correctly?
-            } else if (card instanceof Spell) {
+            if (card instanceof Spell) {
                 System.out.print("Type : Spell - ");
-                card.show();//todo does it work correctly?
+                card.show();
+            } else if (card instanceof Minion) {
+                System.out.print("Type : Minion - ");
+                card.show();
             }
             counter++;
         }
