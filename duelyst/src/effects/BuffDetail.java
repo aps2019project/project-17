@@ -1,21 +1,30 @@
 package effects;
 
 public class BuffDetail {
+    private int id;
     private BuffType buffType;
     private int effectTime;
     private int changeAttackPowerValue;
     private int changeHealthValue;
+    private TargetType targetType;
+    private TargetRange targetRange;
 
-    public BuffDetail(BuffType buffType, int effectTime) {
+    public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
+        this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
+        this.targetType = targetType;
+        this.targetRange = targetRange;
     }
 
-    public BuffDetail(BuffType buffType, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
+    public BuffDetail(int id,BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
+        this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.changeAttackPowerValue = changeAttackPowerValue;
         this.changeHealthValue = changeHealthValue;
+        this.targetType = targetType;
+        this.targetRange = targetRange;
     }
 
     public int getEffectTime() {

@@ -1,6 +1,6 @@
 package effects;
 
-public class Minion extends Card{
+public class Minion extends Card {
     private Enum type;
     private Spell specialPower;
     private Buff buff;
@@ -15,7 +15,9 @@ public class Minion extends Card{
     private int distanceCanMove;
     private int maxRangeToInput;
     private boolean isHolyBuffActive;
+    private boolean isStun;
     private boolean canMove;
+    private boolean canAttack;
     private boolean canCounterAttack;
 
 
@@ -35,6 +37,7 @@ public class Minion extends Card{
         this.canCounterAttack = true;
         this.distanceCanMove = 2;
         this.maxRangeToInput = 1;
+        this.isStun = false;
     }
 
     public int getManaPoint() {
@@ -63,6 +66,14 @@ public class Minion extends Card{
     public void move(int x, int y) {
     }
 
+    public boolean isStun() {
+        return isStun;
+    }
+
+    public void setStun(boolean stun) {
+        isStun = stun;
+    }
+
     public Buff getBuff() {
         return buff;
     }
@@ -72,24 +83,34 @@ public class Minion extends Card{
     }
 
     public void setCanMove(boolean canMove) {
+        if (isStun)
+            return;
         this.canMove = canMove;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public void setCanAttack(boolean canAttack) {
+        if (isStun)
+            return;
+        this.canAttack = canAttack;
     }
 
     public void setCanCounterAttack(boolean canCounterAttack) {
         this.canCounterAttack = canCounterAttack;
     }
 
-    public void changeHealth(int changingValue)
-    {
+    public void changeHealth(int changingValue) {
         this.healthPoint += changingValue;
     }
 
-    public void changeAttackPower(int changingValue)
-    {
+    public void changeAttackPower(int changingValue) {
         this.attackPower += changingValue;
     }
 
-    public void setCoordinate(int x, int y){
+    public void setCoordinate(int x, int y) {
         this.xCoordinate = x;
         this.yCoordinate = y;
     }
@@ -101,4 +122,6 @@ public class Minion extends Card{
     public int getYCoordinate() {
         return yCoordinate;
     }
+
+
 }
