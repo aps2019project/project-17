@@ -148,4 +148,8 @@ public class Minion extends Card {
         System.out.println("Name : " + this.name + " - Class : " + this.minionTpeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
         //todo toString for minionType and specialPower must be overriden and if the minion doesn't have it must print nothing
     }
+
+    public boolean CanMove() {
+        return canMove;
+    }
 }
