@@ -46,7 +46,7 @@ public class Item {
         this.desc = desc;
     }
 
-    public void showItem() {
+    public void show() {
         System.out.println("Name : " + this.name + " - Desc : " + this.desc);
     }
 
