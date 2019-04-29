@@ -14,6 +14,7 @@ public class Buff {
     public void action(ArrayList<Object> objects, TargetType targetType) {
         for (Object object : objects) {
             switch (targetType) {
+                case NONE:
                 case ENEMY:
                 case INSIDER:
                 case ENEMY_HERO:
