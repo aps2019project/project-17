@@ -56,6 +56,10 @@ public class GameController {
         return collection.search(name);
     }
 
+    public static String createDeck(String name,Collection collection){
+        return collection.createDeck(name);
+    }
+
     public static String logout(){
         return Account.logout();
     }

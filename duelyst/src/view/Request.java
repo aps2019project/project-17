@@ -286,4 +286,19 @@ public class Request {
         return true;
     }
 
+    public boolean checkSyntaxOfCreateDeck(){
+        Pattern patternForSCreateDeck = Pattern.compile(CREATE_DECK+ " (?<name>\\w+)");
+        Matcher matcher = patternForSCreateDeck.matcher(command);
+        if(matcher.matches()){
+            String name=matcher.group("name");
+            String result=GameController.createDeck(name, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+
+    }
+
 }
