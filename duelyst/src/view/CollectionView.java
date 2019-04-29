@@ -51,7 +51,7 @@ public class CollectionView extends View {
         System.out.println("exit");
         System.out.println("show");
         System.out.println("search [card name|item name]");
-        System.out.println("save");
+        System.out.println("accountSave");
         System.out.println("create deck [deck name]");
         System.out.println("delete deck [deck name]");
         System.out.println("add [card id | hero id] from deck [deck name]");

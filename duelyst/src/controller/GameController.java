@@ -44,8 +44,12 @@ public class GameController {
         return Account.login(userName, passWord);
     }
 
-    public static String save(){
-        return Account.save();
+    public static String accountSave(Account account){
+        return account.save();
+    }
+
+    public static String collectionSave(Collection collection){
+        return collection.save();
     }
 
     public static String logout(){
