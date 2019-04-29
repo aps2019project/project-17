@@ -1,7 +1,8 @@
 package effects;
 
 public class Minion extends Card {
-    protected Spell specialPower;
+    protected Buff specialPower;
+    protected Buff attack;
     protected Buff buff;
     protected int attackPower;
     protected int healthPoint;
@@ -41,9 +42,12 @@ public class Minion extends Card {
         this.hasFlag = false;
         this.minionType = minionType;
         this.attackType = attackType;
+        this.attack = new Buff();
+        BuffDetail buffDetail = new BuffDetail(-1,BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF,TargetType.ENEMY,TargetRange.ONE,0,0,attackPower);
+        this.attack.addBuff(buffDetail);
     }
 
-    private String minionTpeShow() {
+    private String minionTypeShow() {
         switch (minionType) {
             case MELLEE:
                 return "MELEE";
@@ -64,6 +68,14 @@ public class Minion extends Card {
         this.hasFlag = hasFlag;
     }
 
+    public Buff getBuff() {
+        return buff;
+    }
+
+    public void addBuff(BuffDetail buffDetail)
+    {
+        this.buff.addBuff(buffDetail);
+    }
     public boolean getCanAttack() {
         return canAttack;
     }
@@ -106,9 +118,6 @@ public class Minion extends Card {
         isStun = stun;
     }
 
-    public Buff getBuff() {
-        return buff;
-    }
 
     public void activeHolyBuff() {
         isHolyBuffActive = true;
@@ -146,7 +155,7 @@ public class Minion extends Card {
     }
 
     public void show() {
-        System.out.println("Name : " + this.name + " - Class : " + this.minionTpeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
+        System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
         //todo toString for minionType and specialPower must be overriden and if the minion doesn't have it must print nothing
     }
 
