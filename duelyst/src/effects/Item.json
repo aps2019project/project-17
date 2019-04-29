@@ -1,0 +1,102 @@
+[
+  {
+    "name": "تاج دانایی",
+    "id": "301",
+    "price": 300
+  },
+  {
+    "name": "ناموس سپر",
+    "id": "302",
+    "price": 4000
+  },
+  {
+    "name": "کمان دامول",
+    "id": "303",
+    "price": 30000
+  },
+  {
+    "name": "نوشدارو",
+    "id": "304",
+    "price": 0
+  },
+  {
+    "name": "تیر دوشاخ",
+    "id": "305",
+    "price": 0
+  },
+  {
+    "name": "پر سیمرغ",
+    "id": "306",
+    "price": 3500
+  },
+  {
+    "name": "اکسیر",
+    "id": "307",
+    "price": 0
+  },
+  {
+    "name": "معجون مانا",
+    "id": "308",
+    "price": 0
+  },
+  {
+    "name": "معجون رویین تنی",
+    "id": "309",
+    "price": 0
+  },
+  {
+    "name": "نفرین مرگ",
+    "id": "310",
+    "price": 0
+  },
+  {
+    "name": "Random damage",
+    "id": "311",
+    "price": 0
+  },
+  {
+    "name": "Terror Hood",
+    "id": "312",
+    "price": 5000
+  },
+  {
+    "name": "Blades of agility",
+    "id": "313",
+    "price": 0
+  },
+  {
+    "name": "King Wisdom",
+    "id": "314",
+    "price": 9000
+  },
+  {
+    "name": "Assassination Dagger",
+    "id": "315",
+    "price": 15000
+  },
+  {
+    "name": "Poisonous Dagger",
+    "id": "316",
+    "price": 7000
+  },
+  {
+    "name": "Shock Hammer",
+    "id": "317",
+    "price": 15000
+  },
+  {
+    "name": "Soul Eater",
+    "id": "318",
+    "price": 25000
+  },
+  {
+    "name": "غسل تعمید",
+    "id": "319",
+    "price": 20000
+  },
+  {
+    "name": "شمشیر چینی",
+    "id": "320",
+    "price": 0
+  }
+]
