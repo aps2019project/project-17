@@ -21,7 +21,7 @@ public class Minion extends Card {
     protected boolean hasFlag;
 
 
-    public Minion(String name, String id, int price, int attackPower, int healthPoint, int manaPoint, int attackRange, int distanceCanMove, int maxRangeToInput) {
+    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput) {
         super(name, id, price);
         this.attackPower = attackPower;
         this.healthPoint = healthPoint;
@@ -39,7 +39,7 @@ public class Minion extends Card {
         this.distanceCanMove = distanceCanMove;
         this.maxRangeToInput = maxRangeToInput;
         this.hasFlag = false;
-        setMinionType();
+        this.minionType = minionType;
     }
 
     private String minionTpeShow() {
@@ -61,15 +61,6 @@ public class Minion extends Card {
 
     public void setHasFlag(boolean hasFlag) {
         this.hasFlag = hasFlag;
-    }
-
-    private void setMinionType() {
-        if (this.attackRange == 2)
-            this.minionType = MinionType.MELLEE;
-        else if (this.attackRange == 100)
-            this.minionType = MinionType.HYBRID;
-        else
-            this.minionType = MinionType.RANGED;
     }
 
     public boolean getCanAttack() {
