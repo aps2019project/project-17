@@ -24,7 +24,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "نیزه دار فارس",
     "id": "103",
     "price": 500,
     "manaPoint": 1,
@@ -36,7 +36,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "اسب سوار فارس",
     "id": "104",
     "price": 200,
     "manaPoint": 4,
@@ -48,7 +48,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "پهلوان فارس",
     "id": "105",
     "price": 600,
     "manaPoint": 9,
@@ -60,7 +60,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "سپه سالار فارس",
     "id": "106",
     "price": 800,
     "manaPoint": 7,
@@ -72,7 +72,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "کماندار تورانی",
     "id": "107",
     "price": 500,
     "manaPoint": 1,
@@ -84,7 +84,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "قلاب سنگ دار تورانی",
     "id": "108",
     "price": 600,
     "manaPoint": 1,
@@ -96,7 +96,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "نیزه دار تورانی",
     "id": "109",
     "price": 600,
     "manaPoint": 1,
@@ -108,7 +108,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "جاسوس تورانی",
     "id": "110",
     "price": 700,
     "manaPoint": 4,
@@ -120,7 +120,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "گرزدار تورانی",
     "id": "111",
     "price": 450,
     "manaPoint": 2,
@@ -132,7 +132,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "شاهزاده تورانی",
     "id": "112",
     "price": 800,
     "manaPoint": 6,
@@ -144,7 +144,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "دیو سیاه",
     "id": "113",
     "price": 300,
     "manaPoint": 9,
@@ -156,7 +156,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "غول سنگ انداز",
     "id": "114",
     "price": 300,
     "manaPoint": 9,
@@ -168,7 +168,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "عقاب",
     "id": "115",
     "price": 200,
     "manaPoint": 2,
@@ -180,7 +180,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "دیو گراز سوار",
     "id": "116",
     "price": 300,
     "manaPoint": 6,
@@ -192,7 +192,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "غول تک چشم",
     "id": "117",
     "price": 500,
     "manaPoint": 7,
@@ -204,7 +204,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "مار سمی",
     "id": "118",
     "price": 300,
     "manaPoint": 4,
@@ -216,7 +216,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "اژدهای آتش انداز",
     "id": "119",
     "price": 250,
     "manaPoint": 5,
@@ -228,7 +228,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "شیر درنده",
     "id": "120",
     "price": 600,
     "manaPoint": 2,
@@ -240,7 +240,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "مار غول پیکر",
     "id": "121",
     "price": 500,
     "manaPoint": 8,
@@ -252,7 +252,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "گرگ سفید",
     "id": "122",
     "price": 400,
     "manaPoint": 5,
@@ -264,7 +264,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "پلنگ",
     "id": "123",
     "price": 400,
     "manaPoint": 4,
@@ -276,7 +276,7 @@
     "maxRangeToInput": 1
   },
   {
-    "name": "کماندار فارس",
+    "name": "گرگ",
     "id": "124",
     "price": 400,
     "manaPoint": 3,
@@ -287,16 +287,195 @@
     "distanceCanMove": 2,
     "maxRangeToInput": 1
   },
-  ////
   {
-    "name": "کماندار فارس",
+    "name": "جادوگر",
     "id": "125",
-    "price": 600,
-    "manaPoint": 1,
-    "healthPoint": 4,
-    "attackPoint": 2,
+    "price": 550,
+    "manaPoint": 4,
+    "healthPoint": 5,
+    "attackPoint": 4,
     "minionType": "RANGED",
-    "attackRange": 7,
+    "attackRange": 3,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "جادوگر اعظم",
+    "id": "126",
+    "price": 550,
+    "manaPoint": 6,
+    "healthPoint": 6,
+    "attackPoint": 6,
+    "minionType": "RANGED",
+    "attackRange": 5,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "جن",
+    "id": "127",
+    "price": 500,
+    "manaPoint": 5,
+    "healthPoint": 10,
+    "attackPoint": 4,
+    "minionType": "RANGED",
+    "attackRange": 4,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "گراز وحشی",
+    "id": "128",
+    "price": 500,
+    "manaPoint": 6,
+    "healthPoint": 10,
+    "attackPoint": 14,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "پیران",
+    "id": "129",
+    "price": 400,
+    "manaPoint": 8,
+    "healthPoint": 20,
+    "attackPoint": 12,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "گیو",
+    "id": "130",
+    "price": 450,
+    "manaPoint": 4,
+    "healthPoint": 5,
+    "attackPoint": 7,
+    "minionType": "RANGED",
+    "attackRange": 5,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "بهمن",
+    "id": "131",
+    "price": 450,
+    "manaPoint": 8,
+    "healthPoint": 16,
+    "attackPoint": 9,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "اشکبوس",
+    "id": "132",
+    "price": 400,
+    "manaPoint": 7,
+    "healthPoint": 14,
+    "attackPoint": 8,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "ایرج",
+    "id": "133",
+    "price": 500,
+    "manaPoint": 4,
+    "healthPoint": 6,
+    "attackPoint": 20,
+    "minionType": "RANGED",
+    "attackRange": 3,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "غول بزرگ",
+    "id": "134",
+    "price": 600,
+    "manaPoint": 9,
+    "healthPoint": 30,
+    "attackPoint": 8,
+    "minionType": "HYBRID",
+    "attackRange": 2,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "غول دو سر",
+    "id": "135",
+    "price": 550,
+    "manaPoint": 4,
+    "healthPoint": 10,
+    "attackPoint": 4,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "ننه سرما",
+    "id": "136",
+    "price": 500,
+    "manaPoint": 3,
+    "healthPoint": 3,
+    "attackPoint": 4,
+    "minionType": "RANGED",
+    "attackRange": 5,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "فولاد زره",
+    "id": "137",
+    "price": 650,
+    "manaPoint": 3,
+    "healthPoint": 1,
+    "attackPoint": 1,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "سیاوش",
+    "id": "138",
+    "price": 350,
+    "manaPoint": 4,
+    "healthPoint": 8,
+    "attackPoint": 5,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "شاه غول",
+    "id": "139",
+    "price": 600,
+    "manaPoint": 5,
+    "healthPoint": 10,
+    "attackPoint": 4,
+    "minionType": "MELEE",
+    "attackRange": 0,
+    "distanceCanMove": 2,
+    "maxRangeToInput": 1
+  },
+  {
+    "name": "ارژنگ دیو",
+    "id": "140",
+    "price": 600,
+    "manaPoint": 3,
+    "healthPoint": 6,
+    "attackPoint": 6,
+    "minionType": "MELEE",
+    "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1
   }
