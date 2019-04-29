@@ -2,15 +2,47 @@ package view;
 
 import Data.Account;
 import CardCollections.*;
-import effects.Card;
-import effects.Item;
-import effects.Minion;
-import effects.Spell;
+import effects.*;
 
 public class CollectionView extends View {
 
     public static void showUserCollection(Account account) {
-        System.out.println("Heroes:");
+        System.out.print("Heroes:");
+        if (account.getCollection().getCollectionHeros() != null) {
+            int counter = 1;
+            for (Hero hero : account.getCollection().getCollectionHeros()) {
+                System.out.println();
+                System.out.print(counter+" : ");
+                hero.show();
+                counter++;
+            }
+        }
+        System.out.print("Items:");
+        if(account.getCollection().getItems()!=null){
+            int counter=1;
+            for (Item item:account.getCollection().getItems()) {
+                System.out.println();
+                System.out.println(counter+" : ");
+                item.show();
+                counter++;
+            }
+        }
+        System.out.print("Cards:");
+        if(account.getCollection().getCards()!=null){
+            int counter=1;
+            for (Spell spell:account.getCollection().getCollectionSpells()) {
+                System.out.println();
+                System.out.print(counter+" : Type : Spell - ");
+                spell.show();
+                counter++;
+            }
+            for (Minion minion:account.getCollection().getCollectionMinion()) {
+                System.out.println();
+                System.out.println(counter+" : Type : Minion - ");
+                minion.show();
+                counter++;
+            }
+        }
 
     }
 
@@ -20,25 +52,25 @@ public class CollectionView extends View {
 
     public static void showDeck(Deck deck) {
         System.out.print("Heroes:");
-        if(deck.getHero()!=null){
+        if (deck.getHero() != null) {
             System.out.println();
             System.out.print("1 : ");
             deck.getHero().show();
         }
         System.out.print("Items :");
-        if(deck.getItem()!=null){
+        if (deck.getItem() != null) {
             System.out.println();
             System.out.print("1 : ");
             deck.getItem().show();
         }
         System.out.println("Cards : ");
-        int counter=1;
-        for (Card card: deck.getCards()) {
-            System.out.print(counter+" : ");
-            if(card instanceof Minion){
+        int counter = 1;
+        for (Card card : deck.getCards()) {
+            System.out.print(counter + " : ");
+            if (card instanceof Minion) {
                 System.out.print("Type : Minion - ");
                 card.show();//todo does it work correctly?
-            }else if(card instanceof Spell){
+            } else if (card instanceof Spell) {
                 System.out.print("Type : Spell - ");
                 card.show();//todo does it work correctly?
             }

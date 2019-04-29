@@ -249,6 +249,35 @@ public class Collection {
         return "deck is not validate";
     }
 
+    public ArrayList<Hero> getCollectionHeros(){
+        ArrayList<Hero> collectionHeroes=new ArrayList<>();
+        for (Card card:this.cards) {
+            if(card instanceof Hero){
+                collectionHeroes.add((Hero) card);
+            }
+        }
+        return collectionHeroes;
+    }
+
+    public ArrayList<Minion> getCollectionMinion(){
+        ArrayList<Minion> collectionMinions=new ArrayList<>();
+        for (Card card:this.cards) {
+            if(card instanceof Minion){
+                collectionMinions.add((Minion) card);
+            }
+        }
+        return collectionMinions;
+    }
+
+    public ArrayList<Spell> getCollectionSpells(){
+        ArrayList<Spell> collectionSpells=new ArrayList<>();
+        for (Card card:this.cards) {
+            if(card instanceof Spell){
+                collectionSpells.add((Spell) card);
+            }
+        }
+        return collectionSpells;
+    }
 
     public int numberOfItems(){
         return this.items.size();

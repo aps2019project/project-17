@@ -100,7 +100,7 @@ public class Request {
         Matcher matcherForShowAllDecks = patternForShowAllDecks.matcher(command);
         Pattern patternForShowDeck = Pattern.compile(SHOW_DECK+" \\w+");
         Matcher matcherForShowDeck = patternForShowDeck.matcher(command);
-        if (matcherForSearchCollection.matches()) {
+        if (matcherForCreateAccount.matches()) {
             menuType=MenuType.ACCOUNT_MENU;
             return RequestType.CREATE_ACCOUNT;
         } else if (matcherForLogIn.matches()) {
@@ -255,5 +255,13 @@ public class Request {
         }
         return true;
     }
+
+//    public boolean checkSyntaxOfShowCollectionCommand(){
+//        Pattern patternForShowCollection = Pattern.compile(SHOW_COLLECTION);
+//        Matcher matcher = patternForShowCollection.matcher(command);
+//        if(matcher.matches()){
+//
+//        }
+//    }
 
 }
