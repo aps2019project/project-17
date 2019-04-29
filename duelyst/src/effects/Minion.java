@@ -42,8 +42,12 @@ public class Minion extends Card {
         this.hasFlag = false;
         this.minionType = minionType;
         this.attackType = attackType;
+        makeAttackBuff(attackPower);
+    }
+
+    private void makeAttackBuff(int attackPower) {
         this.attack = new Buff();
-        BuffDetail buffDetail = new BuffDetail(-1,BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF,TargetType.ENEMY,TargetRange.ONE,0,0,attackPower);
+        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE,0,0,-attackPower);
         this.attack.addBuff(buffDetail);
     }
 
