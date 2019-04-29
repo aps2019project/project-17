@@ -19,9 +19,9 @@ public class Minion extends Card {
     protected boolean canAttack;
     protected MinionType minionType;
     protected boolean hasFlag;
+    private AttackType attackType;
 
-
-    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput) {
+    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
         super(name, id, price);
         this.attackPower = attackPower;
         this.healthPoint = healthPoint;
@@ -40,6 +40,7 @@ public class Minion extends Card {
         this.maxRangeToInput = maxRangeToInput;
         this.hasFlag = false;
         this.minionType = minionType;
+        this.attackType = attackType;
     }
 
     private String minionTpeShow() {
