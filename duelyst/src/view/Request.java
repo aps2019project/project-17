@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Data.Account;
 import controller.GameController;
 
 public class Request {
@@ -18,7 +19,7 @@ public class Request {
     private static final String SAVE = "save";
     private static final String LOGOUT = "logout";
     private static final String HELP = "help";
-    private static final String SHOW_COLLECTION = "show";//todo maybe will cause a problem
+    private static final String SHOW_COLLECTION = "show collection";
     private static final String SEARCH_COLLECTION = "search";
     private static final String CREATE_DECK = "create deck";
     private static final String DELETE_DECK = "delete deck";
@@ -52,11 +53,11 @@ public class Request {
                 return checkSyntaxOfLoginCommand();
             case SHOW_LEADER_BOARD:
                 return checkSyntaxOfShowLeaderBoardCommand();
-            case SAVE_ACCOUNT:
+            case SAVE:
                 return checkSyntaxOfSaveCommand();
             case LOGOUT:
                 return checkSyntaxOfLogOutCommand();
-            case ACCOUNT_HELP:
+            case HELP:
                 return checkSyntaxOfHelpCommand();
         }
         return true;
@@ -73,12 +74,14 @@ public class Request {
         Matcher matcherForLogIn = patternForLogIn.matcher(command);
         Pattern patternForShowLeaderBoard = Pattern.compile(SHOW_LEADER_BOARD);
         Matcher matcherForShowLeaderBoard = patternForShowLeaderBoard.matcher(command);
-        Pattern patternForSaveAccount = Pattern.compile(SAVE);
-        Matcher matcherForSaveAccount = patternForSaveAccount.matcher(command);
+        Pattern patternForSave = Pattern.compile(SAVE);
+        Matcher matcherForSave = patternForSave.matcher(command);
         Pattern patternForLogOut = Pattern.compile(LOGOUT );
         Matcher matcherForLogOut = patternForLogOut.matcher(command);
-        Pattern patternForAccountHelp = Pattern.compile(HELP);
-        Matcher matcherForAccuntHelp = patternForAccountHelp.matcher(command);
+        Pattern patternForHelp = Pattern.compile(HELP);
+        Matcher matcherForHelp = patternForHelp.matcher(command);
+        Pattern patternForShowCollection = Pattern.compile(SHOW_COLLECTION);
+        Matcher matcherForShowCollection = patternForShowCollection.matcher(command);
         Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION+ " \\w+");
         Matcher matcherForSearchCollection = patternForSearchCollection.matcher(command);
         Pattern patternForCreateDeck = Pattern.compile(CREATE_DECK + " \\w+");
@@ -106,15 +109,12 @@ public class Request {
         } else if (matcherForShowLeaderBoard.matches()) {
             menuType=MenuType.ACCOUNT_MENU;
             return RequestType.SHOW_LEADER_BOARD;
-        } else if (matcherForSaveAccount.matches()) {
-            menuType=MenuType.ACCOUNT_MENU;
-            return RequestType.SAVE_ACCOUNT;
         } else if (matcherForLogOut.matches()) {
             menuType=MenuType.ACCOUNT_MENU;
             return RequestType.LOGOUT;
-        } else if (matcherForAccuntHelp.matches()) {
+        } else if(matcherForShowCollection.matches()){
             menuType=MenuType.ACCOUNT_MENU;
-            return RequestType.ACCOUNT_HELP;
+            return RequestType.SHOW_COLLECTION;
         }else if(matcherForSearchCollection.matches()){
             menuType=MenuType.COLLECTION_MENU;
             return RequestType.SEARCH_COLLECTION;
@@ -142,6 +142,11 @@ public class Request {
         }else if(matcherForShowDeck.matches()){
             menuType=MenuType.COLLECTION_MENU;
             return RequestType.SHOW_DECK;
+        } else if (matcherForSave.matches()) {
+            return RequestType.SAVE;
+        }
+        else if (matcherForHelp.matches()) {
+            return RequestType.HELP;
         }
         error = ErrorType.INVALID_INPUT;
         return RequestType.EXIT;//todo نمیدونم اینو:(
@@ -194,8 +199,17 @@ public class Request {
         Pattern patternForSave = Pattern.compile(SAVE);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
-            String result = GameController.save();
-            System.out.println(result);
+            switch (menuType){
+                case ACCOUNT_MENU:
+                    String result = GameController.accountSave(Account.getLoginUser());
+                    System.out.println(result);
+                    break;
+                case COLLECTION_MENU:
+                    result = GameController.collectionSave(Account.getLoginUser().getCollection());
+                    System.out.println(result);
+                    break;
+            }
+
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -218,7 +232,23 @@ public class Request {
         Pattern patternForSave = Pattern.compile(HELP);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
-            AccountView.accountHelp();
+            switch (menuType){
+                case MAIN_MENU:
+                    //todo main menu help
+                    break;
+                case ACCOUNT_MENU:
+                    AccountView.accountHelp();
+                    break;
+                case COLLECTION_MENU:
+                    CollectionView.collectionHelp();
+                    break;
+                case SHOP_MENU:
+                    ShopView.shopHelp();
+                    break;
+                case BATTLE_MENU:
+                  //todo needs battle help
+                    break;
+            }
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;

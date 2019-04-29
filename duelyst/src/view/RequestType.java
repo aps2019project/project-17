@@ -5,9 +5,8 @@ public enum RequestType {
     CREATE_ACCOUNT,
     LOGIN,
     SHOW_LEADER_BOARD,
-    SAVE_ACCOUNT,
+    SAVE,
     LOGOUT,
-    ACCOUNT_HELP,
     SHOW_COLLECTION,
     SEARCH_COLLECTION,
     SAVE_COLLECTION,
@@ -19,6 +18,7 @@ public enum RequestType {
     SELECT_DECK,
     SHOW_ALL_DECKS,
     SHOW_DECK,
-    COLLECTION_HELP;
+    HELP;
+
 
 }

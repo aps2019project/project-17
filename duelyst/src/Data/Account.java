@@ -34,6 +34,10 @@ public class Account implements Comparable<Account> {
         this.shop = new Shop(this.collection);
     }
 
+    public Collection getCollection() {
+        return collection;
+    }
+
     public int getDaric() {
         this.daric = this.collection.getDaric();
         return daric;
@@ -158,7 +162,7 @@ public class Account implements Comparable<Account> {
         return loginUser;
     }
 
-    public static String save() {
+    public  String save() {
         return "Saved!";
     }
 

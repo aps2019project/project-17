@@ -249,6 +249,7 @@ public class Collection {
         return "deck is not validate";
     }
 
+
     public int numberOfItems(){
         return this.items.size();
     }
