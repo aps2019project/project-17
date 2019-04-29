@@ -9,7 +9,8 @@
     "minionType": "RANGE",
     "attackRange": 7,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "شمشیرزن فارس",
@@ -21,7 +22,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "نیزه دار فارس",
@@ -33,7 +35,8 @@
     "minionType": "HYBRID",
     "attackRange": 7,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "اسب سوار فارس",
@@ -45,7 +48,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "پهلوان فارس",
@@ -57,7 +61,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "سپه سالار فارس",
@@ -69,7 +74,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "COMBO"
   },
   {
     "name": "کماندار تورانی",
@@ -81,7 +87,8 @@
     "minionType": "RANGED",
     "attackRange": 5,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "قلاب سنگ دار تورانی",
@@ -93,7 +100,8 @@
     "minionType": "RANGED",
     "attackRange": 7,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "نیزه دار تورانی",
@@ -105,7 +113,8 @@
     "minionType": "HYBRID",
     "attackRange": 3,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "جاسوس تورانی",
@@ -117,7 +126,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "گرزدار تورانی",
@@ -129,7 +139,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "شاهزاده تورانی",
@@ -141,7 +152,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "COMBO"
   },
   {
     "name": "دیو سیاه",
@@ -153,7 +165,8 @@
     "minionType": "HYBRID",
     "attackRange": 7,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "غول سنگ انداز",
@@ -165,7 +178,8 @@
     "minionType": "RANGED",
     "attackRange": 7,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "عقاب",
@@ -177,7 +191,8 @@
     "minionType": "RANGED",
     "attackRange": 3,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "PASSIVE"
   },
   {
     "name": "دیو گراز سوار",
@@ -189,7 +204,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "غول تک چشم",
@@ -201,7 +217,8 @@
     "minionType": "HYBRID",
     "attackRange": 3,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_DEATH"
   },
   {
     "name": "مار سمی",
@@ -213,7 +230,8 @@
     "minionType": "RANGED",
     "attackRange": 4,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "اژدهای آتش انداز",
@@ -225,7 +243,8 @@
     "minionType": "RANGED",
     "attackRange": 4,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "شیر درنده",
@@ -237,7 +256,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "مار غول پیکر",
@@ -249,7 +269,8 @@
     "minionType": "RANGED",
     "attackRange": 5,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_SPAWN"
   },
   {
     "name": "گرگ سفید",
@@ -261,7 +282,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "پلنگ",
@@ -273,7 +295,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "گرگ",
@@ -285,7 +308,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "جادوگر",
@@ -297,7 +321,8 @@
     "minionType": "RANGED",
     "attackRange": 3,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "PASSIVE"
   },
   {
     "name": "جادوگر اعظم",
@@ -309,7 +334,8 @@
     "minionType": "RANGED",
     "attackRange": 5,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "PASSIVE"
   },
   {
     "name": "جن",
@@ -321,7 +347,8 @@
     "minionType": "RANGED",
     "attackRange": 4,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_TURN"
   },
   {
     "name": "گراز وحشی",
@@ -333,7 +360,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_DEFEND"
   },
   {
     "name": "پیران",
@@ -345,7 +373,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_DEFEND"
   },
   {
     "name": "گیو",
@@ -357,7 +386,8 @@
     "minionType": "RANGED",
     "attackRange": 5,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_DEFEND"
   },
   {
     "name": "بهمن",
@@ -369,7 +399,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_SPAWN"
   },
   {
     "name": "اشکبوس",
@@ -381,7 +412,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_DEFEND"
   },
   {
     "name": "ایرج",
@@ -393,7 +425,8 @@
     "minionType": "RANGED",
     "attackRange": 3,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "غول بزرگ",
@@ -405,7 +438,8 @@
     "minionType": "HYBRID",
     "attackRange": 2,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "NONE"
   },
   {
     "name": "غول دو سر",
@@ -417,7 +451,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_ATTACK"
   },
   {
     "name": "ننه سرما",
@@ -429,7 +464,8 @@
     "minionType": "RANGED",
     "attackRange": 5,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_SPAWN"
   },
   {
     "name": "فولاد زره",
@@ -441,7 +477,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "PASSIVE"
   },
   {
     "name": "سیاوش",
@@ -453,7 +490,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "ON_DEATH"
   },
   {
     "name": "شاه غول",
@@ -465,7 +503,8 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "COMBO"
   },
   {
     "name": "ارژنگ دیو",
@@ -477,6 +516,7 @@
     "minionType": "MELEE",
     "attackRange": 0,
     "distanceCanMove": 2,
-    "maxRangeToInput": 1
+    "maxRangeToInput": 1,
+    "attackType": "COMBO"
   }
 ]
