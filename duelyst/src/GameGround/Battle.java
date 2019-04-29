@@ -213,8 +213,8 @@ public class Battle {
         if (cell.getCard() != null)
             return "invalid target";
 
-        if (!minion.getCanAttack())
-            return "card already moved in this turn";
+        if (!minion.CanMove())
+            return "minion can't move yet";
 
         cell.setCard(this.selectedCard);
         cell1.setCard(null);
@@ -261,6 +261,7 @@ public class Battle {
     }
 
     public String attack() {
+
         return "attack successfully done";
     }
 }
