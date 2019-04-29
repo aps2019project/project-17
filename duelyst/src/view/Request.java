@@ -18,7 +18,7 @@ public class Request {
     private static final String SAVE = "save";
     private static final String LOGOUT = "logout";
     private static final String HELP = "help";
-    private static final String SHOW_COLLECTION = "show";
+    private static final String SHOW_COLLECTION = "show";//todo maybe will cause a problem
     private static final String SEARCH_COLLECTION = "search";
     private static final String CREATE_DECK = "create deck";
     private static final String DELETE_DECK = "delete deck";
@@ -79,7 +79,25 @@ public class Request {
         Matcher matcherForLogOut = patternForLogOut.matcher(command);
         Pattern patternForAccountHelp = Pattern.compile(HELP);
         Matcher matcherForAccuntHelp = patternForAccountHelp.matcher(command);
-        if (matcherForCreateAccount.matches()) {
+        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION+ " \\w+");
+        Matcher matcherForSearchCollection = patternForSearchCollection.matcher(command);
+        Pattern patternForCreateDeck = Pattern.compile(CREATE_DECK + " \\w+");
+        Matcher matcherForCreateDeck = patternForCreateDeck.matcher(command);
+        Pattern patternForDeleteDeck = Pattern.compile(DELETE_DECK + " \\w+");
+        Matcher matcherForDeleteDeck = patternForDeleteDeck.matcher(command);
+        Pattern patternForAddToDeck = Pattern.compile(ADD_TO_DECK + " \\w+ to deck \\w+");
+        Matcher matcherForAddToDeck = patternForAddToDeck.matcher(command);
+        Pattern patternForRemoveFromDeck = Pattern.compile(REMOVE_FROM_DECK + " \\w+ from deck \\w+");
+        Matcher matcherForRemoveFromDeck = patternForRemoveFromDeck.matcher(command);
+        Pattern patternForValidateDeck = Pattern.compile(VALIDATE_DECK + " \\w+");
+        Matcher matcherForValidateDeck = patternForValidateDeck.matcher(command);
+        Pattern patternForSelectDeck = Pattern.compile(SELECT_DECK + " \\w+");
+        Matcher matcherForSelectDeck = patternForSelectDeck.matcher(command);
+        Pattern patternForShowAllDecks = Pattern.compile(SHOW_ALL_DECKS);
+        Matcher matcherForShowAllDecks = patternForShowAllDecks.matcher(command);
+        Pattern patternForShowDeck = Pattern.compile(SHOW_DECK+" \\w+");
+        Matcher matcherForShowDeck = patternForShowDeck.matcher(command);
+        if (matcherForSearchCollection.matches()) {
             menuType=MenuType.ACCOUNT_MENU;
             return RequestType.CREATE_ACCOUNT;
         } else if (matcherForLogIn.matches()) {
@@ -97,6 +115,33 @@ public class Request {
         } else if (matcherForAccuntHelp.matches()) {
             menuType=MenuType.ACCOUNT_MENU;
             return RequestType.ACCOUNT_HELP;
+        }else if(matcherForSearchCollection.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.SEARCH_COLLECTION;
+        }else if(matcherForCreateDeck.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.CREATE_DECK;
+        }else if(matcherForDeleteDeck.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.DELETE_DECK;
+        }else if(matcherForAddToDeck.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.ADD_TO_DECK;
+        }else if(matcherForRemoveFromDeck.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.REMOVE_FROM_DECK;
+        }else if(matcherForValidateDeck.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.VALIDATE_DECK;
+        }else if(matcherForSelectDeck.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.SELECT_DECK;
+        }else if(matcherForShowAllDecks.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.SHOW_ALL_DECKS;
+        }else if(matcherForShowDeck.matches()){
+            menuType=MenuType.COLLECTION_MENU;
+            return RequestType.SHOW_DECK;
         }
         error = ErrorType.INVALID_INPUT;
         return RequestType.EXIT;//todo نمیدونم اینو:(
