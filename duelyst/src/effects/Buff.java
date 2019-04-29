@@ -5,7 +5,6 @@ import GameGround.Cell;
 import java.util.ArrayList;
 
 public class Buff {
-    private String desc;
     private ArrayList<BuffDetail> buffDetails;
     private ArrayList<Minion> targetMinions;
 
@@ -14,26 +13,18 @@ public class Buff {
         this.buffDetails = new ArrayList<>();
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public void action(ArrayList<Object> objects, TargetType targetType) {
         for (Object object : objects) {
             switch (targetType) {
                 case ENEMY:
                 case INSIDER:
-                    actionForMinion((Minion) object);
-                    break;
                 case ENEMY_HERO:
-                    break;
                 case INSIDER_HERO:
+                    actionForMinion((Minion) object);
                     break;
                 case CELL:
                     break;
                 case PLAYER:
-                    break;
-                case NONE:
                     break;
             }
         }
@@ -56,7 +47,7 @@ public class Buff {
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
                     break;
-                case CLEAR:
+                case CLEAR://mosbat boodan lahaz nashode
                     clearBuff(minion);
                     break;
             }
