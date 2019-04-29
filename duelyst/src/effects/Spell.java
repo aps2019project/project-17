@@ -25,4 +25,8 @@ public class Spell extends Card {
             this.buff.addBuff(buffDetail);
         }
     }
+
+    public void show(){
+        System.out.println("Name : "+this.name+" - MP : "+this.manaPoint+" - Desc : "+this.desc);
+    }
 }
