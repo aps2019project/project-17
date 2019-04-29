@@ -52,6 +52,10 @@ public class GameController {
         return collection.save();
     }
 
+    public static String search(String name,Collection collection){
+        return collection.search(name);
+    }
+
     public static String logout(){
         return Account.logout();
     }

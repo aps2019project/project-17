@@ -42,7 +42,7 @@ public class Request {
         this.error = error;
     }
 
-    public boolean isValid() {
+    public boolean isValid() {//todo remember to complete this part
         RequestType type = getType();
         if (type == null)
             return false;
@@ -53,12 +53,12 @@ public class Request {
                 return checkSyntaxOfLoginCommand();
             case SHOW_LEADER_BOARD:
                 return checkSyntaxOfShowLeaderBoardCommand();
-            case SAVE:
-                return checkSyntaxOfSaveCommand();
             case LOGOUT:
                 return checkSyntaxOfLogOutCommand();
             case HELP:
                 return checkSyntaxOfHelpCommand();
+            case SAVE:
+                return checkSyntaxOfSaveCommand();
         }
         return true;
     }
@@ -256,12 +256,34 @@ public class Request {
         return true;
     }
 
-//    public boolean checkSyntaxOfShowCollectionCommand(){
-//        Pattern patternForShowCollection = Pattern.compile(SHOW_COLLECTION);
-//        Matcher matcher = patternForShowCollection.matcher(command);
-//        if(matcher.matches()){
-//
-//        }
-//    }
+    /**
+     * notice that this show collection is for collection menu
+     * @return
+     */
+    public boolean checkSyntaxOfShowCollectionCommand(){
+        Pattern patternForShowCollection = Pattern.compile(SHOW_COLLECTION);
+        Matcher matcher = patternForShowCollection.matcher(command);
+        if(matcher.matches()){
+            CollectionView.showUserCollection(Account.getLoginUser());
+        }else{
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfSearchCollection(){
+        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION+ " (?<name>\\w+)");
+        Matcher matcher = patternForSearchCollection.matcher(command);
+        if(matcher.matches()){
+            String name=matcher.group("name");
+            String ID=GameController.search(name, Account.getLoginUser().getCollection());
+            System.out.println(ID);
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
 
 }
