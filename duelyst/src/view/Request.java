@@ -1,6 +1,8 @@
 package view;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import controller.GameController;
 
@@ -8,16 +10,16 @@ public class Request {
     protected Scanner scanner = new Scanner(System.in);
     protected String command;
     protected ErrorType error = null;
+    protected MenuType menuType=null;
 
     private static final String CREATE_ACCOUNT = "create account";
     private static final String LOGIN = "login";
     private static final String SHOW_LEADER_BOARD = "show leaderboard";
-    private static final String SAVE_ACCOUNT = "save";
+    private static final String SAVE = "save";
     private static final String LOGOUT = "logout";
-    private static final String ACCOUNT_HELP = "help";
+    private static final String HELP = "help";
     private static final String SHOW_COLLECTION = "show";
     private static final String SEARCH_COLLECTION = "search";
-    private static final String SAVE_COLLECTION = "save";
     private static final String CREATE_DECK = "create deck";
     private static final String DELETE_DECK = "delete deck";
     private static final String ADD_TO_DECK = "add";
@@ -26,7 +28,6 @@ public class Request {
     private static final String SELECT_DECK = "select deck";
     private static final String SHOW_ALL_DECKS = "show all decks";
     private static final String SHOW_DECK = "show deck";
-    private static final String COLLECTION_HELP = "help";
 
     public void getNewCommand() {
         command = scanner.nextLine();
@@ -66,17 +67,35 @@ public class Request {
         if (command == null || command.equals("")) {
             return null;
         }
-        if (command.substring(0, 14).matches(CREATE_ACCOUNT)) {
+        Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " \\w+");
+        Matcher matcherForCreateAccount = patternForCreateAccount.matcher(command);
+        Pattern patternForLogIn = Pattern.compile(LOGIN + " \\w+");
+        Matcher matcherForLogIn = patternForLogIn.matcher(command);
+        Pattern patternForShowLeaderBoard = Pattern.compile(SHOW_LEADER_BOARD);
+        Matcher matcherForShowLeaderBoard = patternForShowLeaderBoard.matcher(command);
+        Pattern patternForSaveAccount = Pattern.compile(SAVE);
+        Matcher matcherForSaveAccount = patternForSaveAccount.matcher(command);
+        Pattern patternForLogOut = Pattern.compile(LOGOUT );
+        Matcher matcherForLogOut = patternForLogOut.matcher(command);
+        Pattern patternForAccountHelp = Pattern.compile(HELP);
+        Matcher matcherForAccuntHelp = patternForAccountHelp.matcher(command);
+        if (matcherForCreateAccount.matches()) {
+            menuType=MenuType.ACCOUNT_MENU;
             return RequestType.CREATE_ACCOUNT;
-        } else if (command.substring(0, 5).matches(LOGIN)) {
+        } else if (matcherForLogIn.matches()) {
+            menuType=MenuType.ACCOUNT_MENU;
             return RequestType.LOGIN;
-        } else if (command.substring(0, 16).matches(SHOW_LEADER_BOARD)) {
+        } else if (matcherForShowLeaderBoard.matches()) {
+            menuType=MenuType.ACCOUNT_MENU;
             return RequestType.SHOW_LEADER_BOARD;
-        } else if (command.substring(0, 4).matches(SAVE_ACCOUNT)) {
+        } else if (matcherForSaveAccount.matches()) {
+            menuType=MenuType.ACCOUNT_MENU;
             return RequestType.SAVE_ACCOUNT;
-        } else if (command.substring(0, 6).matches(LOGOUT)) {
+        } else if (matcherForLogOut.matches()) {
+            menuType=MenuType.ACCOUNT_MENU;
             return RequestType.LOGOUT;
-        } else if (command.substring(0, 4).matches(ACCOUNT_HELP)) {
+        } else if (matcherForAccuntHelp.matches()) {
+            menuType=MenuType.ACCOUNT_MENU;
             return RequestType.ACCOUNT_HELP;
         }
         error = ErrorType.INVALID_INPUT;
@@ -85,8 +104,10 @@ public class Request {
 
 
     public boolean checkSyntaxOfCreateAccountCommand() {
-        if (command.toLowerCase().matches("create account \\w+")) {
-            String userName = command.split(" ")[2];
+        Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " (?<userName>\\w+)");
+        Matcher matcher = patternForCreateAccount.matcher(command);
+        if (matcher.matches()){
+            String userName = matcher.group("userName");
             String passWord = scanner.nextLine();
             String result = GameController.createAccount(userName, passWord);
             System.out.println(result);
@@ -98,8 +119,10 @@ public class Request {
     }
 
     public boolean checkSyntaxOfLoginCommand() {
-        if (command.toLowerCase().matches("login \\w+")) {
-            String userName = command.split(" ")[1];
+        Pattern patternForLogIn = Pattern.compile(LOGIN + " (?<userName>\\w+)");
+        Matcher matcher = patternForLogIn.matcher(command);
+        if (matcher.matches()) {
+            String userName = matcher.group("userName");
             String passWord = scanner.nextLine();
             String result = GameController.login(userName, passWord);
             System.out.println(result);
@@ -111,7 +134,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowLeaderBoardCommand() {
-        if (command.toLowerCase().matches("show leaderboard")) {
+        Pattern patternForShowLeaderBoard = Pattern.compile(SHOW_LEADER_BOARD);
+        Matcher matcher = patternForShowLeaderBoard.matcher(command);
+        if (matcher.matches()) {
             AccountView.showLeaderBoard();
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -121,7 +146,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSaveCommand() {//todo must to be specified for different menus
-        if (command.toLowerCase().matches("save")) {
+        Pattern patternForSave = Pattern.compile(SAVE);
+        Matcher matcher = patternForSave.matcher(command);
+        if (matcher.matches()) {
             String result = GameController.save();
             System.out.println(result);
         } else {
@@ -143,7 +170,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfHelpCommand() {//todo must to be specified for different menus
-        if (command.toLowerCase().matches("help")) {
+        Pattern patternForSave = Pattern.compile(HELP);
+        Matcher matcher = patternForSave.matcher(command);
+        if (matcher.matches()) {
             AccountView.accountHelp();
         } else {
             error = ErrorType.INVALID_INPUT;

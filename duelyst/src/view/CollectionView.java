@@ -42,8 +42,9 @@ public class CollectionView extends View {
                 System.out.print("Type : Spell - ");
                 card.show();//todo does it work correctly?
             }
+            counter++;
         }
-        counter++;
+
     }
 
     public static void collectionHelp() {
