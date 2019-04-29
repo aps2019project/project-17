@@ -37,4 +37,9 @@ public class Card {
     public static boolean equals(Card card, Card card1){
         return card.getId().equals(card1.getId());
     }
+
+    /**
+     * It will be overirden in children classes
+     */
+    public void show(){}
 }

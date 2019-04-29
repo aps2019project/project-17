@@ -2,10 +2,15 @@ package view;
 
 import Data.Account;
 import CardCollections.*;
+import effects.Card;
+import effects.Item;
+import effects.Minion;
+import effects.Spell;
 
 public class CollectionView extends View {
 
     public static void showUserCollection(Account account) {
+        System.out.println("Heroes:");
 
     }
 
@@ -14,7 +19,31 @@ public class CollectionView extends View {
     }
 
     public static void showDeck(Deck deck) {
-
+        System.out.print("Heroes:");
+        if(deck.getHero()!=null){
+            System.out.println();
+            System.out.print("1 : ");
+            deck.getHero().show();
+        }
+        System.out.print("Items :");
+        if(deck.getItem()!=null){
+            System.out.println();
+            System.out.print("1 : ");
+            deck.getItem().show();
+        }
+        System.out.println("Cards : ");
+        int counter=1;
+        for (Card card: deck.getCards()) {
+            System.out.print(counter+" : ");
+            if(card instanceof Minion){
+                System.out.print("Type : Minion - ");
+                card.show();//todo does it work correctly?
+            }else if(card instanceof Spell){
+                System.out.print("Type : Spell - ");
+                card.show();//todo does it work correctly?
+            }
+        }
+        counter++;
     }
 
     public static void collectionHelp() {
