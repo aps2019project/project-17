@@ -2,7 +2,9 @@ package Data;
 
 import CardCollections.*;
 import effects.Card;
+import effects.Hero;
 import effects.Item;
+import effects.Minion;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,7 +22,7 @@ public class Player {
     private boolean playerHasFlag;
 
     public Player(String userName) {
-        this.mana = 9;
+        this.mana = 2;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
         this.copyMainDeck = new Deck(mainDeck.getName());
@@ -28,6 +30,28 @@ public class Player {
         this.userName = userName;
         this.holdingFlags = 0;
         this.playerHasFlag = false;
+    }
+
+    public void allMinionsReset() {
+        for (int i = 0; i < this.mainDeck.getCards().size(); i++) {
+            if (this.mainDeck.getCards().get(i) instanceof Minion) {
+                Minion minion = (Minion) this.mainDeck.getCards().get(i);
+                minion.setCanAttack(true);
+                minion.setCanMove(true);
+                minion.setCanCounterAttack(true);
+            }
+        }
+        this.mainDeck.getHero().setCanAttack(true);
+        this.mainDeck.getHero().setCanMove(true);
+        this.mainDeck.getHero().setCanCounterAttack(true);
+    }
+
+    public Item getItemFromHand(String itemName) {
+        for (Item item : this.collectAbleItems) {
+            if (item.getName().equals(itemName))
+                return item;
+        }
+        return null;
     }
 
     public String getUserName() {
@@ -64,15 +88,17 @@ public class Player {
 
     public void setMainDeck(Deck deck) {
         this.mainDeck = deck;
-        setCopyMainDeck();
+        setCopyMainDeck(true);
         setHand();
         collectAbleItems.add(this.mainDeck.getItem());
     }
 
-    private void setCopyMainDeck() {
+    private void setCopyMainDeck(boolean addHero) {
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
+        if (addHero)
+            copyMainDeck.addCard(mainDeck.getHero());
     }
 
     private void setHand() {
@@ -84,7 +110,7 @@ public class Player {
         }
     }
 
-    public Card getCardFromHand(String cardName){
+    public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
             if (hand.getCards().get(i).getName().equals(cardName))
                 return hand.getCards().get(i);
@@ -126,8 +152,8 @@ public class Player {
         hand.addCard(this.copyMainDeck.getCards().get(n));
         this.copyMainDeck.getCards().remove(n);
 
-        if (copyMainDeck.getCards().size() == 0)
-            setCopyMainDeck();
+        if (copyMainDeck.getCards().size() == 1)
+            setCopyMainDeck(false);
     }
 
     public void removeCardFromHand(Card card) {
@@ -135,7 +161,11 @@ public class Player {
         graveYard.add(card);
     }
 
-    public boolean equals(Player player){
+    public Deck getCopyMainDeck() {
+        return copyMainDeck;
+    }
+
+    public boolean equals(Player player) {
         return this.userName.equals(player.userName);
     }
 }

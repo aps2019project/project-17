@@ -1,8 +1,11 @@
 package GameGround;
 
 
+import CardCollections.Hand;
+import Data.GameData;
 import Data.Player;
 import effects.Card;
+import effects.Hero;
 import effects.Item;
 import effects.Minion;
 
@@ -12,12 +15,67 @@ public class Battle {
     private Player playerOne;
     private Player playerTwo;
     private Board board;
-    private Enum TurnEnum;
     private int turn;
     private GameMode gameMode;
     private Card selectedCard;
     private BattleType battleType;
     private Item selectedItem;
+    private GameData gameData;
+
+    public Battle(Player playerOne, Player playerTwo, Board board, GameMode gameMode, BattleType battleType) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        this.board = board;
+        this.turn = 1;
+        this.gameMode = gameMode;
+        this.selectedCard = null;
+        this.selectedItem = null;
+        this.battleType = battleType;
+    }
+
+    public String showGameInfo() {
+        StringBuilder toReturn = new StringBuilder();
+        toReturn.append("Player One mana: ").append(playerOne.getMana()).append(" player two mana: ").append(playerTwo.getMana()).append(" ");
+        switch (battleType) {
+            case KILL_HERO:
+                toReturn.append("player One Hero health: ").append(playerOne.getMainDeck().getHero()).append(" ");
+                toReturn.append("player Two Hero health: ").append(playerTwo.getMainDeck().getHero());
+                break;
+            case HOLDING_FLAG:
+                if (whoHasFlag() == null)
+                    toReturn.append("no one has flag yet");
+                else
+                    toReturn.append(whoHasFlag().getUserName()).append(" has flag");
+                break;
+            case CAPTURE_FLAG:
+
+                for (int i = 0; i < this.board.getCells().length; i++) {
+                    for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                        Card card = this.board.getCells()[i][j].getCard();
+                        if (card == null)
+                            continue;
+                        if (((Minion) card).isHasFlag()) {
+                            if (cardIsMine(card, playerOne)) {
+                                toReturn.append(card.getName()).append(" from ").append(playerOne.getUserName()).append(" has flag");
+                                continue;
+                            }
+                            toReturn.append(card.getName()).append(" from ").append(playerTwo.getUserName()).append(" has flag");
+                        }
+                    }
+                }
+
+                break;
+        }
+        return toReturn.toString();
+    }
+
+    private Player whoHasFlag() {
+        if (playerOne.isPlayerHasFlag())
+            return playerOne;
+        if (playerTwo.isPlayerHasFlag())
+            return playerTwo;
+        return null;
+    }
 
     public Player getPlayerOne() {
         return playerOne;
@@ -29,10 +87,6 @@ public class Battle {
 
     public Board getBoard() {
         return board;
-    }
-
-    public Enum getTurnEnum() {
-        return TurnEnum;
     }
 
     public int getTurn() {
@@ -47,12 +101,8 @@ public class Battle {
         return selectedItem;
     }
 
-    public void gameInfo() {
-
-    }
-
     private Player whoseTurn() {
-        if (this.turn % 2 == 0)
+        if (this.turn % 2 == 1)
             return this.playerOne;
         return this.playerTwo;
     }
@@ -73,6 +123,8 @@ public class Battle {
             if (((Minion) card).getXCoordinate() != 0 && ((Minion) card).getYCoordinate() != 0)
                 toReturn.add((Minion) card);
         }
+
+        toReturn.add(player.getMainDeck().getHero());
         return toReturn;
     }
 
@@ -89,6 +141,8 @@ public class Battle {
             Card card = whoseTurn().getMainDeck().getCards().get(i);
             if (card.getId().equals(cardID))
                 return card;
+            if (whoseTurn().getMainDeck().getHero().getId().equals(cardID))
+                return whoseTurn().getMainDeck().getHero();
         }
         for (int i = 0; i < theOtherPlayer().getMainDeck().getCards().size(); i++) {
             Card card = theOtherPlayer().getMainDeck().getCards().get(i);
@@ -99,9 +153,12 @@ public class Battle {
     }
 
     public boolean cardIsMine(Card card, Player player) {
+        if (card instanceof Hero) {
+            return player.getMainDeck().getHero().getName().equals(card.getName());
+        }
         for (int i = 0; i < player.getMainDeck().getCards().size(); i++) {
             Card card1 = player.getMainDeck().getCards().get(i);
-            if (card.getId().equals(card1.getId()))
+            if (Card.equals(card, card1))
                 return true;
         }
         return false;
@@ -123,8 +180,21 @@ public class Battle {
     }
 
     public void endTurn() {
-        this.turn++;
         this.selectedCard = null;
+        playerOne.allMinionsReset();
+        playerTwo.allMinionsReset();
+        this.turn++;
+        if (turn % 2 == 0 && turn <= 14)
+            playerTwo.addMana(1);
+        else if (turn % 2 == 1 && turn <= 14)
+            playerOne.addMana(1);
+        else {
+            playerOne.lessMana(playerOne.getMana());
+            playerOne.addMana(9);
+            playerTwo.lessMana(playerTwo.getMana());
+            playerTwo.addMana(9);
+
+        }
     }
 
     public String movingCard(int x, int y) {
@@ -143,6 +213,9 @@ public class Battle {
         if (cell.getCard() != null)
             return "invalid target";
 
+        if (!minion.getCanAttack())
+            return "card already moved in this turn";
+
         cell.setCard(this.selectedCard);
         cell1.setCard(null);
         ((Minion) this.selectedCard).setCoordinate(x, y);
@@ -151,17 +224,16 @@ public class Battle {
             whoseTurn().setPlayerHasFlag(true);
             cell.setFlag(false);
         }
-
         if (cell.getItem() != null) {
             whoseTurn().addItemToCollectAbleItems(cell.getItem());
             cell.setItem(null);
         }
-        return this.selectedCard.getId() + " moved to " + x + " " + y;
+        minion.setCanMove(false);
+        return this.selectedCard.getId() + " moved to " + x + " - " + y;
     }
 
     public String insertingCardFromHand(String cardName, int x, int y) {
 
-        Player player = whoseTurn();
         Card card = whoseTurn().getCardFromHand(cardName);
         Cell cell = board.getCells()[x - 1][y - 1];
 
@@ -170,13 +242,13 @@ public class Battle {
         if (cell.getCard() != null)
             return "invalid target";
 
-        if (player.getMana() < ((Minion) card).getManaPoint())
+        if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
             return "no enough mana";
 
-        if (board.isCoordinateAvailable((Minion) card, cell, whoseTurn(), this))
+        if (!board.isCoordinateAvailable((Minion) card, cell, whoseTurn(), this))
             return "invalid target";
 
-        player.lessMana(((Minion) card).getManaPoint());
+        whoseTurn().lessMana(((Minion) card).getManaPoint());
         cell.setCard(card);
         ((Minion) card).setCoordinate(x, y);
         whoseTurn().removeCardFromHand(card);
@@ -184,4 +256,11 @@ public class Battle {
         return "card successfully inserted";
     }
 
+    public Hand showHand() {
+        return whoseTurn().getHand();
+    }
+
+    public String attack() {
+        return "attack successfully done";
+    }
 }

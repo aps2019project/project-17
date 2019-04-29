@@ -33,4 +33,13 @@ public class Card {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    public static boolean equals(Card card, Card card1){
+        return card.getId().equals(card1.getId());
+    }
+
+    /**
+     * It will be overirden in children classes
+     */
+    public void show(){}
 }

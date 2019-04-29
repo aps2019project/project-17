@@ -1,6 +1,7 @@
 package view;
 
 import Data.Account;
+import controller.GameController;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -8,9 +9,9 @@ import java.util.Comparator;
 public class AccountView extends View {
 
     public static void showLeaderBoard() {
-        Account.getAccounts().sort(Comparator.reverseOrder());
-        for (int i = 0; i < Account.getAccounts().size(); i++) {
-            Account account = Account.getAccounts().get(i);
+        GameController.getAccounts().sort(Comparator.reverseOrder());
+        for (int i = 0; i < GameController.getAccounts().size(); i++) {
+            Account account = GameController.getAccounts().get(i);
             System.out.printf("%d - UserNAme: %s - Wins: %d", i, account.getUserName(), account.getNumbOfWins());
         }
     }
