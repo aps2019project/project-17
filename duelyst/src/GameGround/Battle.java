@@ -237,7 +237,7 @@ public class Battle {
 
         if (!board.isCoordinateAvailable((Minion) card, cell, whoseTurn(), this))
             return "invalid target";
-
+        card.setUserName(whoseTurn().getUserName());
         whoseTurn().lessMana(((Minion) card).getManaPoint());
         cell.setCard(card);
         ((Minion) card).setCoordinate(x, y);
