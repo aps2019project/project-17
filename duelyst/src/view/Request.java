@@ -243,7 +243,7 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfSaveCommand() {//todo must to be specified for different menus
+    public boolean checkSyntaxOfSaveCommand() {
         Pattern patternForSave = Pattern.compile(SAVE);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
@@ -276,7 +276,7 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfHelpCommand() {//todo must to be specified for different menus
+    public boolean checkSyntaxOfHelpCommand() {
         Pattern patternForSave = Pattern.compile(HELP);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
@@ -314,10 +314,14 @@ public class Request {
                 error = ErrorType.INVALID_INPUT;
                 return false;
             }
-        } else if (menuType.equals(MenuType.SHOP_MENU)) {//todo complete this part
-
+        } else if (menuType.equals(MenuType.SHOP_MENU)) {
+            if (matcher.matches()) {
+                ShopView.showAllProducts(Account.getLoginUser());
+            } else {
+                error = ErrorType.INVALID_INPUT;
+                return false;
+            }
         }
-
         return true;
     }
 
@@ -333,8 +337,15 @@ public class Request {
                 error = ErrorType.INVALID_INPUT;
                 return false;
             }
-        } else if (menuType.equals(MenuType.SHOP_MENU)) {//todo complete this part
-
+        } else if (menuType.equals(MenuType.SHOP_MENU)) {
+            if (matcher.matches()) {
+                String name = matcher.group("name");
+                String ID = GameController.searchInShop(name, Account.getLoginUser().getShop());
+                System.out.println(ID);
+            } else {
+                error = ErrorType.INVALID_INPUT;
+                return false;
+            }
         }
         return true;
     }
@@ -491,14 +502,14 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfSellCommand(){
+    public boolean checkSyntaxOfSellCommand() {
         Pattern patternForSell = Pattern.compile(SELL + " (?<name>\\w+)");
         Matcher matcher = patternForSell.matcher(command);
-        if(matcher.matches()){
+        if (matcher.matches()) {
             String name = matcher.group("name");
-            String result=GameController.sell(name, Account.getLoginUser().getShop());
+            String result = GameController.sell(name, Account.getLoginUser().getShop());
             System.out.println(result);
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }

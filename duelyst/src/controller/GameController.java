@@ -90,6 +90,10 @@ public class GameController {
         return shop.sell(cardName);
     }
 
+    public static String searchInShop(String cardName,Shop shop){
+        return shop.search(cardName);
+    }
+
     public static String logout() {
         return Account.logout();
     }

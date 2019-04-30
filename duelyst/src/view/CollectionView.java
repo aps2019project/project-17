@@ -36,7 +36,7 @@ public class CollectionView extends View {
                 spell.show();
                 counter++;
             }
-            for (Minion minion : account.getCollection().getCollectionMinion()) {
+            for (Minion minion : account.getCollection().getCollectionMinions()) {
                 System.out.println();
                 System.out.println(counter + " : Type : Minion - ");
                 minion.show();
