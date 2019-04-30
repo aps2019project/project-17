@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import Data.Account;
 import controller.GameController;
-import org.omg.PortableInterceptor.ServerRequestInfo;
 
 public class Request {
     protected Scanner scanner = new Scanner(System.in);
