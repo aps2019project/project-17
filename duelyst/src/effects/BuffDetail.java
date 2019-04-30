@@ -9,6 +9,7 @@ public class BuffDetail {
     private TargetType targetType;
     private TargetRange targetRange;
     private BuffType antiBuffType;
+    private boolean isContinuous;
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
         this.id = id;
@@ -16,6 +17,8 @@ public class BuffDetail {
         this.effectTime = effectTime;
         this.targetType = targetType;
         this.targetRange = targetRange;
+        this.isContinuous = effectTime == 100;
+
     }
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange,BuffType antiBuffType) {
@@ -25,6 +28,7 @@ public class BuffDetail {
         this.targetType = targetType;
         this.targetRange = targetRange;
         this.antiBuffType = antiBuffType;
+        this.isContinuous = effectTime == 100;
     }
 
     public BuffDetail(int id,BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
@@ -35,6 +39,7 @@ public class BuffDetail {
         this.changeHealthValue = changeHealthValue;
         this.targetType = targetType;
         this.targetRange = targetRange;
+        this.isContinuous = effectTime == 100;
     }
 
     public int getEffectTime() {
@@ -58,4 +63,7 @@ public class BuffDetail {
         return buffType;
     }
 
+    public int getId() {
+        return id;
+    }
 }
