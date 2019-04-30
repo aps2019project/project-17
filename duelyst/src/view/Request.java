@@ -6,12 +6,13 @@ import java.util.regex.Pattern;
 
 import Data.Account;
 import controller.GameController;
+import org.omg.PortableInterceptor.ServerRequestInfo;
 
 public class Request {
     protected Scanner scanner = new Scanner(System.in);
     protected String command;
     protected ErrorType error = null;
-    protected MenuType menuType=null;
+    protected MenuType menuType = null;
 
     private static final String CREATE_ACCOUNT = "create account";
     private static final String LOGIN = "login";
@@ -59,6 +60,26 @@ public class Request {
                 return checkSyntaxOfHelpCommand();
             case SAVE:
                 return checkSyntaxOfSaveCommand();
+            case SHOW_COLLECTION:
+                return checkSyntaxOfShowCollectionCommand();
+            case SEARCH_COLLECTION:
+                return checkSyntaxOfSearchCollection();
+            case CREATE_DECK:
+                return checkSyntaxOfCreateDeck();
+            case DELETE_DECK:
+                return checkSyntaxOfDeleteDeck();
+            case ADD_TO_DECK:
+                return checkSyntaxOfAddToDeck();
+            case REMOVE_FROM_DECK:
+                return checkSyntaxOfRemoveFromDeck();
+            case VALIDATE_DECK:
+                return checkSyntaxOfValidateDeck();
+            case SELECT_DECK:
+                return checkSyntaxOfSelectDeck();
+            case SHOW_ALL_DECKS:
+                return checkSyntaxOfShowAllDecks();
+            case SHOW_DECK:
+                return checkSyntaxOfShowDeck();
         }
         return true;
     }
@@ -76,13 +97,13 @@ public class Request {
         Matcher matcherForShowLeaderBoard = patternForShowLeaderBoard.matcher(command);
         Pattern patternForSave = Pattern.compile(SAVE);
         Matcher matcherForSave = patternForSave.matcher(command);
-        Pattern patternForLogOut = Pattern.compile(LOGOUT );
+        Pattern patternForLogOut = Pattern.compile(LOGOUT);
         Matcher matcherForLogOut = patternForLogOut.matcher(command);
         Pattern patternForHelp = Pattern.compile(HELP);
         Matcher matcherForHelp = patternForHelp.matcher(command);
         Pattern patternForShowCollection = Pattern.compile(SHOW_COLLECTION);
         Matcher matcherForShowCollection = patternForShowCollection.matcher(command);
-        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION+ " \\w+");
+        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION + " \\w+");
         Matcher matcherForSearchCollection = patternForSearchCollection.matcher(command);
         Pattern patternForCreateDeck = Pattern.compile(CREATE_DECK + " \\w+");
         Matcher matcherForCreateDeck = patternForCreateDeck.matcher(command);
@@ -98,54 +119,53 @@ public class Request {
         Matcher matcherForSelectDeck = patternForSelectDeck.matcher(command);
         Pattern patternForShowAllDecks = Pattern.compile(SHOW_ALL_DECKS);
         Matcher matcherForShowAllDecks = patternForShowAllDecks.matcher(command);
-        Pattern patternForShowDeck = Pattern.compile(SHOW_DECK+" \\w+");
+        Pattern patternForShowDeck = Pattern.compile(SHOW_DECK + " \\w+");
         Matcher matcherForShowDeck = patternForShowDeck.matcher(command);
         if (matcherForCreateAccount.matches()) {
-            menuType=MenuType.ACCOUNT_MENU;
+            menuType = MenuType.ACCOUNT_MENU;
             return RequestType.CREATE_ACCOUNT;
         } else if (matcherForLogIn.matches()) {
-            menuType=MenuType.ACCOUNT_MENU;
+            menuType = MenuType.ACCOUNT_MENU;
             return RequestType.LOGIN;
         } else if (matcherForShowLeaderBoard.matches()) {
-            menuType=MenuType.ACCOUNT_MENU;
+            menuType = MenuType.ACCOUNT_MENU;
             return RequestType.SHOW_LEADER_BOARD;
         } else if (matcherForLogOut.matches()) {
-            menuType=MenuType.ACCOUNT_MENU;
+            menuType = MenuType.ACCOUNT_MENU;
             return RequestType.LOGOUT;
-        } else if(matcherForShowCollection.matches()){
-            menuType=MenuType.ACCOUNT_MENU;
+        } else if (matcherForShowCollection.matches()) {
+            menuType = MenuType.ACCOUNT_MENU;
             return RequestType.SHOW_COLLECTION;
-        }else if(matcherForSearchCollection.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForSearchCollection.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.SEARCH_COLLECTION;
-        }else if(matcherForCreateDeck.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForCreateDeck.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.CREATE_DECK;
-        }else if(matcherForDeleteDeck.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForDeleteDeck.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.DELETE_DECK;
-        }else if(matcherForAddToDeck.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForAddToDeck.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.ADD_TO_DECK;
-        }else if(matcherForRemoveFromDeck.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForRemoveFromDeck.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.REMOVE_FROM_DECK;
-        }else if(matcherForValidateDeck.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForValidateDeck.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.VALIDATE_DECK;
-        }else if(matcherForSelectDeck.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForSelectDeck.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.SELECT_DECK;
-        }else if(matcherForShowAllDecks.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForShowAllDecks.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.SHOW_ALL_DECKS;
-        }else if(matcherForShowDeck.matches()){
-            menuType=MenuType.COLLECTION_MENU;
+        } else if (matcherForShowDeck.matches()) {
+            menuType = MenuType.COLLECTION_MENU;
             return RequestType.SHOW_DECK;
         } else if (matcherForSave.matches()) {
             return RequestType.SAVE;
-        }
-        else if (matcherForHelp.matches()) {
+        } else if (matcherForHelp.matches()) {
             return RequestType.HELP;
         }
         error = ErrorType.INVALID_INPUT;
@@ -156,7 +176,7 @@ public class Request {
     public boolean checkSyntaxOfCreateAccountCommand() {
         Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " (?<userName>\\w+)");
         Matcher matcher = patternForCreateAccount.matcher(command);
-        if (matcher.matches()){
+        if (matcher.matches()) {
             String userName = matcher.group("userName");
             String passWord = scanner.nextLine();
             String result = GameController.createAccount(userName, passWord);
@@ -199,7 +219,7 @@ public class Request {
         Pattern patternForSave = Pattern.compile(SAVE);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
-            switch (menuType){
+            switch (menuType) {
                 case ACCOUNT_MENU:
                     String result = GameController.accountSave(Account.getLoginUser());
                     System.out.println(result);
@@ -232,7 +252,7 @@ public class Request {
         Pattern patternForSave = Pattern.compile(HELP);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
-            switch (menuType){
+            switch (menuType) {
                 case MAIN_MENU:
                     //todo main menu help
                     break;
@@ -246,7 +266,7 @@ public class Request {
                     ShopView.shopHelp();
                     break;
                 case BATTLE_MENU:
-                  //todo needs battle help
+                    //todo needs battle help
                     break;
             }
         } else {
@@ -258,47 +278,144 @@ public class Request {
 
     /**
      * notice that this show collection is for collection menu
+     *
      * @return
      */
-    public boolean checkSyntaxOfShowCollectionCommand(){
+    public boolean checkSyntaxOfShowCollectionCommand() {
         Pattern patternForShowCollection = Pattern.compile(SHOW_COLLECTION);
         Matcher matcher = patternForShowCollection.matcher(command);
-        if(matcher.matches()){
+        if (matcher.matches()) {
             CollectionView.showUserCollection(Account.getLoginUser());
-        }else{
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxOfSearchCollection(){
-        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION+ " (?<name>\\w+)");
+    public boolean checkSyntaxOfSearchCollection() {
+        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION + " (?<name>\\w+)");
         Matcher matcher = patternForSearchCollection.matcher(command);
-        if(matcher.matches()){
-            String name=matcher.group("name");
-            String ID=GameController.search(name, Account.getLoginUser().getCollection());
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String ID = GameController.search(name, Account.getLoginUser().getCollection());
             System.out.println(ID);
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxOfCreateDeck(){
-        Pattern patternForSCreateDeck = Pattern.compile(CREATE_DECK+ " (?<name>\\w+)");
+    public boolean checkSyntaxOfCreateDeck() {
+        Pattern patternForSCreateDeck = Pattern.compile(CREATE_DECK + " (?<name>\\w+)");
         Matcher matcher = patternForSCreateDeck.matcher(command);
-        if(matcher.matches()){
-            String name=matcher.group("name");
-            String result=GameController.createDeck(name, Account.getLoginUser().getCollection());
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.createDeck(name, Account.getLoginUser().getCollection());
             System.out.println(result);
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
+    }
 
+    public boolean checkSyntaxOfDeleteDeck() {
+        Pattern patternForDeleteDeck = Pattern.compile(DELETE_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForDeleteDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.deleteDeck(name, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfAddToDeck() {
+        Pattern patternForAddToDeck = Pattern.compile(ADD_TO_DECK + " (?<cardId>\\w+) to deck (?<deckName>\\w+)");
+        Matcher matcher = patternForAddToDeck.matcher(command);
+        if (matcher.matches()) {
+            String cardId = matcher.group("cardId");
+            String deckName = matcher.group("deckName");
+            String result = GameController.addToDeck(cardId, deckName, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfRemoveFromDeck() {
+        Pattern patternForRemoveFromDeck = Pattern.compile(REMOVE_FROM_DECK + " (?<cardId>\\w+) from deck (?<deckName>\\w+)");
+        Matcher matcher = patternForRemoveFromDeck.matcher(command);
+        if (matcher.matches()) {
+            String cardId = matcher.group("cardId");
+            String deckName = matcher.group("deckName");
+            String result = GameController.removeFromDeck(cardId, deckName, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfValidateDeck() {
+        Pattern patternForValidateDeck = Pattern.compile(VALIDATE_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForValidateDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.isDeckValidate(name, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfSelectDeck() {
+        Pattern patternForSelectDeck = Pattern.compile(SELECT_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForSelectDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.setMainDeck(name, Account.getLoginUser());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowAllDecks() {
+        Pattern patternForShowAllDecks = Pattern.compile(SHOW_ALL_DECKS);
+        Matcher matcher = patternForShowAllDecks.matcher(command);
+        if (matcher.matches()) {
+            CollectionView.showAllDecks(Account.getLoginUser());
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowDeck() {
+        Pattern patternForShowDeck = Pattern.compile(SELECT_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForShowDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            CollectionView.showDeck(name, Account.getLoginUser().getCollection());
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
     }
 
 }

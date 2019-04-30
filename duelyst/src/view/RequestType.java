@@ -9,7 +9,6 @@ public enum RequestType {
     LOGOUT,
     SHOW_COLLECTION,
     SEARCH_COLLECTION,
-    SAVE_COLLECTION,
     CREATE_DECK,
     DELETE_DECK,
     ADD_TO_DECK,

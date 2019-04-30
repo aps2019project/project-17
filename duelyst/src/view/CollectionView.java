@@ -12,33 +12,33 @@ public class CollectionView extends View {
             int counter = 1;
             for (Hero hero : account.getCollection().getCollectionHeros()) {
                 System.out.println();
-                System.out.print(counter+" : ");
+                System.out.print(counter + " : ");
                 hero.show();
                 counter++;
             }
         }
         System.out.print("Items:");
-        if(account.getCollection().getItems()!=null){
-            int counter=1;
-            for (Item item:account.getCollection().getItems()) {
+        if (account.getCollection().getItems() != null) {
+            int counter = 1;
+            for (Item item : account.getCollection().getItems()) {
                 System.out.println();
-                System.out.println(counter+" : ");
+                System.out.println(counter + " : ");
                 item.show();
                 counter++;
             }
         }
         System.out.print("Cards:");
-        if(account.getCollection().getCards()!=null){
-            int counter=1;
-            for (Spell spell:account.getCollection().getCollectionSpells()) {
+        if (account.getCollection().getCards() != null) {
+            int counter = 1;
+            for (Spell spell : account.getCollection().getCollectionSpells()) {
                 System.out.println();
-                System.out.print(counter+" : Type : Spell - ");
+                System.out.print(counter + " : Type : Spell - ");
                 spell.show();
                 counter++;
             }
-            for (Minion minion:account.getCollection().getCollectionMinion()) {
+            for (Minion minion : account.getCollection().getCollectionMinion()) {
                 System.out.println();
-                System.out.println(counter+" : Type : Minion - ");
+                System.out.println(counter + " : Type : Minion - ");
                 minion.show();
                 counter++;
             }
@@ -47,12 +47,16 @@ public class CollectionView extends View {
     }
 
     public static void showAllDecks(Account account) {
-        int counter=1;
-        for (Deck deck:account.getCollection().getDecks()) {
-            System.out.println(counter+" : "+deck.getName());
+        int counter = 1;
+        for (Deck deck : account.getCollection().getDecks()) {
+            System.out.println(counter + " : " + deck.getName());
             showDeck(deck);
             counter++;
         }
+    }
+
+    public static void showDeck(String deckName, Collection collection) {
+        showDeck(collection.findDeck(deckName));
     }
 
     public static void showDeck(Deck deck) {
