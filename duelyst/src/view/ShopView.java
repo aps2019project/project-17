@@ -8,8 +8,8 @@ public class ShopView extends View {
 
     }
 
-    public static void showShopProducts(Shop shop) {
-
+    public static void showShopProducts(Shop shop, String cardName) {
+        System.out.println(shop.search(cardName));
     }
 
     public static void shopHelp() {
