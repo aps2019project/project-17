@@ -63,126 +63,185 @@
     "antiBuff": "HOLY"
   },
   {
-    "id": 9,
-    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "INSIDER",
-    "targetRange": "ONE",
-    "effectTime": 3,
-    "changeAttackPower": 4,
-    "changeHealth": 0
-  },
-  {
-    "id": 9,
-    "buffType": "DISARM",
-    "targetType": "INSIDER",
-    "targetRange": "ONE",
-    "effectTime": 0
-  },
-  {
-    "id": 10,
-    "buffType": "DISARM",
-    "targetType": "ENEMY",
-    "targetRange": "ALL",
-    "effectTime": 1
-  },
-  {
-    "id": 11,
-    "buffType": "POISON",
-    "targetType": "ENEMY",
-    "targetRange": "ALL",
-    "effectTime": 4
-  },
-  {
-    "id": 12,
-    "buffType": "CLEAR",
+    "id": 121,
+    "buffType": "DE_HOLY",
     "targetType": "NONE",
-    "targetRange": "ALL",
-    "effectTime": 0
+    "targetRange": "DISTANCE_TWO",
+    "effectTime": -1
   },
   {
-    "id": 13,
-    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "INSIDER",
-    "targetRange": "ONE",
-    "effectTime": 3,
-    "changeAttackPower": 0,
-    "changeHealth": -6
-  },
-  {
-    "id": 13,
-    "buffType": "HOLY",
-    "targetType": "INSIDER",
-    "targetRange": "ONE",
-    "effectTime": 3
-  },
-  {
-    "id": 14,
-    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "INSIDER",
-    "targetRange": "ONE",
-    "effectTime": 0,
-    "changeAttackPower": 6,
-    "changeHealth": 0
-  },
-  {
-    "id": 15,
-    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "INSIDER",
-    "targetRange": "ALL",
-    "effectTime": 0,
-    "changeAttackPower": 2,
-    "changeHealth": 0
-  },
-  {
-    "id": 16,
+    "id": 122,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "ENEMY",
-    "targetRange": "ALL_IN_COLUMN",
-    "effectTime": 0,
-    "changeAttackPower": 0,
-    "changeHealth": -6
-  },
-  {
-    "id": 17,
-    "buffType": "WEAKNESS",
-    "targetType": "ENEMY",
     "targetRange": "ONE",
-    "effectTime": 0,
+    "effectTime": 12,
     "changeAttackPower": 0,
     "changeHealth": -4
   },
   {
-    "id": 18,
-    "buffType": "WEAKNESS",
-    "targetType": "INSIDER",
+    "id": 122,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
     "targetRange": "ONE",
-    "effectTime": 0,
+    "effectTime": 11,
+    "changeAttackPower": 0,
+    "changeHealth": -2
+  },
+  {
+    "id": 123,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 10,
+    "changeAttackPower": 0,
+    "changeHealth": -8
+  },
+  {
+    "id": 124,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 10,
     "changeAttackPower": 0,
     "changeHealth": -6
   },
   {
-    "id": 18,
+    "id": 125,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "INSIDER",
-    "targetRange": "ONE",
-    "effectTime": 0,
-    "changeAttackPower": 8,
+    "targetType": "NONE",
+    "targetRange": "AROUND",
+    "effectTime": 1,
+    "changeAttackPower": 2,
     "changeHealth": 0
   },
   {
-    "id": 19,
+    "id": 125,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "ENEMY",
-    "targetRange": "AROUND",
-    "effectTime": 0,
-    "changeAttackPower": 0,
-    "changeHealth": -100
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 1,
+    "changeAttackPower": 2,
+    "changeHealth": 0
   },
   {
-    "id": 20,
-    "buffType": "STUN",
+    "id": 125,
+    "buffType": "WEAKNESS",
+    "targetType": "NONE",
+    "targetRange": "AROUND",
+    "effectTime": 1,
+    "changeAttackPower": 0,
+    "changeHealth": -1
+  },
+  {
+    "id": 125,
+    "buffType": "WEAKNESS",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 1,
+    "changeAttackPower": 0,
+    "changeHealth": -1
+  },
+  {
+    "id": 126,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "NONE",
+    "targetRange": "AROUND",
+    "effectTime": 100,
+    "changeAttackPower": 2,
+    "changeHealth": 0
+  },
+  {
+    "id": 126,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 100,
+    "changeAttackPower": 2,
+    "changeHealth": 0
+  },
+  {
+    "id": 126,
+    "buffType": "HOLY",
+    "targetType": "NONE",
+    "targetRange": "AROUND",
+    "effectTime": 100
+  },
+  {
+    "id": 126,
+    "buffType": "HOLY",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 100
+  },
+  {
+    "id": 127,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "ALL",
+    "effectTime": 100,
+    "changeAttackPower": 1,
+    "changeHealth": 0
+  },
+  {
+    "id": 128,
+    "buffType": "ANTI",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 0,
+    "antiBuff": "DISARM"
+  },
+  {
+    "id": 129,
+    "buffType": "ANTI",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 0,
+    "antiBuff": "POISON"
+  },
+  {
+    "id": 130,
+    "buffType": "ANTI_ALL_NEGATIVE",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 0
+  },
+  {
+    "id": 131,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
+    "targetRange": "RANDOM",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -16
+  },
+  {
+    "id": 135,
+    "buffType": "ANTI_ALL_POSITIVE",
     "targetType": "ENEMY",
     "targetRange": "ONE",
-    "effectTime": 2
+    "effectTime": 0
+  },
+  {
+    "id": 136,
+    "buffType": "STUN",
+    "targetType": "ENEMY",
+    "targetRange": "AROUND",
+    "effectTime": 1
+  },
+  {
+    "id": 137,
+    "buffType": "HOLY",
+    "targetType": "SELF",
+    "targetRange": "ONE",
+    "effectTime": 100
+  },
+  {
+    "id": 138,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY_HERO",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -6
   }
 ]

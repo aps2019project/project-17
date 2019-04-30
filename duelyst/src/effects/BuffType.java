@@ -2,6 +2,7 @@ package effects;
 
 public enum BuffType {
     HOYL,
+    DE_HOLY,
     WEAKNESS,
     STUN,
     DISARM,
@@ -9,5 +10,7 @@ public enum BuffType {
     CLEAR,
     FIRE_CELL,
     POISON,
-    ,ANTI
+    ,ANTI,
+    ANTI_ALL_NEGATIVE,
+    ANTI_ALL_POSITIVE
 }
