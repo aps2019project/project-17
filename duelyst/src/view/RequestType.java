@@ -7,8 +7,8 @@ public enum RequestType {
     SHOW_LEADER_BOARD,
     SAVE,
     LOGOUT,
-    SHOW_COLLECTION,
-    SEARCH_COLLECTION,
+    SHOW,
+    SEARCH,
     CREATE_DECK,
     DELETE_DECK,
     ADD_TO_DECK,
@@ -17,7 +17,11 @@ public enum RequestType {
     SELECT_DECK,
     SHOW_ALL_DECKS,
     SHOW_DECK,
-    HELP;
+    HELP,
+    SHOW_fOR_SHOP_MENU,
+    SEARCH_COLLECTION,
+    BUY,
+    SELL;
 
 
 }
