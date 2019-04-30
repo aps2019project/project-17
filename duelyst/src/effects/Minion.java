@@ -21,6 +21,7 @@ public class Minion extends Card {
     protected MinionType minionType;
     protected boolean hasFlag;
     private AttackType attackType;
+    private int numberOfAttack;
 
     public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
         super(name, id, price);
@@ -47,7 +48,7 @@ public class Minion extends Card {
 
     private void makeAttackBuff(int attackPower) {
         this.attack = new Buff();
-        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE,0,0,-attackPower);
+        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE, 0, 0, -attackPower);
         this.attack.addBuff(buffDetail);
     }
 
@@ -76,15 +77,17 @@ public class Minion extends Card {
         return buff;
     }
 
-    public void addBuff(BuffDetail buffDetail)
-    {
+    public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
     }
+
     public boolean getCanAttack() {
         return canAttack;
     }
 
     public void setCanAttack(boolean canAttack) {
+        if (isStun)
+            return;
         this.canAttack = canAttack;
     }
 
@@ -108,7 +111,8 @@ public class Minion extends Card {
         this.distanceCanMove = distanceCanMove;
     }
 
-    public void attack(String id) {
+    public void attack(Minion minion) {
+        numberOfAttack++;
     }
 
     public void move(int x, int y) {
@@ -121,7 +125,6 @@ public class Minion extends Card {
     public void setStun(boolean stun) {
         isStun = stun;
     }
-
 
     public void activeHolyBuff() {
         isHolyBuffActive = true;
@@ -160,7 +163,6 @@ public class Minion extends Card {
 
     public void show() {
         System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
-        //todo toString for minionType and specialPower must be overriden and if the minion doesn't have it must print nothing
     }
 
     public boolean CanMove() {

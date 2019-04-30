@@ -89,9 +89,9 @@ public class Request {
         if (command == null || command.equals("")) {
             return null;
         }
-        Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " \\w+");
+        Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " " + "\\w+");
         Matcher matcherForCreateAccount = patternForCreateAccount.matcher(command);
-        Pattern patternForLogIn = Pattern.compile(LOGIN + " \\w+");
+        Pattern patternForLogIn = Pattern.compile(LOGIN + " " +"\\w+");
         Matcher matcherForLogIn = patternForLogIn.matcher(command);
         Pattern patternForShowLeaderBoard = Pattern.compile(SHOW_LEADER_BOARD);
         Matcher matcherForShowLeaderBoard = patternForShowLeaderBoard.matcher(command);
@@ -109,13 +109,13 @@ public class Request {
         Matcher matcherForCreateDeck = patternForCreateDeck.matcher(command);
         Pattern patternForDeleteDeck = Pattern.compile(DELETE_DECK + " \\w+");
         Matcher matcherForDeleteDeck = patternForDeleteDeck.matcher(command);
-        Pattern patternForAddToDeck = Pattern.compile(ADD_TO_DECK + " \\w+ to deck \\w+");
+        Pattern patternForAddToDeck = Pattern.compile(ADD_TO_DECK + " " + "\\w+ to deck \\w+");
         Matcher matcherForAddToDeck = patternForAddToDeck.matcher(command);
         Pattern patternForRemoveFromDeck = Pattern.compile(REMOVE_FROM_DECK + " \\w+ from deck \\w+");
         Matcher matcherForRemoveFromDeck = patternForRemoveFromDeck.matcher(command);
-        Pattern patternForValidateDeck = Pattern.compile(VALIDATE_DECK + " \\w+");
+        Pattern patternForValidateDeck = Pattern.compile(VALIDATE_DECK + " " + "\\w+");
         Matcher matcherForValidateDeck = patternForValidateDeck.matcher(command);
-        Pattern patternForSelectDeck = Pattern.compile(SELECT_DECK + " \\w+");
+        Pattern patternForSelectDeck = Pattern.compile(SELECT_DECK + " " +"\\w+");
         Matcher matcherForSelectDeck = patternForSelectDeck.matcher(command);
         Pattern patternForShowAllDecks = Pattern.compile(SHOW_ALL_DECKS);
         Matcher matcherForShowAllDecks = patternForShowAllDecks.matcher(command);
@@ -327,6 +327,7 @@ public class Request {
         if (matcher.matches()) {
             String name = matcher.group("name");
             String result = GameController.deleteDeck(name, Account.getLoginUser().getCollection());
+
             System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
