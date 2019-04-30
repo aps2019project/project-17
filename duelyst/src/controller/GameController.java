@@ -8,6 +8,7 @@ import view.*;
 import java.util.ArrayList;
 
 public class GameController {
+
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
 
@@ -65,19 +66,19 @@ public class GameController {
         return collection.deleteDeck(name);
     }
 
-    public static String addToDeck(String cardID, String deckName,Collection collection){
+    public static String addToDeck(String cardID, String deckName, Collection collection) {
         return collection.addToDeck(cardID, deckName);
     }
 
-    public static String removeFromDeck(String cardID, String deckName,Collection collection){
+    public static String removeFromDeck(String cardID, String deckName, Collection collection) {
         return collection.removeFromDeck(cardID, deckName);
     }
 
-    public static String isDeckValidate(String deckName,Collection collection){
+    public static String isDeckValidate(String deckName, Collection collection) {
         return collection.isDeckValidate(deckName);
     }
 
-    public static String setMainDeck(String deckName,Account account){
+    public static String setMainDeck(String deckName, Account account) {
         return account.setMainDeck(deckName);
     }
 

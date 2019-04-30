@@ -128,11 +128,11 @@ public class Request {
         Matcher matcherForShowDeck = patternForShowDeck.matcher(command);
         Pattern patternForShowForShopMenu = Pattern.compile(SHOW_FOR_SHOP_MENU);
         Matcher matcherForShowForShopMenu = patternForShowForShopMenu.matcher(command);
-        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION+" "+"\\w+");
+        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION + " " + "\\w+");
         Matcher matcherForSearchCollection = patternForSearchCollection.matcher(command);
-        Pattern patternForBuy = Pattern.compile(BUY+" \\w+");
+        Pattern patternForBuy = Pattern.compile(BUY + " \\w+");
         Matcher matcherForSBuy = patternForBuy.matcher(command);
-        Pattern patternForSell = Pattern.compile(SELL+" "+"\\w+");
+        Pattern patternForSell = Pattern.compile(SELL + " " + "\\w+");
         Matcher matcherForSSell = patternForSell.matcher(command);
         if (matcherForCreateAccount.matches()) {
             menuType = MenuType.ACCOUNT_MENU;
@@ -175,19 +175,18 @@ public class Request {
             menuType = MenuType.COLLECTION_MENU;
             return RequestType.SHOW_DECK;
         } else if (matcherForShowForShopMenu.matches()) {
-            menuType=MenuType.SHOP_MENU;
+            menuType = MenuType.SHOP_MENU;
             return RequestType.SHOW_fOR_SHOP_MENU;
-        }else if(matcherForSearchCollection.matches()){
-            menuType=MenuType.SHOP_MENU;
+        } else if (matcherForSearchCollection.matches()) {
+            menuType = MenuType.SHOP_MENU;
             return RequestType.SEARCH_COLLECTION;
-        }else if(matcherForSBuy.matches()){
-            menuType=MenuType.SHOP_MENU;
+        } else if (matcherForSBuy.matches()) {
+            menuType = MenuType.SHOP_MENU;
             return RequestType.BUY;
-        }else if(matcherForSSell.matches()){
-            menuType=MenuType.SHOP_MENU;
+        } else if (matcherForSSell.matches()) {
+            menuType = MenuType.SHOP_MENU;
             return RequestType.SELL;
-        }
-        else if (matcherForSave.matches()) {
+        } else if (matcherForSave.matches()) {
             return RequestType.SAVE;
         } else if (matcherForHelp.matches()) {
             return RequestType.HELP;
@@ -202,14 +201,13 @@ public class Request {
         Matcher matcher = patternForCreateAccount.matcher(command);
         if (matcher.matches()) {
             String userName = matcher.group("userName");
+            System.out.println("Please enter your password:");
             String passWord = scanner.nextLine();
-            String result = GameController.createAccount(userName, passWord);
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
+            System.out.println(GameController.createAccount(userName, passWord));
+            return true;
         }
-        return true;
+        error = ErrorType.INVALID_INPUT;
+        return false;
     }
 
     public boolean checkSyntaxOfLoginCommand() {
