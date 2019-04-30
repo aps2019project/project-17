@@ -86,6 +86,10 @@ public class GameController {
         return shop.buy(cardName);
     }
 
+    public static String sell(String cardName,Shop shop){
+        return shop.sell(cardName);
+    }
+
     public static String logout() {
         return Account.logout();
     }

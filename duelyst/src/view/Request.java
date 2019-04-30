@@ -89,6 +89,8 @@ public class Request {
                 return checkSyntaxOfSearchCollection();
             case BUY:
                 return checkSyntaxOfBuyCommand();
+            case SELL:
+                return checkSyntaxOfSellCommand();
         }
         return true;
     }
@@ -489,5 +491,17 @@ public class Request {
         return true;
     }
 
-
+    public boolean checkSyntaxOfSellCommand(){
+        Pattern patternForSell = Pattern.compile(SELL + " (?<name>\\w+)");
+        Matcher matcher = patternForSell.matcher(command);
+        if(matcher.matches()){
+            String name = matcher.group("name");
+            String result=GameController.sell(name, Account.getLoginUser().getShop());
+            System.out.println(result);
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
 }
