@@ -36,8 +36,7 @@ public class Request {
 
 
     public void getNewCommand() {
-        command = scanner.nextLine();
-        command = command.toLowerCase();
+        command = scanner.nextLine().toLowerCase();
     }
 
     public ErrorType getError() {
@@ -49,10 +48,9 @@ public class Request {
     }
 
     public boolean isValid() {//todo remember to complete this part
-        RequestType type = getType();
-        if (type == null)
+        if (getType() == null)
             return false;
-        switch (type) {
+        switch (getType()) {
             case CREATE_ACCOUNT:
                 return checkSyntaxOfCreateAccountCommand();
             case LOGIN:
