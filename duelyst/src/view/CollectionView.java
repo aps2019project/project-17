@@ -85,21 +85,20 @@ public class CollectionView extends View {
             }
             counter++;
         }
-
     }
 
     public static void collectionHelp() {
-        System.out.println("command for exit: \"exit\"");
-        System.out.println("command for show \"show\"");
-        System.out.println("command for searching card \"search [card name|item name]\"");
+        System.out.println("command for exit  ->  \"exit\"");
+        System.out.println("command for show  ->  \"show\"");
+        System.out.println("command for searching card   ->  \"search [card name|item name]\"");
         System.out.println("accountSave");
-        System.out.println("command for creating deck \"create deck [deck name]\"");
-        System.out.println("command for deleting deck \"delete deck [deck name]\"");
-        System.out.println("command for add card to deck \"add [card id | hero id] from deck [deck name]\"");
-        System.out.println("command for check validate deck \"validate deck [deck name]\"");
-        System.out.println("command for selecting card \"select deck [deck name]\"");
-        System.out.println("command for show all decks \"show all decks\"");
-        System.out.println("command for show deck \"show deck [deck name]\"");
+        System.out.println("command for creating deck  ->  \"create deck [deck name]\"");
+        System.out.println("command for deleting deck  ->  \"delete deck [deck name]\"");
+        System.out.println("command for add card to deck  ->  \"add [card id | hero id] from deck [deck name]\"");
+        System.out.println("command for check validate deck  ->  \"validate deck [deck name]\"");
+        System.out.println("command for selecting card  ->  \"select deck [deck name]\"");
+        System.out.println("command for show all decks  ->  \"show all decks\"");
+        System.out.println("command for show deck  ->  \"show deck [deck name]\"");
         System.out.println("help");
     }
 }
