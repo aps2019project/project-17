@@ -21,6 +21,7 @@ public class Minion extends Card {
     protected MinionType minionType;
     protected boolean hasFlag;
     private AttackType attackType;
+    private int numberOfAttack;
 
     public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
         super(name, id, price);
@@ -108,7 +109,8 @@ public class Minion extends Card {
         this.distanceCanMove = distanceCanMove;
     }
 
-    public void attack(String id) {
+    public void attack(Minion minion) {
+        numberOfAttack++;
     }
 
     public void move(int x, int y) {

@@ -8,5 +8,6 @@ public enum BuffType {
     CHANGE_ATTACK_POWER_OR_HEALTH_BUFF,
     CLEAR,
     FIRE_CELL,
-    POISON
+    POISON,
+    ,ANTI
 }
