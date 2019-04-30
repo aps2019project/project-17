@@ -24,11 +24,11 @@ public class Collection {
         return daric;
     }
 
-    public void addCardToCollection(Card card){
+    public void addCardToCollection(Card card) {
         this.cards.add(card);
     }
 
-    public void addItemToCollection(Item item){
+    public void addItemToCollection(Item item) {
         this.items.add(item);
     }
 
@@ -36,11 +36,11 @@ public class Collection {
         return collections;
     }
 
-    public void changeDaric(int value){
+    public void changeDaric(int value) {
         this.daric += value;
     }
 
-    public static void addCollection(Collection collection){
+    public static void addCollection(Collection collection) {
         collections.add(collection);
     }
 
@@ -115,10 +115,13 @@ public class Collection {
         return null;
     }
 
-    public void deleteDeck(String deckName) {
+    public String deleteDeck(String deckName) {
         Deck garbageDeck = findDeck(deckName);
         if (garbageDeck != null) {
             decks.remove(garbageDeck);
+            return "Deck Successfully deleted";
+        } else {
+            return "No such deck found";
         }
     }
 
@@ -200,7 +203,7 @@ public class Collection {
         deck.setItem(item);
     }
 
-    public String deleteFromDeck(String cardID, String deckName) {
+    public String removeFromDeck(String cardID, String deckName) {
         Deck deck = findDeck(deckName);
         Item item = findItem(cardID);
         Card card = findCard(cardID);
@@ -249,37 +252,37 @@ public class Collection {
         return "deck is not validate";
     }
 
-    public ArrayList<Hero> getCollectionHeros(){
-        ArrayList<Hero> collectionHeroes=new ArrayList<>();
-        for (Card card:this.cards) {
-            if(card instanceof Hero){
+    public ArrayList<Hero> getCollectionHeros() {
+        ArrayList<Hero> collectionHeroes = new ArrayList<>();
+        for (Card card : this.cards) {
+            if (card instanceof Hero) {
                 collectionHeroes.add((Hero) card);
             }
         }
         return collectionHeroes;
     }
 
-    public ArrayList<Minion> getCollectionMinion(){
-        ArrayList<Minion> collectionMinions=new ArrayList<>();
-        for (Card card:this.cards) {
-            if(card instanceof Minion){
+    public ArrayList<Minion> getCollectionMinion() {
+        ArrayList<Minion> collectionMinions = new ArrayList<>();
+        for (Card card : this.cards) {
+            if (card instanceof Minion) {
                 collectionMinions.add((Minion) card);
             }
         }
         return collectionMinions;
     }
 
-    public ArrayList<Spell> getCollectionSpells(){
-        ArrayList<Spell> collectionSpells=new ArrayList<>();
-        for (Card card:this.cards) {
-            if(card instanceof Spell){
+    public ArrayList<Spell> getCollectionSpells() {
+        ArrayList<Spell> collectionSpells = new ArrayList<>();
+        for (Card card : this.cards) {
+            if (card instanceof Spell) {
                 collectionSpells.add((Spell) card);
             }
         }
         return collectionSpells;
     }
 
-    public int numberOfItems(){
+    public int numberOfItems() {
         return this.items.size();
     }
 }

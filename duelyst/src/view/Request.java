@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import Data.Account;
 import controller.GameController;
+import org.omg.PortableInterceptor.ServerRequestInfo;
 
 public class Request {
     protected Scanner scanner = new Scanner(System.in);
@@ -59,6 +60,26 @@ public class Request {
                 return checkSyntaxOfHelpCommand();
             case SAVE:
                 return checkSyntaxOfSaveCommand();
+            case SHOW_COLLECTION:
+                return checkSyntaxOfShowCollectionCommand();
+            case SEARCH_COLLECTION:
+                return checkSyntaxOfSearchCollection();
+            case CREATE_DECK:
+                return checkSyntaxOfCreateDeck();
+            case DELETE_DECK:
+                return checkSyntaxOfDeleteDeck();
+            case ADD_TO_DECK:
+                return checkSyntaxOfAddToDeck();
+            case REMOVE_FROM_DECK:
+                return checkSyntaxOfRemoveFromDeck();
+            case VALIDATE_DECK:
+                return checkSyntaxOfValidateDeck();
+            case SELECT_DECK:
+                return checkSyntaxOfSelectDeck();
+            case SHOW_ALL_DECKS:
+                return checkSyntaxOfShowAllDecks();
+            case SHOW_DECK:
+                return checkSyntaxOfShowDeck();
         }
         return true;
     }
@@ -298,7 +319,104 @@ public class Request {
             return false;
         }
         return true;
+    }
 
+    public boolean checkSyntaxOfDeleteDeck() {
+        Pattern patternForDeleteDeck = Pattern.compile(DELETE_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForDeleteDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.deleteDeck(name, Account.getLoginUser().getCollection());
+
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfAddToDeck() {
+        Pattern patternForAddToDeck = Pattern.compile(ADD_TO_DECK + " (?<cardId>\\w+) to deck (?<deckName>\\w+)");
+        Matcher matcher = patternForAddToDeck.matcher(command);
+        if (matcher.matches()) {
+            String cardId = matcher.group("cardId");
+            String deckName = matcher.group("deckName");
+            String result = GameController.addToDeck(cardId, deckName, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfRemoveFromDeck() {
+        Pattern patternForRemoveFromDeck = Pattern.compile(REMOVE_FROM_DECK + " (?<cardId>\\w+) from deck (?<deckName>\\w+)");
+        Matcher matcher = patternForRemoveFromDeck.matcher(command);
+        if (matcher.matches()) {
+            String cardId = matcher.group("cardId");
+            String deckName = matcher.group("deckName");
+            String result = GameController.removeFromDeck(cardId, deckName, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfValidateDeck() {
+        Pattern patternForValidateDeck = Pattern.compile(VALIDATE_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForValidateDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.isDeckValidate(name, Account.getLoginUser().getCollection());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfSelectDeck() {
+        Pattern patternForSelectDeck = Pattern.compile(SELECT_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForSelectDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.setMainDeck(name, Account.getLoginUser());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowAllDecks() {
+        Pattern patternForShowAllDecks = Pattern.compile(SHOW_ALL_DECKS);
+        Matcher matcher = patternForShowAllDecks.matcher(command);
+        if (matcher.matches()) {
+            CollectionView.showAllDecks(Account.getLoginUser());
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowDeck() {
+        Pattern patternForShowDeck = Pattern.compile(SELECT_DECK + " (?<name>\\w+)");
+        Matcher matcher = patternForShowDeck.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            CollectionView.showDeck(name, Account.getLoginUser().getCollection());
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
     }
 
 }
