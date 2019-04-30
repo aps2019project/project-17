@@ -262,7 +262,7 @@ public class Collection {
         return collectionHeroes;
     }
 
-    public ArrayList<Minion> getCollectionMinion() {
+    public ArrayList<Minion> getCollectionMinions() {
         ArrayList<Minion> collectionMinions = new ArrayList<>();
         for (Card card : this.cards) {
             if (card instanceof Minion) {

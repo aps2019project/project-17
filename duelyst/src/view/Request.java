@@ -83,6 +83,14 @@ public class Request {
                 return checkSyntaxOfShowAllDecks();
             case SHOW_DECK:
                 return checkSyntaxOfShowDeck();
+            case SHOW_fOR_SHOP_MENU:
+                return checkSyntaxForShowForShopMenu();
+            case SEARCH_COLLECTION:
+                return checkSyntaxOfSearchCollection();
+            case BUY:
+                return checkSyntaxOfBuyCommand();
+            case SELL:
+                return checkSyntaxOfSellCommand();
         }
         return true;
     }
@@ -235,7 +243,7 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfSaveCommand() {//todo must to be specified for different menus
+    public boolean checkSyntaxOfSaveCommand() {
         Pattern patternForSave = Pattern.compile(SAVE);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
@@ -268,7 +276,7 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfHelpCommand() {//todo must to be specified for different menus
+    public boolean checkSyntaxOfHelpCommand() {
         Pattern patternForSave = Pattern.compile(HELP);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
@@ -296,14 +304,9 @@ public class Request {
         return true;
     }
 
-    /**
-     * notice that this show collection is for collection menu
-     *
-     * @return
-     */
     public boolean checkSyntaxOfShowCommand() {
-        Pattern patternForShowCollection = Pattern.compile(SHOW);
-        Matcher matcher = patternForShowCollection.matcher(command);
+        Pattern patternForShow = Pattern.compile(SHOW);
+        Matcher matcher = patternForShow.matcher(command);
         if (menuType.equals(MenuType.COLLECTION_MENU)) {
             if (matcher.matches()) {
                 CollectionView.showUserCollection(Account.getLoginUser());
@@ -311,10 +314,14 @@ public class Request {
                 error = ErrorType.INVALID_INPUT;
                 return false;
             }
-        } else if (menuType.equals(MenuType.SHOP_MENU)) {//todo complete this part
-
+        } else if (menuType.equals(MenuType.SHOP_MENU)) {
+            if (matcher.matches()) {
+                ShopView.showAllProducts(Account.getLoginUser());
+            } else {
+                error = ErrorType.INVALID_INPUT;
+                return false;
+            }
         }
-
         return true;
     }
 
@@ -330,8 +337,15 @@ public class Request {
                 error = ErrorType.INVALID_INPUT;
                 return false;
             }
-        } else if (menuType.equals(MenuType.SHOP_MENU)) {//todo complete this part
-
+        } else if (menuType.equals(MenuType.SHOP_MENU)) {
+            if (matcher.matches()) {
+                String name = matcher.group("name");
+                String ID = GameController.searchInShop(name, Account.getLoginUser().getShop());
+                System.out.println(ID);
+            } else {
+                error = ErrorType.INVALID_INPUT;
+                return false;
+            }
         }
         return true;
     }
@@ -448,4 +462,57 @@ public class Request {
         return true;
     }
 
+    public boolean checkSyntaxForShowForShopMenu() {
+        Pattern patternForShowForShopMenu = Pattern.compile(SHOW_FOR_SHOP_MENU + "");
+        Matcher matcher = patternForShowForShopMenu.matcher(command);
+        if (matcher.matches()) {
+            CollectionView.showUserCollection(Account.getLoginUser());
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfSearchCollection() {
+        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION + " " + "(?<name>\\w+)");
+        Matcher matcher = patternForSearchCollection.matcher(command);
+        if (matcher.matches()) {//todo what to do if there was more than one card with that name?
+            String name = matcher.group("name");
+            String ID = GameController.search(name, Account.getLoginUser().getCollection());
+            System.out.println(ID);
+            return true;
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+    }
+
+    public boolean checkSyntaxOfBuyCommand() {
+        Pattern patternForBuy = Pattern.compile(BUY + " (?<name>\\w+)");
+        Matcher matcher = patternForBuy.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.buy(name, Account.getLoginUser().getShop());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfSellCommand() {
+        Pattern patternForSell = Pattern.compile(SELL + " (?<name>\\w+)");
+        Matcher matcher = patternForSell.matcher(command);
+        if (matcher.matches()) {
+            String name = matcher.group("name");
+            String result = GameController.sell(name, Account.getLoginUser().getShop());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
 }

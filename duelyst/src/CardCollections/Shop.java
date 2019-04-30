@@ -1,7 +1,6 @@
 package CardCollections;
 
-import effects.Card;
-import effects.Item;
+import effects.*;
 
 import java.util.ArrayList;
 
@@ -135,6 +134,36 @@ public class Shop {
         this.collection.changeDaric(item.getPrice());
         this.collection.getItems().remove(item);
         return "item successfully sell";
+    }
+
+    public ArrayList<Hero> getShopHeros() {
+        ArrayList<Hero> shopHeroes = new ArrayList<>();
+        for (Card card : this.cardsInShop) {
+            if (card instanceof Hero) {
+                shopHeroes.add((Hero) card);
+            }
+        }
+        return shopHeroes;
+    }
+
+    public ArrayList<Minion> getShopMinions() {
+        ArrayList<Minion> shopMinions = new ArrayList<>();
+        for (Card card : this.cardsInShop) {
+            if (card instanceof Minion) {
+                shopMinions.add((Minion) card);
+            }
+        }
+        return shopMinions;
+    }
+
+    public ArrayList<Spell> getShopSpells() {
+        ArrayList<Spell> shopSpells = new ArrayList<>();
+        for (Card card : this.cardsInShop) {
+            if (card instanceof Spell) {
+                shopSpells.add((Spell) card);
+            }
+        }
+        return shopSpells;
     }
 
 }
