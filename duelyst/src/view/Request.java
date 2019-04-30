@@ -85,6 +85,8 @@ public class Request {
                 return checkSyntaxOfShowDeck();
             case SHOW_fOR_SHOP_MENU:
                 return checkSyntaxForShowForShopMenu();
+            case SEARCH_COLLECTION:
+                return checkSyntaxOfSearchCollection();
         }
         return true;
     }
@@ -450,16 +452,30 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxForShowForShopMenu(){
-        Pattern patternForShowForShopMenu = Pattern.compile(SHOW_FOR_SHOP_MENU+"");
+    public boolean checkSyntaxForShowForShopMenu() {
+        Pattern patternForShowForShopMenu = Pattern.compile(SHOW_FOR_SHOP_MENU + "");
         Matcher matcher = patternForShowForShopMenu.matcher(command);
-        if(matcher.matches()){
+        if (matcher.matches()) {
             CollectionView.showUserCollection(Account.getLoginUser());
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
+    }
+
+    public boolean checkSyntaxOfSearchCollection() {
+        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION +" "+"(?<name>\\w+)");
+        Matcher matcher = patternForSearchCollection.matcher(command);
+        if (matcher.matches()) {//todo what to do if there was more than one card with that name?
+            String name = matcher.group("name");
+            String ID = GameController.search(name, Account.getLoginUser().getCollection());
+            System.out.println(ID);
+            return true;
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
     }
 
 }
