@@ -82,6 +82,10 @@ public class GameController {
         return account.setMainDeck(deckName);
     }
 
+    public static String buy(String cardName,Shop shop){
+        return shop.buy(cardName);
+    }
+
     public static String logout() {
         return Account.logout();
     }

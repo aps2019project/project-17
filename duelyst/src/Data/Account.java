@@ -162,8 +162,12 @@ public class Account implements Comparable<Account> {
         return loginUser;
     }
 
-    public  String save() {
+    public String save() {
         return "Saved!";
+    }
+
+    public Shop getShop() {
+        return shop;
     }
 
     /**
