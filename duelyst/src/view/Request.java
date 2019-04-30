@@ -83,6 +83,8 @@ public class Request {
                 return checkSyntaxOfShowAllDecks();
             case SHOW_DECK:
                 return checkSyntaxOfShowDeck();
+            case SHOW_fOR_SHOP_MENU:
+                return checkSyntaxForShowForShopMenu();
         }
         return true;
     }
@@ -302,8 +304,8 @@ public class Request {
      * @return
      */
     public boolean checkSyntaxOfShowCommand() {
-        Pattern patternForShowCollection = Pattern.compile(SHOW);
-        Matcher matcher = patternForShowCollection.matcher(command);
+        Pattern patternForShow = Pattern.compile(SHOW);
+        Matcher matcher = patternForShow.matcher(command);
         if (menuType.equals(MenuType.COLLECTION_MENU)) {
             if (matcher.matches()) {
                 CollectionView.showUserCollection(Account.getLoginUser());
@@ -442,6 +444,18 @@ public class Request {
             String name = matcher.group("name");
             CollectionView.showDeck(name, Account.getLoginUser().getCollection());
         } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxForShowForShopMenu(){
+        Pattern patternForShowForShopMenu = Pattern.compile(SHOW_FOR_SHOP_MENU+"");
+        Matcher matcher = patternForShowForShopMenu.matcher(command);
+        if(matcher.matches()){
+            CollectionView.showUserCollection(Account.getLoginUser());
+        }else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
