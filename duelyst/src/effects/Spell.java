@@ -17,4 +17,30 @@ public class Spell extends Card {
     public void show(){
         System.out.println("Name : "+this.name+" - MP : "+this.manaPoint+" - Desc : "+this.desc);
     }
+
+    public int getManaPoint() {
+        return manaPoint;
+    }
+
+    public void setManaPoint(int manaPoint) {
+        this.manaPoint = manaPoint;
+    }
+
+    @Override
+    public String getDesc() {
+        return desc;
+    }
+
+    @Override
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public Buff getBuff() {
+        return buff;
+    }
+
+    public void setBuff(Buff buff) {
+        this.buff = buff;
+    }
 }
