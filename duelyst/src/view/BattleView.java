@@ -51,8 +51,16 @@ public class BattleView extends View {
         }
     }
 
-    public static void showHand(Hand hand) {
-
+    public static void showHand(Battle battle) {
+        Hand hand = battle.showHand();
+        for (int i = 0; i < hand.getCards().size(); i++) {
+            Card card = hand.getCards().get(i);
+            String type;
+            if (card instanceof Minion)
+                type = "Minion";
+            else type = "Spell";
+            System.out.printf("name: %s, type: %s", card.getName(), type);
+        }
     }
 
     public static void showCollectables() {
