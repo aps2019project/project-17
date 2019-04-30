@@ -6,5 +6,8 @@ public enum TargetRange {
     THREE,
     ALL,
     ALL_IN_COLUMN,
-    AROUND
+    AROUND,
+    DISTANCE_TWO,
+    SELF,
+    RANDOM
 }

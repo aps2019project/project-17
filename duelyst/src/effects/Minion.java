@@ -12,7 +12,7 @@ public class Minion extends Card {
     protected int yCoordinate;
     protected int distanceCanMove;
     protected int maxRangeToInput;
-    protected boolean isHolyBuffActive;
+    protected int holyBuffState;
     protected boolean canMove;
     protected boolean canCounterAttack;
     private boolean isStun;
@@ -30,7 +30,7 @@ public class Minion extends Card {
         this.attackRange = attackRange;
         this.xCoordinate = 0;
         this.yCoordinate = 0;
-        this.isHolyBuffActive = false;
+        this.holyBuffState = 0;
         this.canMove = true;
         this.canCounterAttack = true;
         this.distanceCanMove = 2;
@@ -42,6 +42,7 @@ public class Minion extends Card {
         this.hasFlag = false;
         this.minionType = minionType;
         this.attackType = attackType;
+        this.numberOfAttack = 0;
         makeAttackBuff(attackPower);
     }
 
@@ -125,8 +126,8 @@ public class Minion extends Card {
         isStun = stun;
     }
 
-    public void activeHolyBuff() {
-        isHolyBuffActive = true;
+    public void activeHolyBuff(int holyBuffState) {
+        this.holyBuffState = holyBuffState;
     }
 
     public void setCanMove(boolean canMove) {

@@ -35,7 +35,13 @@ public class Buff {
         for (BuffDetail buffDetail : this.buffDetails) {
             switch (buffDetail.getBuffType()) {
                 case HOYL:
-                    holyBuff(minion);
+                    if ( buffDetail.getId() == 137)
+                        holyBuff(minion,12);
+                    else
+                        holyBuff(minion, 1);
+                    break;
+                case DE_HOLY:
+                    holyBuff(minion, -1);
                     break;
                 case STUN:
                     stunBuff(minion);
@@ -79,8 +85,8 @@ public class Buff {
         this.buffDetails.add(buffDetail);
     }
 
-    public void holyBuff(Minion minion) {
-        minion.activeHolyBuff();
+    public void holyBuff(Minion minion, int holyBuffState) {
+        minion.activeHolyBuff(holyBuffState);
     }
 
     public void changeHealthOrAttack(Minion minion, int changeHealthValue, int changeAttackValue) {
