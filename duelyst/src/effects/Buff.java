@@ -4,30 +4,27 @@ import java.util.ArrayList;
 
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
-    private ArrayList<Minion> targetMinions;
-
+    private ArrayList<Minion> targetMinionsForWeakNes;
+    private ArrayList<Minion> targetMinionsForHoly;
     public Buff() {
-        this.targetMinions = new ArrayList<>();
+        this.targetMinionsForWeakNes = new ArrayList<>();
         this.buffDetails = new ArrayList<>();
     }
 
-    public void action(ArrayList<Object> objects, TargetType targetType) {
-        for (Object object : objects) {
-            switch (targetType) {
-                case NONE:
-                case ENEMY_HERO:
-                case ENEMY:
-                    actionForMinion((Minion) object, true);
-                    break;
-                case INSIDER:
-                case INSIDER_HERO:
-                    actionForMinion((Minion) object, false);
-                    break;
-                case CELL:
-                    break;
-                case PLAYER:
-                    break;
-            }
+    private void action(Object object, TargetType targetType) {
+        switch (targetType) {
+            case NONE:
+            case ENEMY_HERO:
+            case ENEMY:
+                actionForMinion((Minion) object, true);
+                break;
+            case INSIDER:
+            case INSIDER_HERO:
+                actionForMinion((Minion) object, false);
+                break;
+            case CELL:
+                break;
+            case PLAYER:
         }
     }
 
@@ -39,12 +36,14 @@ public class Buff {
         for (BuffDetail buffDetail : this.buffDetails) {
             switch (buffDetail.getBuffType()) {
                 case HOYL:
+                    targetMinionsForWeakNes.add(minion);
                     if (buffDetail.getId() == 137)
                         holyBuff(minion, 12);
                     else
                         holyBuff(minion, 1);
                     break;
                 case DE_HOLY:
+                    targetMinionsForWeakNes.add(minion);
                     holyBuff(minion, -1);
                     break;
                 case STUN:
@@ -54,16 +53,12 @@ public class Buff {
                     disarmBuff(minion);
                     break;
                 case WEAKNESS:
-                    targetMinions.add(minion);
+                    targetMinionsForWeakNes.add(minion);
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
                     break;
                 case CLEAR:
                     clearBuff(minion, isEnemy);
-                    break;
-                case FIRE_CELL:
-                    break;
-                case POISON:
                     break;
                 case ANTI:
                     antiBuff(minion, buffDetail.getAntiBuffType());
@@ -71,16 +66,17 @@ public class Buff {
                 case ANTI_ALL_NEGATIVE:
                     break;
                 case ANTI_ALL_POSITIVE:
-                    break;
             }
         }
     }
 
     private void removeBuff(BuffDetail buffDetail) {
-        if (buffDetail.getBuffType() == BuffType.WEAKNESS) {
-            for (Minion targetMinion : targetMinions) {
+        if (buffDetail.getBuffType().equals(BuffType.WEAKNESS)) {
+            for (Minion targetMinion : targetMinionsForWeakNes) {
                 deletingWeaknessBuff(targetMinion, buffDetail.getEffectTime());
             }
+        } else if (buffDetail.getBuffType().equals(BuffType.HOYL)) {
+
         }
         buffDetails.remove(buffDetail);
     }
@@ -103,6 +99,7 @@ public class Buff {
     }
 
     public void changeHealthOrAttack(Minion minion, int changeHealthValue, int changeAttackValue) {
+        changeHealthValue += minion.getHolyBuffState();
         minion.changeHealth(changeHealthValue);
         minion.changeAttackPower(changeAttackValue);
     }
@@ -110,8 +107,6 @@ public class Buff {
     public void stunBuff(Minion minion) {
         if (!minion.getAntiBuff().equals(BuffType.STUN)) {
             minion.setStun(true);
-            minion.setCanMove(false);
-            minion.setCanAttack(false);
         }
     }
 
