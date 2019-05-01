@@ -34,15 +34,6 @@ public class Account implements Comparable<Account> {
         this.shop = new Shop(this.collection);
     }
 
-    public Collection getCollection() {
-        return collection;
-    }
-
-    public int getDaric() {
-        this.daric = this.collection.getDaric();
-        return daric;
-    }
-
     public static String addUser(String userName, String passWord) {
 
         for (Account account : GameController.getAccounts()) {
@@ -74,6 +65,14 @@ public class Account implements Comparable<Account> {
         return "logout successfully done";
     }
 
+    public Deck getMainDeck() {
+        return this.collection.getMainDeck();
+    }
+
+    public void setMainDeck() {
+        this.player.setMainDeck(this.collection.getMainDeck());
+    }
+
     public static ArrayList<Account> getLeaderBoard() {
         sortAccounts();
         return GameController.getAccounts();
@@ -90,36 +89,57 @@ public class Account implements Comparable<Account> {
         });
     }
 
-    public String setMainDeck(String deckName) {
-        Deck deck = this.collection.findDeck(deckName);
-
-        if (deck == null) {
-            return "cannot find deck with this name";
-        }
-
-        this.player.setMainDeck(deck);
-        this.collection.setMainDeck(deck);
-        return "set main deck successfully done";
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public void setCollection(Collection collection) {
-        this.collection = collection;
-    }
-
     public MatchHistory getMatchHistory() {
         return matchHistory;
     }
 
-    public void setMatchHistory(GameData gameData) {
-        this.matchHistory.addGameData(gameData);
+    public void incrementNumbOfWins() {
+        this.numbOfWins++;
+    }
+
+    public void incrementNumbOfDraw() {
+        this.numbOfDraw++;
+    }
+
+    public void incrementNumbOfLose() {
+        this.numbOfLose++;
+    }
+
+    public String save() {
+        return "Saved!";
+    }
+
+    public Collection getCollection() {
+        return this.collection;
+    }
+
+    public int getDaric() {
+        this.daric = this.collection.getDaric();
+        return this.daric;
+    }
+
+    public int getNumbOfDraw() {
+        return numbOfDraw;
+    }
+
+    public int getNumbOfLose() {
+        return numbOfLose;
+    }
+
+    public static ArrayList<Account> getAccounts() {
+        return GameController.getAccounts();
+    }
+
+    public static Account getLoginUser() {
+        return loginUser;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public String getUserName() {
@@ -134,45 +154,14 @@ public class Account implements Comparable<Account> {
         return numbOfWins;
     }
 
-    public void incrementNumbOfWins() {
-        this.numbOfWins++;
+    public static Account getAccount(String userName) {
+        for (int i = 0; i < GameController.getAccounts().size(); i++) {
+            if (GameController.getAccounts().get(i).getUserName().equals(userName))
+                return GameController.getAccounts().get(i);
+        }
+        return null;
     }
 
-    public int getNumbOfDraw() {
-        return numbOfDraw;
-    }
-
-    public void incrementNumbOfDraw() {
-        this.numbOfDraw++;
-    }
-
-    public int getNumbOfLose() {
-        return numbOfLose;
-    }
-
-    public void incrementNumbOfLose() {
-        this.numbOfLose++;
-    }
-
-    public static ArrayList<Account> getAccounts() {
-        return GameController.getAccounts();
-    }
-
-    public static Account getLoginUser() {
-        return loginUser;
-    }
-
-    public String save() {
-        return "Saved!";
-    }
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    /**
-     * for comparing accounts according to their num of wins in increasing order
-     */
     @Override
     public int compareTo(Account o) {
         Integer firstNumOfWins = this.numbOfWins;
