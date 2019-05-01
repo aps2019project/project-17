@@ -31,12 +31,16 @@ public class Buff {
         }
     }
 
+    public void addBuff(BuffDetail buffDetail) {
+        this.buffDetails.add(buffDetail);
+    }
+
     private void actionForMinion(Minion minion, boolean isEnemy) {
         for (BuffDetail buffDetail : this.buffDetails) {
             switch (buffDetail.getBuffType()) {
                 case HOYL:
-                    if ( buffDetail.getId() == 137)
-                        holyBuff(minion,12);
+                    if (buffDetail.getId() == 137)
+                        holyBuff(minion, 12);
                     else
                         holyBuff(minion, 1);
                     break;
@@ -56,6 +60,17 @@ public class Buff {
                     break;
                 case CLEAR:
                     clearBuff(minion, isEnemy);
+                    break;
+                case FIRE_CELL:
+                    break;
+                case POISON:
+                    break;
+                case ANTI:
+                    antiBuff(minion, buffDetail.getAntiBuffType());
+                    break;
+                case ANTI_ALL_NEGATIVE:
+                    break;
+                case ANTI_ALL_POSITIVE:
                     break;
             }
         }
@@ -81,12 +96,10 @@ public class Buff {
         minion.changeHealth(time);
     }
 
-    public void addBuff(BuffDetail buffDetail) {
-        this.buffDetails.add(buffDetail);
-    }
 
     public void holyBuff(Minion minion, int holyBuffState) {
-        minion.activeHolyBuff(holyBuffState);
+        if (!minion.getAntiBuff().equals(BuffType.HOYL))
+            minion.activeHolyBuff(holyBuffState);
     }
 
     public void changeHealthOrAttack(Minion minion, int changeHealthValue, int changeAttackValue) {
@@ -95,13 +108,16 @@ public class Buff {
     }
 
     public void stunBuff(Minion minion) {
-        minion.setStun(true);
-        minion.setCanMove(false);
-        minion.setCanAttack(false);
+        if (!minion.getAntiBuff().equals(BuffType.STUN)) {
+            minion.setStun(true);
+            minion.setCanMove(false);
+            minion.setCanAttack(false);
+        }
     }
 
     public void disarmBuff(Minion minion) {
-        minion.setCanCounterAttack(false);
+        if (!minion.getAntiBuff().equals(BuffType.DISARM))
+            minion.setCanCounterAttack(false);
     }
 
     public void clearBuff(Minion minion, boolean isEnemy) {
@@ -111,5 +127,9 @@ public class Buff {
             else if (isEnemy && (buffDetail.getBuffType() == BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF && (buffDetail.getChangeAttackPowerValue() > 0 || buffDetail.getChangeHealthValue() > 0)))
                 removeBuff(buffDetail);
         }
+    }
+
+    public void antiBuff(Minion minion, BuffType buffType) {
+        minion.setAntiBuff(buffType);
     }
 }

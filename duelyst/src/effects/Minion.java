@@ -15,12 +15,13 @@ public class Minion extends Card {
     protected int holyBuffState;
     protected boolean canMove;
     protected boolean canCounterAttack;
-    private boolean isStun;
+    protected boolean isStun;
     protected boolean canAttack;
     protected MinionType minionType;
     protected boolean hasFlag;
-    private AttackType attackType;
-    private int numberOfAttack;
+    protected AttackType attackType;
+    protected int numberOfAttack;
+    protected BuffType antiBuff;
 
     public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
         super(name, id, price);
@@ -73,8 +74,13 @@ public class Minion extends Card {
         this.hasFlag = hasFlag;
     }
 
+
     public Buff getBuff() {
         return buff;
+    }
+
+    public BuffType getAntiBuff() {
+        return antiBuff;
     }
 
     public void addBuff(BuffDetail buffDetail) {
@@ -211,5 +217,9 @@ public class Minion extends Card {
 
     public int getNumberOfAttack() {
         return numberOfAttack;
+    }
+
+    public void setAntiBuff(BuffType antiBuff) {
+        this.antiBuff = antiBuff;
     }
 }
