@@ -61,6 +61,17 @@ public class Buff {
                 case CLEAR:
                     clearBuff(minion, isEnemy);
                     break;
+                case FIRE_CELL:
+                    break;
+                case POISON:
+                    break;
+                case ANTI:
+                    antiBuff(minion, buffDetail.getAntiBuffType());
+                    break;
+                case ANTI_ALL_NEGATIVE:
+                    break;
+                case ANTI_ALL_POSITIVE:
+                    break;
             }
         }
     }
@@ -116,5 +127,9 @@ public class Buff {
             else if (isEnemy && (buffDetail.getBuffType() == BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF && (buffDetail.getChangeAttackPowerValue() > 0 || buffDetail.getChangeHealthValue() > 0)))
                 removeBuff(buffDetail);
         }
+    }
+
+    public void antiBuff(Minion minion, BuffType buffType) {
+        minion.setAntiBuff(buffType);
     }
 }

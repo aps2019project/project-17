@@ -63,6 +63,10 @@ public class BuffDetail {
         return buffType;
     }
 
+    public BuffType getAntiBuffType() {
+        return antiBuffType;
+    }
+
     public int getId() {
         return id;
     }
