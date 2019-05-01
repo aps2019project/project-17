@@ -2,7 +2,6 @@ package Data;
 
 import CardCollections.*;
 import effects.Card;
-import effects.Hero;
 import effects.Item;
 import effects.Minion;
 
@@ -55,6 +54,15 @@ public class Player {
         return null;
     }
 
+
+    public Card getCardFromHand(String cardName) {
+        for (int i = 0; i < hand.getCards().size(); i++) {
+            if (hand.getCards().get(i).getName().equals(cardName))
+                return hand.getCards().get(i);
+        }
+        return null;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -100,7 +108,7 @@ public class Player {
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
         if (addHero)
-            copyMainDeck.addCard(mainDeck.getHero());
+            copyMainDeck.setHero(mainDeck.getHero());
     }
 
     private void setHand() {
@@ -110,14 +118,6 @@ public class Player {
             this.hand.addCard(copyMainDeck.getCards().get(n));
             this.copyMainDeck.getCards().remove(n);
         }
-    }
-
-    public Card getCardFromHand(String cardName) {
-        for (int i = 0; i < hand.getCards().size(); i++) {
-            if (hand.getCards().get(i).getName().equals(cardName))
-                return hand.getCards().get(i);
-        }
-        return null;
     }
 
     public Hand getHand() {
@@ -153,8 +153,8 @@ public class Player {
     }
 
     private void setNextCard() {
-        if (this.nextCard != null)
-            return;
+        if (copyMainDeck.getCards().size() == 0)
+            setCopyMainDeck(false);
         Random random = new Random();
         int n = random.nextInt(this.copyMainDeck.getCards().size());
         this.nextCard = this.copyMainDeck.getCards().get(n);
@@ -162,15 +162,14 @@ public class Player {
     }
 
     public void addCardToHand() {
+        if (this.hand.getCards().size() >= 5)
+            return;
         hand.addCard(this.nextCard);
-        this.nextCard = null;
-        if (copyMainDeck.getCards().size() == 1)
-            setCopyMainDeck(false);
+        setNextCard();
     }
 
     public void removeCardFromHand(Card card) {
         hand.removeCard(card);
-        graveYard.add(card);
     }
 
     public Deck getCopyMainDeck() {
