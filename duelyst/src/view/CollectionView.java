@@ -12,33 +12,33 @@ public class CollectionView extends View {
             int counter = 1;
             for (Hero hero : account.getCollection().getCollectionHeros()) {
                 System.out.println();
-                System.out.print(counter+" : ");
+                System.out.print(counter + " : ");
                 hero.show();
                 counter++;
             }
         }
         System.out.print("Items:");
-        if(account.getCollection().getItems()!=null){
-            int counter=1;
-            for (Item item:account.getCollection().getItems()) {
+        if (account.getCollection().getItems() != null) {
+            int counter = 1;
+            for (Item item : account.getCollection().getItems()) {
                 System.out.println();
-                System.out.println(counter+" : ");
+                System.out.println(counter + " : ");
                 item.show();
                 counter++;
             }
         }
         System.out.print("Cards:");
-        if(account.getCollection().getCards()!=null){
-            int counter=1;
-            for (Spell spell:account.getCollection().getCollectionSpells()) {
+        if (account.getCollection().getCards() != null) {
+            int counter = 1;
+            for (Spell spell : account.getCollection().getCollectionSpells()) {
                 System.out.println();
-                System.out.print(counter+" : Type : Spell - ");
+                System.out.print(counter + " : Type : Spell - ");
                 spell.show();
                 counter++;
             }
-            for (Minion minion:account.getCollection().getCollectionMinion()) {
+            for (Minion minion : account.getCollection().getCollectionMinions()) {
                 System.out.println();
-                System.out.println(counter+" : Type : Minion - ");
+                System.out.println(counter + " : Type : Minion - ");
                 minion.show();
                 counter++;
             }
@@ -47,12 +47,16 @@ public class CollectionView extends View {
     }
 
     public static void showAllDecks(Account account) {
-        int counter=1;
-        for (Deck deck:account.getCollection().getDecks()) {
-            System.out.println(counter+" : "+deck.getName());
+        int counter = 1;
+        for (Deck deck : account.getCollection().getDecks()) {
+            System.out.println(counter + " : " + deck.getName());
             showDeck(deck);
             counter++;
         }
+    }
+
+    public static void showDeck(String deckName, Collection collection) {
+        showDeck(collection.findDeck(deckName));
     }
 
     public static void showDeck(Deck deck) {
@@ -81,21 +85,20 @@ public class CollectionView extends View {
             }
             counter++;
         }
-
     }
 
     public static void collectionHelp() {
-        System.out.println("exit");
-        System.out.println("show");
-        System.out.println("search [card name|item name]");
+        System.out.println("command for exit  ->  \"exit\"");
+        System.out.println("command for show  ->  \"show\"");
+        System.out.println("command for searching card   ->  \"search [card name|item name]\"");
         System.out.println("accountSave");
-        System.out.println("create deck [deck name]");
-        System.out.println("delete deck [deck name]");
-        System.out.println("add [card id | hero id] from deck [deck name]");
-        System.out.println("validate deck [deck name]");
-        System.out.println("select deck [deck name]");
-        System.out.println("show all decks");
-        System.out.println("show deck [deck name]");
+        System.out.println("command for creating deck  ->  \"create deck [deck name]\"");
+        System.out.println("command for deleting deck  ->  \"delete deck [deck name]\"");
+        System.out.println("command for add card to deck  ->  \"add [card id | hero id] from deck [deck name]\"");
+        System.out.println("command for check validate deck  ->  \"validate deck [deck name]\"");
+        System.out.println("command for selecting card  ->  \"select deck [deck name]\"");
+        System.out.println("command for show all decks  ->  \"show all decks\"");
+        System.out.println("command for show deck  ->  \"show deck [deck name]\"");
         System.out.println("help");
     }
 }

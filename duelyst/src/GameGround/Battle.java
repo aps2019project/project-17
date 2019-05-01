@@ -118,13 +118,15 @@ public class Battle {
     private ArrayList<Minion> showMinions(Player player) {
         ArrayList<Minion> toReturn = new ArrayList<>();
 
-        for (int i = 0; i < player.getMainDeck().getCards().size(); i++) {
-            Card card = player.getMainDeck().getCards().get(i);
-            if (((Minion) card).getXCoordinate() != 0 && ((Minion) card).getYCoordinate() != 0)
-                toReturn.add((Minion) card);
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                if (this.board.getCells()[i][j].getCard() == null)
+                    continue;
+                Minion minion = (Minion) this.board.getCells()[i][j].getCard();
+                if (cardIsMine(minion, player))
+                    toReturn.add(minion);
+            }
         }
-
-        toReturn.add(player.getMainDeck().getHero());
         return toReturn;
     }
 
@@ -137,15 +139,11 @@ public class Battle {
     }
 
     public Card returnCard(String cardID) {
+        if (whoseTurn().getMainDeck().getHero().getId().equals(cardID))
+            return whoseTurn().getMainDeck().getHero();
+
         for (int i = 0; i < whoseTurn().getMainDeck().getCards().size(); i++) {
             Card card = whoseTurn().getMainDeck().getCards().get(i);
-            if (card.getId().equals(cardID))
-                return card;
-            if (whoseTurn().getMainDeck().getHero().getId().equals(cardID))
-                return whoseTurn().getMainDeck().getHero();
-        }
-        for (int i = 0; i < theOtherPlayer().getMainDeck().getCards().size(); i++) {
-            Card card = theOtherPlayer().getMainDeck().getCards().get(i);
             if (card.getId().equals(cardID))
                 return card;
         }
@@ -153,15 +151,7 @@ public class Battle {
     }
 
     public boolean cardIsMine(Card card, Player player) {
-        if (card instanceof Hero) {
-            return player.getMainDeck().getHero().getName().equals(card.getName());
-        }
-        for (int i = 0; i < player.getMainDeck().getCards().size(); i++) {
-            Card card1 = player.getMainDeck().getCards().get(i);
-            if (Card.equals(card, card1))
-                return true;
-        }
-        return false;
+        return card.getUserName().equals(player.getUserName());
     }
 
     public String selectCard(String cardID) {
@@ -172,7 +162,7 @@ public class Battle {
                     continue;
                 if (cardIsMine(card, whoseTurn())) {
                     this.selectedCard = card;
-                    return "card successfully added";
+                    return "card successfully selected";
                 }
             }
         }
@@ -247,7 +237,7 @@ public class Battle {
 
         if (!board.isCoordinateAvailable((Minion) card, cell, whoseTurn(), this))
             return "invalid target";
-
+        card.setUserName(whoseTurn().getUserName());
         whoseTurn().lessMana(((Minion) card).getManaPoint());
         cell.setCard(card);
         ((Minion) card).setCoordinate(x, y);

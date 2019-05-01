@@ -7,7 +7,6 @@ public class Minion extends Card {
     protected int attackPower;
     protected int healthPoint;
     protected int manaPoint;
-    protected String desc;
     protected int attackRange;
     protected int xCoordinate;
     protected int yCoordinate;
@@ -174,5 +173,49 @@ public class Minion extends Card {
 
     public boolean CanMove() {
         return canMove;
+    }
+
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public int getHealthPoint() {
+        return healthPoint;
+    }
+
+    public int getAttackRange() {
+        return attackRange;
+    }
+
+    public int getxCoordinate() {
+        return xCoordinate;
+    }
+
+    public int getyCoordinate() {
+        return yCoordinate;
+    }
+
+    public boolean isCanMove() {
+        return canMove;
+    }
+
+    public boolean isCanCounterAttack() {
+        return canCounterAttack;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public MinionType getMinionType() {
+        return minionType;
+    }
+
+    public AttackType getAttackType() {
+        return attackType;
+    }
+
+    public int getNumberOfAttack() {
+        return numberOfAttack;
     }
 }

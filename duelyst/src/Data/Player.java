@@ -20,16 +20,17 @@ public class Player {
     private ArrayList<Card> graveYard;
     private int holdingFlags;
     private boolean playerHasFlag;
+    private Card nextCard;
 
     public Player(String userName) {
         this.mana = 2;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
-        this.copyMainDeck = new Deck(mainDeck.getName());
         this.hand = new Hand();
         this.userName = userName;
         this.holdingFlags = 0;
         this.playerHasFlag = false;
+        this.nextCard = null;
     }
 
     public void allMinionsReset() {
@@ -88,6 +89,7 @@ public class Player {
 
     public void setMainDeck(Deck deck) {
         this.mainDeck = deck;
+        this.copyMainDeck = new Deck(this.mainDeck.getName());
         setCopyMainDeck(true);
         setHand();
         collectAbleItems.add(this.mainDeck.getItem());
@@ -146,12 +148,22 @@ public class Player {
         this.mana -= change;
     }
 
-    public void addCardToHand() {
+    public Card getNextCard() {
+        return nextCard;
+    }
+
+    private void setNextCard() {
+        if (this.nextCard != null)
+            return;
         Random random = new Random();
         int n = random.nextInt(this.copyMainDeck.getCards().size());
-        hand.addCard(this.copyMainDeck.getCards().get(n));
+        this.nextCard = this.copyMainDeck.getCards().get(n);
         this.copyMainDeck.getCards().remove(n);
+    }
 
+    public void addCardToHand() {
+        hand.addCard(this.nextCard);
+        this.nextCard = null;
         if (copyMainDeck.getCards().size() == 1)
             setCopyMainDeck(false);
     }
