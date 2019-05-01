@@ -12,7 +12,6 @@ public class Deck {
     private ArrayList<Card> cards;
     private Item item;
     private Hero hero;
-    private static ArrayList<Deck> decks;
 
     public Deck(String name) {
         this.name = name;
@@ -24,20 +23,9 @@ public class Deck {
         this.item = item;
     }
 
-    public static ArrayList<Deck> getDecks() {
-        return decks;
-    }
-
-    public String addCard(Card card){
-        for (Card card1 : cards) {
-            if (card1.getName().equals(card.getName()))
-                return "this card already exist";
-        }
+    public void addCard(Card card) {
         cards.add(card);
-        return "card successfully add";
     }
-
-
 
     public String getName() {
         return name;
@@ -50,7 +38,6 @@ public class Deck {
 
     public Item getItem() {
         return item;
-
     }
 
     public Hero getHero() {
@@ -59,15 +46,6 @@ public class Deck {
 
     public void setHero(Hero hero) {
         this.hero = hero;
-    }
-
-    public static boolean isDeckValidate(String deckName) {
-        for (Deck deck : decks) {
-            if (deck.getName().equals(deckName))
-                return deck.isDeckValidate();
-
-        }
-        return false;
     }
 
     public boolean isDeckValidate() {
@@ -81,9 +59,4 @@ public class Deck {
     public int getNumberOfDeckCards() {
         return this.cards.size();
     }
-
-//    public Deck getDeck(String deckName) {
-//
-//    }
-
 }
