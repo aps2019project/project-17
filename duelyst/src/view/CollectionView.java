@@ -8,9 +8,9 @@ public class CollectionView extends View {
 
     public static void showUserCollection(Account account) {
         System.out.print("Heroes:");
-        if (account.getCollection().getCollectionHeros() != null) {
+        if (account.getCollection().getCollectionHeroes() != null) {
             int counter = 1;
-            for (Hero hero : account.getCollection().getCollectionHeros()) {
+            for (Hero hero : account.getCollection().getCollectionHeroes()) {
                 System.out.println();
                 System.out.print(counter + " : ");
                 hero.show();

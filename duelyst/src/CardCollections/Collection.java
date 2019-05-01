@@ -9,7 +9,7 @@ import effects.Card;
 public class Collection {
     private ArrayList<Card> cards;
     private ArrayList<Item> items;
-    private ArrayList<Deck> decks = new ArrayList<>();
+    private ArrayList<Deck> decks;
     private Deck mainDeck;
     private int daric;
     private static ArrayList<Collection> collections = new ArrayList<>();
@@ -17,23 +17,27 @@ public class Collection {
     public Collection() {
         this.cards = new ArrayList<>();
         this.items = new ArrayList<>();
+        this.decks = new ArrayList<>();
         this.daric = 15000;
+        this.mainDeck = null;
     }
 
-    public int getDaric() {
-        return daric;
-    }
-
-    public void addCardToCollection(Card card) {
+    public String addCardToCollection(Card card) {
+        for (Card card1 : this.cards) {
+            if (card1.getId().equals(card.getId()))
+                return "this card already Exist";
+        }
         this.cards.add(card);
+        return "card successfully added";
     }
 
-    public void addItemToCollection(Item item) {
+    public String addItemToCollection(Item item) {
+        for (Item item1 : this.items) {
+            if (item1.getName().equals(item.getName()))
+                return "this item already Exist";
+        }
         this.items.add(item);
-    }
-
-    public static ArrayList<Collection> getCollections() {
-        return collections;
+        return "item successfully added";
     }
 
     public void changeDaric(int value) {
@@ -60,8 +64,11 @@ public class Collection {
         return mainDeck;
     }
 
-    public void setMainDeck(Deck mainDeck) {
-        this.mainDeck = mainDeck;
+    public String setMainDeck(String deckName) {
+        if (findDeck(deckName) == null)
+            return "cant find deck with this name";
+        this.mainDeck = findDeck(deckName);
+        return "main deck successfully choose";
     }
 
     public String search(String name) {
@@ -120,13 +127,15 @@ public class Collection {
         if (garbageDeck != null) {
             decks.remove(garbageDeck);
             return "Deck Successfully deleted";
-        } else {
-            return "No such deck found";
         }
+        return "No such deck found";
     }
 
     private boolean isCardInDeck(String cardID, String deckName) {
         Deck deck = findDeck(deckName);
+
+        if (deck == null)
+            return false;
 
         for (int i = 0; i < deck.getCards().size(); i++) {
             Card card = deck.getCards().get(i);
@@ -165,7 +174,7 @@ public class Collection {
             return "invalid card\\item";
 
         if (card != null) {
-            if (card.getClass().toString().equals("class Hero")) {
+            if (card instanceof Hero) {
                 if (deckHasHero(deckName))
                     return "deck already has hero";
 
@@ -252,7 +261,7 @@ public class Collection {
         return "deck is not validate";
     }
 
-    public ArrayList<Hero> getCollectionHeros() {
+    public ArrayList<Hero> getCollectionHeroes() {
         ArrayList<Hero> collectionHeroes = new ArrayList<>();
         for (Card card : this.cards) {
             if (card instanceof Hero) {
@@ -282,7 +291,15 @@ public class Collection {
         return collectionSpells;
     }
 
+    public int getDaric() {
+        return daric;
+    }
+
     public int numberOfItems() {
         return this.items.size();
+    }
+
+    public static ArrayList<Collection> getCollections() {
+        return collections;
     }
 }
