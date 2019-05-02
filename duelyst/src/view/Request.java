@@ -336,6 +336,7 @@ public class Request {
         Matcher matcher = patternForLogIn.matcher(command);
         if (matcher.matches()) {
             String userName = matcher.group("userName");
+            System.out.println("password: ");
             String passWord = scanner.nextLine();
             String result = GameController.login(userName, passWord);
             System.out.println(result);
