@@ -15,9 +15,9 @@ public class GameData {
         return timeOfGame;
     }
 
-    public GameData(String name, LocalDateTime timeOfGame) {
+    public GameData(String name) {
         this.name = name;
-        this.timeOfGame = timeOfGame;
+        this.timeOfGame = LocalDateTime.now();
     }
 
     public MatchState getMatchState() {

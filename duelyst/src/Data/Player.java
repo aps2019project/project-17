@@ -21,7 +21,7 @@ public class Player {
     private boolean playerHasFlag;
     private Card nextCard;
 
-    public Player(String userName) {
+    public Player(String userName, Deck deck) {
         this.mana = 2;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
@@ -30,6 +30,7 @@ public class Player {
         this.holdingFlags = 0;
         this.playerHasFlag = false;
         this.nextCard = null;
+        setMainDeck(deck);
     }
 
     public void allMinionsReset() {
@@ -95,7 +96,7 @@ public class Player {
         return mainDeck;
     }
 
-    public void setMainDeck(Deck deck) {
+    private void setMainDeck(Deck deck) {
         this.mainDeck = deck;
         this.copyMainDeck = new Deck(this.mainDeck.getName());
         setCopyMainDeck(true);
@@ -148,10 +149,6 @@ public class Player {
         this.mana -= change;
     }
 
-    public Card getNextCard() {
-        return nextCard;
-    }
-
     private void setNextCard() {
         if (copyMainDeck.getCards().size() == 0)
             setCopyMainDeck(false);
@@ -166,6 +163,10 @@ public class Player {
             return;
         hand.addCard(this.nextCard);
         setNextCard();
+    }
+
+    public Card getNextCard() {
+        return nextCard;
     }
 
     public void removeCardFromHand(Card card) {
