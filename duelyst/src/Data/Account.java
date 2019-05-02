@@ -28,8 +28,8 @@ public class Account implements Comparable<Account> {
         this.numbOfLose = 0;
         this.daric = 15000;
         this.matchHistory = new MatchHistory();
-        this.player = new Player(this.userName);
         this.collection = new Collection();
+        this.player = new Player(this.userName, this.getMainDeck());
         Collection.addCollection(this.collection);
         this.shop = new Shop(this.collection);
     }
