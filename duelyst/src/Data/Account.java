@@ -57,7 +57,7 @@ public class Account implements Comparable<Account> {
                 return "your password is wrong!";
             }
         }
-        return "username doesnt exist!";
+        return "cant find account with this user name";
     }
 
     public static String logout() {
@@ -69,53 +69,8 @@ public class Account implements Comparable<Account> {
         return this.collection.getMainDeck();
     }
 
-    public void setMainDeck() {
-        this.player.setMainDeck(this.collection.getMainDeck());
-    }
-
-    public static ArrayList<Account> getLeaderBoard() {
-        sortAccounts();
-        return GameController.getAccounts();
-    }
-
-    private static void sortAccounts() {
-        GameController.getAccounts().sort((o1, o2) -> {
-            if (o1.numbOfWins > o2.numbOfWins)
-                return -1;
-            else if (o1.numbOfWins == o2.numbOfWins) {
-                return o1.userName.compareTo(o2.userName);
-            }
-            return 1;
-        });
-    }
-
-    public MatchHistory getMatchHistory() {
-        return matchHistory;
-    }
-
-    public void incrementNumbOfWins() {
-        this.numbOfWins++;
-    }
-
-    public void incrementNumbOfDraw() {
-        this.numbOfDraw++;
-    }
-
-    public void incrementNumbOfLose() {
-        this.numbOfLose++;
-    }
-
     public String save() {
         return "Saved!";
-    }
-
-    public Collection getCollection() {
-        return this.collection;
-    }
-
-    public int getDaric() {
-        this.daric = this.collection.getDaric();
-        return this.daric;
     }
 
     public int getNumbOfDraw() {
@@ -168,5 +123,31 @@ public class Account implements Comparable<Account> {
         Integer secondNumOfWins = o.numbOfWins;
 
         return firstNumOfWins.compareTo(secondNumOfWins);
+    }
+
+    public MatchHistory getMatchHistory() {
+        return matchHistory;
+    }
+
+    public void incrementNumbOfWins() {
+        this.numbOfWins++;
+    }
+
+    public void incrementNumbOfDraw() {
+        this.numbOfDraw++;
+    }
+
+    public void incrementNumbOfLose() {
+        this.numbOfLose++;
+    }
+
+    public Collection getCollection() {
+        return this.collection;
+    }
+
+
+    public int getDaric() {
+        this.daric = this.collection.getDaric();
+        return this.daric;
     }
 }
