@@ -33,7 +33,25 @@ public class Request {
     private static final String SEARCH_COLLECTION = "search collection";
     private static final String BUY = "buy";
     private static final String SELL = "sell";
-
+    private static final String GAME_INFO="game info";
+    private static final String SHOW_MY_MINIONS="show my minions";
+    private static final String SHOW_OPPONENT_MINIONS ="show opponent minions";
+    private static final String SHOW_CARD_INFO="show card info";
+    private static final String SELECT="select";//foe selecting card or item in game ground
+    private static final String MOVE_TO="move to";
+    private static final String ATTACK="attack";
+    private static final String ATTACK_COMBO="attac combo";
+    private static final String USE_SPECIAL_POWER="use special power";
+    private static final String SHOW_HAND="show hand";
+    private static final String INSERT="insert";
+    private static final String END_TURN="end turn";
+    private static final String SHOW_COLLECTIBLES="show collectibles";
+    private static final String SHOW_INFO="show info";//for battle or grave yard
+    private static final String USE="use";
+    private static final String SHOW_NEXT_CARD="show next card";
+    private static final String ENTER_GRAVE_YARD="enter grave yard";
+    private static final String SHOW_CARDS="show cards";
+    private static final String END_GAME="end game";
 
     public void getNewCommand() {
         command = scanner.nextLine().toLowerCase();
@@ -100,6 +118,7 @@ public class Request {
         if (command == null || command.equals("")) {
             return null;
         }
+
         Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " " + "\\w+");
         Matcher matcherForCreateAccount = patternForCreateAccount.matcher(command);
         Pattern patternForLogIn = Pattern.compile(LOGIN + " " + "\\w+");
@@ -139,7 +158,47 @@ public class Request {
         Pattern patternForBuy = Pattern.compile(BUY + " \\w+");
         Matcher matcherForSBuy = patternForBuy.matcher(command);
         Pattern patternForSell = Pattern.compile(SELL + " " + "\\w+");
-        Matcher matcherForSSell = patternForSell.matcher(command);
+        Matcher matcherForSell = patternForSell.matcher(command);
+        Pattern patternForGameInfo = Pattern.compile(GAME_INFO);
+        Matcher matcherForGameInfo = patternForGameInfo.matcher(command);
+        Pattern patternForShowMyMinions = Pattern.compile(SHOW_MY_MINIONS);
+        Matcher matcherForShowMyMinions = patternForShowMyMinions.matcher(command);
+        Pattern patternForShowOpponentMinions = Pattern.compile(SHOW_OPPONENT_MINIONS);
+        Matcher matcherForShowOpponentMinions = patternForShowOpponentMinions.matcher(command);
+        Pattern patternForShowCardInfo = Pattern.compile(SHOW_CARD_INFO+" \\w+");
+        Matcher matcherForShowCardInfo = patternForShowCardInfo.matcher(command);
+        Pattern patternForSelect = Pattern.compile(SELECT+" \\w+");
+        Matcher matcherForSelect = patternForSelect.matcher(command);
+        Pattern patternForMoveTO = Pattern.compile(MOVE_TO+" \\(\\d,\\d\\)");
+        Matcher matcherForMoveTO  = patternForMoveTO .matcher(command);
+        Pattern patternForAttack = Pattern.compile(ATTACK+" \\w+");
+        Matcher matcherForAttack  = patternForAttack .matcher(command);
+        Pattern patternForAttackCombo = Pattern.compile(ATTACK_COMBO);
+        Matcher matcherForAttackCombo  = patternForAttackCombo .matcher(command);
+        Pattern patternForUserSpecialPower = Pattern.compile(USE_SPECIAL_POWER+" \\(\\d,\\d\\)");
+        Matcher matcherForUserSpecialPower  = patternForUserSpecialPower .matcher(command);
+        Pattern patternForShowHand = Pattern.compile(SHOW_HAND);
+        Matcher matcherForShowHand  = patternForShowHand .matcher(command);
+        Pattern patternForInsert = Pattern.compile(INSERT+" \\w+ in \\(\\d,\\d\\)");
+        Matcher matcherForInsert  = patternForInsert .matcher(command);
+        Pattern patternForEndTurn = Pattern.compile(END_TURN);
+        Matcher matcherForEndTurn  = patternForEndTurn .matcher(command);
+        Pattern patternForShowCollectibles = Pattern.compile(SHOW_COLLECTIBLES);
+        Matcher matcherForShowCollectibles  = patternForShowCollectibles .matcher(command);
+        Pattern patternForShowInfo = Pattern.compile(SHOW_INFO);
+        Matcher matcherForShowInfo  = patternForShowInfo .matcher(command);
+        Pattern patternForUse = Pattern.compile(USE+" \\(\\d,\\d\\)");
+        Matcher matcherForUse  = patternForUse .matcher(command);
+        Pattern patternForShowNextCard = Pattern.compile(SHOW_NEXT_CARD);
+        Matcher matcherForShowNexrCard  = patternForShowNextCard .matcher(command);
+        Pattern patternForEnterGraveYard = Pattern.compile(ENTER_GRAVE_YARD);
+        Matcher matcherForEnterGraveYard  = patternForEnterGraveYard .matcher(command);
+        Pattern patternForShowCards = Pattern.compile(SHOW_CARDS);
+        Matcher matcherForShowCards  = patternForShowCards .matcher(command);
+        Pattern patternForEndGame = Pattern.compile(END_GAME);
+        Matcher matcherForEndGame  = patternForEndGame .matcher(command);
+
+
         if (matcherForCreateAccount.matches()) {
             menuType = MenuType.ACCOUNT_MENU;
             return RequestType.CREATE_ACCOUNT;
@@ -189,7 +248,7 @@ public class Request {
         } else if (matcherForSBuy.matches()) {
             menuType = MenuType.SHOP_MENU;
             return RequestType.BUY;
-        } else if (matcherForSSell.matches()) {
+        } else if (matcherForSell.matches()) {
             menuType = MenuType.SHOP_MENU;
             return RequestType.SELL;
         } else if (matcherForSave.matches()) {
