@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Data.Account;
+import GameGround.Battle;
 import controller.GameController;
 
 public class Request {
@@ -625,6 +626,55 @@ public class Request {
             String result = GameController.sell(name, Account.getLoginUser().getShop());
             System.out.println(result);
         } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxForGameInfo(){
+        Pattern patternForGameInfo = Pattern.compile(GAME_INFO);
+        Matcher matcher = patternForGameInfo.matcher(command);
+        if (matcher.matches()){
+            BattleView.showGameInfo();
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxForShowMyMinions(){
+        Pattern patternForShowMyMinions = Pattern.compile(SHOW_MY_MINIONS);
+        Matcher matcher = patternForShowMyMinions.matcher(command);
+        if (matcher.matches()){
+            BattleView.showMyMinions();
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowOpponentMinions(){
+        Pattern patternForShowOpponentMinions = Pattern.compile(SHOW_OPPONENT_MINIONS);
+        Matcher matcher = patternForShowOpponentMinions.matcher(command);
+        if(matcher.matches()){
+            BattleView.showOpponentMinions();
+        }else{
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowCardInfo(){
+        Pattern patternForShowCardInfo = Pattern.compile(SHOW_CARD_INFO + " (?<cardId>\\w+)");
+        Matcher matcher = patternForShowCardInfo.matcher(command);
+        if(matcher.matches()){
+            String cardId=matcher.group("cardId");
+            BattleView.showCardInfo(, cardId);
+        }else{
             error = ErrorType.INVALID_INPUT;
             return false;
         }
