@@ -68,10 +68,16 @@ public class BattleView extends View {
     }
 
     public static void showInfo() {
-
+/**
+ * it depends on the item that has been selected in the previous command(check doc page 20)
+ */
     }
 
     public static void showNextCard() {
+
+    }
+
+    public static void battleHelp() {
 
     }
 

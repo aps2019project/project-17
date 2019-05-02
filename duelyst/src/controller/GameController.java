@@ -99,6 +99,13 @@ public class GameController {
         return battle.attack(opponentCardId);
     }
 
+    public static String insertCard(String cardName, int x, int y, Battle battle){
+        return battle.insertingCardFromHand(cardName, x, y);
+    }
+
+    public static void endTurn(Battle battle){
+         battle.endTurn();
+    }
     public static String searchInShop(String cardName,Shop shop){
         return shop.search(cardName);
     }
