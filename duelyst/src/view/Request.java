@@ -13,45 +13,6 @@ public class Request {
     protected ErrorType error = null;
     protected MenuType menuType = null;
 
-    private static final String CREATE_ACCOUNT = "create account";
-    private static final String LOGIN = "login";
-    private static final String SHOW_LEADER_BOARD = "show leaderboard";
-    private static final String SAVE = "save";
-    private static final String LOGOUT = "logout";
-    private static final String HELP = "help";
-    private static final String SHOW = "show";
-    private static final String SEARCH = "search";
-    private static final String CREATE_DECK = "create deck";
-    private static final String DELETE_DECK = "delete deck";
-    private static final String ADD_TO_DECK = "add";
-    private static final String REMOVE_FROM_DECK = "remove";
-    private static final String VALIDATE_DECK = "validate deck";
-    private static final String SELECT_DECK = "select deck";
-    private static final String SHOW_ALL_DECKS = "show all decks";
-    private static final String SHOW_DECK = "show deck";
-    private static final String SHOW_FOR_SHOP_MENU = "show collection";
-    private static final String SEARCH_COLLECTION = "search collection";
-    private static final String BUY = "buy";
-    private static final String SELL = "sell";
-    private static final String GAME_INFO = "game info";
-    private static final String SHOW_MY_MINIONS = "show my minions";
-    private static final String SHOW_OPPONENT_MINIONS = "show opponent minions";
-    private static final String SHOW_CARD_INFO = "show card info";
-    private static final String SELECT = "select";//foe selecting card or item in game ground
-    private static final String MOVE_TO = "move to";
-    private static final String ATTACK = "attack";
-    private static final String ATTACK_COMBO = "attac combo";
-    private static final String USE_SPECIAL_POWER = "use special power";
-    private static final String SHOW_HAND = "show hand";
-    private static final String INSERT = "insert";
-    private static final String END_TURN = "end turn";
-    private static final String SHOW_COLLECTIBLES = "show collectibles";
-    private static final String SHOW_INFO = "show info";//for battle or grave yard
-    private static final String USE = "use";
-    private static final String SHOW_NEXT_CARD = "show next card";
-    private static final String ENTER_GRAVE_YARD = "enter grave yard";
-    private static final String SHOW_CARDS = "show cards";
-    private static final String END_GAME = "end game";
 
     public void getNewCommand() {
         command = scanner.nextLine().toLowerCase();
@@ -119,83 +80,83 @@ public class Request {
             return null;
         }
 
-        Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " " + "\\w+");
+        Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " " + "\\w+");
         Matcher matcherForCreateAccount = patternForCreateAccount.matcher(command);
-        Pattern patternForLogIn = Pattern.compile(LOGIN + " " + "\\w+");
+        Pattern patternForLogIn = Pattern.compile(StringsRq.LOGIN + " " + "\\w+");
         Matcher matcherForLogIn = patternForLogIn.matcher(command);
-        Pattern patternForShowLeaderBoard = Pattern.compile(SHOW_LEADER_BOARD);
+        Pattern patternForShowLeaderBoard = Pattern.compile(StringsRq.SHOW_LEADER_BOARD);
         Matcher matcherForShowLeaderBoard = patternForShowLeaderBoard.matcher(command);
-        Pattern patternForSave = Pattern.compile(SAVE);
+        Pattern patternForSave = Pattern.compile(StringsRq.SAVE);
         Matcher matcherForSave = patternForSave.matcher(command);
-        Pattern patternForLogOut = Pattern.compile(LOGOUT);
+        Pattern patternForLogOut = Pattern.compile(StringsRq.LOGOUT);
         Matcher matcherForLogOut = patternForLogOut.matcher(command);
-        Pattern patternForHelp = Pattern.compile(HELP);
+        Pattern patternForHelp = Pattern.compile(StringsRq.HELP);
         Matcher matcherForHelp = patternForHelp.matcher(command);
-        Pattern patternForShow = Pattern.compile(SHOW);
+        Pattern patternForShow = Pattern.compile(StringsRq.SHOW);
         Matcher matcherForShow = patternForShow.matcher(command);
-        Pattern patternForSearch = Pattern.compile(SEARCH + " \\w+");
+        Pattern patternForSearch = Pattern.compile(StringsRq.SEARCH + " \\w+");
         Matcher matcherForSearch = patternForSearch.matcher(command);
-        Pattern patternForCreateDeck = Pattern.compile(CREATE_DECK + " \\w+");
+        Pattern patternForCreateDeck = Pattern.compile(StringsRq.CREATE_DECK + " \\w+");
         Matcher matcherForCreateDeck = patternForCreateDeck.matcher(command);
-        Pattern patternForDeleteDeck = Pattern.compile(DELETE_DECK + " \\w+");
+        Pattern patternForDeleteDeck = Pattern.compile(StringsRq.DELETE_DECK + " \\w+");
         Matcher matcherForDeleteDeck = patternForDeleteDeck.matcher(command);
-        Pattern patternForAddToDeck = Pattern.compile(ADD_TO_DECK + " " + "\\w+ to deck \\w+");
+        Pattern patternForAddToDeck = Pattern.compile(StringsRq.ADD_TO_DECK + " " + "\\w+ to deck \\w+");
         Matcher matcherForAddToDeck = patternForAddToDeck.matcher(command);
-        Pattern patternForRemoveFromDeck = Pattern.compile(REMOVE_FROM_DECK + " \\w+ from deck \\w+");
+        Pattern patternForRemoveFromDeck = Pattern.compile(StringsRq.REMOVE_FROM_DECK + " \\w+ from deck \\w+");
         Matcher matcherForRemoveFromDeck = patternForRemoveFromDeck.matcher(command);
-        Pattern patternForValidateDeck = Pattern.compile(VALIDATE_DECK + " " + "\\w+");
+        Pattern patternForValidateDeck = Pattern.compile(StringsRq.VALIDATE_DECK + " " + "\\w+");
         Matcher matcherForValidateDeck = patternForValidateDeck.matcher(command);
-        Pattern patternForSelectDeck = Pattern.compile(SELECT_DECK + " " + "\\w+");
+        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK + " " + "\\w+");
         Matcher matcherForSelectDeck = patternForSelectDeck.matcher(command);
-        Pattern patternForShowAllDecks = Pattern.compile(SHOW_ALL_DECKS);
+        Pattern patternForShowAllDecks = Pattern.compile(StringsRq.SHOW_ALL_DECKS);
         Matcher matcherForShowAllDecks = patternForShowAllDecks.matcher(command);
-        Pattern patternForShowDeck = Pattern.compile(SHOW_DECK + " \\w+");
+        Pattern patternForShowDeck = Pattern.compile(StringsRq.SHOW_DECK + " \\w+");
         Matcher matcherForShowDeck = patternForShowDeck.matcher(command);
-        Pattern patternForShowForShopMenu = Pattern.compile(SHOW_FOR_SHOP_MENU);
+        Pattern patternForShowForShopMenu = Pattern.compile(StringsRq.SHOW_FOR_SHOP_MENU);
         Matcher matcherForShowForShopMenu = patternForShowForShopMenu.matcher(command);
-        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION + " " + "\\w+");
+        Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH_COLLECTION + " " + "\\w+");
         Matcher matcherForSearchCollection = patternForSearchCollection.matcher(command);
-        Pattern patternForBuy = Pattern.compile(BUY + " \\w+");
+        Pattern patternForBuy = Pattern.compile(StringsRq.BUY + " \\w+");
         Matcher matcherForSBuy = patternForBuy.matcher(command);
-        Pattern patternForSell = Pattern.compile(SELL + " " + "\\w+");
+        Pattern patternForSell = Pattern.compile(StringsRq.SELL + " " + "\\w+");
         Matcher matcherForSell = patternForSell.matcher(command);
-        Pattern patternForGameInfo = Pattern.compile(GAME_INFO);
+        Pattern patternForGameInfo = Pattern.compile(StringsRq.GAME_INFO);
         Matcher matcherForGameInfo = patternForGameInfo.matcher(command);
-        Pattern patternForShowMyMinions = Pattern.compile(SHOW_MY_MINIONS);
+        Pattern patternForShowMyMinions = Pattern.compile(StringsRq.SHOW_MY_MINIONS);
         Matcher matcherForShowMyMinions = patternForShowMyMinions.matcher(command);
-        Pattern patternForShowOpponentMinions = Pattern.compile(SHOW_OPPONENT_MINIONS);
+        Pattern patternForShowOpponentMinions = Pattern.compile(StringsRq.SHOW_OPPONENT_MINIONS);
         Matcher matcherForShowOpponentMinions = patternForShowOpponentMinions.matcher(command);
-        Pattern patternForShowCardInfo = Pattern.compile(SHOW_CARD_INFO + " \\w+");
+        Pattern patternForShowCardInfo = Pattern.compile(StringsRq.SHOW_CARD_INFO + " \\w+");
         Matcher matcherForShowCardInfo = patternForShowCardInfo.matcher(command);
-        Pattern patternForSelect = Pattern.compile(SELECT + " \\w+");
+        Pattern patternForSelect = Pattern.compile(StringsRq.SELECT + " \\w+");
         Matcher matcherForSelect = patternForSelect.matcher(command);
-        Pattern patternForMoveTO = Pattern.compile(MOVE_TO + " \\(\\d,\\d\\)");
+        Pattern patternForMoveTO = Pattern.compile(StringsRq.MOVE_TO + " \\(\\d,\\d\\)");
         Matcher matcherForMoveTO = patternForMoveTO.matcher(command);
-        Pattern patternForAttack = Pattern.compile(ATTACK + " \\w+");
+        Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " \\w+");
         Matcher matcherForAttack = patternForAttack.matcher(command);
-        Pattern patternForAttackCombo = Pattern.compile(ATTACK_COMBO);
+        Pattern patternForAttackCombo = Pattern.compile(StringsRq.ATTACK_COMBO);
         Matcher matcherForAttackCombo = patternForAttackCombo.matcher(command);
-        Pattern patternForUserSpecialPower = Pattern.compile(USE_SPECIAL_POWER + " \\(\\d,\\d\\)");
+        Pattern patternForUserSpecialPower = Pattern.compile(StringsRq.USE_SPECIAL_POWER + " \\(\\d,\\d\\)");
         Matcher matcherForUserSpecialPower = patternForUserSpecialPower.matcher(command);
-        Pattern patternForShowHand = Pattern.compile(SHOW_HAND);
+        Pattern patternForShowHand = Pattern.compile(StringsRq.SHOW_HAND);
         Matcher matcherForShowHand = patternForShowHand.matcher(command);
-        Pattern patternForInsert = Pattern.compile(INSERT + " \\w+ in \\(\\d,\\d\\)");
+        Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " \\w+ in \\(\\d,\\d\\)");
         Matcher matcherForInsert = patternForInsert.matcher(command);
-        Pattern patternForEndTurn = Pattern.compile(END_TURN);
+        Pattern patternForEndTurn = Pattern.compile(StringsRq.END_TURN);
         Matcher matcherForEndTurn = patternForEndTurn.matcher(command);
-        Pattern patternForShowCollectibles = Pattern.compile(SHOW_COLLECTIBLES);
+        Pattern patternForShowCollectibles = Pattern.compile(StringsRq.SHOW_COLLECTIBLES);
         Matcher matcherForShowCollectibles = patternForShowCollectibles.matcher(command);
-        Pattern patternForShowInfo = Pattern.compile(SHOW_INFO);
+        Pattern patternForShowInfo = Pattern.compile(StringsRq.SHOW_INFO);
         Matcher matcherForShowInfo = patternForShowInfo.matcher(command);
-        Pattern patternForUse = Pattern.compile(USE + " \\(\\d,\\d\\)");
+        Pattern patternForUse = Pattern.compile(StringsRq.USE + " \\(\\d,\\d\\)");
         Matcher matcherForUse = patternForUse.matcher(command);
-        Pattern patternForShowNextCard = Pattern.compile(SHOW_NEXT_CARD);
+        Pattern patternForShowNextCard = Pattern.compile(StringsRq.SHOW_NEXT_CARD);
         Matcher matcherForShowNextCard = patternForShowNextCard.matcher(command);
-        Pattern patternForEnterGraveYard = Pattern.compile(ENTER_GRAVE_YARD);
+        Pattern patternForEnterGraveYard = Pattern.compile(StringsRq.ENTER_GRAVE_YARD);
         Matcher matcherForEnterGraveYard = patternForEnterGraveYard.matcher(command);
-        Pattern patternForShowCards = Pattern.compile(SHOW_CARDS);
+        Pattern patternForShowCards = Pattern.compile(StringsRq.SHOW_CARDS);
         Matcher matcherForShowCards = patternForShowCards.matcher(command);
-        Pattern patternForEndGame = Pattern.compile(END_GAME);
+        Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
         Matcher matcherForEndGame = patternForEndGame.matcher(command);
 
 
@@ -318,7 +279,7 @@ public class Request {
 
 
     public boolean checkSyntaxOfCreateAccountCommand() {
-        Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " (?<userName>\\w+)");
+        Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " (?<userName>\\w+)");
         Matcher matcher = patternForCreateAccount.matcher(command);
         if (matcher.matches()) {
             String userName = matcher.group("userName");
@@ -332,7 +293,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfLoginCommand() {
-        Pattern patternForLogIn = Pattern.compile(LOGIN + " (?<userName>\\w+)");
+        Pattern patternForLogIn = Pattern.compile(StringsRq.LOGIN + " (?<userName>\\w+)");
         Matcher matcher = patternForLogIn.matcher(command);
         if (matcher.matches()) {
             String userName = matcher.group("userName");
@@ -348,7 +309,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowLeaderBoardCommand() {
-        Pattern patternForShowLeaderBoard = Pattern.compile(SHOW_LEADER_BOARD);
+        Pattern patternForShowLeaderBoard = Pattern.compile(StringsRq.SHOW_LEADER_BOARD);
         Matcher matcher = patternForShowLeaderBoard.matcher(command);
         if (matcher.matches()) {
             AccountView.showLeaderBoard();
@@ -360,7 +321,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSaveCommand() {
-        Pattern patternForSave = Pattern.compile(SAVE);
+        Pattern patternForSave = Pattern.compile(StringsRq.SAVE);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
             switch (menuType) {
@@ -382,7 +343,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfLogOutCommand() {
-        if (command.toLowerCase().matches("logout")) {
+        if (command.toLowerCase().matches(StringsRq.LOGOUT)) {
             String result = GameController.logout();
             System.out.println(result);
         } else {
@@ -393,7 +354,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfHelpCommand() {
-        Pattern patternForSave = Pattern.compile(HELP);
+        Pattern patternForSave = Pattern.compile(StringsRq.HELP);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
             switch (menuType) {
@@ -421,7 +382,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCommand() {
-        Pattern patternForShow = Pattern.compile(SHOW);
+        Pattern patternForShow = Pattern.compile(StringsRq.SHOW);
         Matcher matcher = patternForShow.matcher(command);
         if (menuType.equals(MenuType.COLLECTION_MENU)) {
             if (matcher.matches()) {
@@ -442,7 +403,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSearchCommand() {
-        Pattern patternForSearchCollection = Pattern.compile(SEARCH + " (?<name>\\w+)");
+        Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH + " (?<name>\\w+)");
         Matcher matcher = patternForSearchCollection.matcher(command);
         if (menuType.equals(MenuType.COLLECTION_MENU)) {
             if (matcher.matches()) {
@@ -467,7 +428,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfCreateDeck() {
-        Pattern patternForSCreateDeck = Pattern.compile(CREATE_DECK + " (?<name>\\w+)");
+        Pattern patternForSCreateDeck = Pattern.compile(StringsRq.CREATE_DECK + " (?<name>\\w+)");
         Matcher matcher = patternForSCreateDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -481,7 +442,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfDeleteDeck() {
-        Pattern patternForDeleteDeck = Pattern.compile(DELETE_DECK + " (?<name>\\w+)");
+        Pattern patternForDeleteDeck = Pattern.compile(StringsRq.DELETE_DECK + " (?<name>\\w+)");
         Matcher matcher = patternForDeleteDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -496,7 +457,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfAddToDeck() {
-        Pattern patternForAddToDeck = Pattern.compile(ADD_TO_DECK + " (?<cardId>\\w+) to deck (?<deckName>\\w+)");
+        Pattern patternForAddToDeck = Pattern.compile(StringsRq.ADD_TO_DECK + " (?<cardId>\\w+) to deck (?<deckName>\\w+)");
         Matcher matcher = patternForAddToDeck.matcher(command);
         if (matcher.matches()) {
             String cardId = matcher.group("cardId");
@@ -511,7 +472,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfRemoveFromDeck() {
-        Pattern patternForRemoveFromDeck = Pattern.compile(REMOVE_FROM_DECK + " (?<cardId>\\w+) from deck (?<deckName>\\w+)");
+        Pattern patternForRemoveFromDeck = Pattern.compile(StringsRq.REMOVE_FROM_DECK + " (?<cardId>\\w+) from deck (?<deckName>\\w+)");
         Matcher matcher = patternForRemoveFromDeck.matcher(command);
         if (matcher.matches()) {
             String cardId = matcher.group("cardId");
@@ -526,7 +487,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfValidateDeck() {
-        Pattern patternForValidateDeck = Pattern.compile(VALIDATE_DECK + " (?<name>\\w+)");
+        Pattern patternForValidateDeck = Pattern.compile(StringsRq.VALIDATE_DECK + " (?<name>\\w+)");
         Matcher matcher = patternForValidateDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -540,7 +501,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSelectDeck() {
-        Pattern patternForSelectDeck = Pattern.compile(SELECT_DECK + " (?<name>\\w+)");
+        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>\\w+)");
         Matcher matcher = patternForSelectDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -554,7 +515,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowAllDecks() {
-        Pattern patternForShowAllDecks = Pattern.compile(SHOW_ALL_DECKS);
+        Pattern patternForShowAllDecks = Pattern.compile(StringsRq.SHOW_ALL_DECKS);
         Matcher matcher = patternForShowAllDecks.matcher(command);
         if (matcher.matches()) {
             CollectionView.showAllDecks(Account.getLoginUser());
@@ -566,7 +527,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowDeck() {
-        Pattern patternForShowDeck = Pattern.compile(SELECT_DECK + " (?<name>\\w+)");
+        Pattern patternForShowDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>\\w+)");
         Matcher matcher = patternForShowDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -579,7 +540,7 @@ public class Request {
     }
 
     public boolean checkSyntaxForShowForShopMenu() {
-        Pattern patternForShowForShopMenu = Pattern.compile(SHOW_FOR_SHOP_MENU + "");
+        Pattern patternForShowForShopMenu = Pattern.compile(StringsRq.SHOW_FOR_SHOP_MENU + "");
         Matcher matcher = patternForShowForShopMenu.matcher(command);
         if (matcher.matches()) {
             CollectionView.showUserCollection(Account.getLoginUser());
@@ -591,7 +552,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSearchCollection() {
-        Pattern patternForSearchCollection = Pattern.compile(SEARCH_COLLECTION + " " + "(?<name>\\w+)");
+        Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH_COLLECTION + " " + "(?<name>\\w+)");
         Matcher matcher = patternForSearchCollection.matcher(command);
         if (matcher.matches()) {//todo what to do if there was more than one card with that name?
             String name = matcher.group("name");
@@ -605,7 +566,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfBuyCommand() {
-        Pattern patternForBuy = Pattern.compile(BUY + " (?<name>\\w+)");
+        Pattern patternForBuy = Pattern.compile(StringsRq.BUY + " (?<name>\\w+)");
         Matcher matcher = patternForBuy.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -619,7 +580,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSellCommand() {
-        Pattern patternForSell = Pattern.compile(SELL + " (?<name>\\w+)");
+        Pattern patternForSell = Pattern.compile(StringsRq.SELL + " (?<name>\\w+)");
         Matcher matcher = patternForSell.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -633,7 +594,7 @@ public class Request {
     }
 
     public boolean checkSyntaxForGameInfo() {
-        Pattern patternForGameInfo = Pattern.compile(GAME_INFO);
+        Pattern patternForGameInfo = Pattern.compile(StringsRq.GAME_INFO);
         Matcher matcher = patternForGameInfo.matcher(command);
         if (matcher.matches()) {
             BattleView.showGameInfo();
@@ -645,7 +606,7 @@ public class Request {
     }
 
     public boolean checkSyntaxForShowMyMinions() {
-        Pattern patternForShowMyMinions = Pattern.compile(SHOW_MY_MINIONS);
+        Pattern patternForShowMyMinions = Pattern.compile(StringsRq.SHOW_MY_MINIONS);
         Matcher matcher = patternForShowMyMinions.matcher(command);
         if (matcher.matches()) {
             BattleView.showMyMinions();
@@ -657,7 +618,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowOpponentMinions() {
-        Pattern patternForShowOpponentMinions = Pattern.compile(SHOW_OPPONENT_MINIONS);
+        Pattern patternForShowOpponentMinions = Pattern.compile(StringsRq.SHOW_OPPONENT_MINIONS);
         Matcher matcher = patternForShowOpponentMinions.matcher(command);
         if (matcher.matches()) {
             BattleView.showOpponentMinions();
@@ -669,7 +630,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCardInfo() {
-        Pattern patternForShowCardInfo = Pattern.compile(SHOW_CARD_INFO + " (?<cardId>\\w+)");
+        Pattern patternForShowCardInfo = Pattern.compile(StringsRq.SHOW_CARD_INFO + " (?<cardId>\\w+)");
         Matcher matcher = patternForShowCardInfo.matcher(command);
         if (matcher.matches()) {
             String cardId = matcher.group("cardId");
@@ -682,7 +643,7 @@ public class Request {
     }
 
     public boolean checkSyntaxForSelect() {
-        Pattern patternForSelect = Pattern.compile(SELECT + " (?<cardId>\\w+)");
+        Pattern patternForSelect = Pattern.compile(StringsRq.SELECT + " (?<cardId>\\w+)");
         Matcher matcher = patternForSelect.matcher(command);
         String cardId = matcher.group("cardId");
         //todo have to set a method in battle fo selecting item then will complete this method according to id(card or item)
@@ -690,7 +651,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfMoveTO() {
-        Pattern patternForMoveTO = Pattern.compile(MOVE_TO + " \\((?<x>\\d),(?<y>\\d)\\)");
+        Pattern patternForMoveTO = Pattern.compile(StringsRq.MOVE_TO + " \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForMoveTO.matcher(command);
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
@@ -705,7 +666,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfAtack() {
-        Pattern patternForAttack = Pattern.compile(ATTACK + " (?<cardId>\\w+)");
+        Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " (?<cardId>\\w+)");
         Matcher matcher = patternForAttack.matcher(command);
         String cardId = matcher.group("cardId");
         if (matcher.matches()) {
@@ -719,14 +680,14 @@ public class Request {
     }
 
     public boolean checkSyntaxOfComboAttack() {
-        Pattern patternForAttackCombo = Pattern.compile(ATTACK_COMBO);
+        Pattern patternForAttackCombo = Pattern.compile(StringsRq.ATTACK_COMBO);
         Matcher matcher = patternForAttackCombo.matcher(command);
         // TODO: the combo attack method must   added and the syntax can get more than one card id so this must be handled
         return true;
     }
 
     public boolean checkSyntaxOfUseSpecialPower() {
-        Pattern patternForUserSpecialPower = Pattern.compile(USE_SPECIAL_POWER + " \\((?<x>\\d),(?<y>\\d)\\)");
+        Pattern patternForUserSpecialPower = Pattern.compile(StringsRq.USE_SPECIAL_POWER + " \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForUserSpecialPower.matcher(command);
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
@@ -740,7 +701,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowHand() {
-        Pattern patternForShowHand = Pattern.compile(SHOW_HAND);
+        Pattern patternForShowHand = Pattern.compile(StringsRq.SHOW_HAND);
         Matcher matcher = patternForShowHand.matcher(command);
         if (matcher.matches()) {
             BattleView.showHand();
@@ -752,7 +713,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfInsert() {
-        Pattern patternForInsert = Pattern.compile(INSERT + " (?<cardName>\\w)+ in  \\((?<x>\\d),(?<y>\\d)\\)");
+        Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " (?<cardName>\\w)+ in  \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForInsert.matcher(command);
         if (matcher.matches()) {
             String cardName = matcher.group("cardName");
@@ -768,7 +729,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfEndTurn() {
-        Pattern patternForEndTurn = Pattern.compile(END_TURN);
+        Pattern patternForEndTurn = Pattern.compile(StringsRq.END_TURN);
         Matcher matcher = patternForEndTurn.matcher(command);
         if (matcher.matches()) {
             GameController.endTurn();
@@ -780,7 +741,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCollectibles() {
-        Pattern patternForShowCollectibles = Pattern.compile(SHOW_COLLECTIBLES);
+        Pattern patternForShowCollectibles = Pattern.compile(StringsRq.SHOW_COLLECTIBLES);
         Matcher matcher = patternForShowCollectibles.matcher(command);
         if (matcher.matches()) {
             BattleView.showCollectables();// TODO: must to be completed
@@ -793,7 +754,7 @@ public class Request {
 
     public boolean checkSyntaxOfShowInfo() {
         if (menuType.equals(MenuType.BATTLE_MENU)) {
-            Pattern patternForShowInfoInBattleMenu = Pattern.compile(SHOW_INFO);
+            Pattern patternForShowInfoInBattleMenu = Pattern.compile(StringsRq.SHOW_INFO);
             Matcher matcher = patternForShowInfoInBattleMenu.matcher(command);
             if (matcher.matches()) {
                 BattleView.showInfo();// TODO: must to be completed
@@ -802,7 +763,7 @@ public class Request {
                 return false;
             }
         } else if (menuType.equals(MenuType.GRAVE_YARD)) {
-            Pattern patternForShowInfoInBGraveYardMenu = Pattern.compile(SHOW_INFO + " (?<cardId>\\w+)");
+            Pattern patternForShowInfoInBGraveYardMenu = Pattern.compile(StringsRq.SHOW_INFO + " (?<cardId>\\w+)");
             Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
             if (matcher.matches()) {
                 String cardId = matcher.group("cardId");
@@ -817,7 +778,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfUse() {
-        Pattern patternForUse = Pattern.compile(USE + " \\(\\d,\\d\\)");
+        Pattern patternForUse = Pattern.compile(StringsRq.USE + " \\(\\d,\\d\\)");
         Matcher matcher = patternForUse.matcher(command);
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
@@ -831,7 +792,7 @@ public class Request {
     }
 
     public boolean checkSyntaxForShowNextCard() {
-        Pattern patternForShowNextCard = Pattern.compile(SHOW_NEXT_CARD);
+        Pattern patternForShowNextCard = Pattern.compile(StringsRq.SHOW_NEXT_CARD);
         Matcher matcher = patternForShowNextCard.matcher(command);
         if (matcher.matches()) {
             BattleView.showNextCard();// TODO: must to be completed
@@ -843,7 +804,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCards() {
-        Pattern patternForShowCards = Pattern.compile(SHOW_CARDS);
+        Pattern patternForShowCards = Pattern.compile(StringsRq.SHOW_CARDS);
         Matcher matcher = patternForShowCards.matcher(command);
         if (matcher.matches()) {
             // TODO: a method for showing grave yard cards (easy)
@@ -855,7 +816,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfEndGame() {
-        Pattern patternForEndGame = Pattern.compile(END_GAME);
+        Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
         Matcher matcher = patternForEndGame.matcher(command);
         if (matcher.matches()) {
             // TODO: needs a method for ending game
