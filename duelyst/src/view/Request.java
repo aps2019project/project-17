@@ -70,6 +70,42 @@ public class Request {
                 return checkSyntaxOfBuyCommand();
             case SELL:
                 return checkSyntaxOfSellCommand();
+            case GAME_INFO:
+                return checkSyntaxOfGameInfo();
+            case SHOW_MY_MINIONS:
+                return checkSyntaxOfShowMyMinions();
+            case SHOW_OPPONENT_MINIONS:
+                return checkSyntaxOfShowOpponentMinions();
+            case SHOW_CARD_INFO:
+                return checkSyntaxOfShowCardInfo();
+            case SELECT:
+                return checkSyntaxOfSelect();
+            case MOVE_TO:
+                return checkSyntaxOfMoveTO();
+            case ATTACK:
+                return checkSyntaxOfAtack();
+            case ATTACK_COMBO:
+                return checkSyntaxOfComboAttack();
+            case USE_SPECIAL_POWER:
+                return checkSyntaxOfUseSpecialPower();
+            case SHOW_HAND:
+                return checkSyntaxOfShowHand();
+            case INSERT:
+                return checkSyntaxOfInsert();
+            case END_TURN:
+                return checkSyntaxOfEndTurn();
+            case SHOW_COLLECTIBLES:
+                return checkSyntaxOfShowCollectibles();
+            case SHOW_INFO:
+                return checkSyntaxOfShowInfo();
+            case USE:
+                return checkSyntaxOfUse();
+            case SHOW_NEXT_CARD:
+                return checkSyntaxOfShowNextCard();
+            case SHOW_CARDS:
+                return checkSyntaxOfShowCards();
+            case END_GAME:
+                return checkSyntaxOfEndGame();
         }
         return true;
     }
