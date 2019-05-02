@@ -16,6 +16,74 @@ public class Shop {
         this.itemsInShop = new ArrayList<>();
     }
 
+    public String search(String cardName) {
+        if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
+            return "there is not any card\\item in shop with this name";
+
+        if (returnCardFromShop(cardName) != null)
+            return returnCardFromShop(cardName).getId();
+
+        return returnItemFromShop(cardName).getId();
+    }
+
+    public String searchInCollection(String cardName) {
+        if (returnCardFromCollection(cardName) == null && returnItemFromCollection(cardName) == null)
+            return "this card\\item doesnt exist in collection";
+        if (returnCardFromCollection(cardName) != null)
+            return "this card exist in this collection and the cardID is: " + returnCardFromCollection(cardName).getId();
+
+        return "this item exist in this Collection and the itemID is: " + returnItemFromCollection(cardName).getId();
+    }
+
+    public String buy(String cardName) {
+        if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
+            return "this card\\item doesnt exist in shop";
+
+        if (returnCardFromShop(cardName) != null) {
+
+            Card card = returnCardFromShop(cardName);
+            if (this.collection.getDaric() < card.getPrice())
+                return "you don't have enough money to buy this card";
+
+            this.collection.addCardToCollection(card);
+            this.cardsInShop.remove(card);
+            this.collection.changeDaric(-card.getPrice());
+            return "card successfully added";
+        }
+
+        Item item = returnItemFromShop(cardName);
+        if (this.collection.getDaric() < item.getPrice())
+            return "you don't have enough money";
+
+        if (this.collection.getItems().size() == 3)
+            return "item storage in your collection is full";
+
+        this.collection.addItemToCollection(item);
+        this.itemsInShop.remove(item);
+        this.collection.changeDaric(-item.getPrice());
+        return "item successfully added";
+    }
+
+    public String sell(String cardName) {
+        if (returnItemFromCollection(cardName) == null && returnCardFromCollection(cardName) == null)
+            return "you dont have this card\\item";
+
+        if (returnCardFromCollection(cardName) != null) {
+            Card card = returnCardFromCollection(cardName);
+
+            cardsInShop.add(card);
+            this.collection.changeDaric(card.getPrice());
+            this.collection.getCards().remove(card);
+            return "card successfully sell";
+        }
+
+        Item item = returnItemFromCollection(cardName);
+        itemsInShop.add(item);
+        this.collection.changeDaric(item.getPrice());
+        this.collection.getItems().remove(item);
+        return "item successfully sell";
+    }
+
     public void addCardToShop(Card card) {
         cardsInShop.add(card);
     }
@@ -48,16 +116,6 @@ public class Shop {
         return null;
     }
 
-    public String search(String cardName) {
-        if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
-            return "there is not any card\\item in shop with this name";
-
-        if (returnCardFromShop(cardName) != null)
-            return returnCardFromShop(cardName).getId();
-
-        return returnItemFromShop(cardName).getId();
-    }
-
     private Card returnCardFromCollection(String cardName) {
         for (int i = 0; i < this.collection.getCards().size(); i++) {
             Card card = this.collection.getCards().get(i);
@@ -76,64 +134,6 @@ public class Shop {
                 return item;
         }
         return null;
-    }
-
-    public String searchInCollection(String cardName) {
-        if (returnCardFromCollection(cardName) == null && returnItemFromCollection(cardName) == null)
-            return "there is'nt any card\\item with ths name";
-
-        if (returnCardFromCollection(cardName) != null)
-            return "card Exist in this collection and the cardID is: " + returnCardFromCollection(cardName).getId();
-
-        return "item Exist in this Collection and the itemID is: " + returnItemFromCollection(cardName).getId();
-    }
-
-    public String buy(String cardName) {
-        if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
-            return "there is'nt any card\\item in the shop with this name";
-
-        if (returnCardFromShop(cardName) != null) {
-
-            Card card = returnCardFromShop(cardName);
-            if (this.collection.getDaric() < card.getPrice())
-                return "you don't have enough money";
-
-            this.collection.addCardToCollection(card);
-            this.cardsInShop.remove(card);
-            this.collection.changeDaric(-card.getPrice());
-            return "card successfully added";
-        }
-
-        Item item = returnItemFromShop(cardName);
-        if (this.collection.getDaric() < item.getPrice())
-            return "you don't have enough money";
-
-        if (this.collection.numberOfItems() == 3)
-            return "item collection is full";
-
-        this.collection.addItemToCollection(item);
-        this.collection.changeDaric(-item.getPrice());
-        return "item successfully added";
-    }
-
-    public String sell(String cardName) {
-        if (returnItemFromCollection(cardName) == null && returnCardFromCollection(cardName) == null)
-            return "you dont have this card\\item";
-
-        if (returnCardFromCollection(cardName) != null) {
-            Card card = returnCardFromCollection(cardName);
-
-            cardsInShop.add(card);
-            this.collection.changeDaric(card.getPrice());
-            this.collection.getCards().remove(card);
-            return "card successfully sell";
-        }
-
-        Item item = returnItemFromCollection(cardName);
-        itemsInShop.add(item);
-        this.collection.changeDaric(item.getPrice());
-        this.collection.getItems().remove(item);
-        return "item successfully sell";
     }
 
     public ArrayList<Hero> getShopHeros() {

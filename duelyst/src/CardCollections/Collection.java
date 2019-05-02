@@ -253,10 +253,6 @@ public class Collection {
         return daric;
     }
 
-    public int numberOfItems() {
-        return this.items.size();
-    }
-
     public static ArrayList<Collection> getCollections() {
         return collections;
     }
