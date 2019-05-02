@@ -841,5 +841,27 @@ public class Request {
         return true;
     }
 
+    public boolean checkSyntaxOfShowCards() {
+        Pattern patternForShowCards = Pattern.compile(SHOW_CARDS);
+        Matcher matcher = patternForShowCards.matcher(command);
+        if (matcher.matches()) {
+            // TODO: a method for showing grave yard cards (easy)
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
 
+    public boolean checkSyntaxOfEndGame() {
+        Pattern patternForEndGame = Pattern.compile(END_GAME);
+        Matcher matcher = patternForEndGame.matcher(command);
+        if (matcher.matches()) {
+            // TODO: needs a method for ending game
+            return true;
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+    }
 }
