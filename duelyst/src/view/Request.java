@@ -680,4 +680,50 @@ public class Request {
         }
         return true;
     }
+
+    public boolean checkSyntaxForSelect(){
+        Pattern patternForSelect = Pattern.compile(SELECT + " (?<cardId>\\w+)");
+        Matcher matcher = patternForSelect.matcher(command);
+        String cardId=matcher.group("cardId");
+        //todo have to set a method in battle fo selecting item then will complete this method according to id(card or item)
+        return true;
+    }
+
+    public boolean checkSyntaxOfMoveTO(){
+        Pattern patternForMoveTO = Pattern.compile(MOVE_TO + " \\((?<x>\\d),(?<y>\\d)\\)");
+        Matcher matcher = patternForMoveTO.matcher(command);
+        if(matcher.matches()){
+            int x=Integer.parseInt(matcher.group("x"));
+            int y=Integer.parseInt(matcher.group("y"));
+            String result=GameController.movingCard(x, y, );
+            System.out.println(result);
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfAtack(){
+        Pattern patternForAttack = Pattern.compile(ATTACK +" (?<cardId>\\w+)");
+        Matcher matcher = patternForAttack.matcher(command);
+        String cardId=matcher.group("cardId");
+        if(matcher.matches()){
+            String result=GameController.attack(cardId, );
+            System.out.println(result);
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxForComboAttack(){
+        Pattern patternForAttackCombo = Pattern.compile(ATTACK_COMBO);
+        Matcher matcher = patternForAttackCombo.matcher(command);
+        // TODO: the combo attack method must   added and the syntax can get more than one card id so this must be handled
+        return true;
+    }
+
+
 }

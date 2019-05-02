@@ -250,7 +250,7 @@ public class Battle {
         return whoseTurn().getHand();
     }
 
-    public String attack() {
+    public String attack(String opponentCardId) {
 
         return "attack successfully done";
     }

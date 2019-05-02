@@ -2,6 +2,7 @@ package controller;
 
 import CardCollections.*;
 import Data.*;
+import GameGround.Battle;
 import effects.*;
 import view.*;
 
@@ -88,6 +89,14 @@ public class GameController {
 
     public static String sell(String cardName,Shop shop){
         return shop.sell(cardName);
+    }
+
+    public static String movingCard(int x, int y, Battle battle){
+        return battle.movingCard(x, y);
+    }
+
+    public static String attack(String opponentCardId,Battle battle){
+        return battle.attack(opponentCardId);
     }
 
     public static String searchInShop(String cardName,Shop shop){
