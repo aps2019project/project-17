@@ -35,5 +35,40 @@
     "targetType": "ENEMY",
     "targetRange": "NONE",
     "effectTime": 1
+  },
+  {
+    "id": 206,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "NONE",
+    "effectTime": 1
+  },
+  {
+    "id": 207,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "NONE",
+    "effectTime": 1
+  },
+  {
+    "id": 208,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "NONE",
+    "effectTime": 1
+  },
+  {
+    "id": 209,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "NONE",
+    "effectTime": 1
+  },
+  {
+    "id": 210,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "NONE",
+    "effectTime": 1
   }
 ]
