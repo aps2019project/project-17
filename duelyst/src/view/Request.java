@@ -71,15 +71,15 @@ public class Request {
             case SELL:
                 return checkSyntaxOfSellCommand();
             case GAME_INFO:
-                return checkSyntaxOfGameInfo();
+                return checkSyntaxForGameInfo();
             case SHOW_MY_MINIONS:
-                return checkSyntaxOfShowMyMinions();
+                return checkSyntaxForShowMyMinions();
             case SHOW_OPPONENT_MINIONS:
                 return checkSyntaxOfShowOpponentMinions();
             case SHOW_CARD_INFO:
                 return checkSyntaxOfShowCardInfo();
             case SELECT:
-                return checkSyntaxOfSelect();
+                return checkSyntaxForSelect();
             case MOVE_TO:
                 return checkSyntaxOfMoveTO();
             case ATTACK:
@@ -101,7 +101,7 @@ public class Request {
             case USE:
                 return checkSyntaxOfUse();
             case SHOW_NEXT_CARD:
-                return checkSyntaxOfShowNextCard();
+                return checkSyntaxForShowNextCard();
             case SHOW_CARDS:
                 return checkSyntaxOfShowCards();
             case END_GAME:
