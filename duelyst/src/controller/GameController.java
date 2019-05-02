@@ -78,8 +78,8 @@ public class GameController {
         return collection.isDeckValidate(deckName);
     }
 
-    public static String setMainDeck(String deckName, Account account) {
-        return account.setMainDeck(deckName);
+    public static String setMainDeck(String deckName, Collection collection) {
+        return collection.setMainDeck(deckName);
     }
 
     public static String buy(String cardName,Shop shop){
