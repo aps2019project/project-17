@@ -22,7 +22,7 @@ public class Battle {
     private Item selectedItem;
     private GameData gameDataPlayerOne;
     private GameData gameDataPlayerTwo;
-    private static Battle correctBattle;
+    private static Battle currentBattle;
 
     public Battle(Player playerOne, Player playerTwo, Board board, GameMode gameMode, BattleType battleType) {
         this.playerOne = playerOne;
@@ -35,11 +35,11 @@ public class Battle {
         this.battleType = battleType;
         setGameData();
         setHeroesInTheirPosition();
-        correctBattle = this;
+        currentBattle = this;
     }
 
-    public static Battle getCorrectBattle() {
-        return correctBattle;
+    public static Battle getCurrentBattle() {
+        return currentBattle;
     }
 
     private void setGameData() {
