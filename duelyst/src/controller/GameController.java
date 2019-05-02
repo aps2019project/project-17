@@ -83,34 +83,39 @@ public class GameController {
         return collection.setMainDeck(deckName);
     }
 
-    public static String buy(String cardName,Shop shop){
+    public static String buy(String cardName, Shop shop) {
         return shop.buy(cardName);
     }
 
-    public static String sell(String cardName,Shop shop){
+    public static String sell(String cardName, Shop shop) {
         return shop.sell(cardName);
     }
 
-    public static String movingCard(int x, int y, Battle battle){
+    public static String movingCard(int x, int y, Battle battle) {
         return battle.movingCard(x, y);
     }
 
-    public static String attack(String opponentCardId,Battle battle){
+    public static String attack(String opponentCardId, Battle battle) {
         return battle.attack(opponentCardId);
     }
 
-    public static String insertCard(String cardName, int x, int y, Battle battle){
+    public static String insertCard(String cardName, int x, int y, Battle battle) {
         return battle.insertingCardFromHand(cardName, x, y);
     }
 
-    public static void endTurn(Battle battle){
-         battle.endTurn();
+    public static void endTurn(Battle battle) {
+        battle.endTurn();
     }
-    public static String searchInShop(String cardName,Shop shop){
+
+    public static String searchInShop(String cardName, Shop shop) {
         return shop.search(cardName);
     }
 
     public static String logout() {
         return Account.logout();
+    }
+
+    public static String showGameInfo(Battle battle){
+        return battle.showGameInfo();
     }
 }

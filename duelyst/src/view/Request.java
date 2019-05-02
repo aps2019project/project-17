@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Data.Account;
+import GameGround.Battle;
 import controller.GameController;
 
 public class Request {
@@ -633,7 +634,7 @@ public class Request {
         Pattern patternForGameInfo = Pattern.compile(StringsRq.GAME_INFO);
         Matcher matcher = patternForGameInfo.matcher(command);
         if (matcher.matches()) {
-            BattleView.showGameInfo();
+            BattleView.showGameInfo(Battle.getCorrectBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -645,7 +646,7 @@ public class Request {
         Pattern patternForShowMyMinions = Pattern.compile(StringsRq.SHOW_MY_MINIONS);
         Matcher matcher = patternForShowMyMinions.matcher(command);
         if (matcher.matches()) {
-            BattleView.showMyMinions();
+            BattleView.showMyMinions(Battle.getCorrectBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -657,7 +658,7 @@ public class Request {
         Pattern patternForShowOpponentMinions = Pattern.compile(StringsRq.SHOW_OPPONENT_MINIONS);
         Matcher matcher = patternForShowOpponentMinions.matcher(command);
         if (matcher.matches()) {
-            BattleView.showOpponentMinions();
+            BattleView.showOpponentMinions(Battle.getCorrectBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -670,7 +671,7 @@ public class Request {
         Matcher matcher = patternForShowCardInfo.matcher(command);
         if (matcher.matches()) {
             String cardId = matcher.group("cardId");
-            BattleView.showCardInfo(, cardId);
+            BattleView.showCardInfo(Battle.getCorrectBattle(), cardId);
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -692,7 +693,7 @@ public class Request {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            String result = GameController.movingCard(x, y, );
+            String result = GameController.movingCard(x, y, Battle.getCorrectBattle());
             System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -706,7 +707,7 @@ public class Request {
         Matcher matcher = patternForAttack.matcher(command);
         String cardId = matcher.group("cardId");
         if (matcher.matches()) {
-            String result = GameController.attack(cardId, );
+            String result = GameController.attack(cardId, Battle.getCorrectBattle());
             System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -740,7 +741,7 @@ public class Request {
         Pattern patternForShowHand = Pattern.compile(StringsRq.SHOW_HAND);
         Matcher matcher = patternForShowHand.matcher(command);
         if (matcher.matches()) {
-            BattleView.showHand();
+            BattleView.showHand(Battle.getCorrectBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -755,7 +756,7 @@ public class Request {
             String cardName = matcher.group("cardName");
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            String result = GameController.insertCard(cardName, x, y, );
+            String result = GameController.insertCard(cardName, x, y, Battle.getCorrectBattle());
             System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -768,7 +769,7 @@ public class Request {
         Pattern patternForEndTurn = Pattern.compile(StringsRq.END_TURN);
         Matcher matcher = patternForEndTurn.matcher(command);
         if (matcher.matches()) {
-            GameController.endTurn();
+            GameController.endTurn(Battle.getCorrectBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -803,7 +804,7 @@ public class Request {
             Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
             if (matcher.matches()) {
                 String cardId = matcher.group("cardId");
-                BattleView.showCardInfo(, cardId);
+                BattleView.showCardInfo(Battle.getCorrectBattle(), cardId);
                 return true;
             } else {
                 error = ErrorType.INVALID_INPUT;
