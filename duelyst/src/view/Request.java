@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Data.Account;
-import GameGround.Battle;
 import controller.GameController;
 
 public class Request {
@@ -632,98 +631,191 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxForGameInfo(){
+    public boolean checkSyntaxForGameInfo() {
         Pattern patternForGameInfo = Pattern.compile(GAME_INFO);
         Matcher matcher = patternForGameInfo.matcher(command);
-        if (matcher.matches()){
+        if (matcher.matches()) {
             BattleView.showGameInfo();
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxForShowMyMinions(){
+    public boolean checkSyntaxForShowMyMinions() {
         Pattern patternForShowMyMinions = Pattern.compile(SHOW_MY_MINIONS);
         Matcher matcher = patternForShowMyMinions.matcher(command);
-        if (matcher.matches()){
+        if (matcher.matches()) {
             BattleView.showMyMinions();
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxOfShowOpponentMinions(){
+    public boolean checkSyntaxOfShowOpponentMinions() {
         Pattern patternForShowOpponentMinions = Pattern.compile(SHOW_OPPONENT_MINIONS);
         Matcher matcher = patternForShowOpponentMinions.matcher(command);
-        if(matcher.matches()){
+        if (matcher.matches()) {
             BattleView.showOpponentMinions();
-        }else{
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxOfShowCardInfo(){
+    public boolean checkSyntaxOfShowCardInfo() {
         Pattern patternForShowCardInfo = Pattern.compile(SHOW_CARD_INFO + " (?<cardId>\\w+)");
         Matcher matcher = patternForShowCardInfo.matcher(command);
-        if(matcher.matches()){
-            String cardId=matcher.group("cardId");
+        if (matcher.matches()) {
+            String cardId = matcher.group("cardId");
             BattleView.showCardInfo(, cardId);
-        }else{
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxForSelect(){
+    public boolean checkSyntaxForSelect() {
         Pattern patternForSelect = Pattern.compile(SELECT + " (?<cardId>\\w+)");
         Matcher matcher = patternForSelect.matcher(command);
-        String cardId=matcher.group("cardId");
+        String cardId = matcher.group("cardId");
         //todo have to set a method in battle fo selecting item then will complete this method according to id(card or item)
         return true;
     }
 
-    public boolean checkSyntaxOfMoveTO(){
+    public boolean checkSyntaxOfMoveTO() {
         Pattern patternForMoveTO = Pattern.compile(MOVE_TO + " \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForMoveTO.matcher(command);
-        if(matcher.matches()){
-            int x=Integer.parseInt(matcher.group("x"));
-            int y=Integer.parseInt(matcher.group("y"));
-            String result=GameController.movingCard(x, y, );
+        if (matcher.matches()) {
+            int x = Integer.parseInt(matcher.group("x"));
+            int y = Integer.parseInt(matcher.group("y"));
+            String result = GameController.movingCard(x, y, );
             System.out.println(result);
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxOfAtack(){
-        Pattern patternForAttack = Pattern.compile(ATTACK +" (?<cardId>\\w+)");
+    public boolean checkSyntaxOfAtack() {
+        Pattern patternForAttack = Pattern.compile(ATTACK + " (?<cardId>\\w+)");
         Matcher matcher = patternForAttack.matcher(command);
-        String cardId=matcher.group("cardId");
-        if(matcher.matches()){
-            String result=GameController.attack(cardId, );
+        String cardId = matcher.group("cardId");
+        if (matcher.matches()) {
+            String result = GameController.attack(cardId, );
             System.out.println(result);
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
         return true;
     }
 
-    public boolean checkSyntaxForComboAttack(){
+    public boolean checkSyntaxOfComboAttack() {
         Pattern patternForAttackCombo = Pattern.compile(ATTACK_COMBO);
         Matcher matcher = patternForAttackCombo.matcher(command);
         // TODO: the combo attack method must   added and the syntax can get more than one card id so this must be handled
         return true;
     }
 
+    public boolean checkSyntaxOfUseSpecialPower() {
+        Pattern patternForUserSpecialPower = Pattern.compile(USE_SPECIAL_POWER + " \\((?<x>\\d),(?<y>\\d)\\)");
+        Matcher matcher = patternForUserSpecialPower.matcher(command);
+        if (matcher.matches()) {
+            int x = Integer.parseInt(matcher.group("x"));
+            int y = Integer.parseInt(matcher.group("y"));
+            // TODO: must to be completed with methods
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
 
+    public boolean checkSyntaxOfShowHand() {
+        Pattern patternForShowHand = Pattern.compile(SHOW_HAND);
+        Matcher matcher = patternForShowHand.matcher(command);
+        if (matcher.matches()) {
+            BattleView.showHand();
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfInsert() {
+        Pattern patternForInsert = Pattern.compile(INSERT + " (?<cardName>\\w)+ in  \\((?<x>\\d),(?<y>\\d)\\)");
+        Matcher matcher = patternForInsert.matcher(command);
+        if (matcher.matches()) {
+            String cardName = matcher.group("cardName");
+            int x = Integer.parseInt(matcher.group("x"));
+            int y = Integer.parseInt(matcher.group("y"));
+            String result = GameController.insertCard(cardName, x, y, );
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfEndTurn() {
+        Pattern patternForEndTurn = Pattern.compile(END_TURN);
+        Matcher matcher = patternForEndTurn.matcher(command);
+        if (matcher.matches()) {
+            GameController.endTurn();
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowCollectibles() {
+        Pattern patternForShowCollectibles = Pattern.compile(SHOW_COLLECTIBLES);
+        Matcher matcher = patternForShowCollectibles.matcher(command);
+        if (matcher.matches()) {
+            BattleView.showCollectables();// TODO: must to be completed
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowInfo() {
+        if (menuType.equals(MenuType.BATTLE_MENU)) {
+            Pattern patternForShowInfoInBattleMenu = Pattern.compile(SHOW_INFO);
+            Matcher matcher = patternForShowInfoInBattleMenu.matcher(command);
+            if (matcher.matches()) {
+                BattleView.showInfo();// TODO: must to be completed
+            } else {
+                error = ErrorType.INVALID_INPUT;
+                return false;
+            }
+        } else if (menuType.equals(MenuType.GRAVE_YARD)) {
+            Pattern patternForShowInfoInBGraveYardMenu = Pattern.compile(SHOW_INFO+" (?<cardId>\\w+)");
+            Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
+            if (matcher.matches()) {
+                String cardId=matcher.group("cardId");
+                BattleView.showCardInfo(, cardId);
+                return true;
+            } else {
+                error = ErrorType.INVALID_INPUT;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfUse(){
+
+    }
 }
