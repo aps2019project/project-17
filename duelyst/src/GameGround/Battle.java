@@ -112,7 +112,7 @@ public class Battle {
         return null;
     }
 
-    private Player whoseTurn() {
+    public Player whoseTurn() {
         if (this.turn % 2 == 1)
             return this.playerOne;
         return this.playerTwo;
