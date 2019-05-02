@@ -14,9 +14,12 @@ public class Request {
     protected ErrorType error = null;
     protected MenuType menuType = null;
 
+    public Request() {
+        menuType = MenuType.ACCOUNT_MENU;
+    }
 
     public void getNewCommand() {
-        command = scanner.nextLine().toLowerCase();
+        command = scanner.nextLine().toLowerCase().trim();
     }
 
     public ErrorType getError() {
@@ -117,6 +120,8 @@ public class Request {
             return null;
         }
 
+        Pattern patternForEnter = Pattern.compile(StringsRq.ENTER + " \\w+");
+        Matcher matcherForEnter = patternForEnter.matcher(command);
         Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " " + "\\w+");
         Matcher matcherForCreateAccount = patternForCreateAccount.matcher(command);
         Pattern patternForLogIn = Pattern.compile(StringsRq.LOGIN + " " + "\\w+");
@@ -196,8 +201,9 @@ public class Request {
         Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
         Matcher matcherForEndGame = patternForEndGame.matcher(command);
 
-
-        if (matcherForCreateAccount.matches()) {
+        if (matcherForEnter.matches()) {
+            return RequestType.ENTER;
+        } else if (matcherForCreateAccount.matches()) {
             menuType = MenuType.ACCOUNT_MENU;
             return RequestType.CREATE_ACCOUNT;
         } else if (matcherForLogIn.matches()) {
@@ -314,6 +320,32 @@ public class Request {
         return RequestType.EXIT;//todo نمیدونم اینو:(
     }
 
+    public boolean checkSyntaxForEnter() {
+        Pattern patternForEnter = Pattern.compile(StringsRq.ENTER + " (?<menuName>\\w+)");
+        Matcher matcher = patternForEnter.matcher(command);
+        if (matcher.matches()) {
+            String menuName = matcher.group("menuName");
+            switch (menuName) {
+                case "collection":
+                    menuType = MenuType.COLLECTION_MENU;
+                    break;
+                case "shop":
+                    menuType = MenuType.SHOP_MENU;
+                    break;
+                case "battle":
+                    menuType = MenuType.BATTLE_MENU;
+                    break;
+                default:
+                    error = ErrorType.INVALID_INPUT;
+                    break;
+
+            }
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
 
     public boolean checkSyntaxOfCreateAccountCommand() {
         Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " (?<userName>\\w+)");
