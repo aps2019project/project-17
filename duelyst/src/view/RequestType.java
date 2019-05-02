@@ -21,7 +21,26 @@ public enum RequestType {
     SHOW_fOR_SHOP_MENU,
     SEARCH_COLLECTION,
     BUY,
-    SELL;
+    SELL,
+    GAME_INFO,
+    SHOW_MY_MINIONS,
+    SHOW_OPPONENT_MINIONS,
+    SHOW_CARD_INFO,
+    SELECT,
+    MOVE_TO,
+    ATTACK,
+    ATTACK_COMBO,
+    USE_SPECIAL_POWER,
+    SHOW_HAND,
+    INSERT,
+    END_TURN,
+    SHOW_COLLECTIBLES,
+    SHOW_INFO,
+    USE,
+    SHOW_NEXT_CARD,
+    ENTER_GRAVE_YARD,
+    SHOW_CARDS,
+    END_GAME;
 
 
 }

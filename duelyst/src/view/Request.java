@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Data.Account;
+import GameGround.Battle;
 import controller.GameController;
 
 public class Request {
@@ -33,7 +34,25 @@ public class Request {
     private static final String SEARCH_COLLECTION = "search collection";
     private static final String BUY = "buy";
     private static final String SELL = "sell";
-
+    private static final String GAME_INFO = "game info";
+    private static final String SHOW_MY_MINIONS = "show my minions";
+    private static final String SHOW_OPPONENT_MINIONS = "show opponent minions";
+    private static final String SHOW_CARD_INFO = "show card info";
+    private static final String SELECT = "select";//foe selecting card or item in game ground
+    private static final String MOVE_TO = "move to";
+    private static final String ATTACK = "attack";
+    private static final String ATTACK_COMBO = "attac combo";
+    private static final String USE_SPECIAL_POWER = "use special power";
+    private static final String SHOW_HAND = "show hand";
+    private static final String INSERT = "insert";
+    private static final String END_TURN = "end turn";
+    private static final String SHOW_COLLECTIBLES = "show collectibles";
+    private static final String SHOW_INFO = "show info";//for battle or grave yard
+    private static final String USE = "use";
+    private static final String SHOW_NEXT_CARD = "show next card";
+    private static final String ENTER_GRAVE_YARD = "enter grave yard";
+    private static final String SHOW_CARDS = "show cards";
+    private static final String END_GAME = "end game";
 
     public void getNewCommand() {
         command = scanner.nextLine().toLowerCase();
@@ -100,6 +119,7 @@ public class Request {
         if (command == null || command.equals("")) {
             return null;
         }
+
         Pattern patternForCreateAccount = Pattern.compile(CREATE_ACCOUNT + " " + "\\w+");
         Matcher matcherForCreateAccount = patternForCreateAccount.matcher(command);
         Pattern patternForLogIn = Pattern.compile(LOGIN + " " + "\\w+");
@@ -139,7 +159,47 @@ public class Request {
         Pattern patternForBuy = Pattern.compile(BUY + " \\w+");
         Matcher matcherForSBuy = patternForBuy.matcher(command);
         Pattern patternForSell = Pattern.compile(SELL + " " + "\\w+");
-        Matcher matcherForSSell = patternForSell.matcher(command);
+        Matcher matcherForSell = patternForSell.matcher(command);
+        Pattern patternForGameInfo = Pattern.compile(GAME_INFO);
+        Matcher matcherForGameInfo = patternForGameInfo.matcher(command);
+        Pattern patternForShowMyMinions = Pattern.compile(SHOW_MY_MINIONS);
+        Matcher matcherForShowMyMinions = patternForShowMyMinions.matcher(command);
+        Pattern patternForShowOpponentMinions = Pattern.compile(SHOW_OPPONENT_MINIONS);
+        Matcher matcherForShowOpponentMinions = patternForShowOpponentMinions.matcher(command);
+        Pattern patternForShowCardInfo = Pattern.compile(SHOW_CARD_INFO + " \\w+");
+        Matcher matcherForShowCardInfo = patternForShowCardInfo.matcher(command);
+        Pattern patternForSelect = Pattern.compile(SELECT + " \\w+");
+        Matcher matcherForSelect = patternForSelect.matcher(command);
+        Pattern patternForMoveTO = Pattern.compile(MOVE_TO + " \\(\\d,\\d\\)");
+        Matcher matcherForMoveTO = patternForMoveTO.matcher(command);
+        Pattern patternForAttack = Pattern.compile(ATTACK + " \\w+");
+        Matcher matcherForAttack = patternForAttack.matcher(command);
+        Pattern patternForAttackCombo = Pattern.compile(ATTACK_COMBO);
+        Matcher matcherForAttackCombo = patternForAttackCombo.matcher(command);
+        Pattern patternForUserSpecialPower = Pattern.compile(USE_SPECIAL_POWER + " \\(\\d,\\d\\)");
+        Matcher matcherForUserSpecialPower = patternForUserSpecialPower.matcher(command);
+        Pattern patternForShowHand = Pattern.compile(SHOW_HAND);
+        Matcher matcherForShowHand = patternForShowHand.matcher(command);
+        Pattern patternForInsert = Pattern.compile(INSERT + " \\w+ in \\(\\d,\\d\\)");
+        Matcher matcherForInsert = patternForInsert.matcher(command);
+        Pattern patternForEndTurn = Pattern.compile(END_TURN);
+        Matcher matcherForEndTurn = patternForEndTurn.matcher(command);
+        Pattern patternForShowCollectibles = Pattern.compile(SHOW_COLLECTIBLES);
+        Matcher matcherForShowCollectibles = patternForShowCollectibles.matcher(command);
+        Pattern patternForShowInfo = Pattern.compile(SHOW_INFO);
+        Matcher matcherForShowInfo = patternForShowInfo.matcher(command);
+        Pattern patternForUse = Pattern.compile(USE + " \\(\\d,\\d\\)");
+        Matcher matcherForUse = patternForUse.matcher(command);
+        Pattern patternForShowNextCard = Pattern.compile(SHOW_NEXT_CARD);
+        Matcher matcherForShowNexrCard = patternForShowNextCard.matcher(command);
+        Pattern patternForEnterGraveYard = Pattern.compile(ENTER_GRAVE_YARD);
+        Matcher matcherForEnterGraveYard = patternForEnterGraveYard.matcher(command);
+        Pattern patternForShowCards = Pattern.compile(SHOW_CARDS);
+        Matcher matcherForShowCards = patternForShowCards.matcher(command);
+        Pattern patternForEndGame = Pattern.compile(END_GAME);
+        Matcher matcherForEndGame = patternForEndGame.matcher(command);
+
+
         if (matcherForCreateAccount.matches()) {
             menuType = MenuType.ACCOUNT_MENU;
             return RequestType.CREATE_ACCOUNT;
@@ -189,9 +249,65 @@ public class Request {
         } else if (matcherForSBuy.matches()) {
             menuType = MenuType.SHOP_MENU;
             return RequestType.BUY;
-        } else if (matcherForSSell.matches()) {
+        } else if (matcherForSell.matches()) {
             menuType = MenuType.SHOP_MENU;
             return RequestType.SELL;
+        } else if (matcherForGameInfo.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.GAME_INFO;
+        } else if (matcherForShowMyMinions.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.SHOW_MY_MINIONS;
+        } else if (matcherForShowOpponentMinions.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.SHOW_OPPONENT_MINIONS;
+        } else if (matcherForShowCardInfo.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.SHOW_CARD_INFO;
+        } else if (matcherForSelect.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.SELECT;
+        } else if (matcherForMoveTO.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.MOVE_TO;
+        } else if (matcherForAttack.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.ATTACK;
+        } else if (matcherForAttackCombo.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.ATTACK_COMBO;
+        } else if (matcherForUserSpecialPower.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.USE_SPECIAL_POWER;
+        } else if (matcherForShowHand.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.SHOW_HAND;
+        } else if (matcherForInsert.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.INSERT;
+        } else if (matcherForEndTurn.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.END_TURN;
+        } else if (matcherForShowCollectibles.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.SHOW_COLLECTIBLES;
+        } else if (matcherForShowInfo.matches()) {//for battle or grave yard menu
+            return RequestType.SHOW_INFO;
+        } else if (matcherForUse.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.USE;
+        } else if (matcherForShowNexrCard.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.SHOW_NEXT_CARD;
+        } else if (matcherForEnterGraveYard.matches()) {
+            menuType = MenuType.GRAVE_YARD;
+            return RequestType.ENTER_GRAVE_YARD;
+        } else if (matcherForShowCards.matches()) {
+            menuType = MenuType.GRAVE_YARD;
+            return RequestType.SHOW_CARDS;
+        } else if (matcherForEndGame.matches()) {
+            menuType = MenuType.BATTLE_MENU;
+            return RequestType.END_GAME;
         } else if (matcherForSave.matches()) {
             return RequestType.SAVE;
         } else if (matcherForHelp.matches()) {
@@ -428,7 +544,7 @@ public class Request {
         Matcher matcher = patternForSelectDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
-            String result = GameController.setMainDeck(name, Account.getLoginUser());
+            String result = GameController.setMainDeck(name, Account.getLoginUser().getCollection());
             System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -515,4 +631,99 @@ public class Request {
         }
         return true;
     }
+
+    public boolean checkSyntaxForGameInfo(){
+        Pattern patternForGameInfo = Pattern.compile(GAME_INFO);
+        Matcher matcher = patternForGameInfo.matcher(command);
+        if (matcher.matches()){
+            BattleView.showGameInfo();
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxForShowMyMinions(){
+        Pattern patternForShowMyMinions = Pattern.compile(SHOW_MY_MINIONS);
+        Matcher matcher = patternForShowMyMinions.matcher(command);
+        if (matcher.matches()){
+            BattleView.showMyMinions();
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowOpponentMinions(){
+        Pattern patternForShowOpponentMinions = Pattern.compile(SHOW_OPPONENT_MINIONS);
+        Matcher matcher = patternForShowOpponentMinions.matcher(command);
+        if(matcher.matches()){
+            BattleView.showOpponentMinions();
+        }else{
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfShowCardInfo(){
+        Pattern patternForShowCardInfo = Pattern.compile(SHOW_CARD_INFO + " (?<cardId>\\w+)");
+        Matcher matcher = patternForShowCardInfo.matcher(command);
+        if(matcher.matches()){
+            String cardId=matcher.group("cardId");
+            BattleView.showCardInfo(, cardId);
+        }else{
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxForSelect(){
+        Pattern patternForSelect = Pattern.compile(SELECT + " (?<cardId>\\w+)");
+        Matcher matcher = patternForSelect.matcher(command);
+        String cardId=matcher.group("cardId");
+        //todo have to set a method in battle fo selecting item then will complete this method according to id(card or item)
+        return true;
+    }
+
+    public boolean checkSyntaxOfMoveTO(){
+        Pattern patternForMoveTO = Pattern.compile(MOVE_TO + " \\((?<x>\\d),(?<y>\\d)\\)");
+        Matcher matcher = patternForMoveTO.matcher(command);
+        if(matcher.matches()){
+            int x=Integer.parseInt(matcher.group("x"));
+            int y=Integer.parseInt(matcher.group("y"));
+            String result=GameController.movingCard(x, y, );
+            System.out.println(result);
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfAtack(){
+        Pattern patternForAttack = Pattern.compile(ATTACK +" (?<cardId>\\w+)");
+        Matcher matcher = patternForAttack.matcher(command);
+        String cardId=matcher.group("cardId");
+        if(matcher.matches()){
+            String result=GameController.attack(cardId, );
+            System.out.println(result);
+        }else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxForComboAttack(){
+        Pattern patternForAttackCombo = Pattern.compile(ATTACK_COMBO);
+        Matcher matcher = patternForAttackCombo.matcher(command);
+        // TODO: the combo attack method must   added and the syntax can get more than one card id so this must be handled
+        return true;
+    }
+
+
 }
