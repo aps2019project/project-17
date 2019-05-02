@@ -1,6 +1,5 @@
 package view;
 
 public enum ErrorType {
-    INVALID_INPUT;
-
+    INVALID_INPUT
 }
