@@ -1,0 +1,39 @@
+[
+  {
+    "id": 201,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetTpe": "INSIDER_HERO",
+    "targetRange": "SELF",
+    "effectTime": 0,
+    "changeAttackPower": 4,
+    "changeHealth": 0
+  },
+  {
+    "id": 202,
+    "buffType": "STUN",
+    "targetType": "ENEMY",
+    "targetRange": "ALL",
+    "effectTime": 1
+  },
+  {
+    "id": 203,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "NONE",
+    "effectTime": 1
+  },
+  {
+    "id": 204,
+    "buffType": "STUN",
+    "targetType": "ENEMY",
+    "targetRange": "ALL",
+    "effectTime": 1
+  },
+  {
+    "id": 205,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "NONE",
+    "effectTime": 1
+  }
+]
