@@ -190,7 +190,7 @@ public class Request {
         Pattern patternForUse = Pattern.compile(USE + " \\(\\d,\\d\\)");
         Matcher matcherForUse = patternForUse.matcher(command);
         Pattern patternForShowNextCard = Pattern.compile(SHOW_NEXT_CARD);
-        Matcher matcherForShowNexrCard = patternForShowNextCard.matcher(command);
+        Matcher matcherForShowNextCard = patternForShowNextCard.matcher(command);
         Pattern patternForEnterGraveYard = Pattern.compile(ENTER_GRAVE_YARD);
         Matcher matcherForEnterGraveYard = patternForEnterGraveYard.matcher(command);
         Pattern patternForShowCards = Pattern.compile(SHOW_CARDS);
@@ -295,7 +295,7 @@ public class Request {
         } else if (matcherForUse.matches()) {
             menuType = MenuType.BATTLE_MENU;
             return RequestType.USE;
-        } else if (matcherForShowNexrCard.matches()) {
+        } else if (matcherForShowNextCard.matches()) {
             menuType = MenuType.BATTLE_MENU;
             return RequestType.SHOW_NEXT_CARD;
         } else if (matcherForEnterGraveYard.matches()) {
@@ -801,10 +801,10 @@ public class Request {
                 return false;
             }
         } else if (menuType.equals(MenuType.GRAVE_YARD)) {
-            Pattern patternForShowInfoInBGraveYardMenu = Pattern.compile(SHOW_INFO+" (?<cardId>\\w+)");
+            Pattern patternForShowInfoInBGraveYardMenu = Pattern.compile(SHOW_INFO + " (?<cardId>\\w+)");
             Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
             if (matcher.matches()) {
-                String cardId=matcher.group("cardId");
+                String cardId = matcher.group("cardId");
                 BattleView.showCardInfo(, cardId);
                 return true;
             } else {
@@ -815,7 +815,31 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfUse(){
-
+    public boolean checkSyntaxOfUse() {
+        Pattern patternForUse = Pattern.compile(USE + " \\(\\d,\\d\\)");
+        Matcher matcher = patternForUse.matcher(command);
+        if (matcher.matches()) {
+            int x = Integer.parseInt(matcher.group("x"));
+            int y = Integer.parseInt(matcher.group("y"));
+            // TODO: must to be completed by adding use method for items
+            return true;
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
     }
+
+    public boolean checkSyntaxForShowNextCard() {
+        Pattern patternForShowNextCard = Pattern.compile(SHOW_NEXT_CARD);
+        Matcher matcher = patternForShowNextCard.matcher(command);
+        if (matcher.matches()) {
+            BattleView.showNextCard();// TODO: must to be completed
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+
 }
