@@ -36,6 +36,8 @@ public class Request {
             return false;
 
         switch (getType()) {
+            case ENTER:
+                return checkSyntaxForEnter();
             case CREATE_ACCOUNT:
                 return checkSyntaxOfCreateAccountCommand();
             case LOGIN:
@@ -89,7 +91,7 @@ public class Request {
             case MOVE_TO:
                 return checkSyntaxOfMoveTO();
             case ATTACK:
-                return checkSyntaxOfAtack();
+                return checkSyntaxOfAttack();
             case ATTACK_COMBO:
                 return checkSyntaxOfComboAttack();
             case USE_SPECIAL_POWER:
@@ -203,6 +205,8 @@ public class Request {
         Matcher matcherForShowCards = patternForShowCards.matcher(command);
         Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
         Matcher matcherForEndGame = patternForEndGame.matcher(command);
+        Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
+        Matcher matcherForExit = patternForExit.matcher(command);
 
         if (matcherForLogIn.matches()) {
             if (menuType.equals(MenuType.ACCOUNT_MENU)) {
@@ -387,7 +391,8 @@ public class Request {
             }
             return null;
         } else if (matcherForEnterGraveYard.matches()) {
-            if (menuType.equals(MenuType.GRAVE_YARD)) {
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                menuType=MenuType.GRAVE_YARD;
                 return RequestType.ENTER_GRAVE_YARD;
             }
             return null;
@@ -403,9 +408,20 @@ public class Request {
             return null;
         } else if (matcherForHelp.matches()) {
             return RequestType.HELP;
+        } else if (matcherForExit.matches()) {
+            if (menuType.equals(MenuType.MAIN_MENU)) {
+                menuType=null;
+                return RequestType.EXIT_GAME;
+            } else if (menuType.equals(MenuType.GRAVE_YARD)) {
+                menuType=MenuType.BATTLE_MENU;
+                return RequestType.EXIT_GRAVE_YARD;
+            } else {
+                menuType=MenuType.MAIN_MENU;
+                return RequestType.EXIT_MENU;
+            }
         }
         error = ErrorType.INVALID_INPUT;
-        return RequestType.EXIT;//todo نمیدونم اینو:(
+        return RequestType.EXIT_GAME;//todo نمیدونم اینو:(
     }
 
     public boolean checkSyntaxForEnter() {
@@ -434,6 +450,7 @@ public class Request {
         }
         return true;
     }
+
 
     public boolean checkSyntaxOfCreateAccountCommand() {
         Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " (?<userName>\\w+)");
@@ -822,7 +839,7 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfAtack() {
+    public boolean checkSyntaxOfAttack() {
         Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " (?<cardId>\\w+)");
         Matcher matcher = patternForAttack.matcher(command);
         String cardId = matcher.group("cardId");

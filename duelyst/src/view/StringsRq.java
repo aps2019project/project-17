@@ -1,6 +1,7 @@
 package view;
 
 class StringsRq {
+    static final String EXIT="exit";
     static final String ENTER="enter";
     static final String CREATE_ACCOUNT = "create account";
     static final String LOGIN = "login";
