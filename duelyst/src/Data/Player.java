@@ -5,6 +5,7 @@ import effects.Card;
 import effects.Item;
 import effects.Minion;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -35,6 +36,18 @@ public class Player {
         this.playerHasFlag = false;
         this.nextCard = null;
         setMainDeck(deck);
+    }
+
+    public Player(String userName) {
+        this.mana = 2;
+        this.collectAbleItems = new ArrayList<>();
+        this.graveYard = new ArrayList<>();
+        this.hand = new Hand();
+        this.userName = userName;
+        this.holdingFlags = 0;
+        this.playerHasFlag = false;
+        this.nextCard = null;
+        this.mainDeck = null;
     }
 
     public void allMinionsReset() {
