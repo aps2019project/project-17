@@ -9,7 +9,7 @@ import effects.Card;
 public class Collection {
     private ArrayList<Card> cards;
     private ArrayList<Item> items;
-    private ArrayList<Deck> decks = new ArrayList<>();
+    private ArrayList<Deck> decks;
     private Deck mainDeck;
     private int daric;
     private static ArrayList<Collection> collections = new ArrayList<>();
@@ -17,60 +17,9 @@ public class Collection {
     public Collection() {
         this.cards = new ArrayList<>();
         this.items = new ArrayList<>();
+        this.decks = new ArrayList<>();
         this.daric = 15000;
-    }
-
-    public int getDaric() {
-        return daric;
-    }
-
-    public void addCardToCollection(Card card) {
-        this.cards.add(card);
-    }
-
-    public void addItemToCollection(Item item) {
-        this.items.add(item);
-    }
-
-    public static ArrayList<Collection> getCollections() {
-        return collections;
-    }
-
-    public void changeDaric(int value) {
-        this.daric += value;
-    }
-
-    public static void addCollection(Collection collection) {
-        collections.add(collection);
-    }
-
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
-
-    public ArrayList<Item> getItems() {
-        return items;
-    }
-
-    public ArrayList<Deck> getDecks() {
-        return decks;
-    }
-
-    public Deck getMainDeck() {
-        return mainDeck;
-    }
-
-    public void setMainDeck(Deck mainDeck) {
-        this.mainDeck = mainDeck;
-    }
-
-    public String search(String name) {
-        if (findCard(name) != null)
-            return findCard(name).getId();
-
-        else if (findItem(name) != null)
-            return findItem(name).getId();
-        return null;
+        this.mainDeck = null;
     }
 
     private Card findCard(String cardNameID) {
@@ -95,6 +44,15 @@ public class Collection {
         return null;
     }
 
+    public String search(String name) {
+        if (findCard(name) != null)
+            return findCard(name).getId();
+
+        else if (findItem(name) != null)
+            return findItem(name).getId();
+        return null;
+    }
+
     public String createDeck(String deckName) {
         for (Deck deck1 : decks) {
             if (deck1.getName().equals(deckName)) {
@@ -106,50 +64,13 @@ public class Collection {
         return "Deck Successfully created";
     }
 
-    public Deck findDeck(String deckName) {
-        for (Deck deck : decks) {
-            if (deck.getName().equals(deckName)) {
-                return deck;
-            }
-        }
-        return null;
-    }
-
     public String deleteDeck(String deckName) {
         Deck garbageDeck = findDeck(deckName);
         if (garbageDeck != null) {
             decks.remove(garbageDeck);
             return "Deck Successfully deleted";
-        } else {
-            return "No such deck found";
         }
-    }
-
-    private boolean isCardInDeck(String cardID, String deckName) {
-        Deck deck = findDeck(deckName);
-
-        for (int i = 0; i < deck.getCards().size(); i++) {
-            Card card = deck.getCards().get(i);
-            if (card.getId().equals(cardID))
-                return true;
-        }
-        return false;
-    }
-
-    private boolean deckCardsHasStorage(String deckName) {
-        Deck deck = findDeck(deckName);
-        return deck.getCards().size() < 20;
-    }
-
-    private boolean deckHasItem(String deckName) {
-        Deck deck = findDeck(deckName);
-
-        return deck.getItem() != null;
-    }
-
-    private boolean deckHasHero(String deckName) {
-        Deck deck = findDeck(deckName);
-        return deck.getHero() != null;
+        return "No such deck found";
     }
 
     public String addToDeck(String cardID, String deckName) {
@@ -165,11 +86,11 @@ public class Collection {
             return "invalid card\\item";
 
         if (card != null) {
-            if (card.getClass().toString().equals("class Hero")) {
+            if (card instanceof Hero) {
                 if (deckHasHero(deckName))
                     return "deck already has hero";
 
-                addHeroToDeck(card, deck);
+                deck.setHero((Hero) card);
                 return "hero successfully add";
             }
 
@@ -179,28 +100,16 @@ public class Collection {
             if (deckCardsHasStorage(deckName))
                 return "deck Card storage is full";
 
-            addCardToDeck(card, deck);
+            deck.addCard(card);
             return "card successfully add";
         }
 
         if (deckHasItem(deckName))
             return "deck already has item";
 
-        addItemToDeck(item, deck);
+        deck.setItem(item);
         return "item successfully add";
 
-    }
-
-    private void addHeroToDeck(Card card, Deck deck) {
-        deck.setHero((Hero) card);
-    }
-
-    private void addCardToDeck(Card card, Deck deck) {
-        deck.addCard(card);
-    }
-
-    private void addItemToDeck(Item item, Deck deck) {
-        deck.setItem(item);
     }
 
     public String removeFromDeck(String cardID, String deckName) {
@@ -218,9 +127,9 @@ public class Collection {
             if (card instanceof Hero) {
                 if (card.getName().equals(deck.getHero().getName())) {
                     deck.setHero(null);
-                    return "removing hero from deck successfully done";
+                    return "removing this hero from deck successfully done";
                 }
-                return "invalid Hero card";
+                return "this deck doesnt have this card";
             }
             if (!isCardInDeck(cardID, deckName))
                 return "card does not exist in this deck";
@@ -236,10 +145,6 @@ public class Collection {
         return "item does not exist in this deck";
     }
 
-    public String save() {
-        return "successfully saved";
-    }
-
     public String isDeckValidate(String deckName) {
         Deck deck = findDeck(deckName);
 
@@ -252,7 +157,53 @@ public class Collection {
         return "deck is not validate";
     }
 
-    public ArrayList<Hero> getCollectionHeros() {
+    public String setMainDeck(String deckName) {
+        if (findDeck(deckName) == null)
+            return "cant find deck with this name";
+        this.mainDeck = findDeck(deckName);
+        return "main deck successfully choose";
+    }
+
+    public Deck findDeck(String deckName) {
+        for (Deck deck : decks) {
+            if (deck.getName().equals(deckName)) {
+                return deck;
+            }
+        }
+        return null;
+    }
+
+    private boolean isCardInDeck(String cardID, String deckName) {
+        Deck deck = findDeck(deckName);
+
+        if (deck == null)
+            return false;
+
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            Card card = deck.getCards().get(i);
+            if (card.getId().equals(cardID))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean deckCardsHasStorage(String deckName) {
+        return findDeck(deckName).getCards().size() < 20;
+    }
+
+    private boolean deckHasItem(String deckName) {
+        return findDeck(deckName).getItem() != null;
+    }
+
+    private boolean deckHasHero(String deckName) {
+        return findDeck(deckName).getHero() != null;
+    }
+
+    public String save() {
+        return "successfully saved";
+    }
+
+    public ArrayList<Hero> getCollectionHeroes() {
         ArrayList<Hero> collectionHeroes = new ArrayList<>();
         for (Card card : this.cards) {
             if (card instanceof Hero) {
@@ -282,7 +233,51 @@ public class Collection {
         return collectionSpells;
     }
 
-    public int numberOfItems() {
-        return this.items.size();
+    public void addCardToCollection(Card card) {
+        for (Card card1 : this.cards) {
+            if (card1.getId().equals(card.getId()))
+                return;
+        }
+        this.cards.add(card);
+    }
+
+    public void addItemToCollection(Item item) {
+        for (Item item1 : this.items) {
+            if (item1.getName().equals(item.getName()))
+                return;
+        }
+        this.items.add(item);
+    }
+
+    public int getDaric() {
+        return daric;
+    }
+
+    public static ArrayList<Collection> getCollections() {
+        return collections;
+    }
+
+    public void changeDaric(int value) {
+        this.daric += value;
+    }
+
+    public static void addCollection(Collection collection) {
+        collections.add(collection);
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
+    public Deck getMainDeck() {
+        return mainDeck;
     }
 }

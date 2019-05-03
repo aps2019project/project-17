@@ -2,7 +2,6 @@ package Data;
 
 import CardCollections.*;
 import effects.Card;
-import effects.Hero;
 import effects.Item;
 import effects.Minion;
 
@@ -22,7 +21,7 @@ public class Player {
     private boolean playerHasFlag;
     private Card nextCard;
 
-    public Player(String userName) {
+    public Player(String userName, Deck deck) {
         this.mana = 2;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
@@ -31,6 +30,7 @@ public class Player {
         this.holdingFlags = 0;
         this.playerHasFlag = false;
         this.nextCard = null;
+        setMainDeck(deck);
     }
 
     public void allMinionsReset() {
@@ -51,6 +51,15 @@ public class Player {
         for (Item item : this.collectAbleItems) {
             if (item.getName().equals(itemName))
                 return item;
+        }
+        return null;
+    }
+
+
+    public Card getCardFromHand(String cardName) {
+        for (int i = 0; i < hand.getCards().size(); i++) {
+            if (hand.getCards().get(i).getName().equals(cardName))
+                return hand.getCards().get(i);
         }
         return null;
     }
@@ -87,7 +96,7 @@ public class Player {
         return mainDeck;
     }
 
-    public void setMainDeck(Deck deck) {
+    private void setMainDeck(Deck deck) {
         this.mainDeck = deck;
         this.copyMainDeck = new Deck(this.mainDeck.getName());
         setCopyMainDeck(true);
@@ -100,7 +109,7 @@ public class Player {
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
         if (addHero)
-            copyMainDeck.addCard(mainDeck.getHero());
+            copyMainDeck.setHero(mainDeck.getHero());
     }
 
     private void setHand() {
@@ -110,14 +119,6 @@ public class Player {
             this.hand.addCard(copyMainDeck.getCards().get(n));
             this.copyMainDeck.getCards().remove(n);
         }
-    }
-
-    public Card getCardFromHand(String cardName) {
-        for (int i = 0; i < hand.getCards().size(); i++) {
-            if (hand.getCards().get(i).getName().equals(cardName))
-                return hand.getCards().get(i);
-        }
-        return null;
     }
 
     public Hand getHand() {
@@ -148,13 +149,9 @@ public class Player {
         this.mana -= change;
     }
 
-    public Card getNextCard() {
-        return nextCard;
-    }
-
     private void setNextCard() {
-        if (this.nextCard != null)
-            return;
+        if (copyMainDeck.getCards().size() == 0)
+            setCopyMainDeck(false);
         Random random = new Random();
         int n = random.nextInt(this.copyMainDeck.getCards().size());
         this.nextCard = this.copyMainDeck.getCards().get(n);
@@ -162,15 +159,18 @@ public class Player {
     }
 
     public void addCardToHand() {
+        if (this.hand.getCards().size() >= 5)
+            return;
         hand.addCard(this.nextCard);
-        this.nextCard = null;
-        if (copyMainDeck.getCards().size() == 1)
-            setCopyMainDeck(false);
+        setNextCard();
+    }
+
+    public Card getNextCard() {
+        return nextCard;
     }
 
     public void removeCardFromHand(Card card) {
         hand.removeCard(card);
-        graveYard.add(card);
     }
 
     public Deck getCopyMainDeck() {

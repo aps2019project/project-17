@@ -4,24 +4,33 @@ import java.time.LocalDateTime;
 
 public class GameData {
     private String name;
-    private Enum gameState;
     private LocalDateTime timeOfGame;
+    private MatchState matchState;
 
     public String getName() {
         return name;
-    }
-
-    public Enum getGameState() {
-        return gameState;
     }
 
     public LocalDateTime getTimeOfGame() {
         return timeOfGame;
     }
 
-    public GameData(String name, Enum gameState, LocalDateTime timeOfGame) {
+    public GameData(String name) {
         this.name = name;
-        this.gameState = gameState;
-        this.timeOfGame = timeOfGame;
+        this.timeOfGame = LocalDateTime.now();
     }
+
+    public MatchState getMatchState() {
+        return matchState;
+    }
+
+    public void setMatchState(MatchState matchState) {
+        this.matchState = matchState;
+    }
+}
+
+enum MatchState {
+    WIN,
+    LOSE,
+    DRAW
 }

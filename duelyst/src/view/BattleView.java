@@ -59,8 +59,13 @@ public class BattleView extends View {
             if (card instanceof Minion)
                 type = "Minion";
             else type = "Spell";
-            System.out.printf("name: %s, type: %s", card.getName(), type);
+            System.out.printf("name: %s, type: %s\n", card.getName(), type);
         }
+        Card card = battle.whoseTurn().getNextCard();
+        String type = "Minion";
+        if (card instanceof Spell)
+            type = "Spell";
+        System.out.printf("next card ->  name : %s , type : %s", card.getName(), type);
     }
 
     public static void showCollectables() {
@@ -68,10 +73,16 @@ public class BattleView extends View {
     }
 
     public static void showInfo() {
-
+/**
+ * it depends on the item that has been selected in the previous command(check doc page 20)
+ */
     }
 
     public static void showNextCard() {
+
+    }
+
+    public static void battleHelp() {
 
     }
 

@@ -5,11 +5,11 @@ import CardCollections.Hand;
 import Data.GameData;
 import Data.Player;
 import effects.Card;
-import effects.Hero;
 import effects.Item;
 import effects.Minion;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Battle {
     private Player playerOne;
@@ -20,7 +20,9 @@ public class Battle {
     private Card selectedCard;
     private BattleType battleType;
     private Item selectedItem;
-    private GameData gameData;
+    private GameData gameDataPlayerOne;
+    private GameData gameDataPlayerTwo;
+    private static Battle currentBattle;
 
     public Battle(Player playerOne, Player playerTwo, Board board, GameMode gameMode, BattleType battleType) {
         this.playerOne = playerOne;
@@ -31,14 +33,45 @@ public class Battle {
         this.selectedCard = null;
         this.selectedItem = null;
         this.battleType = battleType;
+        setGameData();
+        setHeroesInTheirPosition();
+        currentBattle = this;
+    }
+
+    public static Battle getCurrentBattle() {
+        return currentBattle;
+    }
+
+    private void setGameData() {
+        switch (gameMode) {
+            case SINGLE_PLAYER:
+                gameDataPlayerOne = new GameData("1");
+                gameDataPlayerTwo = new GameData("2");
+                return;
+            case MULTIPLAYER:
+                gameDataPlayerOne = new GameData(this.playerTwo.getUserName());
+                gameDataPlayerTwo = new GameData(this.playerOne.getUserName());
+                break;
+        }
+    }
+
+    private void setHeroesInTheirPosition() {
+        int random = new Random().nextInt();
+        if (random % 2 == 0) {
+            this.board.getCells()[2][0].setCard(this.playerOne.getCopyMainDeck().getHero());
+            this.board.getCells()[2][8].setCard(this.playerTwo.getCopyMainDeck().getHero());
+            return;
+        }
+        this.board.getCells()[2][0].setCard(this.playerTwo.getCopyMainDeck().getHero());
+        this.board.getCells()[2][9].setCard(this.playerOne.getCopyMainDeck().getHero());
     }
 
     public String showGameInfo() {
         StringBuilder toReturn = new StringBuilder();
-        toReturn.append("Player One mana: ").append(playerOne.getMana()).append(" player two mana: ").append(playerTwo.getMana()).append(" ");
+        toReturn.append("Player One mana: ").append(playerOne.getMana()).append(" player two mana: ").append(playerTwo.getMana()).append("\n");
         switch (battleType) {
             case KILL_HERO:
-                toReturn.append("player One Hero health: ").append(playerOne.getMainDeck().getHero()).append(" ");
+                toReturn.append("player One Hero health: ").append(playerOne.getMainDeck().getHero()).append("\n");
                 toReturn.append("player Two Hero health: ").append(playerTwo.getMainDeck().getHero());
                 break;
             case HOLDING_FLAG:
@@ -56,7 +89,7 @@ public class Battle {
                             continue;
                         if (((Minion) card).isHasFlag()) {
                             if (cardIsMine(card, playerOne)) {
-                                toReturn.append(card.getName()).append(" from ").append(playerOne.getUserName()).append(" has flag");
+                                toReturn.append(card.getName()).append(" from ").append(playerOne.getUserName()).append(" has flag ");
                                 continue;
                             }
                             toReturn.append(card.getName()).append(" from ").append(playerTwo.getUserName()).append(" has flag");
@@ -69,6 +102,14 @@ public class Battle {
         return toReturn.toString();
     }
 
+    public ArrayList<Minion> showMyMinions() {
+        return showMinions(whoseTurn());
+    }
+
+    public ArrayList<Minion> showOpponentMinion() {
+        return showMinions(theOtherPlayer());
+    }
+
     private Player whoHasFlag() {
         if (playerOne.isPlayerHasFlag())
             return playerOne;
@@ -77,31 +118,7 @@ public class Battle {
         return null;
     }
 
-    public Player getPlayerOne() {
-        return playerOne;
-    }
-
-    public Player getPlayerTwo() {
-        return playerTwo;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public int getTurn() {
-        return turn;
-    }
-
-    public Card getSelectedCard() {
-        return selectedCard;
-    }
-
-    public Item getSelectedItem() {
-        return selectedItem;
-    }
-
-    private Player whoseTurn() {
+    public Player whoseTurn() {
         if (this.turn % 2 == 1)
             return this.playerOne;
         return this.playerTwo;
@@ -128,14 +145,6 @@ public class Battle {
             }
         }
         return toReturn;
-    }
-
-    public ArrayList<Minion> showMyMinions() {
-        return showMinions(whoseTurn());
-    }
-
-    public ArrayList<Minion> showOpponentMinion() {
-        return showMinions(theOtherPlayer());
     }
 
     public Card returnCard(String cardID) {
@@ -194,9 +203,9 @@ public class Battle {
         int y0 = minion.getYCoordinate();
 
         Cell cell = board.getCells()[x - 1][y - 1];
-        Cell cell1 = board.getCells()[x0 - 1][y0 - 1];
+        Cell correctCell = board.getCells()[x0 - 1][y0 - 1];
 
-        int distance = Cell.distance(cell, cell1);
+        int distance = Cell.distance(cell, correctCell);
 
         if (distance > minion.getDistanceCanMove())
             return "invalid target";
@@ -207,7 +216,7 @@ public class Battle {
             return "minion can't move yet";
 
         cell.setCard(this.selectedCard);
-        cell1.setCard(null);
+        correctCell.setCard(null);
         ((Minion) this.selectedCard).setCoordinate(x, y);
         if (cell.hasFlag()) {
             whoseTurn().changeNumberOfHoldingFlags(1);
@@ -243,6 +252,7 @@ public class Battle {
         ((Minion) card).setCoordinate(x, y);
         whoseTurn().removeCardFromHand(card);
         whoseTurn().addCardToHand();
+        this.selectedCard = card;
         return "card successfully inserted";
     }
 
@@ -250,8 +260,32 @@ public class Battle {
         return whoseTurn().getHand();
     }
 
-    public String attack() {
+    public String attack(String opponentCardId) {
 
         return "attack successfully done";
+    }
+
+    public Player getPlayerOne() {
+        return playerOne;
+    }
+
+    public Player getPlayerTwo() {
+        return playerTwo;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public Card getSelectedCard() {
+        return selectedCard;
+    }
+
+    public Item getSelectedItem() {
+        return selectedItem;
     }
 }
