@@ -3,7 +3,6 @@ package controller;
 import CardCollections.*;
 import Data.*;
 import GameGround.Battle;
-import effects.*;
 import view.*;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class GameController {
         do {
             Request request = new Request();
             request.getNewCommand();
-            if (request.getType() == RequestType.EXIT) {
+            if (request.getType() == RequestType.EXIT_GAME) {
                 isFinish = true;
             }
             if (!request.isValid()) {
