@@ -107,7 +107,7 @@ public class Buff {
 
 
     public void holyBuff(Minion minion, int holyBuffState) {
-        if (!minion.getAntiBuff().equals(BuffType.HOYL))
+        if (!minion.getAntiBuff().equals(BuffType.HOLY))
             minion.activeHolyBuff(holyBuffState);
     }
 

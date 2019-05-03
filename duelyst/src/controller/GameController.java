@@ -12,6 +12,9 @@ public class GameController {
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
 
+    static {
+    accounts=new ArrayList<>();
+    }
 
     public static void main() {
         boolean isFinish = false;
@@ -21,11 +24,12 @@ public class GameController {
             if (request.getType() == RequestType.EXIT_GAME) {
                 isFinish = true;
             }
+
             if (!request.isValid()) {
                 view.printError(request.getError());
-                continue;
+
             }
-            request.isValid();
+            //request.isValid();
 
         } while (!isFinish);
     }
