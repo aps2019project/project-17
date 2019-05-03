@@ -106,38 +106,7 @@ public class Battle {
     }
 
     public String movingCard(int x, int y) {
-        Minion minion = (Minion) this.selectedCard;
-
-        int x0 = minion.getXCoordinate();
-        int y0 = minion.getYCoordinate();
-
-        Cell cell = board.getCells()[x - 1][y - 1];
-        Cell correctCell = board.getCells()[x0 - 1][y0 - 1];
-
-        int distance = Cell.distance(cell, correctCell);
-
-        if (distance > minion.getDistanceCanMove())
-            return "invalid target";
-        if (cell.getCard() != null)
-            return "invalid target";
-
-        if (!minion.CanMove())
-            return "minion can't move yet";
-
-        cell.setCard(this.selectedCard);
-        correctCell.setCard(null);
-        ((Minion) this.selectedCard).setCoordinate(x, y);
-        if (cell.hasFlag()) {
-            whoseTurn().changeNumberOfHoldingFlags(1);
-            whoseTurn().setPlayerHasFlag(true);
-            cell.setFlag(false);
-        }
-        if (cell.getItem() != null) {
-            whoseTurn().addItemToCollectAbleItems(cell.getItem());
-            cell.setItem(null);
-        }
-        minion.setCanMove(false);
-        return this.selectedCard.getId() + " moved to " + x + " - " + y;
+        return "";
     }
 
     public String insertingCardFromHand(String cardName, int x, int y) {
