@@ -46,6 +46,10 @@ public class GameController {
         return Account.login(userName, passWord);
     }
 
+    public static boolean checkForValidUserName(String userName){
+        return Account.checkForValidUserName(userName);
+    }
+
     public static String accountSave(Account account) {
         return account.save();
     }
@@ -117,7 +121,7 @@ public class GameController {
     public static String logout() {
         return Account.logout();
     }
-
+  
     public static String showGameInfo(Battle battle) {
         return battle.showGameInfo().toString();
     }
