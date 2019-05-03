@@ -111,4 +111,20 @@ public class BattleKillHero extends Battle {
         // spell
         return "card successfully inserted";
     }
+
+    @Override
+    public String attack(String opponentCardId) {
+        Card card = returnCardFromBoard(opponentCardId, theOtherPlayer());
+        if (card == null)
+            return "invalid card ID";
+        Cell cellFirst = this.board.getCells()[((Minion) this.selectedCard).getXCoordinate() - 1][((Minion) this.selectedCard).getYCoordinate() - 1];
+        Cell cellTarget = this.board.getCells()[((Minion) card).getXCoordinate() - 1][((Minion) card).getYCoordinate() -1];
+
+        if (Cell.distance(cellFirst, cellTarget) > ((Minion) this.selectedCard).getAttackRange())
+            return "opponent minion in unavailable";
+
+        if (!((Minion) selectedCard).getCanAttack())
+            return "this minion with " + this.selectedCard.getId() + " can't attack";
+        return "attack from " + this.selectedCard.getName() + " to " + card.getName() + "successfully done";
+    }
 }
