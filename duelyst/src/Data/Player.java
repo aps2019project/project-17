@@ -113,7 +113,7 @@ public class Player {
         return mainDeck;
     }
 
-    private void setMainDeck(Deck deck) {
+    public void setMainDeck(Deck deck) {
         this.mainDeck = deck;
         this.copyMainDeck = new Deck(this.mainDeck.getName());
         setCopyMainDeck(true);
