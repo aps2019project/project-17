@@ -45,6 +45,7 @@ public class BuffDetail {
         this.isContinuous = effectTime == 100;
     }
 
+    //for holy buff
     public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int holyBuffState) {
         this.id = id;
         this.buffType = buffType;

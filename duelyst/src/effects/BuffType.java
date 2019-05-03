@@ -12,5 +12,6 @@ public enum BuffType {
     POISON,
     ,ANTI,
     ANTI_ALL_NEGATIVE,
-    ANTI_ALL_POSITIVE
+    ANTI_ALL_POSITIVE,
+    CHANGE_MANA,
 }

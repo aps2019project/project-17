@@ -1,11 +1,14 @@
 package effects;
 
+import Data.Player;
+
 import java.util.ArrayList;
 
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
     private ArrayList<Minion> targetMinionsForWeakness;
     private ArrayList<Minion> targetMinionsForHoly;
+
     public Buff() {
         this.targetMinionsForWeakness = new ArrayList<>();
         this.buffDetails = new ArrayList<>();
@@ -25,11 +28,21 @@ public class Buff {
             case CELL:
                 break;
             case PLAYER:
+                actionForPlayer((Player) object);
         }
     }
 
     public void addBuff(BuffDetail buffDetail) {
         this.buffDetails.add(buffDetail);
+    }
+
+    private void actionForPlayer(Player player) {
+        for (BuffDetail buffDetail : buffDetails) {
+            switch (buffDetail.getBuffType()) {
+                case CHANGE_MANA:
+                    player.changeMana(+1);
+            }
+        }
     }
 
     private void actionForMinion(Minion minion, boolean isEnemy) {
