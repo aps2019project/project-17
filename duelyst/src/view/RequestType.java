@@ -1,6 +1,7 @@
 package view;
 
 public enum RequestType {
+    ENTER,
     EXIT,
     CREATE_ACCOUNT,
     LOGIN,
