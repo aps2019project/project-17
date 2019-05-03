@@ -5,6 +5,7 @@ import Data.GameData;
 import Data.Player;
 import effects.Card;
 import effects.Minion;
+import effects.Spell;
 
 public class BattleKillHero extends Battle {
 
@@ -25,21 +26,13 @@ public class BattleKillHero extends Battle {
         // single Player -> in this case there is no different between custom and story because both of them pass a deck name! the currentAIPlayer should set in Controller!
     }
 
-    @Override
-    public StringBuilder showGameInfo() {
-        StringBuilder toPrint = super.showGameInfo();
-        toPrint.append("hero of first player : ").append(playerOne.getMainDeck().getHero().getHealthPoint()).append("\n");
-        toPrint.append("hero of second player : ").append(playerTwo.getMainDeck().getHero().getHealthPoint()).append("\n");
-        return toPrint;
-    }
-
     private void setGameData() {
         switch (this.gameMode) {
             case SINGLE_PLAYER:
+                gameDataPlayerTwo = null;
                 switch (singlePlayerModes) {
                     case STORY:
                         gameDataPlayerOne = new GameData("mode one");
-                        gameDataPlayerTwo = null;
                         break;
                     case CUSTOM:
                         gameDataPlayerOne = new GameData("custom game ->  mode : kill hero");
@@ -52,16 +45,26 @@ public class BattleKillHero extends Battle {
         }
     }
 
+
+    @Override
+    public StringBuilder showGameInfo() {
+        StringBuilder toPrint = super.showGameInfo();
+        toPrint.append("hero of first player : ").append(playerOne.getMainDeck().getHero().getHealthPoint()).append("\n");
+        toPrint.append("hero of second player : ").append(playerTwo.getMainDeck().getHero().getHealthPoint()).append("\n");
+        return toPrint;
+    }
+
     @Override
     public String movingCard(int x, int y) {
+
+        if (this.selectedCard == null)
+            return "first you have to select a card";
         Minion minion = (Minion) this.selectedCard;
 
         Cell cellFirst = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
         Cell cellDestination = this.board.getCells()[x - 1][y - 1];
 
-        if (cellDestination.getCard() != null)
-            return "invalid target";
-        if (Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
+        if (cellDestination.getCard() != null || Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
             return "invalid target";
         if (!minion.isCanMove())
             return "this card cant move";
@@ -81,21 +84,23 @@ public class BattleKillHero extends Battle {
         Cell cell = board.getCells()[x - 1][y - 1];
 
         if (card == null)
-            return "invalid card name ";
-        if (cell == null || cell.getCard() != null)
-            return "invalid target ";
-
-        if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
-            return "You don′t have enough mana";
-
-        if (!board.isCoordinateAvailable(cell, whoseTurn(), this))
-            return "invalid target";
-        card.setUserName(whoseTurn().getUserName());
-        whoseTurn().lessMana(((Minion) card).getManaPoint());
-        cell.setCard(card);
-        ((Minion) card).setCoordinate(x, y);
-        whoseTurn().removeCardFromHand(card);
-        this.selectedCard = card;
-        return "card successfully inserted ";
+            return "invalid card name";
+        if (card instanceof Minion) {
+            if (cell == null || cell.getCard() != null)
+                return "invalid target ";
+            if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
+                return "You don′t have enough mana";
+            if (!board.isCoordinateAvailable(cell, whoseTurn(), this))
+                return "invalid target";
+            card.setUserName(whoseTurn().getUserName());
+            whoseTurn().lessMana(((Minion) card).getManaPoint());
+            cell.setCard(card);
+            ((Minion) card).setCoordinate(x, y);
+            whoseTurn().removeCardFromHand(card);
+            this.selectedCard = card;
+            return "card successfully inserted ";
+        }
+        // spell
+        return "card successfully inserted";
     }
 }

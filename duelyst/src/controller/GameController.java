@@ -13,7 +13,7 @@ public class GameController {
     private static ArrayList<Account> accounts;
 
     static {
-    accounts=new ArrayList<>();
+        accounts = new ArrayList<>();
     }
 
     public static void main() {
@@ -36,10 +36,6 @@ public class GameController {
 
     public static ArrayList<Account> getAccounts() {
         return accounts;
-    }
-
-    public static void addUser(Account account) {
-        accounts.add(account);
     }
 
     public static String createAccount(String userName, String passWord) {
@@ -87,6 +83,10 @@ public class GameController {
     }
 
     public static String setMainDeck(String deckName, Collection collection) {
+        Deck deck = collection.findDeck(deckName);
+        if (deck != null) {
+            Account.getLoginUser().getPlayer().setMainDeck(deck);
+        }
         return collection.setMainDeck(deckName);
     }
 
@@ -121,8 +121,8 @@ public class GameController {
     public static String logout() {
         return Account.logout();
     }
-
-//    public static String showGameInfo(Battle battle) {
-//        return battle.showGameInfo();
-//    }
+  
+    public static String showGameInfo(Battle battle) {
+        return battle.showGameInfo().toString();
+    }
 }
