@@ -10,6 +10,7 @@ public class BuffDetail {
     private TargetRange targetRange;
     private BuffType antiBuffType;
     private boolean isContinuous;
+    private int holyBuffState;
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
         this.id = id;
@@ -21,7 +22,8 @@ public class BuffDetail {
 
     }
 
-    public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange,BuffType antiBuffType) {
+    //for anti buffs
+    public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange, BuffType antiBuffType) {
         this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
@@ -31,12 +33,24 @@ public class BuffDetail {
         this.isContinuous = effectTime == 100;
     }
 
-    public BuffDetail(int id,BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
+    //for change attack power or health buff
+    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
         this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.changeAttackPowerValue = changeAttackPowerValue;
         this.changeHealthValue = changeHealthValue;
+        this.targetType = targetType;
+        this.targetRange = targetRange;
+        this.isContinuous = effectTime == 100;
+    }
+
+    //for holy buff
+    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int holyBuffState) {
+        this.id = id;
+        this.buffType = buffType;
+        this.effectTime = effectTime;
+        this.holyBuffState = holyBuffState;
         this.targetType = targetType;
         this.targetRange = targetRange;
         this.isContinuous = effectTime == 100;

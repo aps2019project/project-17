@@ -165,6 +165,10 @@ public class Player {
         setNextCard();
     }
 
+    public void changeMana(int value) {
+        this.mana += value;
+    }
+
     public Card getNextCard() {
         return nextCard;
     }

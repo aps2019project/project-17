@@ -3,7 +3,7 @@ package effects;
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
-    protected Buff buff;
+    protected Buff Buff;
     protected int attackPower;
     protected int healthPoint;
     protected int manaPoint;
@@ -75,8 +75,8 @@ public class Minion extends Card {
     }
 
 
-    public Buff getBuff() {
-        return buff;
+    public Buff getTakenBuff() {
+        return Buff;
     }
 
     public BuffType getAntiBuff() {
@@ -84,7 +84,7 @@ public class Minion extends Card {
     }
 
     public void addBuff(BuffDetail buffDetail) {
-        this.buff.addBuff(buffDetail);
+        this.Buff.addBuff(buffDetail);
     }
 
     public boolean getCanAttack() {
@@ -130,6 +130,8 @@ public class Minion extends Card {
 
     public void setStun(boolean stun) {
         isStun = stun;
+        this.setCanMove(false);
+        this.setCanAttack(false);
     }
 
     public void activeHolyBuff(int holyBuffState) {
@@ -217,6 +219,10 @@ public class Minion extends Card {
 
     public int getNumberOfAttack() {
         return numberOfAttack;
+    }
+
+    public int getHolyBuffState() {
+        return holyBuffState;
     }
 
     public void setAntiBuff(BuffType antiBuff) {
