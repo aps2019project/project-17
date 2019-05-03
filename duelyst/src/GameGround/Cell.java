@@ -31,14 +31,6 @@ public class Cell {
         return row;
     }
 
-    public void setHasFlag(boolean hasFlag) {
-        this.hasFlag = hasFlag;
-    }
-
-    public boolean isHasFlag() {
-        return hasFlag;
-    }
-
     public Item getItem() {
         return item;
     }

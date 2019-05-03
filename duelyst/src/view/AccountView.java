@@ -12,7 +12,7 @@ public class AccountView extends View {
         GameController.getAccounts().sort(Comparator.reverseOrder());
         for (int i = 0; i < GameController.getAccounts().size(); i++) {
             Account account = GameController.getAccounts().get(i);
-            System.out.printf("%d - UserNAme: %s - Wins: %d\n", i, account.getUserName(), account.getNumbOfWins());
+            System.out.printf("%d - UserNAme: %s - Wins: %d\n", i+1, account.getUserName(), account.getNumbOfWins());
         }
     }
 

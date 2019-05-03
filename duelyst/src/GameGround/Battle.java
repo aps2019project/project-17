@@ -12,47 +12,28 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Battle {
-    private Player playerOne;
-    private Player playerTwo;
-    private Board board;
-    private int turn;
-    private GameMode gameMode;
-    private Card selectedCard;
-    private BattleType battleType;
-    private Item selectedItem;
-    private GameData gameDataPlayerOne;
-    private GameData gameDataPlayerTwo;
-    private static Battle currentBattle;
+    protected Player playerOne;
+    protected Player playerTwo;
+    protected Board board;
+    protected int turn;
+    protected GameMode gameMode;
+    protected Card selectedCard;
+    protected Item selectedItem;
+    protected BattleType battleType;
+    protected GameData gameDataPlayerOne;
+    protected GameData gameDataPlayerTwo;
+    protected static Battle currentBattle;
 
-    public Battle(Player playerOne, Player playerTwo, Board board, GameMode gameMode, BattleType battleType) {
+    public Battle(Player playerOne, Player playerTwo, GameMode gameMode, BattleType battleType) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        this.board = board;
+        this.board = new Board();
         this.turn = 1;
         this.gameMode = gameMode;
         this.selectedCard = null;
         this.selectedItem = null;
         this.battleType = battleType;
-        setGameData();
         setHeroesInTheirPosition();
-        currentBattle = this;
-    }
-
-    public static Battle getCurrentBattle() {
-        return currentBattle;
-    }
-
-    private void setGameData() {
-        switch (gameMode) {
-            case SINGLE_PLAYER:
-                gameDataPlayerOne = new GameData("1");
-                gameDataPlayerTwo = new GameData("2");
-                return;
-            case MULTIPLAYER:
-                gameDataPlayerOne = new GameData(this.playerTwo.getUserName());
-                gameDataPlayerTwo = new GameData(this.playerOne.getUserName());
-                break;
-        }
     }
 
     private void setHeroesInTheirPosition() {
@@ -66,40 +47,10 @@ public class Battle {
         this.board.getCells()[2][9].setCard(this.playerOne.getCopyMainDeck().getHero());
     }
 
-    public String showGameInfo() {
+    public StringBuilder showGameInfo() {
         StringBuilder toReturn = new StringBuilder();
         toReturn.append("Player One mana: ").append(playerOne.getMana()).append(" player two mana: ").append(playerTwo.getMana()).append("\n");
-        switch (battleType) {
-            case KILL_HERO:
-                toReturn.append("player One Hero health: ").append(playerOne.getMainDeck().getHero()).append("\n");
-                toReturn.append("player Two Hero health: ").append(playerTwo.getMainDeck().getHero());
-                break;
-            case HOLDING_FLAG:
-                if (whoHasFlag() == null)
-                    toReturn.append("no one has flag yet");
-                else
-                    toReturn.append(whoHasFlag().getUserName()).append(" has flag");
-                break;
-            case CAPTURE_FLAG:
-
-                for (int i = 0; i < this.board.getCells().length; i++) {
-                    for (int j = 0; j < this.board.getCells()[i].length; j++) {
-                        Card card = this.board.getCells()[i][j].getCard();
-                        if (card == null)
-                            continue;
-                        if (((Minion) card).isHasFlag()) {
-                            if (cardIsMine(card, playerOne)) {
-                                toReturn.append(card.getName()).append(" from ").append(playerOne.getUserName()).append(" has flag ");
-                                continue;
-                            }
-                            toReturn.append(card.getName()).append(" from ").append(playerTwo.getUserName()).append(" has flag");
-                        }
-                    }
-                }
-
-                break;
-        }
-        return toReturn.toString();
+        return toReturn;
     }
 
     public ArrayList<Minion> showMyMinions() {
@@ -108,28 +59,6 @@ public class Battle {
 
     public ArrayList<Minion> showOpponentMinion() {
         return showMinions(theOtherPlayer());
-    }
-
-    private Player whoHasFlag() {
-        if (playerOne.isPlayerHasFlag())
-            return playerOne;
-        if (playerTwo.isPlayerHasFlag())
-            return playerTwo;
-        return null;
-    }
-
-    public Player whoseTurn() {
-        if (this.turn % 2 == 1)
-            return this.playerOne;
-        return this.playerTwo;
-    }
-
-    private Player theOtherPlayer() {
-        Player player = playerOne;
-
-        if (whoseTurn().equals(playerOne))
-            player = playerTwo;
-        return player;
     }
 
     private ArrayList<Minion> showMinions(Player player) {
@@ -159,41 +88,21 @@ public class Battle {
         return null;
     }
 
-    public boolean cardIsMine(Card card, Player player) {
-        return card.getUserName().equals(player.getUserName());
-    }
-
     public String selectCard(String cardID) {
         for (int i = 0; i < board.getCells().length; i++) {
             for (int j = 0; j < board.getCells()[i].length; j++) {
                 Card card = board.getCells()[i][j].getCard();
-                if (card == null || !card.getId().equals(cardID))
+                if (card == null)
                     continue;
-                if (cardIsMine(card, whoseTurn())) {
+                if (card.getId().equals(cardID)) {
+                    if (!cardIsMine(card, whoseTurn()))
+                        return "this card doesnt belong to you";
                     this.selectedCard = card;
                     return "card successfully selected";
                 }
             }
         }
         return "invalid card id";
-    }
-
-    public void endTurn() {
-        this.selectedCard = null;
-        playerOne.allMinionsReset();
-        playerTwo.allMinionsReset();
-        this.turn++;
-        if (turn % 2 == 0 && turn <= 14)
-            playerTwo.addMana(1);
-        else if (turn % 2 == 1 && turn <= 14)
-            playerOne.addMana(1);
-        else {
-            playerOne.lessMana(playerOne.getMana());
-            playerOne.addMana(9);
-            playerTwo.lessMana(playerTwo.getMana());
-            playerTwo.addMana(9);
-
-        }
     }
 
     public String movingCard(int x, int y) {
@@ -232,28 +141,7 @@ public class Battle {
     }
 
     public String insertingCardFromHand(String cardName, int x, int y) {
-
-        Card card = whoseTurn().getCardFromHand(cardName);
-        Cell cell = board.getCells()[x - 1][y - 1];
-
-        if (card == null)
-            return "invalid card name";
-        if (cell.getCard() != null)
-            return "invalid target";
-
-        if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
-            return "no enough mana";
-
-        if (!board.isCoordinateAvailable((Minion) card, cell, whoseTurn(), this))
-            return "invalid target";
-        card.setUserName(whoseTurn().getUserName());
-        whoseTurn().lessMana(((Minion) card).getManaPoint());
-        cell.setCard(card);
-        ((Minion) card).setCoordinate(x, y);
-        whoseTurn().removeCardFromHand(card);
-        whoseTurn().addCardToHand();
-        this.selectedCard = card;
-        return "card successfully inserted";
+        return "";
     }
 
     public Hand showHand() {
@@ -288,4 +176,57 @@ public class Battle {
     public Item getSelectedItem() {
         return selectedItem;
     }
+
+    public Player whoseTurn() {
+        if (this.turn % 2 == 1)
+            return this.playerOne;
+        return this.playerTwo;
+    }
+
+    public Player theOtherPlayer() {
+        Player player = playerOne;
+
+        if (whoseTurn().equals(playerOne))
+            player = playerTwo;
+        return player;
+    }
+
+    boolean cardIsMine(Card card, Player player) {
+        return card.getUserName().equals(player.getUserName());
+    }
+
+    public static Battle getCurrentBattle() {
+        return currentBattle;
+    }
+
+    public void endTurn() {
+    }
+
+//    private void setFlagsInBoard() {
+//        Random r = new Random();
+//        for (int i = 0; i < this.numberOfFlags / 2; i++) {
+//            int x = r.nextInt(6);
+//            int y = r.nextInt(6);
+//            Cell cell = this.board.getCells()[x - 1][y - 1];
+//
+//            while ((x == 3 && y == 0) || cell.hasFlag()) {
+//                x = r.nextInt(6);
+//                y = r.nextInt(6);
+//                cell = this.board.getCells()[x - 1][y - 1];
+//            }
+//            cell.setFlag(true);
+//        }
+//        for (int i = 0; i < this.numberOfFlags - this.numberOfFlags / 2; i++) {
+//            int x = r.nextInt(4);
+//            int y = r.nextInt(6);
+//            Cell cell = this.board.getCells()[5 + x - 1][y - 1];
+//
+//            while ((x == 3 && y == 9) || cell.hasFlag()) {
+//                x = r.nextInt(10);
+//                y = r.nextInt(6);
+//                cell = this.board.getCells()[5 + x - 1][y - 1];
+//            }
+//            cell.setFlag(true);
+//        }
+//    }
 }
