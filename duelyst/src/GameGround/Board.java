@@ -18,21 +18,17 @@ public class Board {
         }
     }
 
-    public Cell[][] getCells() {
+    Cell[][] getCells() {
         return cells;
     }
 
-    public boolean isCoordinateAvailable(Minion minion, Cell cell, Player player, Battle battle) {
-        int x = cell.getRow();
-        int y = cell.getCol();
-
+    boolean isCoordinateAvailable(Cell cell, Player player, Battle battle) {
         for (int i = 0; i <= this.getCells().length; i++) {
             for (int j = 0; j < this.getCells()[i].length; j++) {
                 Cell cell1 = Cell.getCell(this, i, j);
                 if (cell1 == null)
                     continue;
-
-                if (Cell.distance(cell, cell1) <= minion.getMaxRangeToInput()) {
+                if (Cell.distance(cell, cell1) <= 1) {
                     Minion minion1 = (Minion) cell1.getCard();
                     if (minion1 == null)
                         continue;
@@ -43,7 +39,17 @@ public class Board {
 
             }
         }
-        return false;
+        Cell cell1 = battle.getBoard().getCells()[cell.getRow() - 1 + 1][cell.getCol() - 1 + 1];
+        if (cell1 != null && cell1.getCard() != null && battle.cardIsMine(cell1.getCard(), player))
+            return true;
+        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 + 1][cell.getCol() - 1 - 1];
+        if (cell1 != null && cell1.getCard() != null && battle.cardIsMine(cell1.getCard(), player))
+            return true;
+        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 - 1][cell.getCol() - 1 - 1];
+        if (cell1 != null && cell1.getCard() != null && battle.cardIsMine(cell1.getCard(), player))
+            return true;
+        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 - 1][cell.getCol() - 1 + 1];
+        return cell1 != null && cell1.getCard() != null && battle.cardIsMine(cell1.getCard(), player);
     }
 
 }
