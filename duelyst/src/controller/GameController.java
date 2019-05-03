@@ -3,8 +3,15 @@ package controller;
 import CardCollections.*;
 import Data.*;
 import GameGround.Battle;
+import com.google.gson.Gson;
+import effects.Buff;
+import netscape.javascript.JSObject;
 import view.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameController {
@@ -16,7 +23,8 @@ public class GameController {
         accounts = new ArrayList<>();
     }
 
-    public static void main() {
+    public static void main() throws IOException {
+        creatingInstance();
         Request request = new Request();
         boolean isFinish = false;
         do {
@@ -33,6 +41,22 @@ public class GameController {
             //request.isValid();
 
         } while (!isFinish);
+    }
+
+    private static String jsonReader() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("Buff.json"));
+        String line;
+        StringBuilder jsonString = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            jsonString.append(line);
+        }
+        return jsonString.toString();
+    }
+
+    private static void creatingInstance() throws IOException {
+        Gson gson = new Gson();
+        Buff[] buffs = new Buff[50];
+        buffs = gson.fromJson(jsonReader(),Buff[].class);
     }
 
     public static ArrayList<Account> getAccounts() {
@@ -122,7 +146,7 @@ public class GameController {
     public static String logout() {
         return Account.logout();
     }
-  
+
     public static String showGameInfo(Battle battle) {
         return battle.showGameInfo().toString();
     }
