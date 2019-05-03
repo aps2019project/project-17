@@ -122,7 +122,7 @@ public class GameController {
         return Account.logout();
     }
 
-    public static String showGameInfo(Battle battle) {
-        return battle.showGameInfo();
-    }
+//    public static String showGameInfo(Battle battle) {
+//        return battle.showGameInfo();
+//    }
 }
