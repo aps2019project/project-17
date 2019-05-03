@@ -15,6 +15,7 @@ public class Request {
     protected MenuType menuType = null;
 
     public Request() {
+        //we set the default menu in constructor
         menuType = MenuType.ACCOUNT_MENU;
     }
 
@@ -33,6 +34,7 @@ public class Request {
     public boolean isValid() {//todo remember to complete this part
         if (getType() == null)
             return false;
+
         switch (getType()) {
             case CREATE_ACCOUNT:
                 return checkSyntaxOfCreateAccountCommand();
@@ -111,6 +113,7 @@ public class Request {
             case END_GAME:
                 return checkSyntaxOfEndGame();
         }
+
         return true;
     }
 
@@ -201,118 +204,203 @@ public class Request {
         Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
         Matcher matcherForEndGame = patternForEndGame.matcher(command);
 
-        if (matcherForEnter.matches()) {
-            return RequestType.ENTER;
+        if (matcherForLogIn.matches()) {
+            if (menuType.equals(MenuType.ACCOUNT_MENU)) {
+                menuType = MenuType.MAIN_MENU;
+                return RequestType.LOGIN;
+            }
+            return null;
+        } else if (matcherForEnter.matches()) {
+            if (menuType.equals(MenuType.MAIN_MENU)) {
+                return RequestType.ENTER;
+            }
+            return null;
         } else if (matcherForCreateAccount.matches()) {
-            menuType = MenuType.ACCOUNT_MENU;
-            return RequestType.CREATE_ACCOUNT;
-        } else if (matcherForLogIn.matches()) {
-            menuType = MenuType.ACCOUNT_MENU;
-            return RequestType.LOGIN;
+            if (menuType.equals(MenuType.ACCOUNT_MENU)) {
+                return RequestType.CREATE_ACCOUNT;
+            }
+            return null;
         } else if (matcherForShowLeaderBoard.matches()) {
-            menuType = MenuType.ACCOUNT_MENU;
-            return RequestType.SHOW_LEADER_BOARD;
+            if (menuType.equals(MenuType.ACCOUNT_MENU)) {
+                return RequestType.SHOW_LEADER_BOARD;
+            }
+            return null;
         } else if (matcherForLogOut.matches()) {
-            menuType = MenuType.ACCOUNT_MENU;
-            return RequestType.LOGOUT;
+            if (menuType.equals(MenuType.MAIN_MENU)) {
+                menuType = MenuType.ACCOUNT_MENU;
+                return RequestType.LOGOUT;
+            }
+            return null;
         } else if (matcherForShow.matches()) {
-            return RequestType.SHOW;
+            if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.SHOP_MENU)) {
+                return RequestType.SHOW;
+            }
+            return null;
         } else if (matcherForSearch.matches()) {
-            return RequestType.SEARCH;
+            if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.SHOP_MENU)) {
+                return RequestType.SEARCH;
+            }
+            return null;
         } else if (matcherForCreateDeck.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.CREATE_DECK;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.CREATE_DECK;
+            }
+            return null;
         } else if (matcherForDeleteDeck.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.DELETE_DECK;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.DELETE_DECK;
+            }
+            return null;
         } else if (matcherForAddToDeck.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.ADD_TO_DECK;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.ADD_TO_DECK;
+            }
+            return null;
         } else if (matcherForRemoveFromDeck.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.REMOVE_FROM_DECK;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.REMOVE_FROM_DECK;
+            }
+            return null;
         } else if (matcherForValidateDeck.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.VALIDATE_DECK;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.VALIDATE_DECK;
+            }
+            return null;
         } else if (matcherForSelectDeck.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.SELECT_DECK;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.SELECT_DECK;
+            }
+            return null;
         } else if (matcherForShowAllDecks.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.SHOW_ALL_DECKS;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.SHOW_ALL_DECKS;
+            }
+            return null;
         } else if (matcherForShowDeck.matches()) {
-            menuType = MenuType.COLLECTION_MENU;
-            return RequestType.SHOW_DECK;
+            if (menuType.equals(MenuType.COLLECTION_MENU)) {
+                return RequestType.SHOW_DECK;
+            }
+            return null;
         } else if (matcherForShowForShopMenu.matches()) {
-            menuType = MenuType.SHOP_MENU;
-            return RequestType.SHOW_fOR_SHOP_MENU;
+            if (menuType.equals(MenuType.SHOP_MENU)) {
+                return RequestType.SHOW_fOR_SHOP_MENU;
+            }
+            return null;
         } else if (matcherForSearchCollection.matches()) {
-            menuType = MenuType.SHOP_MENU;
-            return RequestType.SEARCH_COLLECTION;
+            if (menuType.equals(MenuType.SHOP_MENU)) {
+                return RequestType.SEARCH_COLLECTION;
+            }
+            return null;
         } else if (matcherForSBuy.matches()) {
-            menuType = MenuType.SHOP_MENU;
-            return RequestType.BUY;
+            if (menuType.equals(MenuType.SHOP_MENU)) {
+                return RequestType.BUY;
+            }
+            return null;
         } else if (matcherForSell.matches()) {
-            menuType = MenuType.SHOP_MENU;
-            return RequestType.SELL;
+            if (menuType.equals(MenuType.SHOP_MENU)) {
+                return RequestType.SELL;
+            }
+            return null;
         } else if (matcherForGameInfo.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.GAME_INFO;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.GAME_INFO;
+            }
+            return null;
         } else if (matcherForShowMyMinions.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.SHOW_MY_MINIONS;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.SHOW_MY_MINIONS;
+            }
+            return null;
         } else if (matcherForShowOpponentMinions.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.SHOW_OPPONENT_MINIONS;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.SHOW_OPPONENT_MINIONS;
+            }
+            return null;
         } else if (matcherForShowCardInfo.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.SHOW_CARD_INFO;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.SHOW_CARD_INFO;
+            }
+            return null;
         } else if (matcherForSelect.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.SELECT;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.SELECT;
+            }
+            return null;
         } else if (matcherForMoveTO.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.MOVE_TO;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.MOVE_TO;
+            }
+            return null;
         } else if (matcherForAttack.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.ATTACK;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.ATTACK;
+            }
+            return null;
         } else if (matcherForAttackCombo.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.ATTACK_COMBO;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.ATTACK_COMBO;
+            }
+            return null;
         } else if (matcherForUserSpecialPower.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.USE_SPECIAL_POWER;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.USE_SPECIAL_POWER;
+            }
+            return null;
         } else if (matcherForShowHand.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.SHOW_HAND;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.SHOW_HAND;
+            }
+            return null;
         } else if (matcherForInsert.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.INSERT;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.INSERT;
+            }
+            return null;
         } else if (matcherForEndTurn.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.END_TURN;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.END_TURN;
+            }
+            return null;
         } else if (matcherForShowCollectibles.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.SHOW_COLLECTIBLES;
-        } else if (matcherForShowInfo.matches()) {//for battle or grave yard menu
-            return RequestType.SHOW_INFO;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.SHOW_COLLECTIBLES;
+            }
+            return null;
+        } else if (matcherForShowInfo.matches()) {
+            if (menuType.equals(MenuType.BATTLE_MENU) || menuType.equals(MenuType.GRAVE_YARD)) {
+                return RequestType.SHOW_INFO;
+            }
+            return null;
         } else if (matcherForUse.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.USE;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.USE;
+            }
+            return null;
         } else if (matcherForShowNextCard.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.SHOW_NEXT_CARD;
-        } else if (matcherForEnterGraveYard.matches()) {
-            menuType = MenuType.GRAVE_YARD;
-            return RequestType.ENTER_GRAVE_YARD;
-        } else if (matcherForShowCards.matches()) {
-            menuType = MenuType.GRAVE_YARD;
-            return RequestType.SHOW_CARDS;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.SHOW_NEXT_CARD;
+            }
+            return null;
         } else if (matcherForEndGame.matches()) {
-            menuType = MenuType.BATTLE_MENU;
-            return RequestType.END_GAME;
+            if (menuType.equals(MenuType.BATTLE_MENU)) {
+                return RequestType.END_GAME;
+            }
+            return null;
+        } else if (matcherForEnterGraveYard.matches()) {
+            if (menuType.equals(MenuType.GRAVE_YARD)) {
+                return RequestType.ENTER_GRAVE_YARD;
+            }
+            return null;
+        } else if (matcherForShowCards.matches()) {
+            if (menuType.equals(MenuType.GRAVE_YARD)) {
+                return RequestType.SHOW_CARDS;
+            }
+            return null;
         } else if (matcherForSave.matches()) {
-            return RequestType.SAVE;
+            if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.ACCOUNT_MENU)) {
+                return RequestType.SAVE;
+            }
+            return null;
         } else if (matcherForHelp.matches()) {
             return RequestType.HELP;
         }
@@ -340,7 +428,7 @@ public class Request {
                     break;
 
             }
-        }else {
+        } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
