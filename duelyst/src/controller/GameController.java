@@ -12,13 +12,6 @@ public class GameController {
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
 
-    public static ArrayList<Account> getAccounts() {
-        return accounts;
-    }
-
-    public static void addUser(Account account) {
-        accounts.add(account);
-    }
 
     public static void main() {
         boolean isFinish = false;
@@ -29,13 +22,20 @@ public class GameController {
                 isFinish = true;
             }
             if (!request.isValid()) {
-
+                view.printError(request.getError());
                 continue;
             }
-            switch (request.getType()) {
+            request.isValid();
 
-            }
         } while (!isFinish);
+    }
+
+    public static ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
+    public static void addUser(Account account) {
+        accounts.add(account);
     }
 
     public static String createAccount(String userName, String passWord) {
@@ -114,7 +114,7 @@ public class GameController {
         return Account.logout();
     }
 
-    public static String showGameInfo(Battle battle){
+    public static String showGameInfo(Battle battle) {
         return battle.showGameInfo();
     }
 }

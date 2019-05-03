@@ -6,4 +6,10 @@ public class View {
     public static View getInstance() {
         return VIEW;
     }
+
+    public void printError(ErrorType type) {
+        if (type == null)
+            return;
+        System.out.println("Invalid Input,Try again!");
+    }
 }
