@@ -16,7 +16,7 @@ public class BattleView extends View {
     public static void showMyMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showMyMinions();
         for (Minion minion : minions) {
-            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getxCoordinate(), minion.getyCoordinate(), minion.getAttackPower());
+            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPower());
         }
 
     }
@@ -24,7 +24,7 @@ public class BattleView extends View {
     public static void showOpponentMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showOpponentMinion();
         for (Minion minion : minions) {
-            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getxCoordinate(), minion.getyCoordinate(), minion.getAttackPower());
+            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPower());
         }
     }
 

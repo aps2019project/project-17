@@ -187,14 +187,6 @@ public class Minion extends Card {
         return attackRange;
     }
 
-    public int getxCoordinate() {
-        return xCoordinate;
-    }
-
-    public int getyCoordinate() {
-        return yCoordinate;
-    }
-
     public boolean isCanMove() {
         return canMove;
     }
