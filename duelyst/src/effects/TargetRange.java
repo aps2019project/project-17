@@ -9,6 +9,7 @@ public enum TargetRange {
     AROUND,
     DISTANCE_TWO,
     SELF,
+    CLOSEST_RANDOM,
     RANDOM,
-    SELF_NOT_MELEE
+    NOT_MELEE
 }

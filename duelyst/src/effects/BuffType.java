@@ -14,5 +14,6 @@ public enum BuffType {
     ANTI_ALL_NEGATIVE,
     ANTI_ALL_POSITIVE,
     CHANGE_MANA,
-    ADD_BUFF
+    ADD_BUFF,
+    SPECIAL_SITUATION_BUFF
 }

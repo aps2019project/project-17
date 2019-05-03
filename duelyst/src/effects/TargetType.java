@@ -7,5 +7,7 @@ public enum TargetType {
     INSIDER_HERO,
     CELL,
     PLAYER,
+    SELF_NOT_MELEE,
+    INSIDER_NOT_MELEE,
     NONE
 }

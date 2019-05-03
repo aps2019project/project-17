@@ -12,6 +12,7 @@ public class BuffDetail {
     private boolean isContinuous;
     private int holyBuffState;
     private BuffType addBuff;
+    private int manaIncreaseValue;
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
         this.id = id;
@@ -46,12 +47,15 @@ public class BuffDetail {
         this.isContinuous = effectTime == 100;
     }
 
-    //for holy buff
-    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int holyBuffState) {
+    //for holy buff and change mana
+    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int buffState) {
         this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
-        this.holyBuffState = holyBuffState;
+        if ( buffType.equals(BuffType.HOLY))
+            this.holyBuffState = buffState;
+        else if (buffType.equals(BuffType.CHANGE_MANA))
+            this.manaIncreaseValue = buffState;
         this.targetType = targetType;
         this.targetRange = targetRange;
         this.isContinuous = effectTime == 100;
