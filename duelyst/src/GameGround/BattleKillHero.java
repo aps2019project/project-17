@@ -72,8 +72,10 @@ public class BattleKillHero extends Battle {
         cellFirst.setCard(null);
         minion.setCanMove(false);
         minion.setCoordinate(x, y);
-        if (cellDestination.getItem() != null)
+        if (cellDestination.getItem() != null) {
             whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
+            cellDestination.setItem(null);
+        }
         // if cell has buff ?!
         return this.selectedCard.getId() + " moved to " + x + " - " + y;
     }

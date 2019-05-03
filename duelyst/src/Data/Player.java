@@ -21,10 +21,6 @@ public class Player {
     private int holdingFlags;
     private boolean playerHasFlag;
     private Card nextCard;
-    private static Player AIPlayer;
-    private static Player playerModeKH;
-    private static Player playerModeCF;
-    private static Player playerModeHF;
 
     public Player(String userName, Deck deck) {
         this.mana = 2;
@@ -93,20 +89,12 @@ public class Player {
         return holdingFlags;
     }
 
-    public boolean isPlayerHasFlag() {
-        return playerHasFlag;
-    }
-
     public void addItemToCollectAbleItems(Item item) {
         this.collectAbleItems.add(item);
     }
 
     public void changeNumberOfHoldingFlags(int value) {
         this.holdingFlags += value;
-    }
-
-    public void setPlayerHasFlag(boolean playerHasFlag) {
-        this.playerHasFlag = playerHasFlag;
     }
 
     public Deck getMainDeck() {
@@ -200,37 +188,5 @@ public class Player {
 
     public boolean equals(Player player) {
         return this.userName.equals(player.userName);
-    }
-
-    public static Player getAIPlayer() {
-        return AIPlayer;
-    }
-
-    public static void setAIPlayer(Player AIPlayer) {
-        Player.AIPlayer = AIPlayer;
-    }
-
-    public static Player getPlayerModeKH() {
-        return playerModeKH;
-    }
-
-    public static void setPlayerModeKH(Player playerModeKH) {
-        Player.playerModeKH = playerModeKH;
-    }
-
-    public static Player getPlayerModeCF() {
-        return playerModeCF;
-    }
-
-    public static void setPlayerModeCF(Player playerModeCF) {
-        Player.playerModeCF = playerModeCF;
-    }
-
-    public static Player getPlayerModeHF() {
-        return playerModeHF;
-    }
-
-    public static void setPlayerModeHF(Player playerModeHF) {
-        Player.playerModeHF = playerModeHF;
     }
 }

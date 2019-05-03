@@ -91,8 +91,10 @@ public class BattleHoldingFlag extends Battle {
 
         cellDestination.setCard(minion);
 
-        if (cellDestination.getItem() != null)
+        if (cellDestination.getItem() != null) {
             whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
+            cellDestination.setItem(null);
+        }
         // cell has buf ??
 
         cellFirst.setCard(null);

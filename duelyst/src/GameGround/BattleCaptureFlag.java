@@ -96,4 +96,41 @@ public class BattleCaptureFlag extends Battle {
             cell.setFlag(true);
         }
     }
+
+    @Override
+    public String movingCard(int x, int y) {
+        if (selectedCard == null)
+            return "first you have to select card";
+
+        Minion minion = (Minion) this.selectedCard;
+        int x0 = minion.getXCoordinate();
+        int y0 = minion.getYCoordinate();
+
+        Cell cellFirst = this.board.getCells()[x0 - 1][y0 - 1];
+        Cell cellDestination = this.board.getCells()[x - 1][y - 1];
+
+        if (Cell.distance(cellDestination, cellFirst) > minion.getDistanceCanMove() || cellDestination.getCard() != null)
+            return "invalid target  ";
+        if (!minion.isCanMove())
+            return "this minion can't move yet";
+        cellDestination.setCard(minion);
+        minion.setCanMove(false);
+        cellFirst.setCard(null);
+        minion.setCoordinate(x, y);
+        if (cellDestination.getItem() != null) {
+            whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
+            cellDestination.setItem(null);
+        }
+
+        // cell has buff ?!
+
+        if (cellDestination.hasFlag()) {
+            minion.setHasFlag(true);
+            cellDestination.setFlag(false);
+            whoseTurn().changeNumberOfHoldingFlags(1);
+            this.minionsHaveFlag.add(minion);
+            return "minion successfully moved to " + x + " - " + y + " and captured the flag";
+        }
+        return "minion successfully moved to " + x + " - " + y;
+    }
 }
