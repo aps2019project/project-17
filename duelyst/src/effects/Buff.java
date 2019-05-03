@@ -79,6 +79,8 @@ public class Buff {
                 case ANTI_ALL_NEGATIVE:
                     break;
                 case ANTI_ALL_POSITIVE:
+                case ADD_BUFF:
+                    minion.getBuff().addBuff(new BuffDetail(0, BuffType.STUN, 0, TargetType.ENEMY, TargetRange.ONE));
             }
         }
     }

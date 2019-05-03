@@ -173,6 +173,10 @@ public class Minion extends Card {
         System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
     }
 
+    public effects.Buff getBuff() {
+        return Buff;
+    }
+
     public boolean CanMove() {
         return canMove;
     }

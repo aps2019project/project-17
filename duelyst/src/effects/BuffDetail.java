@@ -11,6 +11,7 @@ public class BuffDetail {
     private BuffType antiBuffType;
     private boolean isContinuous;
     private int holyBuffState;
+    private BuffType addBuff;
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
         this.id = id;
@@ -51,6 +52,17 @@ public class BuffDetail {
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.holyBuffState = holyBuffState;
+        this.targetType = targetType;
+        this.targetRange = targetRange;
+        this.isContinuous = effectTime == 100;
+    }
+
+    //for add  buff
+    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, BuffType addBuff) {
+        this.id = id;
+        this.buffType = buffType;
+        this.effectTime = effectTime;
+        this.addBuff = addBuff;
         this.targetType = targetType;
         this.targetRange = targetRange;
         this.isContinuous = effectTime == 100;

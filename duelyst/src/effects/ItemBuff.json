@@ -1,0 +1,35 @@
+[
+  {
+    "id": 301,
+    "buffType": "CHANG_MANA",
+    "targetType": "PLAYER",
+    "targetRange": "ONE",
+    "effectTime": 3
+  },
+  {
+    "id": 302,
+    "buffType": "HOLY",
+    "targetType": "INSIDER_HERO",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "holyBuffState": 12
+  },
+  {
+    "id": 303,
+    "buffType": "ADD_BUFF",
+    "targetType": "INSIDER_HERO",
+    "targetRange": "SELF_NOT_MELEE",
+    "effectTime": 0,
+    "addBuff": "STUN"
+  },
+  {
+    "id": 304,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "RANDOM",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": 6
+  },
+
+]
