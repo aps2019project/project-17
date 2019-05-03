@@ -17,9 +17,10 @@ public class GameController {
     }
 
     public static void main() {
+        Request request = new Request();
         boolean isFinish = false;
         do {
-            Request request = new Request();
+
             request.getNewCommand();
             if (request.getType() == RequestType.EXIT_GAME) {
                 isFinish = true;
@@ -46,7 +47,7 @@ public class GameController {
         return Account.login(userName, passWord);
     }
 
-    public static boolean checkForValidUserName(String userName){
+    public static boolean checkForValidUserName(String userName) {
         return Account.checkForValidUserName(userName);
     }
 
