@@ -201,32 +201,4 @@ public class Battle {
 
     public void endTurn() {
     }
-
-//    private void setFlagsInBoard() {
-//        Random r = new Random();
-//        for (int i = 0; i < this.numberOfFlags / 2; i++) {
-//            int x = r.nextInt(6);
-//            int y = r.nextInt(6);
-//            Cell cell = this.board.getCells()[x - 1][y - 1];
-//
-//            while ((x == 3 && y == 0) || cell.hasFlag()) {
-//                x = r.nextInt(6);
-//                y = r.nextInt(6);
-//                cell = this.board.getCells()[x - 1][y - 1];
-//            }
-//            cell.setFlag(true);
-//        }
-//        for (int i = 0; i < this.numberOfFlags - this.numberOfFlags / 2; i++) {
-//            int x = r.nextInt(4);
-//            int y = r.nextInt(6);
-//            Cell cell = this.board.getCells()[5 + x - 1][y - 1];
-//
-//            while ((x == 3 && y == 9) || cell.hasFlag()) {
-//                x = r.nextInt(10);
-//                y = r.nextInt(6);
-//                cell = this.board.getCells()[5 + x - 1][y - 1];
-//            }
-//            cell.setFlag(true);
-//        }
-//    }
 }
