@@ -105,6 +105,19 @@ public class Battle {
         return "invalid card id";
     }
 
+    protected Card returnCardFromBoard(String cardID, Player player) {
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[j].length; j++) {
+                if (this.board.getCells()[i][j].getCard() == null)
+                    continue;
+                Card card = this.board.getCells()[i][j].getCard();
+                if (card.getId().equals(cardID) && cardIsMine(card, player))
+                    return card;
+            }
+        }
+        return null;
+    }
+
     public String movingCard(int x, int y) {
         return "";
     }
@@ -113,12 +126,64 @@ public class Battle {
         return "";
     }
 
+    public String showCollectable() {
+        StringBuilder toShow = new StringBuilder();
+        ArrayList<Item> toPrint = whoseTurn().getCollectAbleItems();
+        if (toPrint.size() == 0) {
+            toShow.append("you dont have item right know ");
+        } else {
+            for (int i = 0; i < toPrint.size(); i++) {
+                toShow.append(i).append(": ").append(toPrint.get(i).getName()).append("\n");
+            }
+        }
+        return toShow.toString();
+    }
+
     public Hand showHand() {
         return whoseTurn().getHand();
     }
 
-    public String attack(String opponentCardId) {
+    public String SelectedItem(String itemID) {
+        for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
+            if (whoseTurn().getCollectAbleItems().get(i).getId().equals(itemID)) {
+                this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
+                return "item successfully selected";
+            }
+        }
+        return "invalid item id";
+    }
 
+    public String showInfoOFItem() {
+        if (this.selectedCard == null) {
+            return "no item selected yet";
+        }
+        return "name: " + this.selectedItem.getName() + " -> " + this.selectedItem.getDesc();
+    }
+
+    public String showNextCard(){
+        return whoseTurn().getNextCard().getName() + " " + whoseTurn().getNextCard().getDesc();
+    }
+
+    public String showCardInfoFromGraveYard(String cardID){
+        for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
+            if (whoseTurn().getGraveYard().get(i).getId().equals(cardID)){
+                return whoseTurn().getGraveYard().get(i).getName() + " " + whoseTurn().getGraveYard().get(i).getDesc();
+            }
+        }
+        return "this card doesn't exist in the grave yard";
+    }
+
+    public String showCardsOfGraveYard(){
+        StringBuilder toPrint = new StringBuilder();
+        if (whoseTurn().getGraveYard().size() == 0)
+            return "grave card is empty";
+        for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
+            toPrint.append(whoseTurn().getGraveYard().get(i).getName()).append(" ").append(whoseTurn().getGraveYard().get(i).getDesc()).append("\n");
+        }
+        return toPrint.toString();
+    }
+
+    public String attack(String opponentCardId) {
         return "attack successfully done";
     }
 

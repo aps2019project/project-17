@@ -142,10 +142,6 @@ public class Player {
         this.graveYard.add(card);
     }
 
-    public ArrayList<Item> getCollectableItems() {
-        return collectAbleItems;
-    }
-
     public void addMana(int change) {
         this.mana += change;
     }

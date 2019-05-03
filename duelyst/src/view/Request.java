@@ -987,7 +987,7 @@ public class Request {
         Pattern patternForShowCollectibles = Pattern.compile(StringsRq.SHOW_COLLECTIBLES);
         Matcher matcher = patternForShowCollectibles.matcher(command);
         if (matcher.matches()) {
-            BattleView.showCollectables();// TODO: must to be completed
+            BattleView.showCollectAbles();// TODO: must to be completed
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;

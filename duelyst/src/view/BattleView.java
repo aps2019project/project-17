@@ -68,8 +68,8 @@ public class BattleView extends View {
         System.out.printf("next card ->  name : %s , type : %s", card.getName(), type);
     }
 
-    public static void showCollectables() {
-
+    public static void showCollectAbles() {
+        System.out.println(Battle.getCurrentBattle().showCollectable());
     }
 
     public static void showInfo() {
@@ -79,7 +79,7 @@ public class BattleView extends View {
     }
 
     public static void showNextCard() {
-
+        System.out.println(Battle.getCurrentBattle().showNextCard());
     }
 
     public static void battleHelp() {
