@@ -41,6 +41,7 @@ public class Request {
             case CREATE_ACCOUNT:
                 return checkSyntaxOfCreateAccountCommand();
             case LOGIN:
+                MainMenuView.showMainMenu();
                 return checkSyntaxOfLoginCommand();
             case SHOW_LEADER_BOARD:
                 return checkSyntaxOfShowLeaderBoardCommand();
@@ -114,6 +115,8 @@ public class Request {
                 return checkSyntaxOfShowCards();
             case END_GAME:
                 return checkSyntaxOfEndGame();
+            case EXIT_MENU:
+                MainMenuView.showMainMenu();
         }
 
         return true;
@@ -533,7 +536,7 @@ public class Request {
         if (matcher.matches()) {
             switch (menuType) {
                 case MAIN_MENU:
-                    //todo main menu help
+                    MainMenuView.MainMenuHelp();
                     break;
                 case ACCOUNT_MENU:
                     AccountView.accountHelp();
