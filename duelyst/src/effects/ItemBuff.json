@@ -175,5 +175,62 @@
     "targetType": "ENEMY",
     "targetRange": "RANDOM",
     "effectTime": 1
+  },
+  {
+    "id": 317,
+    "buffType": "SPECIAL_SITUATION_BUFF",
+    "targetType": "INSIDER_HERO",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "SITUATION": "ATTACK"
+  },
+  {
+    "id": -317,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 1
+  },
+  {
+    "id": 318,
+    "buffType": "SPECIAL_SITUATION_BUFF",
+    "targetType": "PLAYER",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "SITUATION": "DIE"
+  },
+  {
+    "id": -318,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "INSIDER",
+    "targetRange": "RANDOM",
+    "effectTime": 0,
+    "changeAttackPower": 1,
+    "changeHealth": 0
+  },
+  {
+    "id": 319,
+    "buffType": "SPECIAL_SITUATION_BUFF",
+    "targetType": "PLAYER",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "SITUATION": "SPAWN"
+  },
+  {
+    "id": -319,
+    "buffType": "HOLY",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
+    "effectTime": 2,
+    "holyBuffState": 1
+  },
+  {
+    "id": 320,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "NONE",
+    "targetRange": "MELEE",
+    "effectTime": 0,
+    "changeAttackPower": 5,
+    "changeHealth": 0
   }
 ]
