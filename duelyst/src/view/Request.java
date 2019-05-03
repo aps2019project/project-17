@@ -512,10 +512,15 @@ public class Request {
         Matcher matcher = patternForCreateAccount.matcher(command);
         if (matcher.matches()) {
             String userName = matcher.group("userName");
-            System.out.println("Please enter your password:");
-            String passWord = scanner.nextLine();
-            System.out.println(GameController.createAccount(userName, passWord));
-            return true;
+            if (!GameController.checkForValidUserName(userName)) {
+                System.out.println("Please enter your password:");
+                String passWord = scanner.nextLine();
+                System.out.println(GameController.createAccount(userName, passWord));
+                return true;
+            } else {
+                System.out.println("UserName Already Exist! Please Try again with another UserName.");
+                return true;
+            }
         }
         error = ErrorType.INVALID_INPUT;
         return false;

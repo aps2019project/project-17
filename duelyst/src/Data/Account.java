@@ -62,12 +62,14 @@ public class Account implements Comparable<Account> {
 
     public static boolean checkForValidUserName(String userName){
         for (Account account:GameController.getAccounts()) {
-            if(!account.getUserName().equals(userName)){
-                return false;
+            if(account.getUserName().equals(userName)){
+                return true;
             }
         }
-        return true;
+        return false;
     }
+
+
 
     public static String logout() {
         loginUser = null;
