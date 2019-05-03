@@ -38,7 +38,7 @@ public class Buff {
     private void actionForMinion(Minion minion, boolean isEnemy) {
         for (BuffDetail buffDetail : this.buffDetails) {
             switch (buffDetail.getBuffType()) {
-                case HOYL:
+                case HOLY:
                     if (buffDetail.getId() == 137)
                         holyBuff(minion, 12);
                     else
@@ -98,7 +98,7 @@ public class Buff {
 
 
     public void holyBuff(Minion minion, int holyBuffState) {
-        if (!minion.getAntiBuff().equals(BuffType.HOYL))
+        if (!minion.getAntiBuff().equals(BuffType.HOLY))
             minion.activeHolyBuff(holyBuffState);
     }
 

@@ -32,16 +32,17 @@ public class Request {
     }
 
     public boolean isValid() {//todo remember to complete this part
-        if (getType() == null)
+        RequestType requestType = getType();
+
+        if (requestType == null)
             return false;
 
-        switch (getType()) {
+        switch (requestType) {
             case ENTER:
                 return checkSyntaxForEnter();
             case CREATE_ACCOUNT:
                 return checkSyntaxOfCreateAccountCommand();
             case LOGIN:
-                MainMenuView.showMainMenu();
                 return checkSyntaxOfLoginCommand();
             case SHOW_LEADER_BOARD:
                 return checkSyntaxOfShowLeaderBoardCommand();
@@ -213,218 +214,256 @@ public class Request {
 
         if (matcherForLogIn.matches()) {
             if (menuType.equals(MenuType.ACCOUNT_MENU)) {
-                menuType = MenuType.MAIN_MENU;
                 return RequestType.LOGIN;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForEnter.matches()) {
             if (menuType.equals(MenuType.MAIN_MENU)) {
                 return RequestType.ENTER;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForCreateAccount.matches()) {
             if (menuType.equals(MenuType.ACCOUNT_MENU)) {
                 return RequestType.CREATE_ACCOUNT;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowLeaderBoard.matches()) {
             if (menuType.equals(MenuType.ACCOUNT_MENU)) {
                 return RequestType.SHOW_LEADER_BOARD;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForLogOut.matches()) {
             if (menuType.equals(MenuType.MAIN_MENU)) {
                 menuType = MenuType.ACCOUNT_MENU;
                 return RequestType.LOGOUT;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShow.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.SHOP_MENU)) {
                 return RequestType.SHOW;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForSearch.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.SHOP_MENU)) {
                 return RequestType.SEARCH;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForCreateDeck.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.CREATE_DECK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForDeleteDeck.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.DELETE_DECK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForAddToDeck.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.ADD_TO_DECK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForRemoveFromDeck.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.REMOVE_FROM_DECK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForValidateDeck.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.VALIDATE_DECK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForSelectDeck.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.SELECT_DECK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowAllDecks.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.SHOW_ALL_DECKS;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowDeck.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU)) {
                 return RequestType.SHOW_DECK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowForShopMenu.matches()) {
             if (menuType.equals(MenuType.SHOP_MENU)) {
                 return RequestType.SHOW_fOR_SHOP_MENU;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForSearchCollection.matches()) {
             if (menuType.equals(MenuType.SHOP_MENU)) {
                 return RequestType.SEARCH_COLLECTION;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForSBuy.matches()) {
             if (menuType.equals(MenuType.SHOP_MENU)) {
                 return RequestType.BUY;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForSell.matches()) {
             if (menuType.equals(MenuType.SHOP_MENU)) {
                 return RequestType.SELL;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForGameInfo.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.GAME_INFO;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowMyMinions.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.SHOW_MY_MINIONS;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowOpponentMinions.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.SHOW_OPPONENT_MINIONS;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowCardInfo.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.SHOW_CARD_INFO;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForSelect.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.SELECT;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForMoveTO.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.MOVE_TO;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForAttack.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.ATTACK;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForAttackCombo.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.ATTACK_COMBO;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForUserSpecialPower.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.USE_SPECIAL_POWER;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowHand.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.SHOW_HAND;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForInsert.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.INSERT;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForEndTurn.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.END_TURN;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowCollectibles.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.SHOW_COLLECTIBLES;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowInfo.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU) || menuType.equals(MenuType.GRAVE_YARD)) {
                 return RequestType.SHOW_INFO;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForUse.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.USE;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowNextCard.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.SHOW_NEXT_CARD;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForEndGame.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
                 return RequestType.END_GAME;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForEnterGraveYard.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
-                menuType=MenuType.GRAVE_YARD;
+                menuType = MenuType.GRAVE_YARD;
                 return RequestType.ENTER_GRAVE_YARD;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForShowCards.matches()) {
             if (menuType.equals(MenuType.GRAVE_YARD)) {
                 return RequestType.SHOW_CARDS;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForSave.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.ACCOUNT_MENU)) {
                 return RequestType.SAVE;
             }
+            error=ErrorType.INVALID_INPUT;
             return null;
         } else if (matcherForHelp.matches()) {
             return RequestType.HELP;
         } else if (matcherForExit.matches()) {
             if (menuType.equals(MenuType.MAIN_MENU)) {
-                menuType=null;
+                menuType = null;
                 return RequestType.EXIT_GAME;
             } else if (menuType.equals(MenuType.GRAVE_YARD)) {
-                menuType=MenuType.BATTLE_MENU;
+                menuType = MenuType.BATTLE_MENU;
                 return RequestType.EXIT_GRAVE_YARD;
             } else {
-                menuType=MenuType.MAIN_MENU;
+                menuType = MenuType.MAIN_MENU;
                 return RequestType.EXIT_MENU;
             }
         }
         error = ErrorType.INVALID_INPUT;
-        return RequestType.EXIT_GAME;//todo نمیدونم اینو:(
+        return null;
     }
 
     public boolean checkSyntaxForEnter() {
@@ -478,6 +517,8 @@ public class Request {
             String passWord = scanner.nextLine();
             String result = GameController.login(userName, passWord);
             System.out.println(result);
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
