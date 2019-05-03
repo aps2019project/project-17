@@ -116,8 +116,12 @@ public class Request {
                 return checkSyntaxOfShowCards();
             case END_GAME:
                 return checkSyntaxOfEndGame();
-            case EXIT_MENU:
-                MainMenuView.showMainMenu();
+            case ENTER_GRAVE_YARD:
+                return checkSyntaxOfEnterGraveYard();
+            case EXIT:
+                return checkSyntaxOfExitCommand();
+            case EXIT_GAME:
+                menuType = null;
         }
 
         return true;
@@ -238,7 +242,6 @@ public class Request {
             return null;
         } else if (matcherForLogOut.matches()) {
             if (menuType.equals(MenuType.MAIN_MENU)) {
-                menuType = MenuType.ACCOUNT_MENU;
                 return RequestType.LOGOUT;
             }
             error = ErrorType.INVALID_INPUT;
@@ -431,7 +434,6 @@ public class Request {
             return null;
         } else if (matcherForEnterGraveYard.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU)) {
-                menuType = MenuType.GRAVE_YARD;
                 return RequestType.ENTER_GRAVE_YARD;
             }
             error = ErrorType.INVALID_INPUT;
@@ -452,15 +454,9 @@ public class Request {
             return RequestType.HELP;
         } else if (matcherForExit.matches()) {
             if (menuType.equals(MenuType.MAIN_MENU)) {
-                menuType = null;
                 return RequestType.EXIT_GAME;
-            } else if (menuType.equals(MenuType.GRAVE_YARD)) {
-                menuType = MenuType.BATTLE_MENU;
-                return RequestType.EXIT_GRAVE_YARD;
-            } else {
-                menuType = MenuType.MAIN_MENU;
-                return RequestType.EXIT_MENU;
             }
+            return RequestType.EXIT;
         }
         error = ErrorType.INVALID_INPUT;
         return null;
@@ -485,6 +481,23 @@ public class Request {
                     error = ErrorType.INVALID_INPUT;
                     break;
 
+            }
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfExitCommand() {
+        Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
+        Matcher matcher = patternForExit.matcher(command);
+        if (matcher.matches()) {
+            if (menuType == MenuType.GRAVE_YARD) {
+                menuType = MenuType.BATTLE_MENU;
+            } else {
+                menuType = MenuType.MAIN_MENU;
+                MainMenuView.showMainMenu();
             }
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -570,6 +583,7 @@ public class Request {
         if (command.toLowerCase().matches(StringsRq.LOGOUT)) {
             String result = GameController.logout();
             System.out.println(result);
+            menuType = MenuType.ACCOUNT_MENU;
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -1049,5 +1063,10 @@ public class Request {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
+    }
+
+    public boolean checkSyntaxOfEnterGraveYard() {
+        menuType = MenuType.GRAVE_YARD;
+        return true;
     }
 }
