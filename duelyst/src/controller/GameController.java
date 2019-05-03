@@ -50,6 +50,10 @@ public class GameController {
         return Account.login(userName, passWord);
     }
 
+    public static boolean checkForValidUserName(String userName){
+        return Account.checkForValidUserName(userName);
+    }
+
     public static String accountSave(Account account) {
         return account.save();
     }
