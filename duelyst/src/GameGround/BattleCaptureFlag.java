@@ -3,6 +3,7 @@ package GameGround;
 import Data.AI;
 import Data.GameData;
 import Data.Player;
+import effects.Card;
 import effects.Minion;
 
 import java.util.ArrayList;
@@ -132,5 +133,45 @@ public class BattleCaptureFlag extends Battle {
             return "minion successfully moved to " + x + " - " + y + " and captured the flag";
         }
         return "minion successfully moved to " + x + " - " + y;
+    }
+
+    @Override
+    public String insertingCardFromHand(String cardName, int x, int y) {
+        Card card = whoseTurn().getCardFromHand(cardName);
+        Cell cellTarget = this.board.getCells()[x - 1][y - 1];
+
+        if (card == null)
+            return "invalid card name";
+        if (card instanceof Minion){
+            if (cellTarget.getCard() != null || !board.isCoordinateAvailable(cellTarget, whoseTurn(), this))
+                return "invalid target";
+            if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
+                return "you don't have enough mana to insert this card";
+            card.setUserName(whoseTurn().getUserName());
+            cellTarget.setCard(card);
+            ((Minion) card).setCoordinate(x, y);
+            whoseTurn().lessMana(((Minion) card).getManaPoint());
+            whoseTurn().removeCardFromHand(card);
+
+            if (cellTarget.getItem() != null){
+                whoseTurn().addItemToCollectAbleItems(cellTarget.getItem());
+                cellTarget.setItem(null);
+            }
+
+            this.selectedCard = card;
+
+            if (cellTarget.hasFlag()){
+
+                cellTarget.setFlag(false);
+                ((Minion) card).setHasFlag(true);
+                whoseTurn().changeNumberOfHoldingFlags(1);
+                minionsHaveFlag.add((Minion) card);
+
+                return "card successfully inserted and captured the flag too";
+            }
+            return "card successfully inserted";
+        }
+        // spell
+        return "card successfully inserted";
     }
 }

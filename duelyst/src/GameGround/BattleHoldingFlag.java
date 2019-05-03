@@ -122,18 +122,23 @@ public class BattleHoldingFlag extends Battle {
         if (card == null)
             return "invalid card name ";
         if (card instanceof Minion) {
-            if (cellDestination == null || cellDestination.getCard() != null)
+            if (cellDestination == null || cellDestination.getCard() != null || !this.board.isCoordinateAvailable(cellDestination, whoHasFlag, this))
                 return "invalid target";
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "you don't have enough mana to insert this card";
-            if (!this.board.isCoordinateAvailable(cellDestination, whoHasFlag, this))
-                return "invalid target";
+
             card.setUserName(whoseTurn().getUserName());
-            whoseTurn().lessMana(-((Minion) card).getManaPoint());
+            whoseTurn().lessMana(((Minion) card).getManaPoint());
             cellDestination.setCard(card);
             ((Minion) card).setCoordinate(x, y);
             whoseTurn().removeCardFromHand(card);
             this.selectedCard = card;
+
+            if (cellDestination.getItem() != null) {
+                whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
+                cellDestination.setItem(null);
+            }
+
             if (cellDestination.hasFlag()) {
                 ((Minion) card).setHasFlag(true);
                 cellDestination.setFlag(false);
@@ -143,6 +148,7 @@ public class BattleHoldingFlag extends Battle {
             }
             return "card successfully inserted";
         }
+        //spell
         return "card successfully inserted";
     }
 }

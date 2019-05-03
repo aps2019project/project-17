@@ -94,12 +94,18 @@ public class BattleKillHero extends Battle {
                 return "You don′t have enough mana";
             if (!board.isCoordinateAvailable(cell, whoseTurn(), this))
                 return "invalid target";
+            this.selectedCard = card;
+
+            if (cell.getItem() != null) {
+                whoseTurn().addItemToCollectAbleItems(cell.getItem());
+                cell.setItem(null);
+            }
+
             card.setUserName(whoseTurn().getUserName());
             whoseTurn().lessMana(((Minion) card).getManaPoint());
-            cell.setCard(card);
             ((Minion) card).setCoordinate(x, y);
             whoseTurn().removeCardFromHand(card);
-            this.selectedCard = card;
+            cell.setCard(card);
             return "card successfully inserted ";
         }
         // spell
