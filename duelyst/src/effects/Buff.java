@@ -48,7 +48,7 @@ public class Buff {
     private void actionForMinion(Minion minion, boolean isEnemy) {
         for (BuffDetail buffDetail : this.buffDetails) {
             switch (buffDetail.getBuffType()) {
-                case HOYL:
+                case HOLY:
                     targetMinionsForWeakness.add(minion);
                     if (buffDetail.getId() == 137)
                         holyBuff(minion, 12);
@@ -88,7 +88,7 @@ public class Buff {
             for (Minion targetMinion : targetMinionsForWeakness) {
                 deletingWeaknessBuff(targetMinion, buffDetail.getEffectTime());
             }
-        } else if (buffDetail.getBuffType().equals(BuffType.HOYL)) {
+        } else if (buffDetail.getBuffType().equals(BuffType.HOLY)) {
 
         }
         buffDetails.remove(buffDetail);

@@ -2,9 +2,8 @@ package view;
 
 public enum RequestType {
     ENTER,
+    EXIT,
     EXIT_GAME,
-    EXIT_MENU,
-    EXIT_GRAVE_YARD,
     CREATE_ACCOUNT,
     LOGIN,
     SHOW_LEADER_BOARD,
