@@ -5,11 +5,10 @@ import Data.*;
 import GameGround.Battle;
 import com.google.gson.Gson;
 import effects.Buff;
-import netscape.javascript.JSObject;
+import effects.BuffDetail;
 import view.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class GameController {
     }
 
     public static void main() throws IOException {
-        creatingInstance();
+        BuffDetail[] buffDetails = creatingInstance();
         Request request = new Request();
         boolean isFinish = false;
         do {
@@ -44,7 +43,7 @@ public class GameController {
     }
 
     private static String jsonReader() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("Buff.json"));
+        BufferedReader reader = new BufferedReader(new FileReader("duelyst//src//effects//Buff.json"));
         String line;
         StringBuilder jsonString = new StringBuilder();
         while ((line = reader.readLine()) != null) {
@@ -53,10 +52,11 @@ public class GameController {
         return jsonString.toString();
     }
 
-    private static void creatingInstance() throws IOException {
+    private static BuffDetail[] creatingInstance() throws IOException {
         Gson gson = new Gson();
-        Buff[] buffs = new Buff[50];
-        buffs = gson.fromJson(jsonReader(),Buff[].class);
+        BuffDetail[] buffDetails = new BuffDetail[50];
+        buffDetails = gson.fromJson(jsonReader(), BuffDetail[].class);
+        return buffDetails;
     }
 
     public static ArrayList<Account> getAccounts() {
