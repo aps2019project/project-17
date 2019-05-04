@@ -61,7 +61,7 @@ public class Collection {
         }
         Deck deck = new Deck(deckName);
         decks.add(deck);
-        return "Deck Successfully created";
+        return "deck Successfully created";
     }
 
     public String deleteDeck(String deckName) {

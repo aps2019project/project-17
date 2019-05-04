@@ -7,19 +7,19 @@ public class Card {
     protected String userName;
     protected String desc;
 
+    public Card(String name, String id, int price) {
+        this.name = name;
+        this.id = id;
+        this.price = price;
+        this.userName = null;
+    }
+
     public String getDesc() {
         return desc;
     }
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public Card(String name, String id, int price) {
-        this.name = name;
-        this.id = id;
-        this.price = price;
-        this.userName = null;
     }
 
     public String getUserName() {
