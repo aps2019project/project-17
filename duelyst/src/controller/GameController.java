@@ -17,13 +17,21 @@ public class GameController {
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
     private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
+    private static final String addresOfHero = "duelyst//src//effects//Hero.json";
+    private static final String addresOfHeroBuff = "duelyst//src//effects//HeroBuff.json";
+    private static final String Item = "duelyst//src//effects//Item.json";
+    private static final String ItemBuff = "duelyst//src//effects//ItemBuff.json";
+    private static final String Minoin = "duelyst//src//effects//Minion.json";
+    private static final String MinoinBuff = "duelyst//src//effects//minionBuff.json";
+    private static final String Spell = "duelyst//src//effects//Spell.json";
+    private static BuffDetail[] buffDetails;
 
     static {
         accounts = new ArrayList<>();
     }
 
     public static void main() throws IOException {
-        BuffDetail[] buffDetails = creatingInstance();
+        buffDetails = creatingInstance();
         Request request = new Request();
         boolean isFinish = false;
         do {
@@ -53,7 +61,7 @@ public class GameController {
 
     private static BuffDetail[] creatingInstance() throws IOException {
         Gson gson = new Gson();
-        BuffDetail[] buffDetails = new BuffDetail[50];
+        BuffDetail[] buffDetails;
         buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
         return buffDetails;
     }
