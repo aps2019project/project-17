@@ -218,4 +218,8 @@ public class Minion extends Card {
     public void setAntiBuff(BuffType antiBuff) {
         this.antiBuff = antiBuff;
     }
+
+    public Buff getSpecialPower() {
+        return specialPower;
+    }
 }
