@@ -9,8 +9,7 @@ public class Hero extends Minion {
     }
 
     public void show() {
-        System.out.println("Name : " + this.name + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - Class : " + super.getMinionType() + " - Special power : " + this.specialPower);
-        //todo needs to have toString for minionType and specialPower and if they don't have nothing must be printed
+        System.out.println("Name : " + this.name + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - Class : " + super.getMinionType() + " - Special power : " + this.desc);
     }
 
 }

@@ -140,4 +140,8 @@ public class Buff {
     public void antiBuff(Minion minion, BuffType buffType) {
         minion.setAntiBuff(buffType);
     }
+
+    public ArrayList<BuffDetail> getBuffDetails() {
+        return buffDetails;
+    }
 }

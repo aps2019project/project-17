@@ -56,7 +56,7 @@ public class Minion extends Card {
         this.attack.addBuff(buffDetail);
     }
 
-    protected String minionTypeShow() {
+    private String minionTypeShow() {
         switch (minionType) {
             case MELEE:
                 return "MELEE";
@@ -168,7 +168,7 @@ public class Minion extends Card {
     }
 
     public void show() {
-        System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
+        System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.desc);
     }
 
     public boolean CanMove() {
@@ -217,5 +217,9 @@ public class Minion extends Card {
 
     public void setAntiBuff(BuffType antiBuff) {
         this.antiBuff = antiBuff;
+    }
+
+    public Buff getSpecialPower() {
+        return specialPower;
     }
 }
