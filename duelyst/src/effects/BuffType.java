@@ -12,7 +12,6 @@ public enum BuffType {
     POISON_CELL,
     POISON,
     ANTI,
-    ANTI_ALL_NEGATIVE,
     ANTI_ALL_POSITIVE,
     CHANGE_MANA,
     ADD_BUFF,

@@ -1,7 +1,5 @@
 package effects;
 
-import java.util.ArrayList;
-
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
@@ -218,6 +216,10 @@ public class Minion extends Card {
         return holyBuffState;
     }
 
+    public void setHolyBuffState(int holyBuffState) {
+        this.holyBuffState = holyBuffState;
+    }
+
     public void setAntiBuff(BuffType antiBuff) {
         this.antiBuff = antiBuff;
     }
@@ -228,7 +230,8 @@ public class Minion extends Card {
 
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
-      
+    }
+
     public Buff getSpecialPower() {
         return specialPower;
     }
