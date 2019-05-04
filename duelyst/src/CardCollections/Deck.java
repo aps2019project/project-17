@@ -6,7 +6,6 @@ import effects.*;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Deck {
     private String name;
@@ -24,7 +23,13 @@ public class Deck {
     private static Deck deckHoldFlag;
     private static Deck deckCaptureFlag;
 
-    private static void initilixeFirstAIKH() {
+    static {
+        initializeSecondAIHF();
+        initializeFirstAIKH();
+        initializeThirdAICF();
+    }
+
+    private static void initializeFirstAIKH() {
         Hero[] heroes = InstanceBuilder.getHeroes();
         Minion[] minions = InstanceBuilder.getMinions();
         Spell[] spells = InstanceBuilder.getSpells();
@@ -37,13 +42,61 @@ public class Deck {
 
     }
 
+    private static void initializeSecondAIHF() {
+        Hero[] heroes = InstanceBuilder.getHeroes();
+        Minion[] minions = InstanceBuilder.getMinions();
+        Spell[] spells = InstanceBuilder.getSpells();
+        Item[] items = InstanceBuilder.getItems();
+        deckHoldFlag = new Deck("Hold flag Story");
+        deckHoldFlag.setHero(heroes[4]);
+        deckHoldFlag.setItem(items[17]);
+        addToHoldFlag(minions, 2, 3, 5, 8, 12, 15, 15, 19, 23, 27, 30, 33, 39);
+        addToHoldFlag(spells, 2, 3, 5, 9, 8, 13, 19);
+    }
+
+    private static void initializeThirdAICF() {
+        Hero[] heroes = InstanceBuilder.getHeroes();
+        Minion[] minions = InstanceBuilder.getMinions();
+        Spell[] spells = InstanceBuilder.getSpells();
+        Item[] items = InstanceBuilder.getItems();
+        deckCaptureFlag = new Deck("Capture Flag Story");
+        deckCaptureFlag.setHero(heroes[6]);
+        deckCaptureFlag.setItem(items[11]);
+        addToCaptureFlag(minions, 6, 7, 10, 14, 16, 16, 20, 24, 25, 28, 29, 31, 34);
+        addToCaptureFlag(spells, 6, 10, 12, 14, 15, 16, 17);
+    }
+
+    private static void addToCaptureFlag(Spell[] spells, int... a) {
+        for (int i1 : a) {
+            deckCaptureFlag.addCard(spells[i1 - 1]);
+        }
+    }
+
+    private static void addToCaptureFlag(Minion[] minions, int... a) {
+        for (int i1 : a) {
+            deckCaptureFlag.addCard(minions[i1 - 1]);
+        }
+    }
+
+    private static void addToHoldFlag(Spell[] spells, int... a) {
+        for (int i1 : a) {
+            deckHoldFlag.addCard(spells[i1 - 1]);
+        }
+    }
+
+    private static void addToHoldFlag(Minion[] minions, int... a) {
+        for (int i1 : a) {
+            deckHoldFlag.addCard(minions[i1 - 1]);
+        }
+    }
+
     private static void addToKillHero(Minion[] minions, int... a) {
         for (int i1 : a) {
             deckKillHero.addCard(minions[i1]);
         }
     }
 
-    private static void addToKillHero(Spell[] spells, int... a){
+    private static void addToKillHero(Spell[] spells, int... a) {
         for (int i1 : a) {
             deckKillHero.addCard(spells[i1]);
         }
@@ -82,8 +135,16 @@ public class Deck {
         return cards.size() == 20;
     }
 
+    public static Deck getDeckKillHero() {
+        return deckKillHero;
+    }
 
-    public static void setMainDeck(String deckName) {
+    public static Deck getDeckHoldFlag() {
+        return deckHoldFlag;
+    }
+
+    public static Deck getDeckCaptureFlag() {
+        return deckCaptureFlag;
     }
 
     public int getNumberOfDeckCards() {
