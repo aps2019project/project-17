@@ -4,16 +4,16 @@
     "buffType": "STUN",
     "targetType": "ENEMY",
     "targetRange": "ONE",
-    "effectTime": 1
+    "effectTime": 0
   },
   {
-  "id": 105,
-  "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-  "targetType": "ENEMY",
-  "targetRange": "ONE",
-  "effectTime": 0,
-  "changeAttackPower": 0,
-  "changeHealth": -105
+    "id": 105,
+    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 0,
+    "changeAttackPower": 0,
+    "changeHealth": -105
   },
   {
     "id": 110,
@@ -34,16 +34,16 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "INSIDER",
     "targetRange": "ONE",
-    "effectTime": 0,
+    "effectTime": -1,
     "changeAttackPower": 0,
     "changeHealth": 10
   },
   {
     "id": 117,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "NONE",
+    "targetType": "INSIDER",
     "targetRange": "AROUND",
-    "effectTime": 0,
+    "effectTime": 1000,
     "changeAttackPower": 0,
     "changeHealth": -2
   },
@@ -57,8 +57,8 @@
   {
     "id": 120,
     "buffType": "ANTI",
-    "targetType": "NONE",
-    "targetRange": "ONE",
+    "targetType": "INSIDER",
+    "targetRange": "SELF",
     "effectTime": 0,
     "antiBuff": "HOLY"
   },
@@ -200,10 +200,11 @@
   },
   {
     "id": 130,
-    "buffType": "ANTI_ALL_NEGATIVE",
+    "buffType": "ANTI",
     "targetType": "INSIDER",
     "targetRange": "SELF",
-    "effectTime": 0
+    "effectTime": 0,
+    "antiBuff": "ALL_NEGATIVE"
   },
   {
     "id": 131,
@@ -233,7 +234,8 @@
     "buffType": "HOLY",
     "targetType": "SELF",
     "targetRange": "ONE",
-    "effectTime": 100
+    "effectTime": 100,
+    "holyBuffState": 12
   },
   {
     "id": 138,

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 //-1 in effect time: for ever
 //0 in effect time: this turn
 //for clear buff: get cell to action function
+//-105 in change health: numberOfAttack + 5
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
 
@@ -67,10 +68,7 @@ public class Buff {
             minion.addBuff(buffDetail);
             switch (buffDetail.getBuffType()) {
                 case HOLY:
-                    if (buffDetail.getId().equals("137"))
-                        holyBuff(minion, 12);
-                    else
-                        holyBuff(minion, buffDetail.getHolyBuffState());
+                    holyBuff(minion, buffDetail.getHolyBuffState());
                     break;
                 case DE_HOLY:
                     holyBuff(minion, -1);
@@ -91,8 +89,6 @@ public class Buff {
                 case ANTI:
                     antiBuff(minion, buffDetail.getAntiBuffType());
                     break;
-                case ANTI_ALL_NEGATIVE:
-                    break;
                 case ANTI_ALL_POSITIVE:
             }
         }
@@ -102,10 +98,13 @@ public class Buff {
         for (Object target : buffDetail.getTarget()) {
             switch (buffDetail.getBuffType()) {
                 case HOLY:
-                    break;
                 case DE_HOLY:
+                    ((Minion) target).setHolyBuffState(0);
                     break;
                 case WEAKNESS:
+                case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
+                    ((Minion) target).changeHealth(-buffDetail.getChangeHealthValue());
+                    ((Minion) target).changeAttackPower(-buffDetail.getChangeAttackPowerValue());
                     break;
                 case STUN:
                     break;
@@ -118,8 +117,7 @@ public class Buff {
                 case POISON_CELL:
                     ((Cell) target).setPoison(false);
                 case ANTI:
-                    break;
-                case ANTI_ALL_NEGATIVE:
+                    ((Minion) target).setAntiBuff(null);
                     break;
                 case ANTI_ALL_POSITIVE:
                     break;
@@ -139,11 +137,6 @@ public class Buff {
                 removeBuff(buffDetail);
         }
     }
-
-    public void deletingWeaknessBuff(Minion minion, int time) {
-        minion.changeHealth(time);
-    }
-
 
     public void holyBuff(Minion minion, int holyBuffState) {
         if (!minion.getAntiBuff().equals(BuffType.HOLY))
