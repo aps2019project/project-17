@@ -6,7 +6,7 @@
     "manaPoint": 2,
     "healthPoint": 6,
     "attackPoint": 4,
-    "minionType": "RANGE",
+    "minionType": "RANGED",
     "attackRange": 7,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,

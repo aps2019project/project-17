@@ -44,7 +44,7 @@ public class Battle {
             return;
         }
         this.board.getCells()[2][0].setCard(this.playerTwo.getCopyMainDeck().getHero());
-        this.board.getCells()[2][9].setCard(this.playerOne.getCopyMainDeck().getHero());
+        this.board.getCells()[2][8].setCard(this.playerOne.getCopyMainDeck().getHero());
     }
 
     public StringBuilder showGameInfo() {
