@@ -4,6 +4,7 @@ import CardCollections.*;
 import Data.*;
 import GameGround.Battle;
 import com.google.gson.Gson;
+import effects.Buff;
 import effects.BuffDetail;
 import view.*;
 
@@ -17,13 +18,21 @@ public class GameController {
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
     private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
+    private static final String addresOfHero = "duelyst//src//effects//Hero.json";
+    private static final String addresOfHeroBuff = "duelyst//src//effects//HeroBuff.json";
+    private static final String Item = "duelyst//src//effects//Item.json";
+    private static final String ItemBuff = "duelyst//src//effects//ItemBuff.json";
+    private static final String Minoin = "duelyst//src//effects//Minion.json";
+    private static final String MinoinBuff = "duelyst//src//effects//minionBuff.json";
+    private static final String Spell = "duelyst//src//effects//Spell.json";
+    private static BuffDetail[] buffDetails;
 
     static {
         accounts = new ArrayList<>();
     }
 
     public static void main() throws IOException {
-        BuffDetail[] buffDetails = creatingInstance();
+        buffDetails = creatingInstance(InstanceType.BUFF);
         Request request = new Request();
         boolean isFinish = false;
         do {
@@ -51,10 +60,28 @@ public class GameController {
         return jsonString.toString();
     }
 
-    private static BuffDetail[] creatingInstance() throws IOException {
+    private static BuffDetail[] creatingInstance(InstanceType instanceType) throws IOException {
         Gson gson = new Gson();
-        BuffDetail[] buffDetails = new BuffDetail[50];
-        buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
+        switch (instanceType) {
+            case BUFF:
+                BuffDetail[] buffDetails;
+                buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
+                break;
+            case HERO:
+                break;
+            case HEROBUFF:
+                break;
+            case ITEM:
+                break;
+            case ITEMBUFF:
+                break;
+            case MINION:
+                break;
+            case MINIONBUFF:
+                break;
+            case SPELL:
+                break;
+        }
         return buffDetails;
     }
 
