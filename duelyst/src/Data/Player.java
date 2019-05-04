@@ -5,7 +5,6 @@ import effects.Card;
 import effects.Item;
 import effects.Minion;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +14,7 @@ public class Player {
     private Deck copyMainDeck;
     private Hand hand;
     private int mana;
+    private int previousMana;
     private String userName;
     private ArrayList<Item> collectAbleItems;
     private ArrayList<Card> graveYard;
@@ -24,6 +24,7 @@ public class Player {
 
     public Player(String userName, Deck deck) {
         this.mana = 2;
+        this.previousMana = 2;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
         this.hand = new Hand();
@@ -184,5 +185,13 @@ public class Player {
 
     public boolean equals(Player player) {
         return this.userName.equals(player.userName);
+    }
+
+    public int getPreviousMana() {
+        return previousMana;
+    }
+
+    public void setPreviousMana(int previousMana) {
+        this.previousMana = previousMana;
     }
 }
