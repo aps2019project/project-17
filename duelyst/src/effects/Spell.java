@@ -1,7 +1,6 @@
 package effects;
 public class Spell extends Card {
     private int manaPoint;
-    private String desc;
     private Buff buff;;
 
     public Spell(String name, String id, int price, int manaPoint, String desc) {
