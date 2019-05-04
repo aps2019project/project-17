@@ -29,13 +29,16 @@ public class InstanceBuilder {
         try {
             spells = (Spell[]) creatingInstance(InstanceType.SPELL);
             spellBuff = (BuffDetail[]) creatingInstance(InstanceType.BUFF);
+            addBuffsToSpell();
             heroes = (Hero[]) creatingInstance(InstanceType.HERO);
             heroBuff = (BuffDetail[]) creatingInstance(InstanceType.HERO_BUFF);
+            addBuffToHero();
             items = (Item[]) creatingInstance(InstanceType.ITEM);
             itemBuff = (BuffDetail[]) creatingInstance(InstanceType.ITEM_BUFF);
+            addBuffsToItem();
             minions = (Minion[]) creatingInstance(InstanceType.MINION);
             minionBuff = (BuffDetail[]) creatingInstance(InstanceType.MINION_BUFF);
-
+            addBuffsToMinion();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,12 +90,45 @@ public class InstanceBuilder {
         return null;
     }
 
-    private void addBuffsToSpell() {
+    private static void addBuffsToSpell() {
         for (Spell spell : spells) {
             for (BuffDetail spellBuff : spellBuff) {
                 if (spell.getId().equals(spellBuff.getId())) {
                     spell.addBuff(spellBuff);
                 }
+            }
+        }
+    }
+
+    private static void addBuffsToMinion() {
+        for (Minion minion : minions) {
+            minion.init();
+            for (BuffDetail minionBuff : minionBuff) {
+                if (minion.getId().equals(minionBuff.getId())) {
+                    minion.addBuff(minionBuff);
+                }
+            }
+        }
+    }
+
+    private static void addBuffsToItem() {
+        for (Item item : items) {
+            item.init();
+            for (BuffDetail itemBuff : itemBuff) {
+                if (item.getId().equals(itemBuff.getId()))
+                    item.addBuff(itemBuff);
+                if (Integer.parseInt(item.getId()) == -Integer.parseInt(itemBuff.getId()))
+                    item.setSpecialSituationBuff(itemBuff);
+            }
+        }
+    }
+
+    private static void addBuffToHero() {
+        for (Hero hero : heroes) {
+            hero.init();
+            for (BuffDetail heroBuff : heroBuff) {
+                if (hero.getId().equals(heroBuff.getId()))
+                    hero.addBuff(heroBuff);
             }
         }
     }

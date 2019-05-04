@@ -3,7 +3,6 @@ package effects;
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
-    protected Buff Buff;
     protected int attackPower;
     protected int healthPoint;
     protected int manaPoint;
@@ -29,6 +28,15 @@ public class Minion extends Card {
         this.healthPoint = healthPoint;
         this.manaPoint = manaPoint;
         this.attackRange = attackRange;
+        this.distanceCanMove = distanceCanMove;
+        this.maxRangeToInput = maxRangeToInput;
+        this.hasFlag = false;
+        this.minionType = minionType;
+        this.attackType = attackType;
+    }
+
+    public void init() {
+        specialPower = new Buff();
         this.xCoordinate = 0;
         this.yCoordinate = 0;
         this.holyBuffState = 0;
@@ -38,11 +46,6 @@ public class Minion extends Card {
         this.maxRangeToInput = 1;
         this.isStun = false;
         this.canAttack = true;
-        this.distanceCanMove = distanceCanMove;
-        this.maxRangeToInput = maxRangeToInput;
-        this.hasFlag = false;
-        this.minionType = minionType;
-        this.attackType = attackType;
         this.numberOfAttack = 0;
         makeAttackBuff(attackPower);
     }
@@ -74,17 +77,12 @@ public class Minion extends Card {
         this.hasFlag = hasFlag;
     }
 
-
-    public Buff getTakenBuff() {
-        return Buff;
-    }
-
     public BuffType getAntiBuff() {
         return antiBuff;
     }
 
     public void addBuff(BuffDetail buffDetail) {
-        this.Buff.addBuff(buffDetail);
+        this.specialPower.addBuff(buffDetail);
     }
 
     public boolean getCanAttack() {
@@ -171,10 +169,6 @@ public class Minion extends Card {
 
     public void show() {
         System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.specialPower);
-    }
-
-    public effects.Buff getBuff() {
-        return Buff;
     }
 
     public boolean CanMove() {
