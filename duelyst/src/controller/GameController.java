@@ -4,6 +4,7 @@ import CardCollections.*;
 import Data.*;
 import GameGround.Battle;
 import com.google.gson.Gson;
+import effects.Buff;
 import effects.BuffDetail;
 import view.*;
 
@@ -31,7 +32,7 @@ public class GameController {
     }
 
     public static void main() throws IOException {
-        buffDetails = creatingInstance();
+        buffDetails = creatingInstance(InstanceType.BUFF);
         Request request = new Request();
         boolean isFinish = false;
         do {
@@ -59,10 +60,28 @@ public class GameController {
         return jsonString.toString();
     }
 
-    private static BuffDetail[] creatingInstance() throws IOException {
+    private static BuffDetail[] creatingInstance(InstanceType instanceType) throws IOException {
         Gson gson = new Gson();
-        BuffDetail[] buffDetails;
-        buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
+        switch (instanceType) {
+            case BUFF:
+                BuffDetail[] buffDetails;
+                buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
+                break;
+            case HERO:
+                break;
+            case HEROBUFF:
+                break;
+            case ITEM:
+                break;
+            case ITEMBUFF:
+                break;
+            case MINION:
+                break;
+            case MINIONBUFF:
+                break;
+            case SPELL:
+                break;
+        }
         return buffDetails;
     }
 
