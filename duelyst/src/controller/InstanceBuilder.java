@@ -6,7 +6,6 @@ import effects.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class InstanceBuilder {
@@ -107,7 +106,7 @@ public class InstanceBuilder {
             minion.init();
             for (BuffDetail minionBuff : minionBuff) {
                 if (minion.getId().equals(minionBuff.getId())) {
-                    minion.addBuff(minionBuff);
+                    minion.addSpecialPowerBuff(minionBuff);
                 }
             }
         }
@@ -130,7 +129,7 @@ public class InstanceBuilder {
             hero.init();
             for (BuffDetail heroBuff : heroBuff) {
                 if (hero.getId().equals(heroBuff.getId()))
-                    hero.addBuff(heroBuff);
+                    hero.addSpecialPowerBuff(heroBuff);
             }
         }
     }

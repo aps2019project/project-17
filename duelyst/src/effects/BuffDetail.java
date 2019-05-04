@@ -1,5 +1,7 @@
 package effects;
 
+import java.util.ArrayList;
+
 public class BuffDetail {
     private String id;
     private BuffType buffType;
@@ -13,6 +15,13 @@ public class BuffDetail {
     private int holyBuffState;
     private BuffType addBuff;
     private int manaIncreaseValue;
+    private ArrayList<Object> target;
+
+    public void init() {
+        this.isContinuous = effectTime == 100;
+        if (buffType.equals(BuffType.POISON))
+            changeHealthValue = -1;
+    }
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
         this.id = Integer.toString(id);
@@ -20,7 +29,6 @@ public class BuffDetail {
         this.effectTime = effectTime;
         this.targetType = targetType;
         this.targetRange = targetRange;
-        this.isContinuous = effectTime == 100;
 
     }
 
@@ -32,7 +40,6 @@ public class BuffDetail {
         this.targetType = targetType;
         this.targetRange = targetRange;
         this.antiBuffType = antiBuffType;
-        this.isContinuous = effectTime == 100;
     }
 
     //for change attack power or health buff
@@ -44,7 +51,6 @@ public class BuffDetail {
         this.changeHealthValue = changeHealthValue;
         this.targetType = targetType;
         this.targetRange = targetRange;
-        this.isContinuous = effectTime == 100;
     }
 
     //for holy buff and change mana
@@ -58,7 +64,6 @@ public class BuffDetail {
             this.manaIncreaseValue = buffState;
         this.targetType = targetType;
         this.targetRange = targetRange;
-        this.isContinuous = effectTime == 100;
     }
 
     //for add  buff
@@ -69,7 +74,6 @@ public class BuffDetail {
         this.addBuff = addBuff;
         this.targetType = targetType;
         this.targetRange = targetRange;
-        this.isContinuous = effectTime == 100;
     }
 
     public int getEffectTime() {
@@ -99,5 +103,19 @@ public class BuffDetail {
 
     public String getId() {
         return id;
+    }
+
+    public ArrayList<Object> getTarget() {
+        return target;
+    }
+
+    public void addTarget(Object object) {
+        if (target == null)
+            target = new ArrayList<>();
+        this.target.add(object);
+    }
+
+    public int getHolyBuffState() {
+        return holyBuffState;
     }
 }

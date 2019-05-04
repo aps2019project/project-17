@@ -1,31 +1,28 @@
 package effects;
 
 import Data.Player;
+import GameGround.Battle;
+import GameGround.Cell;
 
 import java.util.ArrayList;
 
+//-1 in effect time: for ever
+//0 in effect time: this turn
+//for clear buff: get cell to action function
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
-    private ArrayList<Minion> targetMinionsForWeakness;
-    private ArrayList<Minion> targetMinionsForHoly;
-
-    public Buff() {
-        this.targetMinionsForWeakness = new ArrayList<>();
-        this.buffDetails = new ArrayList<>();
-    }
 
     private void action(Object object, TargetType targetType) {
         switch (targetType) {
             case NONE:
             case ENEMY_HERO:
             case ENEMY:
-                actionForMinion((Minion) object, true);
-                break;
             case INSIDER:
             case INSIDER_HERO:
-                actionForMinion((Minion) object, false);
+                actionForMinion((Minion) object);
                 break;
             case CELL:
+                actionForCell((Cell) object);
                 break;
             case PLAYER:
                 actionForPlayer((Player) object);
@@ -45,33 +42,51 @@ public class Buff {
         }
     }
 
-    private void actionForMinion(Minion minion, boolean isEnemy) {
+    private void actionForCell(Cell cell) {
+        for (BuffDetail buffDetail : buffDetails) {
+            buffDetail.addTarget(cell);
+            switch (buffDetail.getBuffType()) {
+                case CLEAR:
+                    if (Battle.getCurrentBattle().cardIsMine(cell.getCard(), Battle.getCurrentBattle().whoseTurn()))
+                        clearBuff((Minion) cell.getCard(), false);
+                    else
+                        clearBuff((Minion) cell.getCard(), true);
+                    break;
+                case FIRE_CELL:
+                    cell.setFireCell(true);
+                    break;
+                case POISON_CELL:
+                    cell.setPoison(true);
+            }
+        }
+    }
+
+    private void actionForMinion(Minion minion) {
         for (BuffDetail buffDetail : this.buffDetails) {
+            buffDetail.addTarget(minion);
+            minion.addBuff(buffDetail);
             switch (buffDetail.getBuffType()) {
                 case HOLY:
-                    targetMinionsForWeakness.add(minion);
                     if (buffDetail.getId().equals("137"))
                         holyBuff(minion, 12);
                     else
-                        holyBuff(minion, 1);
+                        holyBuff(minion, buffDetail.getHolyBuffState());
                     break;
                 case DE_HOLY:
-                    targetMinionsForWeakness.add(minion);
                     holyBuff(minion, -1);
                     break;
                 case STUN:
                     stunBuff(minion);
                     break;
+//
                 case DISARM:
                     disarmBuff(minion);
                     break;
+//
                 case WEAKNESS:
-                    targetMinionsForWeakness.add(minion);
+                case POISON:
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
-                    break;
-                case CLEAR:
-                    clearBuff(minion, isEnemy);
                     break;
                 case ANTI:
                     antiBuff(minion, buffDetail.getAntiBuffType());
@@ -84,14 +99,38 @@ public class Buff {
     }
 
     private void removeBuff(BuffDetail buffDetail) {
-        if (buffDetail.getBuffType().equals(BuffType.WEAKNESS)) {
-            for (Minion targetMinion : targetMinionsForWeakness) {
-                deletingWeaknessBuff(targetMinion, buffDetail.getEffectTime());
+        for (Object target : buffDetail.getTarget()) {
+            switch (buffDetail.getBuffType()) {
+                case HOLY:
+                    break;
+                case DE_HOLY:
+                    break;
+                case WEAKNESS:
+                    break;
+                case STUN:
+                    break;
+                case DISARM:
+                    ((Minion) target).setCanAttack(true);
+                    break;
+                case FIRE_CELL:
+                    ((Cell) target).setFireCell(false);
+                    break;
+                case POISON_CELL:
+                    ((Cell) target).setPoison(false);
+                case ANTI:
+                    break;
+                case ANTI_ALL_NEGATIVE:
+                    break;
+                case ANTI_ALL_POSITIVE:
+                    break;
+                case CHANGE_MANA:
+                    break;
+                case ADD_BUFF:
+                    break;
+                case SPECIAL_SITUATION_BUFF:
+                    break;
             }
-        } else if (buffDetail.getBuffType().equals(BuffType.HOLY)) {
-
         }
-        buffDetails.remove(buffDetail);
     }
 
     public void removeBuffs() {
@@ -129,12 +168,33 @@ public class Buff {
     }
 
     public void clearBuff(Minion minion, boolean isEnemy) {
-//        for (BuffDetail buffDetail : minion.getTakenBuff().buffDetails) {
-//            if (!isEnemy && (buffDetail.getBuffType() == BuffType.DISARM || buffDetail.getBuffType() == BuffType.STUN || buffDetail.getBuffType() == BuffType.WEAKNESS))
-//                removeBuff(buffDetail);
-//            else if (isEnemy && (buffDetail.getBuffType() == BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF && (buffDetail.getChangeAttackPowerValue() > 0 || buffDetail.getChangeHealthValue() > 0)))
-//                removeBuff(buffDetail);
-//        }
+        for (BuffDetail buffDetail : minion.getBuff().buffDetails) {
+            if (isEnemy) {
+                switch (buffDetail.getBuffType()) {
+                    case HOLY:
+                        removeBuff(buffDetail);
+                        break;
+                    case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
+                        if (buffDetail.getChangeHealthValue() > 0 || buffDetail.getChangeAttackPowerValue() > 0)
+                            removeBuff(buffDetail);
+                        break;
+                }
+            } else {
+                switch (buffDetail.getBuffType()) {
+                    case DE_HOLY:
+                    case WEAKNESS:
+                    case STUN:
+                    case DISARM:
+                        removeBuff(buffDetail);
+                        break;
+                    case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
+                        if (buffDetail.getChangeHealthValue() < 0 || buffDetail.getChangeAttackPowerValue() < 0)
+                            removeBuff(buffDetail);
+                        break;
+                }
+
+            }
+        }
     }
 
     public void antiBuff(Minion minion, BuffType buffType) {
