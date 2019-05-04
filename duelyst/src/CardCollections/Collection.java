@@ -1,5 +1,6 @@
 package CardCollections;
 
+import Data.Account;
 import effects.*;
 
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class Collection {
             if (isCardInDeck(cardID, deckName))
                 return "deck already has this card";
 
-            if (deckCardsHasStorage(deckName))
+            if (!deckCardsHasStorage(deckName))
                 return "deck Card storage is full";
 
             deck.addCard(card);
@@ -161,6 +162,7 @@ public class Collection {
         if (findDeck(deckName) == null)
             return "cant find deck with this name";
         this.mainDeck = findDeck(deckName);
+        Account.getLoginUser().getPlayer().setMainDeck(findDeck(deckName));
         return "main deck successfully choose";
     }
 

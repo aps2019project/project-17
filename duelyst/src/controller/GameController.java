@@ -28,7 +28,6 @@ public class GameController {
         Request request = new Request();
         boolean isFinish = false;
         do {
-
             request.getNewCommand();
             if (request.getType() == RequestType.EXIT_GAME) {
                 isFinish = true;
@@ -91,10 +90,6 @@ public class GameController {
     }
 
     public static String setMainDeck(String deckName, Collection collection) {
-        Deck deck = collection.findDeck(deckName);
-        if (deck != null) {
-            Account.getLoginUser().getPlayer().setMainDeck(deck);
-        }
         return collection.setMainDeck(deckName);
     }
 

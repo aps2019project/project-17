@@ -112,7 +112,7 @@ public class Shop {
 
     private Card returnCardFromShop(String cardName) {
         for (Card card : cardsInShop) {
-            if (card.getName().equals(cardName))
+            if (card.getName().toLowerCase().equals(cardName))
                 return card;
         }
         return null;
@@ -120,7 +120,7 @@ public class Shop {
 
     private Item returnItemFromShop(String itemName) {
         for (Item item : itemsInShop) {
-            if (item.getName().equals(itemName))
+            if (item.getName().toLowerCase().equals(itemName))
                 return item;
         }
         return null;
@@ -131,6 +131,8 @@ public class Shop {
             Card card = this.collection.getCards().get(i);
 
             if (card.getName().equals(cardName))
+                return card;
+            if (card.getId().equals(cardName))
                 return card;
         }
         return null;
