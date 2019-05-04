@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class InstanceBuilder {
     private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
@@ -135,18 +136,18 @@ public class InstanceBuilder {
     }
 
     public static Spell[] getSpells() {
-        return spells;
+        return Arrays.copyOf(spells, spells.length);
     }
 
     public static Hero[] getHeroes() {
-        return heroes;
+        return Arrays.copyOf(heroes, heroes.length);
     }
 
     public static Item[] getItems() {
-        return items;
+        return Arrays.copyOf(items, items.length);
     }
 
     public static Minion[] getMinions() {
-        return minions;
+        return Arrays.copyOf(minions, minions.length);
     }
 }
