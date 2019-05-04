@@ -6,6 +6,7 @@ public class Item {
     private String desc;
     private int price;
     private Buff buff;
+    private BuffDetail specialSituationBuff;
 
     public Item(String name, String id, int price) {
         this.name = name;
@@ -14,12 +15,20 @@ public class Item {
 
     }
 
+    public void init ()
+    {
+        this.buff = new Buff();
+    }
+    public void setSpecialSituationBuff(BuffDetail buffDetail) {
+        this.specialSituationBuff = buffDetail;
+    }
+
     public Buff getBuff() {
         return buff;
     }
 
-    public void setBuff(Buff buff) {
-        this.buff = buff;
+    public void addBuff(BuffDetail buffDetail) {
+        this.buff.addBuff(buffDetail);
     }
 
     public String getName() {
