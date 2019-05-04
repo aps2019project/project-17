@@ -183,8 +183,13 @@ public class Player {
         return copyMainDeck;
     }
 
-    public boolean equals(Player player) {
-        return this.userName.equals(player.userName);
+    @Override
+    public boolean equals(Object player) {
+        if (player instanceof Player) {
+            Player player1 = (Player) player;
+            return this.userName.equals(player1.getUserName());
+        }
+        return false;
     }
 
     public int getPreviousMana() {
