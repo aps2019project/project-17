@@ -118,13 +118,15 @@ public class BattleKillHero extends Battle {
         if (card == null)
             return "invalid card ID";
         Cell cellFirst = this.board.getCells()[((Minion) this.selectedCard).getXCoordinate() - 1][((Minion) this.selectedCard).getYCoordinate() - 1];
-        Cell cellTarget = this.board.getCells()[((Minion) card).getXCoordinate() - 1][((Minion) card).getYCoordinate() -1];
+        Cell cellTarget = this.board.getCells()[((Minion) card).getXCoordinate() - 1][((Minion) card).getYCoordinate() - 1];
 
         if (Cell.distance(cellFirst, cellTarget) > ((Minion) this.selectedCard).getAttackRange())
             return "opponent minion in unavailable";
 
         if (!((Minion) selectedCard).getCanAttack())
             return "this minion with " + this.selectedCard.getId() + " can't attack";
+
+        // if minion attack ! count it !
         return "attack from " + this.selectedCard.getName() + " to " + card.getName() + "successfully done";
     }
 }

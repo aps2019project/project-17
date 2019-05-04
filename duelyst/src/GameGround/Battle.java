@@ -160,20 +160,20 @@ public class Battle {
         return "name: " + this.selectedItem.getName() + " -> " + this.selectedItem.getDesc();
     }
 
-    public String showNextCard(){
+    public String showNextCard() {
         return whoseTurn().getNextCard().getName() + " " + whoseTurn().getNextCard().getDesc();
     }
 
-    public String showCardInfoFromGraveYard(String cardID){
+    public String showCardInfoFromGraveYard(String cardID) {
         for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
-            if (whoseTurn().getGraveYard().get(i).getId().equals(cardID)){
+            if (whoseTurn().getGraveYard().get(i).getId().equals(cardID)) {
                 return whoseTurn().getGraveYard().get(i).getName() + " " + whoseTurn().getGraveYard().get(i).getDesc();
             }
         }
         return "this card doesn't exist in the grave yard";
     }
 
-    public String showCardsOfGraveYard(){
+    public String showCardsOfGraveYard() {
         StringBuilder toPrint = new StringBuilder();
         if (whoseTurn().getGraveYard().size() == 0)
             return "grave card is empty";
@@ -234,5 +234,23 @@ public class Battle {
     }
 
     public void endTurn() {
+        this.turn++;
+        if (this.turn >= 15) {
+            this.playerOne.addMana(-this.playerOne.getMana() + 9);
+            this.playerTwo.addMana(-this.playerTwo.getMana() + 9);
+        } else {
+            if (this.turn % 2 == 0)
+                this.playerTwo.addMana(this.playerTwo.getPreviousMana() + 1);
+            else
+                this.playerOne.addMana(this.playerOne.getPreviousMana() + 1);
+
+            this.playerOne.setPreviousMana(this.playerOne.getMana());
+            this.playerTwo.setPreviousMana(this.playerTwo.getMana());
+        }
+        // minions reset
+        // effect time in buff
+        // time of holding flag
+        //
+        // this part depend on Game Mode
     }
 }
