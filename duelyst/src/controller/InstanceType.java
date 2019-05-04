@@ -3,10 +3,10 @@ package controller;
 public enum InstanceType {
     BUFF,
     HERO,
-    HEROBUFF,
+    HERO_BUFF,
     ITEM,
-    ITEMBUFF,
+    ITEM_BUFF,
     MINION,
-    MINIONBUFF,
+    MINION_BUFF,
     SPELL
 }

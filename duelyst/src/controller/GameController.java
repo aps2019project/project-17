@@ -4,8 +4,7 @@ import CardCollections.*;
 import Data.*;
 import GameGround.Battle;
 import com.google.gson.Gson;
-import effects.Buff;
-import effects.BuffDetail;
+import effects.*;
 import view.*;
 
 
@@ -19,21 +18,32 @@ public class GameController {
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
     private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
-    private static final String addresOfHero = "duelyst//src//effects//Hero.json";
-    private static final String addresOfHeroBuff = "duelyst//src//effects//HeroBuff.json";
-    private static final String Item = "duelyst//src//effects//Item.json";
-    private static final String ItemBuff = "duelyst//src//effects//ItemBuff.json";
-    private static final String Minoin = "duelyst//src//effects//Minion.json";
-    private static final String MinoinBuff = "duelyst//src//effects//minionBuff.json";
-    private static final String Spell = "duelyst//src//effects//Spell.json";
-    private static BuffDetail[] buffDetails;
+    private static final String addressOfHero = "duelyst//src//effects//Hero.json";
+    private static final String addressOfHeroBuff = "duelyst//src//effects//HeroBuff.json";
+    private static final String addressOfItem = "duelyst//src//effects//addressOfItem.json";
+    private static final String addressOfItemBuff = "duelyst//src//effects//addressOfItemBuff.json";
+    private static final String addressOfMinion = "duelyst//src//effects//Minion.json";
+    private static final String addressOfMinionBuff = "duelyst//src//effects//minionBuff.json";
+    private static final String addressOfSpell = "duelyst//src//effects//Spell.json";
 
     static {
         accounts = new ArrayList<>();
+        try {
+            Spell[] spells = (Spell[]) creatingInstance(InstanceType.SPELL);
+            BuffDetail[] spellBuff = (BuffDetail[]) creatingInstance(InstanceType.BUFF);
+            Hero[] heroes = (Hero[]) creatingInstance(InstanceType.HERO);
+            BuffDetail[] heroBuff = (BuffDetail[]) creatingInstance(InstanceType.HERO_BUFF);
+            Item[] items = (Item[]) creatingInstance(InstanceType.ITEM);
+            BuffDetail[] itemBuff = (BuffDetail[]) creatingInstance(InstanceType.ITEM_BUFF);
+            Minion[] minions = (Minion[]) creatingInstance(InstanceType.MINION);
+            BuffDetail[] minionBuff = (BuffDetail[]) creatingInstance(InstanceType.MINION_BUFF);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void main() throws IOException {
-        buffDetails = creatingInstance(InstanceType.BUFF);
+    public static void main() {
         Request request = new Request();
         boolean isFinish = false;
         do {
@@ -61,29 +71,40 @@ public class GameController {
         return jsonString.toString();
     }
 
-    private static BuffDetail[] creatingInstance(InstanceType instanceType) throws IOException {
+    private static Object[] creatingInstance(InstanceType instanceType) throws IOException {
         Gson gson = new Gson();
+        BuffDetail[] buffDetails;
         switch (instanceType) {
             case BUFF:
-                BuffDetail[] buffDetails;
                 buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
-                break;
+                return buffDetails;
             case HERO:
-                break;
-            case HEROBUFF:
-                break;
+                Hero[] heroes;
+                heroes = gson.fromJson(jsonReader(addressOfHero), Hero[].class);
+                return heroes;
+            case HERO_BUFF:
+                buffDetails = gson.fromJson(jsonReader(addressOfHeroBuff), BuffDetail[].class);
+                return buffDetails;
             case ITEM:
-                break;
-            case ITEMBUFF:
-                break;
+                Item[] items;
+                items = gson.fromJson(jsonReader(addressOfItem), Item[].class);
+                return items;
+            case ITEM_BUFF:
+                buffDetails = gson.fromJson(jsonReader(addressOfItemBuff), BuffDetail[].class);
+                return buffDetails;
             case MINION:
-                break;
-            case MINIONBUFF:
-                break;
+                Minion[] minions;
+                minions = gson.fromJson(jsonReader(addressOfMinion), Minion[].class);
+                return minions;
+            case MINION_BUFF:
+                buffDetails = gson.fromJson(jsonReader(addressOfMinionBuff), BuffDetail[].class);
+                return buffDetails;
             case SPELL:
-                break;
+                Spell[] spells;
+                spells = gson.fromJson(jsonReader(addressOfSpell), Spell[].class);
+                return spells;
         }
-        return buffDetails;
+        return null;
     }
 
     public static ArrayList<Account> getAccounts() {
