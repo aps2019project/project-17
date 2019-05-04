@@ -31,7 +31,7 @@ public class Request {
         this.error = error;
     }
 
-    public boolean isValid() {//todo remember to complete this part
+    public boolean isValid() {
         RequestType requestType = getType();
 
         if (requestType == null)
@@ -744,7 +744,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSelectDeck() {
-        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>\\w+)");
+        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SHOW_DECK+ " (?<name>\\w+)");
         Matcher matcher = patternForSelectDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -770,7 +770,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowDeck() {
-        Pattern patternForShowDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>\\w+)");
+        Pattern patternForShowDeck = Pattern.compile(StringsRq.SHOW_DECK + " (?<name>\\w+)");
         Matcher matcher = patternForShowDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
