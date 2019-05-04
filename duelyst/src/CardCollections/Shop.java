@@ -130,7 +130,7 @@ public class Shop {
         for (int i = 0; i < this.collection.getCards().size(); i++) {
             Card card = this.collection.getCards().get(i);
 
-            if (card.getName().equals(cardName))
+            if (card.getName().toLowerCase().equals(cardName))
                 return card;
             if (card.getId().equals(cardName))
                 return card;
@@ -142,7 +142,7 @@ public class Shop {
         for (int i = 0; i < this.collection.getItems().size(); i++) {
             Item item = this.collection.getItems().get(i);
 
-            if (item.getName().equals(itemName))
+            if (item.getName().toLowerCase().equals(itemName))
                 return item;
         }
         return null;
