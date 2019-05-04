@@ -6,6 +6,7 @@ import effects.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 
 public class InstanceBuilder {
     private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
@@ -131,5 +132,21 @@ public class InstanceBuilder {
                     hero.addBuff(heroBuff);
             }
         }
+    }
+
+    public static Spell[] getSpells() {
+        return spells;
+    }
+
+    public static Hero[] getHeroes() {
+        return heroes;
+    }
+
+    public static Item[] getItems() {
+        return items;
+    }
+
+    public static Minion[] getMinions() {
+        return minions;
     }
 }
