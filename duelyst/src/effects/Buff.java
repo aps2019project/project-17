@@ -79,8 +79,6 @@ public class Buff {
                 case ANTI_ALL_NEGATIVE:
                     break;
                 case ANTI_ALL_POSITIVE:
-                case ADD_BUFF:
-                    minion.getBuff().addBuff(new BuffDetail(0, BuffType.STUN, 0, TargetType.ENEMY, TargetRange.ONE));
             }
         }
     }
@@ -131,12 +129,12 @@ public class Buff {
     }
 
     public void clearBuff(Minion minion, boolean isEnemy) {
-        for (BuffDetail buffDetail : minion.getTakenBuff().buffDetails) {
-            if (!isEnemy && (buffDetail.getBuffType() == BuffType.DISARM || buffDetail.getBuffType() == BuffType.STUN || buffDetail.getBuffType() == BuffType.WEAKNESS))
-                removeBuff(buffDetail);
-            else if (isEnemy && (buffDetail.getBuffType() == BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF && (buffDetail.getChangeAttackPowerValue() > 0 || buffDetail.getChangeHealthValue() > 0)))
-                removeBuff(buffDetail);
-        }
+//        for (BuffDetail buffDetail : minion.getTakenBuff().buffDetails) {
+//            if (!isEnemy && (buffDetail.getBuffType() == BuffType.DISARM || buffDetail.getBuffType() == BuffType.STUN || buffDetail.getBuffType() == BuffType.WEAKNESS))
+//                removeBuff(buffDetail);
+//            else if (isEnemy && (buffDetail.getBuffType() == BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF && (buffDetail.getChangeAttackPowerValue() > 0 || buffDetail.getChangeHealthValue() > 0)))
+//                removeBuff(buffDetail);
+//        }
     }
 
     public void antiBuff(Minion minion, BuffType buffType) {

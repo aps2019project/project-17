@@ -10,6 +10,8 @@ public class Spell extends Card {
     }
 
     public void addBuff(BuffDetail buffDetail) {
+        if (this.buff == null)
+            this.buff = new Buff();
         this.buff.addBuff(buffDetail);
     }
 
