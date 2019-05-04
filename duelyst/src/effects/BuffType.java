@@ -10,6 +10,7 @@ public enum BuffType {
     CLEAR,
     FIRE_CELL,
     POISON_CELL,
+    HOLY_CELL,
     POISON,
     ANTI,
     ANTI_ALL_POSITIVE,
