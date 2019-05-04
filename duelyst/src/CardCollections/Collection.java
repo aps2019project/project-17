@@ -50,7 +50,7 @@ public class Collection {
 
         else if (findItem(name) != null)
             return findItem(name).getId();
-        return "can't find this card ID";
+        return "can't find this card\\item";
     }
 
     public String createDeck(String deckName) {
