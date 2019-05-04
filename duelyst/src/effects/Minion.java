@@ -56,16 +56,16 @@ public class Minion extends Card {
         this.attack.addBuff(buffDetail);
     }
 
-    private String minionTypeShow() {
+    protected String minionTypeShow() {
         switch (minionType) {
-            case MELLEE:
+            case MELEE:
                 return "MELEE";
             case RANGED:
                 return "RANGED";
             case HYBRID:
                 return "HYBRID";
             default:
-                return "";
+                return "MELEE";
         }
     }
 

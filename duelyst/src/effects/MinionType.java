@@ -1,7 +1,7 @@
 package effects;
 
 public enum MinionType {
-    MELLEE,
+    MELEE,
     RANGED,
     HYBRID
 }
