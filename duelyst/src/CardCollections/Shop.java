@@ -112,7 +112,7 @@ public class Shop {
 
     private Card returnCardFromShop(String cardName) {
         for (Card card : cardsInShop) {
-            if (card.getName().equals(cardName))
+            if (card.getName().toLowerCase().equals(cardName))
                 return card;
         }
         return null;
@@ -120,7 +120,7 @@ public class Shop {
 
     private Item returnItemFromShop(String itemName) {
         for (Item item : itemsInShop) {
-            if (item.getName().equals(itemName))
+            if (item.getName().toLowerCase().equals(itemName))
                 return item;
         }
         return null;
@@ -130,7 +130,9 @@ public class Shop {
         for (int i = 0; i < this.collection.getCards().size(); i++) {
             Card card = this.collection.getCards().get(i);
 
-            if (card.getName().equals(cardName))
+            if (card.getName().toLowerCase().equals(cardName))
+                return card;
+            if (card.getId().equals(cardName))
                 return card;
         }
         return null;
@@ -140,7 +142,7 @@ public class Shop {
         for (int i = 0; i < this.collection.getItems().size(); i++) {
             Item item = this.collection.getItems().get(i);
 
-            if (item.getName().equals(itemName))
+            if (item.getName().toLowerCase().equals(itemName))
                 return item;
         }
         return null;
@@ -160,6 +162,8 @@ public class Shop {
         ArrayList<Minion> shopMinions = new ArrayList<>();
         for (Card card : this.cardsInShop) {
             if (card instanceof Minion) {
+                if (card instanceof Hero)
+                    continue;
                 shopMinions.add((Minion) card);
             }
         }
