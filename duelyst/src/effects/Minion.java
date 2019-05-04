@@ -58,7 +58,7 @@ public class Minion extends Card {
 
     protected String minionTypeShow() {
         switch (minionType) {
-            case MELLEE:
+            case MELEE:
                 return "MELEE";
             case RANGED:
                 return "RANGED";
