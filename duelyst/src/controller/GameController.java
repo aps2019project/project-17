@@ -4,7 +4,6 @@ import CardCollections.*;
 import Data.*;
 import GameGround.Battle;
 import com.google.gson.Gson;
-import effects.Buff;
 import effects.BuffDetail;
 import view.*;
 
@@ -17,6 +16,7 @@ public class GameController {
 
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
+    private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
 
     static {
         accounts = new ArrayList<>();
@@ -41,8 +41,8 @@ public class GameController {
         } while (!isFinish);
     }
 
-    private static String jsonReader() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("duelyst//src//effects//Buff.json"));
+    private static String jsonReader(String fileAddress) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(fileAddress));
         String line;
         StringBuilder jsonString = new StringBuilder();
         while ((line = reader.readLine()) != null) {
@@ -54,7 +54,7 @@ public class GameController {
     private static BuffDetail[] creatingInstance() throws IOException {
         Gson gson = new Gson();
         BuffDetail[] buffDetails = new BuffDetail[50];
-        buffDetails = gson.fromJson(jsonReader(), BuffDetail[].class);
+        buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
         return buffDetails;
     }
 
