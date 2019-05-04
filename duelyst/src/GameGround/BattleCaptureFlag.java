@@ -5,6 +5,7 @@ import Data.GameData;
 import Data.Player;
 import effects.Card;
 import effects.Minion;
+import effects.Spell;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -103,6 +104,9 @@ public class BattleCaptureFlag extends Battle {
         if (selectedCard == null)
             return "first you have to select card";
 
+        if (x > 9 || y > 5)
+            return "invalid target out of range";
+
         Minion minion = (Minion) this.selectedCard;
         int x0 = minion.getXCoordinate();
         int y0 = minion.getYCoordinate();
@@ -142,7 +146,7 @@ public class BattleCaptureFlag extends Battle {
 
         if (card == null)
             return "invalid card name";
-        if (card instanceof Minion){
+        if (card instanceof Minion) {
             if (cellTarget.getCard() != null || !board.isCoordinateAvailable(cellTarget, whoseTurn(), this))
                 return "invalid target";
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
@@ -153,14 +157,14 @@ public class BattleCaptureFlag extends Battle {
             whoseTurn().lessMana(((Minion) card).getManaPoint());
             whoseTurn().removeCardFromHand(card);
 
-            if (cellTarget.getItem() != null){
+            if (cellTarget.getItem() != null) {
                 whoseTurn().addItemToCollectAbleItems(cellTarget.getItem());
                 cellTarget.setItem(null);
             }
 
             this.selectedCard = card;
 
-            if (cellTarget.hasFlag()){
+            if (cellTarget.hasFlag()) {
 
                 cellTarget.setFlag(false);
                 ((Minion) card).setHasFlag(true);
@@ -173,5 +177,10 @@ public class BattleCaptureFlag extends Battle {
         }
         // spell
         return "card successfully inserted";
+    }
+
+    @Override
+    public String attack(String opponentCardId) {
+        return super.attack(opponentCardId);
     }
 }

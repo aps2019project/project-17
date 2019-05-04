@@ -7,6 +7,7 @@ import Data.Player;
 import effects.Card;
 import effects.Item;
 import effects.Minion;
+import effects.Spell;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -105,19 +106,6 @@ public class Battle {
         return "invalid card id";
     }
 
-    protected Card returnCardFromBoard(String cardID, Player player) {
-        for (int i = 0; i < this.board.getCells().length; i++) {
-            for (int j = 0; j < this.board.getCells()[j].length; j++) {
-                if (this.board.getCells()[i][j].getCard() == null)
-                    continue;
-                Card card = this.board.getCells()[i][j].getCard();
-                if (card.getId().equals(cardID) && cardIsMine(card, player))
-                    return card;
-            }
-        }
-        return null;
-    }
-
     public String movingCard(int x, int y) {
         return "";
     }
@@ -126,7 +114,7 @@ public class Battle {
         return "";
     }
 
-    public String showCollectable() {
+    public String showCollectAble() {
         StringBuilder toShow = new StringBuilder();
         ArrayList<Item> toPrint = whoseTurn().getCollectAbleItems();
         if (toPrint.size() == 0) {
@@ -184,7 +172,32 @@ public class Battle {
     }
 
     public String attack(String opponentCardId) {
-        return "attack successfully done";
+        Minion minion = (Minion) returnCardFromBoard(opponentCardId, theOtherPlayer());
+        if (minion == null)
+            return "invalid card id";
+
+        if (!((Minion) this.selectedCard).getCanAttack())
+            return "this card with " + this.selectedCard.getId() + " can't attack";
+
+        Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
+        Cell cellFirst = this.board.getCells()[((Minion) this.selectedCard).getXCoordinate() - 1][((Minion) this.selectedCard).getYCoordinate() - 1];
+        if (Cell.distance(cellDestination, cellFirst) > ((Minion) this.selectedCard).getAttackRange())
+            return "opponent minion is unavailable for attack";
+
+
+        return null;
+    }
+
+    Card returnCardFromBoard(String id, Player player) {
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                if (this.board.getCells()[i][j].getCard().getId().equals(id)) {
+                    if (cardIsMine(this.board.getCells()[i][j].getCard(), player))
+                        return this.board.getCells()[i][j].getCard();
+                }
+            }
+        }
+        return null;
     }
 
     public Player getPlayerOne() {
@@ -229,10 +242,6 @@ public class Battle {
         return card.getUserName().equals(player.getUserName());
     }
 
-    public static Battle getCurrentBattle() {
-        return currentBattle;
-    }
-
     public void endTurn() {
         this.turn++;
         if (this.turn >= 15) {
@@ -252,5 +261,9 @@ public class Battle {
         // time of holding flag
         //
         // this part depend on Game Mode
+    }
+
+    public static Battle getCurrentBattle() {
+        return currentBattle;
     }
 }
