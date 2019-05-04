@@ -1,7 +1,6 @@
 package view;
 
 import CardCollections.Hand;
-import Data.Player;
 import GameGround.*;
 import effects.*;
 
@@ -69,7 +68,7 @@ public class BattleView extends View {
     }
 
     public static void showCollectAbles() {
-        System.out.println(Battle.getCurrentBattle().showCollectable());
+        System.out.println(Battle.getCurrentBattle().showCollectAble());
     }
 
     public static void showInfo() {

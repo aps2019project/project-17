@@ -1,6 +1,7 @@
 package Data;
 
 import CardCollections.Deck;
+import GameGround.Battle;
 
 public class AI extends Player {
     private static Player currentAIPlayer;
