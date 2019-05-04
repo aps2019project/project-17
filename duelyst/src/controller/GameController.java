@@ -29,6 +29,14 @@ public class GameController {
         boolean isFinish = false;
         do {
 
+            for (int i = 0; i < InstanceBuilder.getItems().length; i++) {
+                System.out.println(InstanceBuilder.getItems()[i].getName());
+                for (int j = 0; j < InstanceBuilder.getItems()[i].getBuff().getBuffDetails().size(); j++) {
+                    System.out.println(InstanceBuilder.getItems()[i].getBuff().getBuffDetails().get(j).getBuffType());
+                }
+                System.out.println();
+            }
+
             request.getNewCommand();
             if (request.getType() == RequestType.EXIT_GAME) {
                 isFinish = true;

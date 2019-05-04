@@ -160,6 +160,8 @@ public class Shop {
         ArrayList<Minion> shopMinions = new ArrayList<>();
         for (Card card : this.cardsInShop) {
             if (card instanceof Minion) {
+                if (card instanceof Hero)
+                    continue;
                 shopMinions.add((Minion) card);
             }
         }
