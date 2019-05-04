@@ -38,7 +38,6 @@ public class GameController {
                 view.printError(request.getError());
 
             }
-            //request.isValid();
 
         } while (!isFinish);
     }
