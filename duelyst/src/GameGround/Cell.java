@@ -2,7 +2,6 @@ package GameGround;
 
 import effects.*;
 
-import java.util.regex.Matcher;
 
 public class Cell {
     private int row;
@@ -10,6 +9,8 @@ public class Cell {
     private Card card;
     private boolean hasFlag;
     private Item item;
+    private boolean isFireCell;
+    private boolean isPoison;
 
     Cell(int row, int col) {
         this.row = row;
@@ -65,6 +66,14 @@ public class Cell {
 
     public void setFlag(boolean hasFlag) {
         this.hasFlag = hasFlag;
+    }
+
+    public void setFireCell(boolean fireCell) {
+        isFireCell = fireCell;
+    }
+
+    public void setPoison(boolean poison) {
+        isPoison = poison;
     }
 
     static int distance(Cell cell, Cell cell1) {

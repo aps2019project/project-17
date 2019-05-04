@@ -225,7 +225,7 @@ public class Battle {
         return player;
     }
 
-    boolean cardIsMine(Card card, Player player) {
+    public boolean cardIsMine(Card card, Player player) {
         return card.getUserName().equals(player.getUserName());
     }
 
