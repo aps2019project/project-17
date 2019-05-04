@@ -50,7 +50,7 @@ public class Buff {
             switch (buffDetail.getBuffType()) {
                 case HOLY:
                     targetMinionsForWeakness.add(minion);
-                    if (buffDetail.getId() == 137)
+                    if (buffDetail.getId().equals("137"))
                         holyBuff(minion, 12);
                     else
                         holyBuff(minion, 1);

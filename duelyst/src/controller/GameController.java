@@ -16,33 +16,14 @@ public class GameController {
 
     private static View view = View.getInstance();
     private static ArrayList<Account> accounts;
-    private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
-    private static final String addressOfHero = "duelyst//src//effects//Hero.json";
-    private static final String addressOfHeroBuff = "duelyst//src//effects//HeroBuff.json";
-    private static final String addressOfItem = "duelyst//src//effects//addressOfItem.json";
-    private static final String addressOfItemBuff = "duelyst//src//effects//addressOfItemBuff.json";
-    private static final String addressOfMinion = "duelyst//src//effects//Minion.json";
-    private static final String addressOfMinionBuff = "duelyst//src//effects//minionBuff.json";
-    private static final String addressOfSpell = "duelyst//src//effects//Spell.json";
+
 
     static {
         accounts = new ArrayList<>();
-        try {
-            Spell[] spells = (Spell[]) creatingInstance(InstanceType.SPELL);
-            BuffDetail[] spellBuff = (BuffDetail[]) creatingInstance(InstanceType.BUFF);
-            Hero[] heroes = (Hero[]) creatingInstance(InstanceType.HERO);
-            BuffDetail[] heroBuff = (BuffDetail[]) creatingInstance(InstanceType.HERO_BUFF);
-            Item[] items = (Item[]) creatingInstance(InstanceType.ITEM);
-            BuffDetail[] itemBuff = (BuffDetail[]) creatingInstance(InstanceType.ITEM_BUFF);
-            Minion[] minions = (Minion[]) creatingInstance(InstanceType.MINION);
-            BuffDetail[] minionBuff = (BuffDetail[]) creatingInstance(InstanceType.MINION_BUFF);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void main() {
+        InstanceBuilder.creation();
         Request request = new Request();
         boolean isFinish = false;
         do {
@@ -58,52 +39,6 @@ public class GameController {
             }
 
         } while (!isFinish);
-    }
-
-    private static String jsonReader(String fileAddress) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileAddress));
-        String line;
-        StringBuilder jsonString = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            jsonString.append(line);
-        }
-        return jsonString.toString();
-    }
-
-    private static Object[] creatingInstance(InstanceType instanceType) throws IOException {
-        Gson gson = new Gson();
-        BuffDetail[] buffDetails;
-        switch (instanceType) {
-            case BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
-                return buffDetails;
-            case HERO:
-                Hero[] heroes;
-                heroes = gson.fromJson(jsonReader(addressOfHero), Hero[].class);
-                return heroes;
-            case HERO_BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfHeroBuff), BuffDetail[].class);
-                return buffDetails;
-            case ITEM:
-                Item[] items;
-                items = gson.fromJson(jsonReader(addressOfItem), Item[].class);
-                return items;
-            case ITEM_BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfItemBuff), BuffDetail[].class);
-                return buffDetails;
-            case MINION:
-                Minion[] minions;
-                minions = gson.fromJson(jsonReader(addressOfMinion), Minion[].class);
-                return minions;
-            case MINION_BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfMinionBuff), BuffDetail[].class);
-                return buffDetails;
-            case SPELL:
-                Spell[] spells;
-                spells = gson.fromJson(jsonReader(addressOfSpell), Spell[].class);
-                return spells;
-        }
-        return null;
     }
 
     public static ArrayList<Account> getAccounts() {

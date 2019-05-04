@@ -1,7 +1,7 @@
 package effects;
 
 public class BuffDetail {
-    private int id;
+    private String id;
     private BuffType buffType;
     private int effectTime;
     private int changeAttackPowerValue;
@@ -15,7 +15,7 @@ public class BuffDetail {
     private int manaIncreaseValue;
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
-        this.id = id;
+        this.id = Integer.toString(id);
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.targetType = targetType;
@@ -26,7 +26,7 @@ public class BuffDetail {
 
     //for anti buffs
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange, BuffType antiBuffType) {
-        this.id = id;
+        this.id = Integer.toString(id);
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.targetType = targetType;
@@ -37,7 +37,7 @@ public class BuffDetail {
 
     //for change attack power or health buff
     public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
-        this.id = id;
+        this.id = Integer.toString(id);
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.changeAttackPowerValue = changeAttackPowerValue;
@@ -49,10 +49,10 @@ public class BuffDetail {
 
     //for holy buff and change mana
     public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int buffState) {
-        this.id = id;
+        this.id = Integer.toString(id);
         this.buffType = buffType;
         this.effectTime = effectTime;
-        if ( buffType.equals(BuffType.HOLY))
+        if (buffType.equals(BuffType.HOLY))
             this.holyBuffState = buffState;
         else if (buffType.equals(BuffType.CHANGE_MANA))
             this.manaIncreaseValue = buffState;
@@ -63,7 +63,7 @@ public class BuffDetail {
 
     //for add  buff
     public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, BuffType addBuff) {
-        this.id = id;
+        this.id = Integer.toString(id);
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.addBuff = addBuff;
@@ -97,7 +97,7 @@ public class BuffDetail {
         return antiBuffType;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 }
