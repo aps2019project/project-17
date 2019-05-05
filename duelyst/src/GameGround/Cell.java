@@ -11,6 +11,7 @@ public class Cell {
     private Item item;
     private boolean isFireCell;
     private boolean isPoison;
+    private boolean isHoly;
 
     Cell(int row, int col) {
         this.row = row;
@@ -74,6 +75,10 @@ public class Cell {
 
     public void setPoison(boolean poison) {
         isPoison = poison;
+    }
+
+    public void setHoly(boolean holy) {
+        isHoly = holy;
     }
 
     static int distance(Cell cell, Cell cell1) {

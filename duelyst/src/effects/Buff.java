@@ -13,20 +13,22 @@ import java.util.ArrayList;
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
 
-    private void action(Object object, TargetType targetType) {
-        switch (targetType) {
-            case NONE:
-            case ENEMY_HERO:
-            case ENEMY:
-            case INSIDER:
-            case INSIDER_HERO:
-                actionForMinion((Minion) object);
-                break;
-            case CELL:
-                actionForCell((Cell) object);
-                break;
-            case PLAYER:
-                actionForPlayer((Player) object);
+    public void action(ArrayList<Object> objects, TargetType targetType) {
+        for (Object object : objects) {
+            switch (targetType) {
+                case NONE:
+                case ENEMY_HERO:
+                case ENEMY:
+                case INSIDER:
+                case INSIDER_HERO:
+                    actionForMinion((Minion) object);
+                    break;
+                case CELL:
+                    actionForCell((Cell) object);
+                    break;
+                case PLAYER:
+                    actionForPlayer((Player) object);
+            }
         }
     }
 
@@ -36,9 +38,8 @@ public class Buff {
 
     private void actionForPlayer(Player player) {
         for (BuffDetail buffDetail : buffDetails) {
-            switch (buffDetail.getBuffType()) {
-                case CHANGE_MANA:
-                    player.changeMana(+1);
+            if (buffDetail.getBuffType() == BuffType.CHANGE_MANA) {
+                player.changeMana(+1);
             }
         }
     }
@@ -58,6 +59,8 @@ public class Buff {
                     break;
                 case POISON_CELL:
                     cell.setPoison(true);
+                case HOLY_CELL:
+                    cell.setHoly(true);
             }
         }
     }
@@ -76,11 +79,9 @@ public class Buff {
                 case STUN:
                     stunBuff(minion);
                     break;
-//
                 case DISARM:
                     disarmBuff(minion);
                     break;
-//
                 case WEAKNESS:
                 case POISON:
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
@@ -89,7 +90,8 @@ public class Buff {
                 case ANTI:
                     antiBuff(minion, buffDetail.getAntiBuffType());
                     break;
-                case ANTI_ALL_POSITIVE:
+                case SPECIAL_SITUATION_BUFF:
+
             }
         }
     }
@@ -100,38 +102,37 @@ public class Buff {
                 case HOLY:
                 case DE_HOLY:
                     ((Minion) target).setHolyBuffState(0);
+                    ((Minion) target).getBuff().removeBuff(buffDetail);
                     break;
                 case WEAKNESS:
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     ((Minion) target).changeHealth(-buffDetail.getChangeHealthValue());
                     ((Minion) target).changeAttackPower(-buffDetail.getChangeAttackPowerValue());
+                    ((Minion) target).getBuff().removeBuff(buffDetail);
                     break;
                 case STUN:
                     break;
                 case DISARM:
                     ((Minion) target).setCanAttack(true);
+                    ((Minion) target).getBuff().removeBuff(buffDetail);
                     break;
                 case FIRE_CELL:
                     ((Cell) target).setFireCell(false);
                     break;
                 case POISON_CELL:
                     ((Cell) target).setPoison(false);
+                case HOLY_CELL:
+                    ((Cell) target).setHoly(false);
                 case ANTI:
                     ((Minion) target).setAntiBuff(null);
-                    break;
-                case ANTI_ALL_POSITIVE:
-                    break;
-                case CHANGE_MANA:
-                    break;
-                case ADD_BUFF:
-                    break;
-                case SPECIAL_SITUATION_BUFF:
+                    ((Minion) target).getBuff().removeBuff(buffDetail);
                     break;
             }
+            buffDetails.remove(buffDetail);
         }
     }
 
-    public void removeBuffs() {
+    public void passTurn() {
         for (BuffDetail buffDetail : buffDetails) {
             if (buffDetail.increaseEffectTime())
                 removeBuff(buffDetail);

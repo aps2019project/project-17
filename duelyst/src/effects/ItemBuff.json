@@ -141,7 +141,7 @@
     "buffType": "CHANG_MANA",
     "targetType": "PLAYER",
     "targetRange": "ONE",
-    "effectTime": 100,
+    "effectTime": -1,
     "manaIncreaseValue": 1
   },
   {
