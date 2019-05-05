@@ -3,6 +3,8 @@ package effects;
 import Data.Player;
 import GameGround.Battle;
 
+import java.util.ArrayList;
+
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
@@ -131,27 +133,29 @@ public class Minion extends Card {
                 player = Battle.getCurrentBattle().getPlayerTwo();
                 theOtherPlayer = Battle.getCurrentBattle().getPlayerOne();
             }
+            ArrayList<Minion> targetMinions = null;
             switch (buffDetail.getTargetRange()) {
                 case ONE:
                     switch (buffDetail.getTargetType()) {
                         case ENEMY:
-                            specialPower.action(minion, TargetType.ENEMY);
+                            specialPower.action(minion, TargetType.ENEMY, buffDetail);
                         case ENEMY_HERO:
-                            specialPower.action(player.getMainDeck().getHero(), TargetType.ENEMY_HERO);
+                            specialPower.action(player.getMainDeck().getHero(), TargetType.ENEMY_HERO, buffDetail);
                             break;
                         case INSIDER_HERO:
-                            specialPower.action(theOtherPlayer.getMainDeck().getHero(), TargetType.INSIDER_HERO);
+                            specialPower.action(theOtherPlayer.getMainDeck().getHero(), TargetType.INSIDER_HERO, buffDetail);
                             break;
                         case CELL:
-                            specialPower.action(Battle.getCurrentBattle().getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()), TargetType.ENEMY);
+                            specialPower.action(Battle.getCurrentBattle().getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()), TargetType.ENEMY, buffDetail);
                             break;
                     }
                 case SELF:
-                    specialPower.action(this, TargetType.INSIDER);
+                    specialPower.action(this, TargetType.INSIDER, buffDetail);
                     break;
                 case AROUND:
-
+                    targetMinions = Battle.getCurrentBattle().minionsArroundCell(this.getXCoordinate(), this.getYCoordinate());
                 case ALL:
+                    targetMinions = Battle.getCurrentBattle().getAllMinion();
                 case ALL_IN_COLUMN:
                 case DISTANCE_TWO:
                     break;
@@ -160,13 +164,33 @@ public class Minion extends Card {
                 case RANDOM:
                     break;
             }
+            if (targetMinions == null)
+                continue;
+            for (Minion targetMinion : targetMinions) {
+                switch (buffDetail.getTargetType()) {
+                    case ENEMY:
+                    case ENEMY_HERO:
+                        if (!this.getUserName().equals(targetMinion.getUserName()))
+                            specialPower.action(targetMinion, TargetType.ENEMY, buffDetail);
+                        break;
+                    case INSIDER:
+                    case INSIDER_HERO:
+                        if (this.getUserName().equals(targetMinion.getUserName()))
+                            specialPower.action(targetMinion, TargetType.ENEMY, buffDetail);
+                        break;
+                    case NONE:
+                        specialPower.action(targetMinion, TargetType.INSIDER, buffDetail);
+                }
+            }
         }
 
     }
 
     public void attack(Minion minion) {
         increaseNumberOfAttack();
-        this.attack.action(minion, TargetType.ENEMY);
+        for (BuffDetail buffDetail : attack.getBuffDetails()) {
+            this.attack.action(minion, TargetType.ENEMY, buffDetail);
+        }
         if (this.attackType.equals(AttackType.ON_ATTACK))
             useSpecialPower(minion);
     }
@@ -174,7 +198,9 @@ public class Minion extends Card {
     public void counterAttack(Minion minion) {
         if (!canCounterAttack)
             return;
-        this.attack.action(minion, TargetType.ENEMY);
+        for (BuffDetail buffDetail : attack.getBuffDetails()) {
+            this.attack.action(minion, TargetType.ENEMY,buffDetail);
+        }
         if (this.attackType.equals(AttackType.ON_DEFEND))
             useSpecialPower(minion);
     }
