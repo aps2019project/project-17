@@ -70,9 +70,9 @@ public class BuffDetail {
     }
 
     public boolean increaseEffectTime() {
-        if ( effectTime == 100 )
+        if (effectTime == 100)
             return false;
-        if ( effectTime >= 10 ) {
+        if (effectTime >= 10) {
             effectTime -= 10;
             return false;
         }
@@ -108,6 +108,14 @@ public class BuffDetail {
         if (target == null)
             target = new ArrayList<>();
         this.target.add(object);
+    }
+
+    public TargetRange getTargetRange() {
+        return targetRange;
+    }
+
+    public TargetType getTargetType() {
+        return targetType;
     }
 
     public int getHolyBuffState() {

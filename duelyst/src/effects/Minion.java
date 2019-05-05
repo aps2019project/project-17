@@ -1,5 +1,8 @@
 package effects;
 
+import Data.Player;
+import GameGround.Battle;
+
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
@@ -116,9 +119,64 @@ public class Minion extends Card {
         this.distanceCanMove = distanceCanMove;
     }
 
+    private void increaseNumberOfAttack() {
+        this.numberOfAttack++;
+    }
+
+    public void useSpecialPower(Minion minion) {
+        for (BuffDetail buffDetail : specialPower.getBuffDetails()) {
+            Player player = Battle.getCurrentBattle().getPlayerOne();
+            Player theOtherPlayer = Battle.getCurrentBattle().getPlayerTwo();
+            if (!this.getUserName().equals(Battle.getCurrentBattle().getPlayerTwo())) {
+                player = Battle.getCurrentBattle().getPlayerTwo();
+                theOtherPlayer = Battle.getCurrentBattle().getPlayerOne();
+            }
+            switch (buffDetail.getTargetRange()) {
+                case ONE:
+                    switch (buffDetail.getTargetType()) {
+                        case ENEMY:
+                            specialPower.action(minion, TargetType.ENEMY);
+                        case ENEMY_HERO:
+                            specialPower.action(player.getMainDeck().getHero(), TargetType.ENEMY_HERO);
+                            break;
+                        case INSIDER_HERO:
+                            specialPower.action(theOtherPlayer.getMainDeck().getHero(), TargetType.INSIDER_HERO);
+                            break;
+                        case CELL:
+                            specialPower.action(Battle.getCurrentBattle().getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()), TargetType.ENEMY);
+                            break;
+                    }
+                case SELF:
+                    specialPower.action(this, TargetType.INSIDER);
+                    break;
+                case AROUND:
+
+                case ALL:
+                case ALL_IN_COLUMN:
+                case DISTANCE_TWO:
+                    break;
+                case CLOSEST_RANDOM:
+                    break;
+                case RANDOM:
+                    break;
+            }
+        }
+
+    }
+
     public void attack(Minion minion) {
-        numberOfAttack++;
+        increaseNumberOfAttack();
         this.attack.action(minion, TargetType.ENEMY);
+        if (this.attackType.equals(AttackType.ON_ATTACK))
+            useSpecialPower(minion);
+    }
+
+    public void counterAttack(Minion minion) {
+        if (!canCounterAttack)
+            return;
+        this.attack.action(minion, TargetType.ENEMY);
+        if (this.attackType.equals(AttackType.ON_DEFEND))
+            useSpecialPower(minion);
     }
 
     public void move(int x, int y) {
