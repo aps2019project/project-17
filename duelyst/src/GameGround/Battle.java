@@ -181,6 +181,7 @@ public class Battle {
 
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
+            ((Spell) card).action(x, y);
         }
         return "ok";
     }
@@ -278,7 +279,7 @@ public class Battle {
         return null;
     }
 
-    public ArrayList<Minion> minionsArroundCell(int x, int y) {
+    public ArrayList<Minion> minionsAroundCell(int x, int y) {
         ArrayList<Minion> minions = new ArrayList<>();
         for (int i = x - 2; i <= x; i++) {
             for (int j = y - 2; j <= y; j++) {
@@ -432,7 +433,7 @@ public class Battle {
         return nearestMinions.get(r);
     }
 
-    public ArrayList<Minion> getMinionsSquare(int x, int y){
+    public ArrayList<Minion> getMinionsSquare(int x, int y) {
         ArrayList<Minion> toReturn = new ArrayList<>();
         for (int i = x - 1; i <= x; i++) {
             for (int j = y - 1; j <= y; j++) {
@@ -445,7 +446,7 @@ public class Battle {
         return toReturn;
     }
 
-    public ArrayList<Minion> getMinionsCube(int x, int y){
+    public ArrayList<Minion> getMinionsCube(int x, int y) {
         ArrayList<Minion> toReturn = new ArrayList<>();
         for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
