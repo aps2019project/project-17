@@ -352,4 +352,37 @@ public class Battle {
         }
         return allMinion;
     }
+
+    public ArrayList<Minion> returnMinionsInColmn(int x, int y) {
+        ArrayList<Minion> toReturn = new ArrayList<>();
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                if (i == x - 1 && j != y - 1 && getCellFromBoard(i + 1, j + 1).getCard() != null)
+                    toReturn.add((Minion) getCellFromBoard(i, j).getCard());
+            }
+        }
+        return toReturn;
+    }
+
+    public ArrayList<Minion> returnMinionsWhichDistance(int x, int y) {
+        ArrayList<Minion> toReturn = new ArrayList<>();
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                if (Cell.distance(getCellFromBoard(x, y), getCellFromBoard(i + 1, j + 1)) <= 2 && getCellFromBoard(i + 1, j + 1).getCard() != null)
+                    toReturn.add((Minion) getCellFromBoard(i + 1, j + 1).getCard());
+            }
+        }
+        return toReturn;
+    }
+
+    public Minion returnRandomMinion(int x, int y) {
+        int xR = new Random().nextInt() % 10;
+        int yR = new Random().nextInt() % 6;
+
+        while (xR == x && yR == y || getCellFromBoard(xR, yR).getCard() == null || getCellFromBoard(xR, yR).getCard() instanceof Spell) {
+            xR = new Random().nextInt() % 10;
+            yR = new Random().nextInt() % 6;
+        }
+        return (Minion) getCellFromBoard(xR, yR).getCard();
+    }
 }
