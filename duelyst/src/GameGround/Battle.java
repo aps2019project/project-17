@@ -118,8 +118,8 @@ public class Battle {
         if (x > 9 || y > 5)
             return "invalid target out of range";
         Minion minion = (Minion) this.selectedCard;
-        Cell cellFirst = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
-        Cell cellDestination = this.board.getCells()[x - 1][y - 1];
+        Cell cellFirst = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
+        Cell cellDestination = getCellFromBoard(x, y);
 
         if (cellDestination.getCard() != null || Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
             return "invalid target";
@@ -137,7 +137,42 @@ public class Battle {
     }
 
     public String insertingCardFromHand(String cardName, int x, int y) {
-        return "";
+        Card card = whoseTurn().getCardFromHand(cardName);
+        Cell cell = getCellFromBoard(x, y);
+
+        if (card == null)
+            return "invalid card name";
+        if (x > 9 || y > 5)
+            return "invalid target";
+
+        if (cell == null || cell.getCard() != null)
+            return "invalid target ";
+
+        if (!board.isCoordinateAvailable(cell, whoseTurn(), this))
+            return "invalid target";
+
+        if (cell.getItem() != null) {
+            whoseTurn().addItemToCollectAbleItems(cell.getItem());
+            cell.setItem(null);
+        }
+
+        if (card instanceof Minion) {
+            if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
+                return "You don′t have enough mana";
+            this.selectedCard = card;
+            card.setUserName(whoseTurn().getUserName());
+            whoseTurn().lessMana(((Minion) card).getManaPoint());
+            ((Minion) card).setCoordinate(x, y);
+            whoseTurn().removeCardFromHand(card);
+            cell.setCard(card);
+            return "ok";
+
+        } else if (card instanceof Spell) {
+
+            if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
+                return "you don't have enough mana";
+        }
+        return "ok";
     }
 
     public String showCollectAble() {
@@ -284,5 +319,9 @@ public class Battle {
 
     public static Battle getCurrentBattle() {
         return currentBattle;
+    }
+
+    Cell getCellFromBoard(int x, int y) {
+        return this.board.getCells()[x - 1][y - 1];
     }
 }
