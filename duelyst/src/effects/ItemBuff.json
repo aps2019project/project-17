@@ -1,7 +1,7 @@
 [
   {
     "id": 301,
-    "buffType": "CHANG_MANA",
+    "buffType": "CHANGE_MANA",
     "targetType": "PLAYER",
     "targetRange": "ONE",
     "effectTime": 3,
@@ -17,11 +17,18 @@
   },
   {
     "id": 303,
-    "buffType": "ADD_BUFF",
-    "targetType": "SELF_NOT_MELEE",
-    "targetRange": "ONE",
+    "buffType": "SPECIAL_SITUATION_BUFF",
+    "targetType": "INSIDER_HERO",
+    "targetRange": "NOT_MELEE",
     "effectTime": 0,
-    "addBuff": "STUN"
+    "SITUATION": "ATTACK"
+  },
+  {
+    "id": -303,
+    "buffType": "DISARM",
+    "targetType": "ENEMY",
+    "targetRange": "ONE",
+    "effectTime": 1
   },
   {
     "id": 304,
@@ -70,7 +77,7 @@
   },
   {
     "id": 308,
-    "buffType": "CHANG_MANA",
+    "buffType": "CHANGE_MANA",
     "targetType": "PLAYER",
     "targetRange": "ONE",
     "effectTime": 10,
@@ -138,7 +145,7 @@
   },
   {
     "id": 314,
-    "buffType": "CHANG_MANA",
+    "buffType": "CHANGE_MANA",
     "targetType": "PLAYER",
     "targetRange": "ONE",
     "effectTime": -1,
