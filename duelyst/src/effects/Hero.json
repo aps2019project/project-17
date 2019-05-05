@@ -1,6 +1,6 @@
 [
   {
-    "name": "دیو سفید",
+    "name": "dive sefid",
     "id": "201",
     "price": 8000,
     "manaPoint": 1,
@@ -14,7 +14,7 @@
     "coolDown": 2
   },
   {
-    "name": "سیمرغ",
+    "name": "simorgh",
     "id": "202",
     "price": 9000,
     "manaPoint": 5,
@@ -28,7 +28,7 @@
     "coolDown": 8
   },
   {
-    "name": "اژدهای هفت سر",
+    "name": "ezhdehaye haftsar",
     "id": "203",
     "price": 8000,
     "manaPoint": 0,
@@ -42,7 +42,7 @@
     "coolDown": 1
   },
   {
-    "name": "رخش",
+    "name": "rakhsh",
     "id": "204",
     "price": 8000,
     "manaPoint": 1,
@@ -56,7 +56,7 @@
     "coolDown": 2
   },
   {
-    "name": "ضحاک",
+    "name": "zahak",
     "id": "205",
     "price": 10000,
     "manaPoint": 0,
@@ -70,7 +70,7 @@
     "coolDown": 0
   },
   {
-    "name": "کاوه",
+    "name": "kaveh",
     "id": "206",
     "price": 8000,
     "manaPoint": 1,
@@ -84,7 +84,7 @@
     "coolDown": 3
   },
   {
-    "name": "آرش",
+    "name": "arash",
     "id": "207",
     "price": 10000,
     "manaPoint": 2,
@@ -98,7 +98,7 @@
     "coolDown": 2
   },
   {
-    "name": "افسانه",
+    "name": "afsaneh",
     "id": "208",
     "price": 11000,
     "manaPoint": 1,
@@ -112,7 +112,7 @@
     "coolDown": 2
   },
   {
-    "name": "اسفندیار",
+    "name": "esfandiar",
     "id": "209",
     "price": 12000,
     "manaPoint": 0,
@@ -126,7 +126,7 @@
     "coolDown": 0
   },
   {
-    "name": "رستم",
+    "name": "rostam",
     "id": "210",
     "price": 8000,
     "manaPoint": 0,

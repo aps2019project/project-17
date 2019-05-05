@@ -83,7 +83,7 @@ public class Shop {
 
             cardsInShop.add(card);
             this.collection.changeDaric(card.getPrice());
-            this.collection.getCards().remove(card);
+            this.collection.removeCard(card);
             return "card successfully sell";
         }
 

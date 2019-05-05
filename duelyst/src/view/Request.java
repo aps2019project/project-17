@@ -17,6 +17,7 @@ public class Request {
     public Request() {
         //we set the default menu in constructor
         menuType = MenuType.ACCOUNT_MENU;
+        error=null;
     }
 
     public void getNewCommand() {
@@ -118,6 +119,10 @@ public class Request {
                 return checkSyntaxOfEndGame();
             case ENTER_GRAVE_YARD:
                 return checkSyntaxOfEnterGraveYard();
+            case STORY:
+                return checkSyntaxOfGameType();
+            case CUSTOM_GAME:
+                return checkSyntaxOfGameType();
             case EXIT:
                 return checkSyntaxOfExitCommand();
             case EXIT_GAME:
@@ -215,6 +220,10 @@ public class Request {
         Matcher matcherForEndGame = patternForEndGame.matcher(command);
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
         Matcher matcherForExit = patternForExit.matcher(command);
+        Pattern patternForStory = Pattern.compile(StringsRq.STORY);
+        Matcher matcherForStory = patternForStory.matcher(command);
+        Pattern patternForCustomGame = Pattern.compile(StringsRq.CUSTOM_GAME);
+        Matcher matcherForCustom = patternForCustomGame.matcher(command);
 
         if (matcherForLogIn.matches()) {
             if (menuType.equals(MenuType.ACCOUNT_MENU)) {
@@ -444,6 +453,18 @@ public class Request {
             }
             error = ErrorType.INVALID_INPUT;
             return null;
+        } else if (matcherForStory.matches()) {
+            if (menuType.equals(MenuType.SINGLE_PLAYER) || menuType.equals(MenuType.MULTI_PLAYER)) {
+                return RequestType.STORY;
+            }
+            error = ErrorType.INVALID_INPUT;
+            return null;
+        } else if (matcherForCustom.matches()) {
+            if (menuType.equals(MenuType.SINGLE_PLAYER) || menuType.equals(MenuType.MULTI_PLAYER)) {
+                return RequestType.CUSTOM_GAME;
+            }
+            error = ErrorType.INVALID_INPUT;
+            return null;
         } else if (matcherForSave.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.ACCOUNT_MENU)) {
                 return RequestType.SAVE;
@@ -482,6 +503,32 @@ public class Request {
                     break;
 
             }
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfEnteringBattle() {
+        String singleOrMulti = scanner.next();
+        if (singleOrMulti.equals("1")) {
+            BattleView.showBattleMenu();
+            menuType = MenuType.SINGLE_PLAYER;
+        } else if (singleOrMulti.equals("2")) {
+            BattleView.showBattleMenu();
+            menuType = MenuType.MULTI_PLAYER;
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfGameType() {
+        String type = scanner.next();
+        if (type.equals("1") || type.equals("2")) {
+            BattleView.showGameStateMenu();
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -671,7 +718,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfCreateDeck() {
-        Pattern patternForSCreateDeck = Pattern.compile(StringsRq.CREATE_DECK +" (?<name>[\\w+ ]+)");
+        Pattern patternForSCreateDeck = Pattern.compile(StringsRq.CREATE_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSCreateDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -745,7 +792,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSelectDeck() {
-        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK+ " (?<name>[\\w+ ]+)");
+        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSelectDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");

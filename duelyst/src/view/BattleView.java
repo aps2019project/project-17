@@ -8,6 +8,18 @@ import java.util.ArrayList;
 
 public class BattleView extends View {
 
+    public static void showBattleMenu(){
+        System.out.println("Please Select the type you want to play (1/2):");
+        System.out.println("1.Single Player");
+        System.out.println("2.Multi player");
+    }
+
+    public static void showGameStateMenu(){
+        System.out.println("please choose game type:");
+        System.out.println("1.story");
+        System.out.println("2.custom game");
+    }
+
     public static void showGameInfo(Battle battle) {
         System.out.println(battle.showGameInfo());
     }
