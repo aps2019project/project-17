@@ -119,9 +119,4 @@ public class BattleHoldingFlag extends Battle {
         //spell
         return "card successfully inserted";
     }
-
-    @Override
-    public String attack(String opponentCardId) {
-        return super.attack(opponentCardId);
-    }
 }

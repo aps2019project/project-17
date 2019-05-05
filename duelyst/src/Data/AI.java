@@ -81,7 +81,7 @@ public class AI extends Player {
                     break;
                 case 3:
                     randomToChoose = new Random().nextInt() % (battle.theOtherPlayer().getMainDeck().getCards().size());
-                    battle.attack(battle.theOtherPlayer().getMainDeck().getCards().get(randomToChoose).getId());
+                    battle.attack(battle.theOtherPlayer().getMainDeck().getCards().get(randomToChoose).getId(), false,null);
                     break;
                 case 4:
                     Battle.getCurrentBattle().endTurn();

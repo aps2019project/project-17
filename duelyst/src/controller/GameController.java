@@ -106,7 +106,7 @@ public class GameController {
     }
 
     public static String attack(String opponentCardId, Battle battle) {
-        return battle.attack(opponentCardId);
+        return battle.attack(opponentCardId, false, null);
     }
 
     public static String insertCard(String cardName, int x, int y, Battle battle) {

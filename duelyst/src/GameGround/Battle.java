@@ -134,14 +134,18 @@ public class Battle {
     }
 
     public String attackCombo(String opponentCardID, String... cardIDs) {
+        Minion opponentCard = (Minion) returnCardFromBoard(opponentCardID, theOtherPlayer());
+        if (opponentCard == null)
+            return "invalid card ID";
         for (String cardID : cardIDs) {
             Card card = returnCardFromBoard(cardID, whoseTurn());
+            if (card == null || !((Minion) card).getCanAttack() || !((Minion) card).getAttackType().equals(AttackType.COMBO))
+                continue;
             attack(opponentCardID, true, (Minion) card);
         }
-        Minion opponentCard = (Minion) returnCardFromBoard(opponentCardID, theOtherPlayer());
         Minion firstMinion = (Minion) returnCardFromBoard(cardIDs[0], whoseTurn());
         opponentCard.counterAttack(firstMinion);
-        return null;
+        return "combo attack successfully done";
     }
 
     public String insertingCardFromHand(String cardName, int x, int y) {
