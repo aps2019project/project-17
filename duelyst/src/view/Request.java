@@ -17,6 +17,7 @@ public class Request {
     public Request() {
         //we set the default menu in constructor
         menuType = MenuType.ACCOUNT_MENU;
+        error=null;
     }
 
     public void getNewCommand() {
@@ -219,8 +220,8 @@ public class Request {
         Matcher matcherForEndGame = patternForEndGame.matcher(command);
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
         Matcher matcherForExit = patternForExit.matcher(command);
-        Pattern patternStory = Pattern.compile(StringsRq.STORY);
-        Matcher matcherForStory = patternForExit.matcher(command);
+        Pattern patternForStory = Pattern.compile(StringsRq.STORY);
+        Matcher matcherForStory = patternForStory.matcher(command);
         Pattern patternForCustomGame = Pattern.compile(StringsRq.CUSTOM_GAME);
         Matcher matcherForCustom = patternForCustomGame.matcher(command);
 

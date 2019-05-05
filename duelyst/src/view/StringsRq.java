@@ -43,5 +43,5 @@ class StringsRq {
     static final String SHOW_CARDS = "show cards";
     static final String END_GAME = "end game";
     static final String STORY="story";
-    static final String CUSTOM_GAME="costum game";
+    static final String CUSTOM_GAME="custom game";
 }
