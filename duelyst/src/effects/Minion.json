@@ -10,7 +10,8 @@
     "attackRange": 7,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "shamshirzane fars",
@@ -23,7 +24,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "هنگام ضربه زدن نیرو را برای نوبت جاری stun میکند"
   },
   {
     "name": "neizedare fars",
@@ -36,7 +38,8 @@
     "attackRange": 7,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "asbsavare fars",
@@ -49,7 +52,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "pahlavane fars",
@@ -62,7 +66,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "به تعداد دفعاتی که در نوبتهای قبل به یک نیرو حمله کرده، ۵ واحد بیشتر به آن نیرو ضربه وارد میکند"
   },
   {
     "name": "sepahsalare fars",
@@ -75,7 +80,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "COMBO"
+    "attackType": "COMBO",
+    "desc": "Combo"
   },
   {
     "name": "kamandare toorani",
@@ -88,7 +94,8 @@
     "attackRange": 5,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "ghollabsangdare toorani",
@@ -101,7 +108,8 @@
     "attackRange": 7,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "neyzedare toorani",
@@ -114,7 +122,8 @@
     "attackRange": 3,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "jasoose toorani",
@@ -127,7 +136,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "نیروی دشمن را برای یک نوبت disarm میکند و برای ۴ نوبت مسموم میکند"
   },
   {
     "name": "gorzdare toorani",
@@ -140,7 +150,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "shahzade toorani",
@@ -166,7 +177,8 @@
     "attackRange": 7,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "ghoole sangandaz",
@@ -179,7 +191,8 @@
     "attackRange": 7,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "oghab",
@@ -192,7 +205,8 @@
     "attackRange": 3,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "PASSIVE"
+    "attackType": "PASSIVE",
+    "desc": "۱۰ واحد power buff با افزایش جان دارد"
   },
   {
     "name": "dive gorazsavar",
@@ -205,7 +219,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "ghoole takcheshm",
@@ -218,7 +233,8 @@
     "attackRange": 3,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_DEATH"
+    "attackType": "ON_DEATH",
+    "desc": "هنگام مرگ به مینیونهای در ۸ خانهی مجاور به اندازهی ۲ واحد ضربه وارد میکند ."
   },
   {
     "name": "mare sammi",
@@ -231,7 +247,8 @@
     "attackRange": 4,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "تا ۳ نوبت نیروی￼ دشمن مسموم میشود"
   },
   {
     "name": "ezhdehaye atashandaz",
@@ -244,7 +261,8 @@
     "attackRange": 4,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "shire darande",
@@ -257,7 +275,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "holy buff روی اتک آن تاثیر ندارد یعنی از قدرت ضربه کم نمیکند"
   },
   {
     "name": "mare ghoolpeykar",
@@ -270,7 +289,8 @@
     "attackRange": 5,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_SPAWN"
+    "attackType": "ON_SPAWN",
+    "desc": "مینیونهای در￼ خانههای تا دو واحد فاصله، هنگام ضربه خوردن به طور دائم، یک واحد بیشتر ضربه میخورند عکس عملکرد holy buff"
   },
   {
     "name": "gorge sefid",
@@ -283,7 +303,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "زمانی که به یک￼ مینیون ضربه میزند، در نوبت بعد ۶ واحد و در نوبت بعد از آن ۴ واحد از سلامتی او کم میشود. (تاثیرات زمانی مانند این باف هستند)"
   },
   {
     "name": "palang",
@@ -296,7 +317,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "زمانی که به یک￼ مینیون ضربه میزند، مینیون نوبت بعد ۸ واحد از سلامتیاش کم میشود"
   },
   {
     "name": "gorg",
@@ -309,7 +331,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "در نوبت بعد￼مینیون ۶ واحد از سلامتیاش کم میشود"
   },
   {
     "name": "jadoogar",
@@ -322,7 +345,8 @@
     "attackRange": 3,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "PASSIVE"
+    "attackType": "PASSIVE",
+    "desc": "به خودش و هر مینیون خودی در ۸ خانهی مجاورش یک power با ۲ واحد افزایش قدرت ضربه و یک weakness با ۱ واحد کاهش سلامتی هر کدام به اندازهی یک نوبت میدهد."
   },
   {
     "name": "jadoogare azam",
@@ -335,7 +359,8 @@
     "attackRange": 5,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "PASSIVE"
+    "attackType": "PASSIVE",
+    "desc": "همراه با خودش￼￼ به هر مینیون خودی در ۸ خانهی مجاورش یک power با ۲ واحد افزایش قدرت ضربه و یک holy buff به صورت Contious میدهد."
   },
   {
     "name": "jen",
@@ -348,7 +373,8 @@
     "attackRange": 4,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_TURN"
+    "attackType": "ON_TURN",
+    "desc": "به همهی مینیون خودی power buff با ۱ واحد افزایش قدرت ضربه به صورت continuousم یدهد."
   },
   {
     "name": "goraze vahshi",
@@ -361,7 +387,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_DEFEND"
+    "attackType": "ON_DEFEND",
+    "desc": " disarm نمیشود"
   },
   {
     "name": "piran",
@@ -374,7 +401,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_DEFEND"
+    "attackType": "ON_DEFEND",
+    "desc": "disarm نمیشود"
   },
   {
     "name": "giv",
@@ -387,7 +415,8 @@
     "attackRange": 5,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_DEFEND"
+    "attackType": "ON_DEFEND",
+    "desc": "از کارتها اثر￼ منفی نمی بیند (چه باف منفی، چه ضربه)"
   },
   {
     "name": "bahman",
@@ -400,7 +429,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_SPAWN"
+    "attackType": "ON_SPAWN",
+    "desc": "به صورت تصادفی به یکی از سطح سلامتی مینیون های حریف ۱۶ تا کم میکند."
   },
   {
     "name": "ashkboos",
@@ -413,7 +443,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_DEFEND"
+    "attackType": "ON_DEFEND",
+    "desc": "از نیروهایی که قدرت ضربه ی کمتری دارند اتک نمیخورد"
   },
   {
     "name": "iraj",
@@ -426,7 +457,8 @@
     "attackRange": 3,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "ghoole bozorg",
@@ -439,7 +471,8 @@
     "attackRange": 2,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "NONE"
+    "attackType": "NONE",
+    "desc": "nothing"
   },
   {
     "name": "ghoole dosar",
@@ -452,7 +485,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_ATTACK"
+    "attackType": "ON_ATTACK",
+    "desc": "هر نیرویی که￼￼ مورد حمله قرار میدهد تمام اثرات مثبت اعمال شده خنثی میشوند"
   },
   {
     "name": "nane sarma",
@@ -465,7 +499,8 @@
     "attackRange": 5,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_SPAWN"
+    "attackType": "ON_SPAWN",
+    "desc": "مینیون های حریف در ۸خانهی مجاور یک نوبت stun می شوند"
   },
   {
     "name": "foolad zereh",
@@ -478,7 +513,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "PASSIVE"
+    "attackType": "PASSIVE",
+    "desc": "۱۲ تا holy buff به صورت continuous دارد"
   },
   {
     "name": "siavash",
@@ -491,7 +527,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "ON_DEATH"
+    "attackType": "ON_DEATH",
+    "desc": "در هنگام مرگ ۶￼ ضربه به قهرمان دشمن میزند."
   },
   {
     "name": "shah ghool",
@@ -504,7 +541,8 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "COMBO"
+    "attackType": "COMBO",
+    "desc": "Combo"
   },
   {
     "name": "arzhang div",
@@ -517,6 +555,7 @@
     "attackRange": 0,
     "distanceCanMove": 2,
     "maxRangeToInput": 1,
-    "attackType": "COMBO"
+    "attackType": "COMBO",
+    "desc": "Combo"
   }
 ]

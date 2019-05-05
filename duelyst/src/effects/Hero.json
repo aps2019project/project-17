@@ -11,7 +11,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 2
+    "coolDown": 2,
+    "desc": "یک power buff با ۴ واحد افزایش قدرت ضربه به طور دائم روی خود اعمال میکند."
   },
   {
     "name": "simorgh",
@@ -25,7 +26,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 8
+    "coolDown": 8,
+    "desc": "همهی نیروهای دشمن را برای￼￼ یک نوبت stun میکند."
   },
   {
     "name": "ezhdehaye haftsar",
@@ -39,7 +41,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 1
+    "coolDown": 1,
+    "desc": "۱نفر را disarm میکند."
   },
   {
     "name": "rakhsh",
@@ -53,7 +56,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 2
+    "coolDown": 2,
+    "desc": "یک نیروی دشمن را برای یک نوبت stun میکند."
   },
   {
     "name": "zahak",
@@ -67,7 +71,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 0
+    "coolDown": 0,
+    "desc": "هنگام ضربه فرد را برای ۳ نوبت￼ مسموم میکند"
   },
   {
     "name": "kaveh",
@@ -81,7 +86,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 3
+    "coolDown": 3,
+    "desc": "یک خانه را برای ۳ نوبت مقدس میکند."
   },
   {
     "name": "arash",
@@ -95,7 +101,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 2
+    "coolDown": 2,
+    "desc": "به همهی نیروهای در سطر قهرمان ۴واحد ضربه وارد میکند"
   },
   {
     "name": "afsaneh",
@@ -109,7 +116,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 2
+    "coolDown": 2,
+    "desc": "یک نیروی دشمن را dispel میکند"
   },
   {
     "name": "esfandiar",
@@ -123,7 +131,8 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 0
+    "coolDown": 0,
+    "desc": "holy buff۳ را به صورت continuous دارد."
   },
   {
     "name": "rostam",
@@ -137,6 +146,7 @@
     "distanceCanMove": 2,
     "maxRangeToInput": -1,
     "attackType": "ON_TURN",
-    "coolDown": 0
+    "coolDown": 0,
+    "desc": "nothing"
   }
 ]
