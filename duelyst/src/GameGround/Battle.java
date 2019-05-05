@@ -168,6 +168,9 @@ public class Battle {
     }
 
     public String attack(String opponentCardId) {
+        if (selectedCard == null)
+            return "you have to select card at first";
+
         Minion minion = (Minion) returnCardFromBoard(opponentCardId, theOtherPlayer());
         if (minion == null)
             return "invalid card id";
