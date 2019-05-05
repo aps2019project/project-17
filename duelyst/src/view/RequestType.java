@@ -42,5 +42,7 @@ public enum RequestType {
     SHOW_NEXT_CARD,
     ENTER_GRAVE_YARD,
     SHOW_CARDS,
+    STORY,
+    CUSTOM_GAME,
     END_GAME
 }

@@ -6,5 +6,7 @@ public enum MenuType {
     COLLECTION_MENU,
     SHOP_MENU,
     BATTLE_MENU,
-    GRAVE_YARD;
+    GRAVE_YARD,
+    SINGLE_PLAYER,
+    MULTI_PLAYER;
 }
