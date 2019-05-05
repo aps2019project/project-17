@@ -13,12 +13,13 @@ public class BuffDetail {
     private BuffType antiBuffType;
     private boolean isContinuous;
     private int holyBuffState;
-    private BuffType addBuff;
     private int manaIncreaseValue;
     private ArrayList<Object> target;
 
     public void init() {
         this.isContinuous = effectTime == 100;
+        System.out.println(id);
+        System.out.println(buffType);
         if (buffType.equals(BuffType.POISON))
             changeHealthValue = -1;
     }
@@ -62,16 +63,6 @@ public class BuffDetail {
             this.holyBuffState = buffState;
         else if (buffType.equals(BuffType.CHANGE_MANA))
             this.manaIncreaseValue = buffState;
-        this.targetType = targetType;
-        this.targetRange = targetRange;
-    }
-
-    //for add  buff
-    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, BuffType addBuff) {
-        this.id = Integer.toString(id);
-        this.buffType = buffType;
-        this.effectTime = effectTime;
-        this.addBuff = addBuff;
         this.targetType = targetType;
         this.targetRange = targetRange;
     }

@@ -34,10 +34,12 @@ public class Buff {
     }
 
     public void addBuff(BuffDetail buffDetail) {
+        if (this.buffDetails == null)
+            this.buffDetails = new ArrayList<>();
         this.buffDetails.add(buffDetail);
     }
 
-    public void addBuffTominion(Minion minion) {
+    public void addBufftominion(Minion minion) {
         for (BuffDetail buffDetail : buffDetails) {
             buffDetail.addTarget(minion);
             minion.addBuff(buffDetail);
