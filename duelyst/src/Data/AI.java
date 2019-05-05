@@ -86,8 +86,11 @@ public class AI extends Player {
                     battle.insertingCardFromHand(currentAIPlayer.getMainDeck().getCards().get(randomToChoose).getName(), x, y);
                     break;
                 case 3:
+                    randomToChoose = new Random().nextInt() % (battle.theOtherPlayer().getMainDeck().getCards().size());
+                    battle.attack(battle.theOtherPlayer().getMainDeck().getCards().get(randomToChoose).getId());
                     break;
                 case 4:
+
                     break;
                 case 5:
                     break;
