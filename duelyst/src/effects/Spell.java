@@ -56,7 +56,7 @@ public class Spell extends Card {
                     searchMinions = Battle.getCurrentBattle().returnMinionsInColumn(x, y);
                     break;
                 case AROUND:
-                    searchMinions = Battle.getCurrentBattle().minionsArroundCell(x, y);
+                    searchMinions = Battle.getCurrentBattle().minionsAroundCell(x, y);
                     break;
                 case DISTANCE_TWO:
                     searchMinions = Battle.getCurrentBattle().returnMinionsWhichDistance(x, y);

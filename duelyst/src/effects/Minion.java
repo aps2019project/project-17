@@ -166,7 +166,7 @@ public class Minion extends Card {
                     specialPower.action(this, TargetType.INSIDER, buffDetail);
                     break;
                 case AROUND:
-                    targetMinions = Battle.getCurrentBattle().minionsArroundCell(this.getXCoordinate(), this.getYCoordinate());
+                    targetMinions = Battle.getCurrentBattle().minionsAroundCell(this.getXCoordinate(), this.getYCoordinate());
                     break;
                 case ALL:
                     targetMinions = Battle.getCurrentBattle().getAllMinion();
