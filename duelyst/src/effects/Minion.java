@@ -165,6 +165,7 @@ public class Minion extends Card {
                     targetMinions = Battle.getCurrentBattle().returnMinionsWhichDistance(this.getXCoordinate(), this.getYCoordinate());
                     break;
                 case CLOSEST_RANDOM:
+                    specialPower.action(Battle.getCurrentBattle().closestRandomMinion(this.getXCoordinate(), this.getYCoordinate()), TargetType.NONE, buffDetail);
                     break;
                 case RANDOM:
                     specialPower.action(Battle.getCurrentBattle().returnRandomMinion(this.getXCoordinate(), this.getYCoordinate()), TargetType.NONE, buffDetail);
