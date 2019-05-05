@@ -102,6 +102,8 @@ public class Buff {
                 case ANTI:
                     antiBuff(minion, buffDetail.getAntiBuffType());
                     break;
+                case CLEAR:
+                    clearBuff(minion, true);
                 case SPECIAL_SITUATION_BUFF:
 
             }

@@ -240,8 +240,7 @@ public class Battle {
             return "opponent minion is unavailable for attack";
         Minion attacker = (Minion) selectedCard;
         attacker.attack(minion);
-        if (minion.canCounterAttack())
-            minion.attack(attacker);
+        minion.counterAttack(attacker);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
@@ -338,7 +337,19 @@ public class Battle {
         return currentBattle;
     }
 
-    Cell getCellFromBoard(int x, int y) {
+    public Cell getCellFromBoard(int x, int y) {
         return this.board.getCells()[x - 1][y - 1];
+    }
+
+    public ArrayList<Minion> getAllMinion() {
+        ArrayList<Minion> allMinion = new ArrayList<>();
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                Cell cell = this.board.getCells()[i][j];
+                if (cell != null)
+                    allMinion.add((Minion) cell.getCard());
+            }
+        }
+        return allMinion;
     }
 }
