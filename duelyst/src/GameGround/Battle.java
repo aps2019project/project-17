@@ -10,6 +10,7 @@ import effects.Minion;
 import effects.Spell;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Battle {
@@ -254,6 +255,20 @@ public class Battle {
             }
         }
         return null;
+    }
+
+    public ArrayList<Minion> minionsArroundCell(int x, int y) {
+        ArrayList<Minion> minions = new ArrayList<>();
+        for (int i = x - 2; i <= x; i++) {
+            for (int j = y - 2; j <= y; j++) {
+                if (i == x - 1 && j == y - 1)
+                    continue;
+                Cell cell = getCellFromBoard(i + 1, j + 1);
+                if (cell.getCard() != null && cell.getCard() instanceof Minion)
+                    minions.add((Minion) cell.getCard());
+            }
+        }
+        return minions;
     }
 
     public Player getPlayerOne() {
