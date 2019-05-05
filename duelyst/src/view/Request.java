@@ -1,12 +1,15 @@
 package view;
 
+import Data.AI;
+import Data.Account;
+import GameGround.*;
+import controller.GameController;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Data.Account;
-import GameGround.Battle;
-import controller.GameController;
+import static Data.MODE.*;
 
 public class Request {
     protected Scanner scanner = new Scanner(System.in);
@@ -530,22 +533,31 @@ public class Request {
 
     public void checkSyntaxOfGameType() {//story or custom
         String type = scanner.nextLine();
-        while (type.equals("")){
+        while (type.equals("")) {
             type = scanner.nextLine();
         }
         if (type.equals("1") || type.equals("2")) {
             if (type.equals("1")) {
                 BattleView.showStoryMode();
                 String mode = scanner.nextLine();
-                while (mode.equals("")){
+                while (mode.equals("")) {
                     mode = scanner.nextLine();
                 }
                 switch (mode) {
                     case "kill hero":
+                        AI.setAiPlayer(KH);
+                        new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+                        menuType = MenuType.BATTLE_MENU;
                         return;
                     case "hold flag":
+                        AI.setAiPlayer(Hf);
+                        new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+                        menuType = MenuType.BATTLE_MENU;
                         return;
                     case "capture flag":
+                        AI.setAiPlayer(CF);
+                        new BattleCaptureFlag(Account.getLoginUser().getPlayer(),7, SinglePlayerModes.STORY);
+                        menuType = MenuType.BATTLE_MENU;
                         return;
                     default:
                         error = ErrorType.INVALID_INPUT;

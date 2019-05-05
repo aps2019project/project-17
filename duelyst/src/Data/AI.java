@@ -5,7 +5,7 @@ import GameGround.Battle;
 
 import java.util.Random;
 
-enum MODE {
+public enum MODE {
     KH,
     Hf,
     CF
