@@ -6,8 +6,9 @@ import GameGround.Cell;
 
 import java.util.ArrayList;
 
-//-1 in effect time: for ever
+//-1 in effect time: attack
 //0 in effect time: this turn
+//1000 in effect time: for ever
 //for clear buff: get cell to action function
 //-105 in change health: numberOfAttack + 5
 public class Buff {
@@ -36,6 +37,19 @@ public class Buff {
         this.buffDetails.add(buffDetail);
     }
 
+    public void addBuffTominion(Minion minion) {
+        for (BuffDetail buffDetail : buffDetails) {
+            buffDetail.addTarget(minion);
+            minion.addBuff(buffDetail);
+        }
+    }
+
+    public void addBuffToCell(Cell cell) {
+        for (BuffDetail buffDetail : buffDetails) {
+            buffDetail.addTarget(cell);
+        }
+    }
+
     private void actionForPlayer(Player player) {
         for (BuffDetail buffDetail : buffDetails) {
             if (buffDetail.getBuffType() == BuffType.CHANGE_MANA) {
@@ -46,7 +60,6 @@ public class Buff {
 
     private void actionForCell(Cell cell) {
         for (BuffDetail buffDetail : buffDetails) {
-            buffDetail.addTarget(cell);
             switch (buffDetail.getBuffType()) {
                 case CLEAR:
                     if (Battle.getCurrentBattle().cardIsMine(cell.getCard(), Battle.getCurrentBattle().whoseTurn()))
@@ -65,10 +78,9 @@ public class Buff {
         }
     }
 
+
     private void actionForMinion(Minion minion) {
         for (BuffDetail buffDetail : this.buffDetails) {
-            buffDetail.addTarget(minion);
-            minion.addBuff(buffDetail);
             switch (buffDetail.getBuffType()) {
                 case HOLY:
                     holyBuff(minion, buffDetail.getHolyBuffState());
@@ -106,9 +118,11 @@ public class Buff {
                     break;
                 case WEAKNESS:
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
-                    ((Minion) target).changeHealth(-buffDetail.getChangeHealthValue());
-                    ((Minion) target).changeAttackPower(-buffDetail.getChangeAttackPowerValue());
-                    ((Minion) target).getBuff().removeBuff(buffDetail);
+                    if (buffDetail.getEffectTime() != -1) {
+                        ((Minion) target).changeHealth(-buffDetail.getChangeHealthValue());
+                        ((Minion) target).changeAttackPower(-buffDetail.getChangeAttackPowerValue());
+                        ((Minion) target).getBuff().removeBuff(buffDetail);
+                    }
                     break;
                 case STUN:
                     break;
