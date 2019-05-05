@@ -44,7 +44,7 @@ public class AI extends Player {
     }
 
     public void action() {
-        int counters = new Random().nextInt() % 9;
+        int counters = new Random().nextInt() % 5 + 1;
         Battle battle = Battle.getCurrentBattle();
         for (int i = 0; i < counters; i++) {
             int r = new Random().nextInt() % 9;

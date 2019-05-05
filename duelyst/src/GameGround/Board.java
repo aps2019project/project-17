@@ -25,7 +25,7 @@ public class Board {
     boolean isCoordinateAvailable(Cell cell, Player player, Battle battle) {
         for (int i = 0; i <= this.getCells().length; i++) {
             for (int j = 0; j < this.getCells()[i].length; j++) {
-                Cell cell1 = Cell.getCell(this, i, j);
+                Cell cell1 = Battle.currentBattle.getCellFromBoard(i + 1, j + 1);
                 if (cell1 == null)
                     continue;
                 if (Cell.distance(cell, cell1) <= 1) {
