@@ -18,8 +18,6 @@ public class BuffDetail {
 
     public void init() {
         this.isContinuous = effectTime == 100;
-        System.out.println(id);
-        System.out.println(buffType);
         if (buffType.equals(BuffType.POISON))
             changeHealthValue = -1;
     }

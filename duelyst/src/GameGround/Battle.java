@@ -123,7 +123,7 @@ public class Battle {
 
         if (cellDestination.getCard() != null || Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
             return "invalid target";
-        if (!minion.isCanMove())
+        if (!minion.CanMove())
             return "this card cant move";
         cellDestination.setCard(minion);
         minion.setCanMove(false);
@@ -237,9 +237,11 @@ public class Battle {
         Cell cellFirst = this.board.getCells()[((Minion) this.selectedCard).getXCoordinate() - 1][((Minion) this.selectedCard).getYCoordinate() - 1];
         if (Cell.distance(cellDestination, cellFirst) > ((Minion) this.selectedCard).getAttackRange())
             return "opponent minion is unavailable for attack";
-
-
-        return null;
+        Minion attacker = (Minion) selectedCard;
+        attacker.attack(minion);
+        if (minion.canCounterAttack())
+            minion.attack(attacker);
+        return attacker.getName() + " attacked to " + minion.getName();
     }
 
     Card returnCardFromBoard(String id, Player player) {

@@ -14,22 +14,20 @@ import java.util.ArrayList;
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
 
-    public void action(ArrayList<Object> objects, TargetType targetType) {
-        for (Object object : objects) {
-            switch (targetType) {
-                case NONE:
-                case ENEMY_HERO:
-                case ENEMY:
-                case INSIDER:
-                case INSIDER_HERO:
-                    actionForMinion((Minion) object);
-                    break;
-                case CELL:
-                    actionForCell((Cell) object);
-                    break;
-                case PLAYER:
-                    actionForPlayer((Player) object);
-            }
+    public void action(Object object, TargetType targetType) {
+        switch (targetType) {
+            case NONE:
+            case ENEMY_HERO:
+            case ENEMY:
+            case INSIDER:
+            case INSIDER_HERO:
+                actionForMinion((Minion) object);
+                break;
+            case CELL:
+                actionForCell((Cell) object);
+                break;
+            case PLAYER:
+                actionForPlayer((Player) object);
         }
     }
 
@@ -112,6 +110,8 @@ public class Buff {
 
     private void removeBuff(BuffDetail buffDetail) {
         for (Object target : buffDetail.getTarget()) {
+            if (buffDetail.getId().equals("-1"))
+                continue;
             switch (buffDetail.getBuffType()) {
                 case HOLY:
                 case DE_HOLY:
