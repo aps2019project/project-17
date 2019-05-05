@@ -14,20 +14,20 @@ import java.util.ArrayList;
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
 
-    public void action(Object object, TargetType targetType) {
+    public void action(Object object, TargetType targetType, BuffDetail buffDetail) {
         switch (targetType) {
             case NONE:
             case ENEMY_HERO:
             case ENEMY:
             case INSIDER:
             case INSIDER_HERO:
-                actionForMinion((Minion) object);
+                actionForMinion((Minion) object, buffDetail);
                 break;
             case CELL:
-                actionForCell((Cell) object);
+                actionForCell((Cell) object, buffDetail);
                 break;
             case PLAYER:
-                actionForPlayer((Player) object);
+                actionForPlayer((Player) object, buffDetail);
         }
     }
 
@@ -50,63 +50,59 @@ public class Buff {
         }
     }
 
-    private void actionForPlayer(Player player) {
-        for (BuffDetail buffDetail : buffDetails) {
-            if (buffDetail.getBuffType() == BuffType.CHANGE_MANA) {
-                player.changeMana(+1);
-            }
+    private void actionForPlayer(Player player, BuffDetail buffDetail) {
+
+        if (buffDetail.getBuffType() == BuffType.CHANGE_MANA) {
+            player.changeMana(+1);
+        }
+
+    }
+
+    private void actionForCell(Cell cell, BuffDetail buffDetail) {
+        switch (buffDetail.getBuffType()) {
+            case CLEAR:
+                if (Battle.getCurrentBattle().cardIsMine(cell.getCard(), Battle.getCurrentBattle().whoseTurn()))
+                    clearBuff((Minion) cell.getCard(), false);
+                else
+                    clearBuff((Minion) cell.getCard(), true);
+                break;
+            case FIRE_CELL:
+                cell.setFireCell(true);
+                break;
+            case POISON_CELL:
+                cell.setPoison(true);
+            case HOLY_CELL:
+                cell.setHoly(true);
         }
     }
 
-    private void actionForCell(Cell cell) {
-        for (BuffDetail buffDetail : buffDetails) {
-            switch (buffDetail.getBuffType()) {
-                case CLEAR:
-                    if (Battle.getCurrentBattle().cardIsMine(cell.getCard(), Battle.getCurrentBattle().whoseTurn()))
-                        clearBuff((Minion) cell.getCard(), false);
-                    else
-                        clearBuff((Minion) cell.getCard(), true);
-                    break;
-                case FIRE_CELL:
-                    cell.setFireCell(true);
-                    break;
-                case POISON_CELL:
-                    cell.setPoison(true);
-                case HOLY_CELL:
-                    cell.setHoly(true);
-            }
-        }
-    }
 
+    private void actionForMinion(Minion minion, BuffDetail buffDetail) {
+        switch (buffDetail.getBuffType()) {
+            case HOLY:
+                holyBuff(minion, buffDetail.getHolyBuffState());
+                break;
+            case DE_HOLY:
+                holyBuff(minion, -1);
+                break;
+            case STUN:
+                stunBuff(minion);
+                break;
+            case DISARM:
+                disarmBuff(minion);
+                break;
+            case WEAKNESS:
+            case POISON:
+            case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
+                changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
+                break;
+            case ANTI:
+                antiBuff(minion, buffDetail.getAntiBuffType());
+                break;
+            case CLEAR:
+                clearBuff(minion, true);
+            case SPECIAL_SITUATION_BUFF:
 
-    private void actionForMinion(Minion minion) {
-        for (BuffDetail buffDetail : this.buffDetails) {
-            switch (buffDetail.getBuffType()) {
-                case HOLY:
-                    holyBuff(minion, buffDetail.getHolyBuffState());
-                    break;
-                case DE_HOLY:
-                    holyBuff(minion, -1);
-                    break;
-                case STUN:
-                    stunBuff(minion);
-                    break;
-                case DISARM:
-                    disarmBuff(minion);
-                    break;
-                case WEAKNESS:
-                case POISON:
-                case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
-                    changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPowerValue());
-                    break;
-                case ANTI:
-                    antiBuff(minion, buffDetail.getAntiBuffType());
-                    break;
-                case CLEAR:
-                    clearBuff(minion, true);
-                case SPECIAL_SITUATION_BUFF:
-
-            }
         }
     }
 
