@@ -489,6 +489,18 @@ public class Request {
         return true;
     }
 
+    public boolean checkSyntaxForEnteringBattle() {
+        String singleOrMulti = scanner.next();
+        if (singleOrMulti.equals("1") || singleOrMulti.equals("2")) {
+            BattleView.showGameStateMenu();
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+
     public boolean checkSyntaxOfExitCommand() {
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
         Matcher matcher = patternForExit.matcher(command);
@@ -671,7 +683,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfCreateDeck() {
-        Pattern patternForSCreateDeck = Pattern.compile(StringsRq.CREATE_DECK +" (?<name>[\\w+ ]+)");
+        Pattern patternForSCreateDeck = Pattern.compile(StringsRq.CREATE_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSCreateDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");
@@ -745,7 +757,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSelectDeck() {
-        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK+ " (?<name>[\\w+ ]+)");
+        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSelectDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");

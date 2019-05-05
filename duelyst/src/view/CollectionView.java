@@ -56,7 +56,11 @@ public class CollectionView extends View {
     }
 
     public static void showDeck(String deckName, Collection collection) {
-        showDeck(collection.findDeck(deckName));
+        if(collection.findDeck(deckName)!=null){
+        showDeck(collection.findDeck(deckName));}
+        else {
+            System.out.println("deck not found!");
+        }
     }
 
     public static void showDeck(Deck deck) {
