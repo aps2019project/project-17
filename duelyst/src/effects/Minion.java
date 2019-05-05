@@ -2,6 +2,7 @@ package effects;
 
 import Data.Player;
 import GameGround.Battle;
+import GameGround.Cell;
 
 import java.util.ArrayList;
 
@@ -125,7 +126,14 @@ public class Minion extends Card {
         this.numberOfAttack++;
     }
 
-    public void useSpecialPower(Minion minion) {
+    public void useSpecialPower(Object object) {
+        Minion minion = null;
+        Cell cell = null;
+        if (object instanceof Minion)
+            minion = (Minion) object;
+        if (object instanceof Cell)
+            cell = (Cell) object;
+
         for (BuffDetail buffDetail : specialPower.getBuffDetails()) {
             Player player = Battle.getCurrentBattle().getPlayerOne();
             Player theOtherPlayer = Battle.getCurrentBattle().getPlayerTwo();
@@ -134,6 +142,9 @@ public class Minion extends Card {
                 theOtherPlayer = Battle.getCurrentBattle().getPlayerOne();
             }
             ArrayList<Minion> targetMinions = null;
+            if (buffDetail.getTargetType().equals(TargetType.CELL)) {
+                specialPower.action(cell, TargetType.CELL, buffDetail);
+            }
             switch (buffDetail.getTargetRange()) {
                 case ONE:
                     switch (buffDetail.getTargetType()) {

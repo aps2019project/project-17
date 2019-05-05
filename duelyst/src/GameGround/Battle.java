@@ -244,6 +244,12 @@ public class Battle {
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
+    public String useSpecialPower(int x, int y) {
+        Cell cell = this.board.getCells()[x - 1][y - 1];
+        whoseTurn().getMainDeck().getHero().useSpecialPower(cell);
+        return null;
+    }
+
     Card returnCardFromBoard(String id, Player player) {
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
