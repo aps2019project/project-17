@@ -133,6 +133,17 @@ public class Battle {
         return "ok";
     }
 
+    public String attackCombo(String opponentCardID, String... cardIDs) {
+        for (String cardID : cardIDs) {
+            Card card = returnCardFromBoard(cardID, whoseTurn());
+            attack(opponentCardID, true, (Minion) card);
+        }
+        Minion opponentCard = (Minion) returnCardFromBoard(opponentCardID, theOtherPlayer());
+        Minion firstMinion = (Minion) returnCardFromBoard(cardIDs[0], whoseTurn());
+        opponentCard.counterAttack(firstMinion);
+        return null;
+    }
+
     public String insertingCardFromHand(String cardName, int x, int y) {
         Card card = whoseTurn().getCardFromHand(cardName);
         Cell cell = getCellFromBoard(x, y);
@@ -221,22 +232,26 @@ public class Battle {
         return toPrint.toString();
     }
 
-    public String attack(String opponentCardId) {
-        if (selectedCard == null)
+    public String attack(String opponentCardId, boolean isComboAttack, Minion comboAttacker) {
+        Minion attacker;
+        if (isComboAttack)
+            attacker = comboAttacker;
+        else
+            attacker = (Minion) selectedCard;
+        if (attacker == null)
             return "you have to select card at first";
 
         Minion minion = (Minion) returnCardFromBoard(opponentCardId, theOtherPlayer());
         if (minion == null)
             return "invalid card id";
 
-        if (!((Minion) this.selectedCard).getCanAttack())
-            return "this card with " + this.selectedCard.getId() + " can't attack";
+        if (!attacker.getCanAttack())
+            return "this card with " + attacker.getId() + " can't attack";
 
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
-        Cell cellFirst = this.board.getCells()[((Minion) this.selectedCard).getXCoordinate() - 1][((Minion) this.selectedCard).getYCoordinate() - 1];
-        if (Cell.distance(cellDestination, cellFirst) > ((Minion) this.selectedCard).getAttackRange())
+        Cell cellFirst = this.board.getCells()[(attacker).getXCoordinate() - 1][attacker.getYCoordinate() - 1];
+        if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
             return "opponent minion is unavailable for attack";
-        Minion attacker = (Minion) selectedCard;
         attacker.attack(minion);
         minion.counterAttack(attacker);
         return attacker.getName() + " attacked to " + minion.getName();
@@ -357,7 +372,7 @@ public class Battle {
         return allMinion;
     }
 
-    public ArrayList<Minion> returnMinionsInColmn(int x, int y) {
+    public ArrayList<Minion> returnMinionsInColumn(int x, int y) {
         ArrayList<Minion> toReturn = new ArrayList<>();
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {

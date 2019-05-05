@@ -172,7 +172,7 @@ public class Minion extends Card {
                     targetMinions = Battle.getCurrentBattle().getAllMinion();
                     break;
                 case ALL_IN_COLUMN:
-                    targetMinions = Battle.getCurrentBattle().returnMinionsInColmn(this.getXCoordinate(), this.getYCoordinate());
+                    targetMinions = Battle.getCurrentBattle().returnMinionsInColumn(this.getXCoordinate(), this.getYCoordinate());
                     break;
                 case DISTANCE_TWO:
                     targetMinions = Battle.getCurrentBattle().returnMinionsWhichDistance(this.getXCoordinate(), this.getYCoordinate());
