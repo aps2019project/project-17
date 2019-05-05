@@ -5,12 +5,6 @@ import GameGround.Battle;
 
 import java.util.Random;
 
-public enum MODE {
-    KH,
-    Hf,
-    CF
-}
-
 public class AI extends Player {
     private static Player currentAIPlayer;
     private static Player AIModeKH;
