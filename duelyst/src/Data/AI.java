@@ -54,8 +54,8 @@ public class AI extends Player {
                     battle.selectCardOrItem(currentAIPlayer.getMainDeck().getCards().get(randomToChoose).getId());
                     break;
                 case 1:
-                    int x = new Random().nextInt() % 9;
-                    int y = new Random().nextInt() % 5;
+                    int x = new Random().nextInt() %9 +1;
+                    int y = new Random().nextInt() % 5 + 1;
                     battle.movingCard(x, y);
                     break;
                 case 2:
