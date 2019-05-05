@@ -530,10 +530,16 @@ public class Request {
 
     public void checkSyntaxOfGameType() {//story or custom
         String type = scanner.nextLine();
+        while (type.equals("")){
+            type = scanner.nextLine();
+        }
         if (type.equals("1") || type.equals("2")) {
             if (type.equals("1")) {
                 BattleView.showStoryMode();
                 String mode = scanner.nextLine();
+                while (mode.equals("")){
+                    mode = scanner.nextLine();
+                }
                 switch (mode) {
                     case "kill hero":
                         return;
