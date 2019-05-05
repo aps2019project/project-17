@@ -154,14 +154,20 @@ public class Minion extends Card {
                     break;
                 case AROUND:
                     targetMinions = Battle.getCurrentBattle().minionsArroundCell(this.getXCoordinate(), this.getYCoordinate());
+                    break;
                 case ALL:
                     targetMinions = Battle.getCurrentBattle().getAllMinion();
+                    break;
                 case ALL_IN_COLUMN:
+                    targetMinions = Battle.getCurrentBattle().returnMinionsInColmn(this.getXCoordinate(), this.getYCoordinate());
+                    break;
                 case DISTANCE_TWO:
+                    targetMinions = Battle.getCurrentBattle().returnMinionsWhichDistance(this.getXCoordinate(), this.getYCoordinate());
                     break;
                 case CLOSEST_RANDOM:
                     break;
                 case RANDOM:
+                    specialPower.action(Battle.getCurrentBattle().returnRandomMinion(this.getXCoordinate(), this.getYCoordinate()), TargetType.NONE, buffDetail);
                     break;
             }
             if (targetMinions == null)
@@ -199,7 +205,7 @@ public class Minion extends Card {
         if (!canCounterAttack)
             return;
         for (BuffDetail buffDetail : attack.getBuffDetails()) {
-            this.attack.action(minion, TargetType.ENEMY,buffDetail);
+            this.attack.action(minion, TargetType.ENEMY, buffDetail);
         }
         if (this.attackType.equals(AttackType.ON_DEFEND))
             useSpecialPower(minion);
