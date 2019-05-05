@@ -89,7 +89,7 @@ public class Battle {
         return null;
     }
 
-    public String selectCard(String cardID) {
+    public String selectCardOrItem(String cardID) {
         for (int i = 0; i < board.getCells().length; i++) {
             for (int j = 0; j < board.getCells()[i].length; j++) {
                 Card card = board.getCells()[i][j].getCard();
@@ -103,7 +103,13 @@ public class Battle {
                 }
             }
         }
-        return "invalid card id";
+        for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
+            if (whoseTurn().getCollectAbleItems().get(i).getId().equals(cardID)) {
+                this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
+                return "item successfully selected";
+            }
+        }
+        return "invalid card\\item id";
     }
 
     public String movingCard(int x, int y) {
@@ -129,16 +135,6 @@ public class Battle {
 
     public Hand showHand() {
         return whoseTurn().getHand();
-    }
-
-    public String SelectedItem(String itemID) {
-        for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
-            if (whoseTurn().getCollectAbleItems().get(i).getId().equals(itemID)) {
-                this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
-                return "item successfully selected";
-            }
-        }
-        return "invalid item id";
     }
 
     public String showInfoOFItem() {
