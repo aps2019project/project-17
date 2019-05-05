@@ -499,6 +499,7 @@ public class Request {
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
                     checkSyntaxOfEnteringBattle();
+                    checkSyntaxOfGameType();
                     break;
                 default:
                     error = ErrorType.INVALID_INPUT;
@@ -527,18 +528,27 @@ public class Request {
 
     }
 
-    public boolean checkSyntaxOfGameType() {//story or custom
-        String type = scanner.next();
+    public void checkSyntaxOfGameType() {//story or custom
+        String type = scanner.nextLine();
         if (type.equals("1") || type.equals("2")) {
-            BattleView.showGameStateMenu();
             if (type.equals("1")) {
                 BattleView.showStoryMode();
+                String mode = scanner.nextLine();
+                switch (mode) {
+                    case "kill hero":
+                        return;
+                    case "hold flag":
+                        return;
+                    case "capture flag":
+                        return;
+                    default:
+                        error = ErrorType.INVALID_INPUT;
+                }
             }
         } else {
             error = ErrorType.INVALID_INPUT;
-            return false;
         }
-        return true;
+
     }
 
     public boolean checkSyntaxOfStartGame() {
