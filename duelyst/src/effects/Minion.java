@@ -53,7 +53,7 @@ public class Minion extends Card {
 
     private void makeAttackBuff(int attackPower) {
         this.attack = new Buff();
-        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE, 0, 0, -attackPower);
+        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE, -2, 0, -attackPower);
         this.attack.addBuff(buffDetail);
     }
 
@@ -66,7 +66,7 @@ public class Minion extends Card {
             case HYBRID:
                 return "HYBRID";
             default:
-                return "MELEE";
+                return null;
         }
     }
 
@@ -118,6 +118,7 @@ public class Minion extends Card {
 
     public void attack(Minion minion) {
         numberOfAttack++;
+        this.attack.action(minion, TargetType.ENEMY);
     }
 
     public void move(int x, int y) {
@@ -172,10 +173,6 @@ public class Minion extends Card {
         System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow().toLowerCase() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.desc);
     }
 
-    public boolean CanMove() {
-        return canMove;
-    }
-
     public int getAttackPower() {
         return attackPower;
     }
@@ -188,16 +185,12 @@ public class Minion extends Card {
         return attackRange;
     }
 
-    public boolean isCanMove() {
+    public boolean CanMove() {
         return canMove;
     }
 
-    public boolean isCanCounterAttack() {
+    public boolean canCounterAttack() {
         return canCounterAttack;
-    }
-
-    public boolean isCanAttack() {
-        return canAttack;
     }
 
     public MinionType getMinionType() {
@@ -227,6 +220,7 @@ public class Minion extends Card {
     public Buff getBuff() {
         return buff;
     }
+
 
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
