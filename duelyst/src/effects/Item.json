@@ -1,51 +1,51 @@
 [
   {
-    "name": "تاج دانایی",
+    "name": "taje danaei",
     "id": "301",
     "price": 300
   },
   {
-    "name": "ناموس سپر",
+    "name": "namoose separ",
     "id": "302",
     "price": 4000
   },
   {
-    "name": "کمان دامول",
+    "name": "kamane damool",
     "id": "303",
     "price": 30000
   },
   {
-    "name": "نوشدارو",
+    "name": "noosh daroo",
     "id": "304",
     "price": 0
   },
   {
-    "name": "تیر دوشاخ",
+    "name": "tire doshakh",
     "id": "305",
     "price": 0
   },
   {
-    "name": "پر سیمرغ",
+    "name": "pare simorgh",
     "id": "306",
     "price": 3500
   },
   {
-    "name": "اکسیر",
+    "name": "exir",
     "id": "307",
     "price": 0
   },
   {
-    "name": "معجون مانا",
+    "name": "majoone mana",
     "id": "308",
     "price": 0
   },
   {
-    "name": "معجون رویین تنی",
+    "name": "majoone roointani",
     "id": "309",
     "price": 0
   },
   {
-    "name": "نفرین مرگ",
+    "name": "nefrine marg",
     "id": "310",
     "price": 0
   },
@@ -90,12 +90,12 @@
     "price": 25000
   },
   {
-    "name": "غسل تعمید",
+    "name": "ghosle tamid",
     "id": "319",
     "price": 20000
   },
   {
-    "name": "شمشیر چینی",
+    "name": "shamshire chini",
     "id": "320",
     "price": 0
   }
