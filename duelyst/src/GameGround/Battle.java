@@ -385,4 +385,28 @@ public class Battle {
         }
         return (Minion) getCellFromBoard(xR, yR).getCard();
     }
+
+    public Minion closestRandomMinion(int x, int y) {
+        ArrayList<Minion> nearestMinions = new ArrayList<>();
+        int distance = Integer.MAX_VALUE;
+        Cell cellFirst = getCellFromBoard(x, y);
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                Cell cell = getCellFromBoard(i + 1, j + 1);
+                if (cell.getCard() == null || (x == i + 1 && y == j + 1))
+                    continue;
+                if (Cell.distance(cell, cellFirst) < distance)
+                    distance = Cell.distance(cell, cellFirst);
+            }
+        }
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                Cell cell = getCellFromBoard(i + 1, j + 1);
+                if (Cell.distance(cell, cellFirst) == distance && cell.getCard() != null)
+                    nearestMinions.add((Minion) cell.getCard());
+            }
+        }
+        int r = new Random().nextInt() % nearestMinions.size();
+        return nearestMinions.get(r);
+    }
 }
