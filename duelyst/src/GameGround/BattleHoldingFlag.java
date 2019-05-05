@@ -97,35 +97,16 @@ public class BattleHoldingFlag extends Battle {
         return selectedCard.getId() + " moved to " + x + " - " + y;
     }
 
-    private Cell getCellFromBoard(int x, int y) {
-        return this.board.getCells()[x - 1][y - 1];
-    }
-
     @Override
     public String insertingCardFromHand(String cardName, int x, int y) {
+        String returningFromSuper = super.insertingCardFromHand(cardName, x, y);
+        if (!returningFromSuper.equals("ok"))
+            return returningFromSuper;
+
         Card card = whoHasFlag.getCardFromHand(cardName);
-        Cell cellDestination = this.board.getCells()[x - 1][y - 1];
+        Cell cellDestination = getCellFromBoard(x, y);
 
-        if (card == null)
-            return "invalid card name ";
         if (card instanceof Minion) {
-            if (cellDestination == null || cellDestination.getCard() != null || !this.board.isCoordinateAvailable(cellDestination, whoHasFlag, this))
-                return "invalid target";
-            if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
-                return "you don't have enough mana to insert this card";
-
-            card.setUserName(whoseTurn().getUserName());
-            whoseTurn().lessMana(((Minion) card).getManaPoint());
-            cellDestination.setCard(card);
-            ((Minion) card).setCoordinate(x, y);
-            whoseTurn().removeCardFromHand(card);
-            this.selectedCard = card;
-
-            if (cellDestination.getItem() != null) {
-                whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
-                cellDestination.setItem(null);
-            }
-
             if (cellDestination.hasFlag()) {
                 ((Minion) card).setHasFlag(true);
                 cellDestination.setFlag(false);

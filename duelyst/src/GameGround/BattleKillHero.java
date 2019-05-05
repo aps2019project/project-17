@@ -67,32 +67,11 @@ public class BattleKillHero extends Battle {
 
     @Override
     public String insertingCardFromHand(String cardName, int x, int y) {
+        String toReturnFromSuper = super.insertingCardFromHand(cardName, x, y);
+        if (!toReturnFromSuper.equals("ok"))
+            return toReturnFromSuper;
         Card card = whoseTurn().getCardFromHand(cardName);
-        Cell cell = board.getCells()[x - 1][y - 1];
-
-        if (card == null)
-            return "invalid card name";
-        if (card instanceof Minion) {
-            if (cell == null || cell.getCard() != null)
-                return "invalid target ";
-            if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
-                return "You don′t have enough mana";
-            if (!board.isCoordinateAvailable(cell, whoseTurn(), this))
-                return "invalid target";
-            this.selectedCard = card;
-
-            if (cell.getItem() != null) {
-                whoseTurn().addItemToCollectAbleItems(cell.getItem());
-                cell.setItem(null);
-            }
-
-            card.setUserName(whoseTurn().getUserName());
-            whoseTurn().lessMana(((Minion) card).getManaPoint());
-            ((Minion) card).setCoordinate(x, y);
-            whoseTurn().removeCardFromHand(card);
-            cell.setCard(card);
-            return "card successfully inserted ";
-        }
+        Cell cell = getCellFromBoard(x, y);
         // spell
         return "card successfully inserted";
     }

@@ -101,13 +101,11 @@ public class BattleCaptureFlag extends Battle {
 
     @Override
     public String movingCard(int x, int y) {
-
         String toReturn = super.movingCard(x, y);
         if (!toReturn.equals("ok"))
             return toReturn;
-
+        Cell cellDestination = getCellFromBoard(x, y);
         Minion minion = (Minion) this.selectedCard;
-        Cell cellDestination = this.board.getCells()[x - 1][y - 1];
         // cell has buff ?!
 
         if (cellDestination.hasFlag()) {
@@ -122,29 +120,16 @@ public class BattleCaptureFlag extends Battle {
 
     @Override
     public String insertingCardFromHand(String cardName, int x, int y) {
+        String returning = super.insertingCardFromHand(cardName, x, y);
+        if (!returning.equals("ok"))
+            return returning;
+
+        Cell cellTarget = getCellFromBoard(x, y);
         Card card = whoseTurn().getCardFromHand(cardName);
-        Cell cellTarget = this.board.getCells()[x - 1][y - 1];
 
-        if (card == null)
-            return "invalid card name";
         if (card instanceof Minion) {
-            if (cellTarget.getCard() != null || !board.isCoordinateAvailable(cellTarget, whoseTurn(), this))
-                return "invalid target";
-            if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
-                return "you don't have enough mana to insert this card";
-            card.setUserName(whoseTurn().getUserName());
-            cellTarget.setCard(card);
-            ((Minion) card).setCoordinate(x, y);
-            whoseTurn().lessMana(((Minion) card).getManaPoint());
-            whoseTurn().removeCardFromHand(card);
-
-            if (cellTarget.getItem() != null) {
-                whoseTurn().addItemToCollectAbleItems(cellTarget.getItem());
-                cellTarget.setItem(null);
-            }
 
             this.selectedCard = card;
-
             if (cellTarget.hasFlag()) {
 
                 cellTarget.setFlag(false);

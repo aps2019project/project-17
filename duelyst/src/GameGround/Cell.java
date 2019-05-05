@@ -18,17 +18,6 @@ public class Cell {
         this.col = col;
     }
 
-    public static Cell getCell(Board board, int x, int y) {
-        for (int i = 0; i < board.getCells().length; i++) {
-            for (int j = 0; j < board.getCells()[i].length; j++) {
-                Cell cell = board.getCells()[i][j];
-                if (i == x && j == y)
-                    return cell;
-            }
-        }
-        return null;
-    }
-
     public int getRow() {
         return row;
     }
