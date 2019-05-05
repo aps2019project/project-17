@@ -18,7 +18,7 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "INSIDER",
     "targetRange": "ONE",
-    "effectTime": 0,
+    "effectTime": 1000,
     "changeAttackPower": 2,
     "changeHealth": 0
   },
@@ -27,7 +27,7 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "ENEMY",
     "targetRange": "ONE",
-    "effectTime": 0,
+    "effectTime": 1000,
     "changeAttackPower": 0,
     "changeHealth": -4
   },
@@ -36,7 +36,7 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "INSIDER_HERO",
     "targetRange": "ONE",
-    "effectTime": 0,
+    "effectTime": 1000,
     "changeAttackPower": 4,
     "changeHealth": 0
   },
@@ -52,13 +52,13 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "ENEMY_HERO",
     "targetRange": "ONE",
-    "effectTime": 0,
+    "effectTime": 1000,
     "changeAttackPower": 0,
     "changeHealth": -8
   },
   {
     "id": "8",
-    "buffType": "POISON",
+    "buffType": "POISON_CELL",
     "targetType": "CELL",
     "targetRange": "THREE",
     "effectTime": 1
@@ -77,7 +77,7 @@
     "buffType": "DISARM",
     "targetType": "INSIDER",
     "targetRange": "ONE",
-    "effectTime": 0
+    "effectTime": 3
   },
   {
     "id": "10",
@@ -96,13 +96,13 @@
   {
     "id": "12",
     "buffType": "CLEAR",
-    "targetType": "NONE",
-    "targetRange": "ALL",
+    "targetType": "CELL",
+    "targetRange": "ONE",
     "effectTime": 0
   },
   {
     "id": "13",
-    "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
+    "buffType": "WEAKNESS",
     "targetType": "INSIDER",
     "targetRange": "ONE",
     "effectTime": 3,
@@ -114,7 +114,8 @@
     "buffType": "HOLY",
     "targetType": "INSIDER",
     "targetRange": "ONE",
-    "effectTime": 3
+    "effectTime": 3,
+    "holyBuffState": 2
   },
   {
     "id": "14",
@@ -130,7 +131,7 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "INSIDER",
     "targetRange": "ALL",
-    "effectTime": 0,
+    "effectTime": -1,
     "changeAttackPower": 2,
     "changeHealth": 0
   },
@@ -139,7 +140,7 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "ENEMY",
     "targetRange": "ALL_IN_COLUMN",
-    "effectTime": 0,
+    "effectTime": 1000,
     "changeAttackPower": 0,
     "changeHealth": -6
   },
@@ -149,8 +150,8 @@
     "targetType": "ENEMY",
     "targetRange": "ONE",
     "effectTime": 0,
-    "changeAttackPower": 0,
-    "changeHealth": -4
+    "changeAttackPower": -4,
+    "changeHealth": 0
   },
   {
     "id": "18",
@@ -177,7 +178,7 @@
     "targetRange": "AROUND",
     "effectTime": 0,
     "changeAttackPower": 0,
-    "changeHealth": -100
+    "changeHealth": -1000
   },
   {
     "id": "20",

@@ -700,6 +700,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfAddToDeck() {
+
         Pattern patternForAddToDeck = Pattern.compile(StringsRq.ADD_TO_DECK + " (?<cardId>[\\w+ ]+) to deck (?<deckName>[\\w+ ]+)");
         Matcher matcher = patternForAddToDeck.matcher(command);
         if (matcher.matches()) {
@@ -744,7 +745,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfSelectDeck() {
-        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SHOW_DECK+ " (?<name>[\\w+ ]+)");
+        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK+ " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSelectDeck.matcher(command);
         if (matcher.matches()) {
             String name = matcher.group("name");

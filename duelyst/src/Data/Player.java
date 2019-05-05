@@ -69,7 +69,6 @@ public class Player {
         return null;
     }
 
-
     public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
             if (hand.getCards().get(i).getName().equals(cardName))
@@ -106,7 +105,6 @@ public class Player {
         this.mainDeck = deck;
         this.copyMainDeck = new Deck(this.mainDeck.getName());
         setCopyMainDeck(true);
-        setHand();
         collectAbleItems.add(this.mainDeck.getItem());
     }
 
@@ -121,7 +119,7 @@ public class Player {
     private void setHand() {
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
-            int n = random.nextInt(this.copyMainDeck.getCards().size());
+            int n = random.nextInt() % this.copyMainDeck.getCards().size();
             this.hand.addCard(copyMainDeck.getCards().get(n));
             this.copyMainDeck.getCards().remove(n);
         }
@@ -198,5 +196,9 @@ public class Player {
 
     public void setPreviousMana(int previousMana) {
         this.previousMana = previousMana;
+    }
+
+    private void isPlayerReady() {
+
     }
 }

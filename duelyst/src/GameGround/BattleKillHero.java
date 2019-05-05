@@ -114,7 +114,7 @@ public class BattleKillHero extends Battle {
 
     @Override
     public String attack(String opponentCardId) {
-        Card card = returnCardFromBoard(opponentCardId, theOtherPlayer());
+        Card card = returnCardFromBoard(opponentCardId,theOtherPlayer());
         if (card == null)
             return "invalid card ID";
         Cell cellFirst = this.board.getCells()[((Minion) this.selectedCard).getXCoordinate() - 1][((Minion) this.selectedCard).getYCoordinate() - 1];
