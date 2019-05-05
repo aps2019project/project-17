@@ -4,13 +4,9 @@ package GameGround;
 import CardCollections.Hand;
 import Data.GameData;
 import Data.Player;
-import effects.Card;
-import effects.Item;
-import effects.Minion;
-import effects.Spell;
+import effects.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Battle {
@@ -161,6 +157,8 @@ public class Battle {
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You don′t have enough mana";
             this.selectedCard = card;
+            if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
+                ((Minion) card).useSpecialPower(card);
             card.setUserName(whoseTurn().getUserName());
             whoseTurn().lessMana(((Minion) card).getManaPoint());
             ((Minion) card).setCoordinate(x, y);

@@ -10,6 +10,8 @@ public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
     protected Buff buff;
+    protected BuffDetail specialSituationBuff;
+    protected SpecialSituation specialSituation;
     protected int attackPower;
     protected int healthPoint;
     protected int manaPoint;
