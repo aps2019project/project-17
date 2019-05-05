@@ -22,6 +22,7 @@ public class BattleView extends View {
     }
 
     public static void showStoryMode(){
+        AI.initializeAIStory();
         System.out.println("1.Kill Hero : "+ AI.getAIModeKH().getMainDeck().getHero().getName());
         System.out.println("2.Hold Flag : "+AI.getAIModeHF().getMainDeck().getHero().getName());
         System.out.println("3.Capture Flag : "+AI.getAIModeCF().getMainDeck().getHero().getName());
