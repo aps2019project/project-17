@@ -217,8 +217,8 @@
   },
   {
     "id": 135,
-    "buffType": "ANTI_ALL_POSITIVE",
-    "targetType": "ENEMY",
+    "buffType": "CLEAR",
+    "targetType": "CELL",
     "targetRange": "ONE",
     "effectTime": 0
   },

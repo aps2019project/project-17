@@ -13,8 +13,6 @@ public enum BuffType {
     HOLY_CELL,
     POISON,
     ANTI,
-    ANTI_ALL_POSITIVE,
     CHANGE_MANA,
-    ADD_BUFF,
     SPECIAL_SITUATION_BUFF
 }
