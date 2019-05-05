@@ -113,7 +113,27 @@ public class Battle {
     }
 
     public String movingCard(int x, int y) {
-        return "";
+        if (this.selectedCard == null || this.selectedCard instanceof Spell)
+            return "first you have to select a card";
+        if (x > 9 || y > 5)
+            return "invalid target out of range";
+        Minion minion = (Minion) this.selectedCard;
+        Cell cellFirst = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
+        Cell cellDestination = this.board.getCells()[x - 1][y - 1];
+
+        if (cellDestination.getCard() != null || Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
+            return "invalid target";
+        if (!minion.isCanMove())
+            return "this card cant move";
+        cellDestination.setCard(minion);
+        minion.setCanMove(false);
+        cellFirst.setCard(null);
+        minion.setCoordinate(x, y);
+        if (cellDestination.getItem() != null) {
+            whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
+            cellDestination.setItem(null);
+        }
+        return "ok";
     }
 
     public String insertingCardFromHand(String cardName, int x, int y) {

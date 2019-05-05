@@ -57,25 +57,10 @@ public class BattleKillHero extends Battle {
     @Override
     public String movingCard(int x, int y) {
 
-        if (this.selectedCard == null)
-            return "first you have to select a card";
-        Minion minion = (Minion) this.selectedCard;
+        String toReturnFormSuper = super.movingCard(x, y);
+        if (!toReturnFormSuper.equals("ok"))
+            return toReturnFormSuper;
 
-        Cell cellFirst = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
-        Cell cellDestination = this.board.getCells()[x - 1][y - 1];
-
-        if (cellDestination.getCard() != null || Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
-            return "invalid target";
-        if (!minion.isCanMove())
-            return "this card cant move";
-        cellDestination.setCard(this.selectedCard);
-        cellFirst.setCard(null);
-        minion.setCanMove(false);
-        minion.setCoordinate(x, y);
-        if (cellDestination.getItem() != null) {
-            whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
-            cellDestination.setItem(null);
-        }
         // if cell has buff ?!
         return this.selectedCard.getId() + " moved to " + x + " - " + y;
     }
@@ -114,7 +99,7 @@ public class BattleKillHero extends Battle {
 
     @Override
     public String attack(String opponentCardId) {
-        Card card = returnCardFromBoard(opponentCardId,theOtherPlayer());
+        Card card = returnCardFromBoard(opponentCardId, theOtherPlayer());
         if (card == null)
             return "invalid card ID";
         Cell cellFirst = this.board.getCells()[((Minion) this.selectedCard).getXCoordinate() - 1][((Minion) this.selectedCard).getYCoordinate() - 1];

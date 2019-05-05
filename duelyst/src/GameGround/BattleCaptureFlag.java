@@ -101,32 +101,13 @@ public class BattleCaptureFlag extends Battle {
 
     @Override
     public String movingCard(int x, int y) {
-        if (selectedCard == null)
-            return "first you have to select card";
 
-        if (x > 9 || y > 5)
-            return "invalid target out of range";
+        String toReturn = super.movingCard(x, y);
+        if (!toReturn.equals("ok"))
+            return toReturn;
 
         Minion minion = (Minion) this.selectedCard;
-        int x0 = minion.getXCoordinate();
-        int y0 = minion.getYCoordinate();
-
-        Cell cellFirst = this.board.getCells()[x0 - 1][y0 - 1];
         Cell cellDestination = this.board.getCells()[x - 1][y - 1];
-
-        if (Cell.distance(cellDestination, cellFirst) > minion.getDistanceCanMove() || cellDestination.getCard() != null)
-            return "invalid target  ";
-        if (!minion.isCanMove())
-            return "this minion can't move yet";
-        cellDestination.setCard(minion);
-        minion.setCanMove(false);
-        cellFirst.setCard(null);
-        minion.setCoordinate(x, y);
-        if (cellDestination.getItem() != null) {
-            whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
-            cellDestination.setItem(null);
-        }
-
         // cell has buff ?!
 
         if (cellDestination.hasFlag()) {

@@ -76,30 +76,13 @@ public class BattleHoldingFlag extends Battle {
 
     @Override
     public String movingCard(int x, int y) {
-        if (this.selectedCard == null)
-            return "firs you have to select a card";
+        String returnOFSuper = super.movingCard(x, y);
+        if (!returnOFSuper.equals("ok"))
+            return returnOFSuper;
+
         Minion minion = (Minion) this.selectedCard;
-
-        Cell cellDestination = this.board.getCells()[x - 1][y - 1];
-        Cell cellFirst = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
-
-        if (cellDestination.getCard() != null || Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
-            return "invalid target";
-
-        if (!minion.isCanMove())
-            return "this card can't move";
-
-        cellDestination.setCard(minion);
-
-        if (cellDestination.getItem() != null) {
-            whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
-            cellDestination.setItem(null);
-        }
+        Cell cellDestination = getCellFromBoard(x, y);
         // cell has buf ??
-
-        cellFirst.setCard(null);
-        minion.setCanMove(false);
-        minion.setCoordinate(x, y);
 
         if (minion.isHasFlag())
             cellOfFlag = cellDestination;
@@ -112,6 +95,10 @@ public class BattleHoldingFlag extends Battle {
             return selectedCard.getId() + " moved to " + x + " - " + y + " and capture the flag";
         }
         return selectedCard.getId() + " moved to " + x + " - " + y;
+    }
+
+    private Cell getCellFromBoard(int x, int y) {
+        return this.board.getCells()[x - 1][y - 1];
     }
 
     @Override
