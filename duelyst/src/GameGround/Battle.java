@@ -258,9 +258,12 @@ public class Battle {
     }
 
     public String useSpecialPower(int x, int y) {
-        Cell cell = this.board.getCells()[x - 1][y - 1];
+        Cell cell = getCellFromBoard(x, y);
+        if (whoseTurn().getMainDeck().getHero().getManaPoint() > whoseTurn().getMana())
+            return "you don't have enough mana";
+
         whoseTurn().getMainDeck().getHero().useSpecialPower(cell);
-        return null;
+        return "special power successfully added";
     }
 
     Card returnCardFromBoard(String id, Player player) {
@@ -427,5 +430,31 @@ public class Battle {
         }
         int r = new Random().nextInt() % nearestMinions.size();
         return nearestMinions.get(r);
+    }
+
+    public ArrayList<Minion> getMinionsSquare(int x, int y){
+        ArrayList<Minion> toReturn = new ArrayList<>();
+        for (int i = x - 1; i <= x; i++) {
+            for (int j = y - 1; j <= y; j++) {
+                Minion minion = (Minion) getCellFromBoard(i + 1, j + 1).getCard();
+                if (minion == null)
+                    continue;
+                toReturn.add(minion);
+            }
+        }
+        return toReturn;
+    }
+
+    public ArrayList<Minion> getMinionsCube(int x, int y){
+        ArrayList<Minion> toReturn = new ArrayList<>();
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                Minion minion = (Minion) getCellFromBoard(i + 1, j + 1).getCard();
+                if (minion == null)
+                    continue;
+                toReturn.add(minion);
+            }
+        }
+        return toReturn;
     }
 }
