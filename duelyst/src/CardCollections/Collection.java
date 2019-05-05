@@ -251,6 +251,15 @@ public class Collection {
         this.items.add(item);
     }
 
+    public void removeCard(Card card) {
+        cards.remove(card);
+        for (int i = 0; i < decks.size(); i++) {
+            Deck deck = decks.get(i);
+            if (deck.returnCardFromDeck(card.getName()) != null)
+                deck.getCards().remove(deck.returnCardFromDeck(card.getName()));
+        }
+    }
+
     public int getDaric() {
         return daric;
     }

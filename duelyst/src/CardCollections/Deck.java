@@ -150,4 +150,12 @@ public class Deck {
     public int getNumberOfDeckCards() {
         return this.cards.size();
     }
+
+    public Card returnCardFromDeck(String cardName){
+        for (Card card : this.cards) {
+            if (card.getName().equals(cardName) || card.getId().equals(cardName))
+                return card;
+        }
+        return null;
+    }
 }
