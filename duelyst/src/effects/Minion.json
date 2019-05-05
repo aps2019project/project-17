@@ -13,7 +13,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "شمشیرزن فارس",
+    "name": "shamshirzane fars",
     "id": "102",
     "price": 400,
     "manaPoint": 2,
@@ -26,7 +26,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "نیزه دار فارس",
+    "name": "neizedare fars",
     "id": "103",
     "price": 500,
     "manaPoint": 1,
@@ -39,7 +39,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "اسب سوار فارس",
+    "name": "asbsavare fars",
     "id": "104",
     "price": 200,
     "manaPoint": 4,
@@ -52,7 +52,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "پهلوان فارس",
+    "name": "pahlavane fars",
     "id": "105",
     "price": 600,
     "manaPoint": 9,
@@ -65,7 +65,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "سپه سالار فارس",
+    "name": "sepahsalare fars",
     "id": "106",
     "price": 800,
     "manaPoint": 7,
@@ -78,7 +78,7 @@
     "attackType": "COMBO"
   },
   {
-    "name": "کماندار تورانی",
+    "name": "kamandare toorani",
     "id": "107",
     "price": 500,
     "manaPoint": 1,
@@ -91,7 +91,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "قلاب سنگ دار تورانی",
+    "name": "ghollabsangdare toorani",
     "id": "108",
     "price": 600,
     "manaPoint": 1,
@@ -104,7 +104,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "نیزه دار تورانی",
+    "name": "neyzedare toorani",
     "id": "109",
     "price": 600,
     "manaPoint": 1,
@@ -117,7 +117,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "جاسوس تورانی",
+    "name": "jasoose toorani",
     "id": "110",
     "price": 700,
     "manaPoint": 4,
@@ -130,7 +130,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "گرزدار تورانی",
+    "name": "gorzdare toorani",
     "id": "111",
     "price": 450,
     "manaPoint": 2,
@@ -143,7 +143,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "شاهزاده تورانی",
+    "name": "shahzade toorani",
     "id": "112",
     "price": 800,
     "manaPoint": 6,
@@ -156,7 +156,7 @@
     "attackType": "COMBO"
   },
   {
-    "name": "دیو سیاه",
+    "name": "dive siah",
     "id": "113",
     "price": 300,
     "manaPoint": 9,
@@ -169,7 +169,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "غول سنگ انداز",
+    "name": "ghoole sangandaz",
     "id": "114",
     "price": 300,
     "manaPoint": 9,
@@ -182,7 +182,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "عقاب",
+    "name": "oghab",
     "id": "115",
     "price": 200,
     "manaPoint": 2,
@@ -195,7 +195,7 @@
     "attackType": "PASSIVE"
   },
   {
-    "name": "دیو گراز سوار",
+    "name": "dive gorazsavar",
     "id": "116",
     "price": 300,
     "manaPoint": 6,
@@ -208,7 +208,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "غول تک چشم",
+    "name": "ghoole takcheshm",
     "id": "117",
     "price": 500,
     "manaPoint": 7,
@@ -221,7 +221,7 @@
     "attackType": "ON_DEATH"
   },
   {
-    "name": "مار سمی",
+    "name": "mare sammi",
     "id": "118",
     "price": 300,
     "manaPoint": 4,
@@ -234,7 +234,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "اژدهای آتش انداز",
+    "name": "ezhdehaye atashandaz",
     "id": "119",
     "price": 250,
     "manaPoint": 5,
@@ -247,7 +247,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "شیر درنده",
+    "name": "shire darande",
     "id": "120",
     "price": 600,
     "manaPoint": 2,
@@ -260,7 +260,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "مار غول پیکر",
+    "name": "mare ghoolpeykar",
     "id": "121",
     "price": 500,
     "manaPoint": 8,
@@ -273,7 +273,7 @@
     "attackType": "ON_SPAWN"
   },
   {
-    "name": "گرگ سفید",
+    "name": "gorge sefid",
     "id": "122",
     "price": 400,
     "manaPoint": 5,
@@ -286,7 +286,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "پلنگ",
+    "name": "palang",
     "id": "123",
     "price": 400,
     "manaPoint": 4,
@@ -299,7 +299,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "گرگ",
+    "name": "gorg",
     "id": "124",
     "price": 400,
     "manaPoint": 3,
@@ -312,7 +312,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "جادوگر",
+    "name": "jadoogar",
     "id": "125",
     "price": 550,
     "manaPoint": 4,
@@ -325,7 +325,7 @@
     "attackType": "PASSIVE"
   },
   {
-    "name": "جادوگر اعظم",
+    "name": "jadoogare azam",
     "id": "126",
     "price": 550,
     "manaPoint": 6,
@@ -338,7 +338,7 @@
     "attackType": "PASSIVE"
   },
   {
-    "name": "جن",
+    "name": "jen",
     "id": "127",
     "price": 500,
     "manaPoint": 5,
@@ -351,7 +351,7 @@
     "attackType": "ON_TURN"
   },
   {
-    "name": "گراز وحشی",
+    "name": "goraze vahshi",
     "id": "128",
     "price": 500,
     "manaPoint": 6,
@@ -364,7 +364,7 @@
     "attackType": "ON_DEFEND"
   },
   {
-    "name": "پیران",
+    "name": "piran",
     "id": "129",
     "price": 400,
     "manaPoint": 8,
@@ -377,7 +377,7 @@
     "attackType": "ON_DEFEND"
   },
   {
-    "name": "گیو",
+    "name": "giv",
     "id": "130",
     "price": 450,
     "manaPoint": 4,
@@ -390,7 +390,7 @@
     "attackType": "ON_DEFEND"
   },
   {
-    "name": "بهمن",
+    "name": "bahman",
     "id": "131",
     "price": 450,
     "manaPoint": 8,
@@ -403,7 +403,7 @@
     "attackType": "ON_SPAWN"
   },
   {
-    "name": "اشکبوس",
+    "name": "ashkboos",
     "id": "132",
     "price": 400,
     "manaPoint": 7,
@@ -416,7 +416,7 @@
     "attackType": "ON_DEFEND"
   },
   {
-    "name": "ایرج",
+    "name": "iraj",
     "id": "133",
     "price": 500,
     "manaPoint": 4,
@@ -429,7 +429,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "غول بزرگ",
+    "name": "ghoole bozorg",
     "id": "134",
     "price": 600,
     "manaPoint": 9,
@@ -442,7 +442,7 @@
     "attackType": "NONE"
   },
   {
-    "name": "غول دو سر",
+    "name": "ghoole dosar",
     "id": "135",
     "price": 550,
     "manaPoint": 4,
@@ -455,7 +455,7 @@
     "attackType": "ON_ATTACK"
   },
   {
-    "name": "ننه سرما",
+    "name": "nane sarma",
     "id": "136",
     "price": 500,
     "manaPoint": 3,
@@ -468,7 +468,7 @@
     "attackType": "ON_SPAWN"
   },
   {
-    "name": "فولاد زره",
+    "name": "foolad zereh",
     "id": "137",
     "price": 650,
     "manaPoint": 3,
@@ -481,7 +481,7 @@
     "attackType": "PASSIVE"
   },
   {
-    "name": "سیاوش",
+    "name": "siavash",
     "id": "138",
     "price": 350,
     "manaPoint": 4,
@@ -494,7 +494,7 @@
     "attackType": "ON_DEATH"
   },
   {
-    "name": "شاه غول",
+    "name": "shah ghool",
     "id": "139",
     "price": 600,
     "manaPoint": 5,
@@ -507,7 +507,7 @@
     "attackType": "COMBO"
   },
   {
-    "name": "ارژنگ دیو",
+    "name": "arzhang div",
     "id": "140",
     "price": 600,
     "manaPoint": 3,

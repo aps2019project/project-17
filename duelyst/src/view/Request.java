@@ -700,7 +700,8 @@ public class Request {
     }
 
     public boolean checkSyntaxOfAddToDeck() {
-        Pattern patternForAddToDeck = Pattern.compile(StringsRq.ADD_TO_DECK + " (?<cardId>[\\w+ ]+) to deck (?<deckName>[\\w+ ])+");
+
+        Pattern patternForAddToDeck = Pattern.compile(StringsRq.ADD_TO_DECK + " (?<cardId>[\\w+ ]+) to deck (?<deckName>[\\w+ ]+)");
         Matcher matcher = patternForAddToDeck.matcher(command);
         if (matcher.matches()) {
             String cardId = matcher.group("cardId");
