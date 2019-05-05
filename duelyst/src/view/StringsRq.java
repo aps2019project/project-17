@@ -42,6 +42,6 @@ class StringsRq {
     static final String ENTER_GRAVE_YARD = "enter grave yard";
     static final String SHOW_CARDS = "show cards";
     static final String END_GAME = "end game";
-    static final String STORY="story";
-    static final String CUSTOM_GAME="custom game";
+    static final String START_GAME="start game";
+    static final String START_MULTI_PLAYER_GAME="start multiPlayer game";
 }

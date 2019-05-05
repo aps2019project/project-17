@@ -17,7 +17,7 @@ public class Request {
     public Request() {
         //we set the default menu in constructor
         menuType = MenuType.ACCOUNT_MENU;
-        error=null;
+        error = null;
     }
 
     public void getNewCommand() {
@@ -119,10 +119,6 @@ public class Request {
                 return checkSyntaxOfEndGame();
             case ENTER_GRAVE_YARD:
                 return checkSyntaxOfEnterGraveYard();
-            case STORY:
-                return checkSyntaxOfGameType();
-            case CUSTOM_GAME:
-                return checkSyntaxOfGameType();
             case EXIT:
                 return checkSyntaxOfExitCommand();
             case EXIT_GAME:
@@ -220,10 +216,10 @@ public class Request {
         Matcher matcherForEndGame = patternForEndGame.matcher(command);
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
         Matcher matcherForExit = patternForExit.matcher(command);
-        Pattern patternForStory = Pattern.compile(StringsRq.STORY);
-        Matcher matcherForStory = patternForStory.matcher(command);
-        Pattern patternForCustomGame = Pattern.compile(StringsRq.CUSTOM_GAME);
-        Matcher matcherForCustom = patternForCustomGame.matcher(command);
+        Pattern patternForStartGame = Pattern.compile(StringsRq.START_GAME + " \\w+ \\w+");
+        Matcher matcherForStartGame = patternForStartGame.matcher(command);
+        Pattern patternForStartMultiPlayerGame = Pattern.compile(StringsRq.START_MULTI_PLAYER_GAME + " \\w+");
+        Matcher matcherForStartMultiPlayerGame = patternForStartMultiPlayerGame.matcher(command);
 
         if (matcherForLogIn.matches()) {
             if (menuType.equals(MenuType.ACCOUNT_MENU)) {
@@ -453,21 +449,21 @@ public class Request {
             }
             error = ErrorType.INVALID_INPUT;
             return null;
-        } else if (matcherForStory.matches()) {
-            if (menuType.equals(MenuType.SINGLE_PLAYER) || menuType.equals(MenuType.MULTI_PLAYER)) {
-                return RequestType.STORY;
-            }
-            error = ErrorType.INVALID_INPUT;
-            return null;
-        } else if (matcherForCustom.matches()) {
-            if (menuType.equals(MenuType.SINGLE_PLAYER) || menuType.equals(MenuType.MULTI_PLAYER)) {
-                return RequestType.CUSTOM_GAME;
-            }
-            error = ErrorType.INVALID_INPUT;
-            return null;
         } else if (matcherForSave.matches()) {
             if (menuType.equals(MenuType.COLLECTION_MENU) || menuType.equals(MenuType.ACCOUNT_MENU)) {
                 return RequestType.SAVE;
+            }
+            error = ErrorType.INVALID_INPUT;
+            return null;
+        } else if (matcherForStartGame.matches()) {
+            if (menuType.equals(MenuType.SINGLE_PLAYER)) {
+                return RequestType.START_GAME;
+            }
+            error = ErrorType.INVALID_INPUT;
+            return null;
+        } else if (matcherForStartMultiPlayerGame.matches()) {
+            if (menuType.equals(MenuType.MULTI_PLAYER)) {
+                return RequestType.START_MULTI_PLAYER_GAME;
             }
             error = ErrorType.INVALID_INPUT;
             return null;
@@ -496,7 +492,13 @@ public class Request {
                     menuType = MenuType.SHOP_MENU;
                     break;
                 case "battle":
+//                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
+//                        System.out.println("selected deck is invalid");
+//                        return false;
+//                    }
                     menuType = MenuType.BATTLE_MENU;
+                    BattleView.showBattleMenu();
+                    checkSyntaxOfEnteringBattle();
                     break;
                 default:
                     error = ErrorType.INVALID_INPUT;
@@ -510,14 +512,28 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfEnteringBattle() {
+    public void checkSyntaxOfEnteringBattle() {
         String singleOrMulti = scanner.next();
         if (singleOrMulti.equals("1")) {
-            BattleView.showBattleMenu();
             menuType = MenuType.SINGLE_PLAYER;
+            BattleView.showGameStateMenu();
+
         } else if (singleOrMulti.equals("2")) {
-            BattleView.showBattleMenu();
             menuType = MenuType.MULTI_PLAYER;
+            AccountView.showLeaderBoard();
+        } else {
+            error = ErrorType.INVALID_INPUT;
+        }
+
+    }
+
+    public boolean checkSyntaxOfGameType() {//story or custom
+        String type = scanner.next();
+        if (type.equals("1") || type.equals("2")) {
+            BattleView.showGameStateMenu();
+            if (type.equals("1")) {
+                BattleView.showStoryMode();
+            }
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -525,10 +541,38 @@ public class Request {
         return true;
     }
 
-    public boolean checkSyntaxOfGameType() {
-        String type = scanner.next();
-        if (type.equals("1") || type.equals("2")) {
-            BattleView.showGameStateMenu();
+    public boolean checkSyntaxOfStartGame() {
+        Pattern patternForStartGame = Pattern.compile(StringsRq.START_GAME + " (?<deckName>[\\w+ ]+) (?<mode>[\\w+ ]+)");
+        Matcher matcher = patternForStartGame.matcher(command);
+        if (matcher.matches()) {
+            if (menuType.equals(MenuType.SINGLE_PLAYER)) {
+                String deckName = matcher.group("deckName");
+                String mode = matcher.group("mode");
+                if (mode.equals("captureflag")) {
+                    int numberOfFlags = scanner.nextInt();
+                } else {
+
+                }
+            }
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSyntaxOfStartMultiPlayer() {
+        Pattern patternForStartMultiPlayerGame = Pattern.compile(StringsRq.START_MULTI_PLAYER_GAME + " (?<mode>[\\w+ ]+)");
+        Matcher matcher = patternForStartMultiPlayerGame.matcher(command);
+        if (matcher.matches()) {
+            if (menuType.equals(MenuType.MULTI_PLAYER)) {
+                String mode = matcher.group("mode");
+                if (mode.equals("captureflag")) {
+                    int numberOfFlags = scanner.nextInt();
+                } else {
+
+                }
+            }
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;

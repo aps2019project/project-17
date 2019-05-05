@@ -1,6 +1,7 @@
 package view;
 
 import CardCollections.Hand;
+import Data.AI;
 import GameGround.*;
 import effects.*;
 
@@ -18,6 +19,12 @@ public class BattleView extends View {
         System.out.println("please choose game type:");
         System.out.println("1.story");
         System.out.println("2.custom game");
+    }
+
+    public static void showStoryMode(){
+        System.out.println("1.Kill Hero : "+ AI.getAIModeKH().getMainDeck().getHero().getName());
+        System.out.println("2.Hold Flag : "+AI.getAIModeHF().getMainDeck().getHero().getName());
+        System.out.println("3.Capture Flag : "+AI.getAIModeCF().getMainDeck().getHero().getName());
     }
 
     public static void showGameInfo(Battle battle) {
