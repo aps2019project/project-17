@@ -5,6 +5,12 @@ import GameGround.Battle;
 
 import java.util.Random;
 
+enum MODE {
+    KH,
+    Hf,
+    CF
+}
+
 public class AI extends Player {
     private static Player currentAIPlayer;
     private static Player AIModeKH;
@@ -18,9 +24,24 @@ public class AI extends Player {
     }
 
     public AI(String userName, Deck deck) {
+//        Deck deck = Account.getLoginUser().getCollection().findDeck(deckName);
         super(userName, deck);
         initializeAIStory();
         currentAIPlayer = this;
+    }
+
+    public static void setAiPlayer(MODE mode) {
+        initializeAIStory();
+        switch (mode) {
+            case KH:
+                currentAIPlayer = AIModeKH;
+                return;
+            case Hf:
+                currentAIPlayer = AIModeHF;
+                return;
+            case CF:
+                currentAIPlayer = AIModeCF;
+        }
     }
 
     public static Player getCurrentAIPlayer() {
@@ -54,7 +75,7 @@ public class AI extends Player {
                     battle.selectCardOrItem(currentAIPlayer.getMainDeck().getCards().get(randomToChoose).getId());
                     break;
                 case 1:
-                    int x = new Random().nextInt() %9 +1;
+                    int x = new Random().nextInt() % 9 + 1;
                     int y = new Random().nextInt() % 5 + 1;
                     battle.movingCard(x, y);
                     break;

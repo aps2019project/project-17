@@ -198,7 +198,7 @@ public class Player {
         this.previousMana = previousMana;
     }
 
-    public boolean isPlayerReady() {
+    public boolean isPlayerReadyForBattle() {
         if (mainDeck == null)
             return false;
         if (!mainDeck.isDeckValidate())
