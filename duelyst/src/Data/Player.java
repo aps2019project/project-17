@@ -198,7 +198,12 @@ public class Player {
         this.previousMana = previousMana;
     }
 
-    private void isPlayerReady() {
-
+    public boolean isPlayerReady() {
+        if (mainDeck == null)
+            return false;
+        if (!mainDeck.isDeckValidate())
+            return false;
+        setHand();
+        return true;
     }
 }

@@ -3,6 +3,8 @@ package Data;
 import CardCollections.Deck;
 import GameGround.Battle;
 
+import java.util.Random;
+
 public class AI extends Player {
     private static Player currentAIPlayer;
     private static Player AIModeKH;
@@ -42,6 +44,39 @@ public class AI extends Player {
     }
 
     public void action() {
-
+        int counters = new Random().nextInt() % 9;
+        Battle battle = Battle.getCurrentBattle();
+        for (int i = 0; i < counters; i++) {
+            int r = new Random().nextInt() % 9;
+            switch (r) {
+                case 0:
+                    int randomToChoose = new Random().nextInt() % (currentAIPlayer).getMainDeck().getCards().size();
+                    battle.selectCardOrItem(currentAIPlayer.getMainDeck().getCards().get(randomToChoose).getId());
+                    break;
+                case 1:
+                    int x = new Random().nextInt() % 9;
+                    int y = new Random().nextInt() % 5;
+                    battle.movingCard(x, y);
+                    break;
+                case 2:
+                    randomToChoose = new Random().nextInt() % (currentAIPlayer).getMainDeck().getCards().size();
+                    x = new Random().nextInt() % 9;
+                    y = new Random().nextInt() % 5;
+                    battle.insertingCardFromHand(currentAIPlayer.getMainDeck().getCards().get(randomToChoose).getName(), x, y);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+            }
+        }
     }
 }
