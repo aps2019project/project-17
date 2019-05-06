@@ -632,6 +632,11 @@ public class Request {
         Matcher matcher = patternForStartMultiPlayerGame.matcher(command);
         if (matcher.matches()) {
             if (menuType.equals(MenuType.MULTI_PLAYER)) {
+                if(secondPlayerUserName==null){
+                    System.out.println("You have not selected any opponents yet!");
+                    return true;
+                }
+                Account accountOfPlayerTwo=GameController.getAccount(secondPlayerUserName);
                 String mode = matcher.group("mode");
                 if (mode.equals("captureflag")) {
                     int numberOfFlags = scanner.nextInt();
