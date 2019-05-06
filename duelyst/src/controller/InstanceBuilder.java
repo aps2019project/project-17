@@ -33,13 +33,13 @@ public class InstanceBuilder {
             addBuffsToSpell();
             heroes = (Hero[]) creatingInstance(InstanceType.HERO);
             heroBuff = (BuffDetail[]) creatingInstance(InstanceType.HERO_BUFF);
-            addBuffToHero();
+            addBuffsToMinion(heroes, heroBuff);
             items = (Item[]) creatingInstance(InstanceType.ITEM);
             itemBuff = (BuffDetail[]) creatingInstance(InstanceType.ITEM_BUFF);
             addBuffsToItem();
             minions = (Minion[]) creatingInstance(InstanceType.MINION);
             minionBuff = (BuffDetail[]) creatingInstance(InstanceType.MINION_BUFF);
-            addBuffsToMinion();
+            addBuffsToMinion(minions, minionBuff);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,10 +102,10 @@ public class InstanceBuilder {
         }
     }
 
-    private static void addBuffsToMinion() {
+    private static void addBuffsToMinion(Minion[] minions, BuffDetail[] buffDetails) {
         for (Minion minion : minions) {
             minion.init();
-            for (BuffDetail minionBuff : minionBuff) {
+            for (BuffDetail minionBuff : buffDetails) {
                 minion.init();
                 if (minion.getId().equals(minionBuff.getId())) {
                     minion.addSpecialPowerBuff(minionBuff);
@@ -127,16 +127,6 @@ public class InstanceBuilder {
         }
     }
 
-    private static void addBuffToHero() {
-        for (Hero hero : heroes) {
-            hero.init();
-            for (BuffDetail heroBuff : heroBuff) {
-                heroBuff.init();
-                if (hero.getId().equals(heroBuff.getId()))
-                    hero.addSpecialPowerBuff(heroBuff);
-            }
-        }
-    }
 
     public static Spell[] getSpells() {
         return Arrays.copyOf(spells, spells.length);
