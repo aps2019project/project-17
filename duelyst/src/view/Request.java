@@ -1141,7 +1141,7 @@ public class Request {
         Matcher matcher = patternForAttackCombo.matcher(command);
         if (matcher.matches()) {
             System.out.println("Enter opponent cardId:");
-            String opponentCardId=scanner.nextLine();
+            String opponentCardId = scanner.nextLine();
             System.out.println("Enter your cardIds:");
             String ids = scanner.nextLine();
             String[] allIds = ids.split(" ");
@@ -1252,7 +1252,7 @@ public class Request {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            // TODO: must to be completed by adding use method for items
+            GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
             return true;
         } else {
             error = ErrorType.INVALID_INPUT;
