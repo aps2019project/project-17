@@ -6,6 +6,7 @@ import effects.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class InstanceBuilder {
@@ -25,6 +26,7 @@ public class InstanceBuilder {
     private static BuffDetail[] itemBuff;
     private static Minion[] minions;
     private static BuffDetail[] minionBuff;
+    private static ArrayList<Item> collectAbleItems;
 
     public static void creation() {
         try {
@@ -33,13 +35,13 @@ public class InstanceBuilder {
             addBuffsToSpell();
             heroes = (Hero[]) creatingInstance(InstanceType.HERO);
             heroBuff = (BuffDetail[]) creatingInstance(InstanceType.HERO_BUFF);
-            addBuffToHero();
+            addBuffsToMinion(heroes, heroBuff);
             items = (Item[]) creatingInstance(InstanceType.ITEM);
             itemBuff = (BuffDetail[]) creatingInstance(InstanceType.ITEM_BUFF);
             addBuffsToItem();
             minions = (Minion[]) creatingInstance(InstanceType.MINION);
             minionBuff = (BuffDetail[]) creatingInstance(InstanceType.MINION_BUFF);
-            addBuffsToMinion();
+            addBuffsToMinion(minions, minionBuff);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,10 +104,10 @@ public class InstanceBuilder {
         }
     }
 
-    private static void addBuffsToMinion() {
+    private static void addBuffsToMinion(Minion[] minions, BuffDetail[] buffDetails) {
         for (Minion minion : minions) {
             minion.init();
-            for (BuffDetail minionBuff : minionBuff) {
+            for (BuffDetail minionBuff : buffDetails) {
                 minion.init();
                 if (minion.getId().equals(minionBuff.getId())) {
                     minion.addSpecialPowerBuff(minionBuff);
@@ -127,16 +129,6 @@ public class InstanceBuilder {
         }
     }
 
-    private static void addBuffToHero() {
-        for (Hero hero : heroes) {
-            hero.init();
-            for (BuffDetail heroBuff : heroBuff) {
-                heroBuff.init();
-                if (hero.getId().equals(heroBuff.getId()))
-                    hero.addSpecialPowerBuff(heroBuff);
-            }
-        }
-    }
 
     public static Spell[] getSpells() {
         return Arrays.copyOf(spells, spells.length);
@@ -146,11 +138,32 @@ public class InstanceBuilder {
         return Arrays.copyOf(heroes, heroes.length);
     }
 
-    public static Item[] getItems() {
+    public static Item[] getAllItems() {
         return Arrays.copyOf(items, items.length);
     }
 
     public static Minion[] getMinions() {
         return Arrays.copyOf(minions, minions.length);
+    }
+
+    public static ArrayList<Item> getCollectAbleItems() {
+        ArrayList<Item> toReturn = new ArrayList<>();
+        for (int i = 0; i < getAllItems().length; i++) {
+            if (getAllItems()[i].getPrice() == 0)
+                toReturn.add(getAllItems()[i]);
+        }
+        return toReturn;
+    }
+
+    public static Item[] getIems(){
+        Item[] items = new Item[getAllItems().length - getCollectAbleItems().size()];
+        int counter = 0;
+        for (int i = 0; i < getAllItems().length; i++) {
+            if (getAllItems()[i].getPrice() != 0){
+                items[counter] = getAllItems()[i];
+                counter ++;
+            }
+        }
+        return Arrays.copyOf(items, items.length);
     }
 }

@@ -129,7 +129,7 @@ public class GameController {
         return battle.showGameInfo().toString();
     }
 
-    public static String selectCard(String cardID){
+    public static String selectCard(String cardID) {
         return Battle.getCurrentBattle().selectCardOrItem(cardID);
     }
 }

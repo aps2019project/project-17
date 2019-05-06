@@ -33,7 +33,7 @@ public class Deck {
         Hero[] heroes = InstanceBuilder.getHeroes();
         Minion[] minions = InstanceBuilder.getMinions();
         Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getItems();
+        Item[] items = InstanceBuilder.getAllItems();
         deckKillHero = new Deck("Kill Hero Story");
         deckKillHero.setHero(heroes[0]);
         deckKillHero.setItem(items[0]);
@@ -46,11 +46,11 @@ public class Deck {
         Hero[] heroes = InstanceBuilder.getHeroes();
         Minion[] minions = InstanceBuilder.getMinions();
         Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getItems();
+        Item[] items = InstanceBuilder.getAllItems();
         deckHoldFlag = new Deck("Hold flag Story");
         deckHoldFlag.setHero(heroes[4]);
         deckHoldFlag.setItem(items[17]);
-        addToHoldFlag(minions, 2, 3, 5, 8, 12, 15, 15, 19, 23, 27, 30, 33, 39);
+        addToHoldFlag(minions, 2, 3, 5, 8, 12, 15, 19, 23, 27, 30, 33, 39);
         addToHoldFlag(spells, 2, 3, 5, 9, 8, 13, 19);
     }
 
@@ -58,7 +58,7 @@ public class Deck {
         Hero[] heroes = InstanceBuilder.getHeroes();
         Minion[] minions = InstanceBuilder.getMinions();
         Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getItems();
+        Item[] items = InstanceBuilder.getAllItems();
         deckCaptureFlag = new Deck("Capture Flag Story");
         deckCaptureFlag.setHero(heroes[6]);
         deckCaptureFlag.setItem(items[11]);
@@ -151,7 +151,7 @@ public class Deck {
         return this.cards.size();
     }
 
-    public Card returnCardFromDeck(String cardName){
+    public Card returnCardFromDeck(String cardName) {
         for (Card card : this.cards) {
             if (card.getName().equals(cardName) || card.getId().equals(cardName))
                 return card;
