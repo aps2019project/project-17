@@ -29,8 +29,3 @@ public class GameData {
     }
 }
 
-public enum MatchState {
-    WIN,
-    LOSE,
-    DRAW
-}
