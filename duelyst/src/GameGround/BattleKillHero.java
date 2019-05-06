@@ -13,16 +13,18 @@ public class BattleKillHero extends Battle {
 
     public BattleKillHero(Player playerOne, Player playerTwo) {
         super(playerOne, playerTwo, GameMode.MULTI_PLAYER, BattleType.KILL_HERO);
-        currentBattle = this;
         setGameData();
+        setPrice();
+        currentBattle = this;
         //MULTI PLAYER
     }
 
     public BattleKillHero(Player playerOne, SinglePlayerModes singlePlayerModes) {
         super(playerOne, AI.getCurrentAIPlayer(), GameMode.SINGLE_PLAYER, BattleType.KILL_HERO);
         this.singlePlayerModes = singlePlayerModes;
-        currentBattle = this;
         setGameData();
+        setPrice();
+        currentBattle = this;
         // single Player -> in this case there is no different between custom and story because both of them pass a deck name! the currentAIPlayer should set in Controller!
     }
 
@@ -74,5 +76,24 @@ public class BattleKillHero extends Battle {
         Cell cell = getCellFromBoard(x, y);
         // spell
         return "card successfully inserted";
+    }
+
+    @Override
+    protected void setPrice() {
+        switch (gameMode) {
+            case SINGLE_PLAYER:
+                switch (singlePlayerModes) {
+                    case STORY:
+                        this.price = 500;
+                        break;
+                    case CUSTOM:
+                        this.price = 1000;
+                        break;
+                }
+                break;
+            case MULTI_PLAYER:
+                this.price =  1000;
+                break;
+        }
     }
 }
