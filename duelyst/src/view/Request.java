@@ -513,10 +513,10 @@ public class Request {
                     menuType = MenuType.SHOP_MENU;
                     break;
                 case "battle":
-//                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
-//                        System.out.println("selected deck is invalid");
-//                        return false;
-//                    }
+                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
+                        System.out.println("selected deck is invalid");
+                        return false;
+                    }
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
                     checkSyntaxOfEnteringBattle();
@@ -1125,6 +1125,9 @@ public class Request {
     public boolean checkSyntaxOfAttack() {
         Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " (?<cardId>[\\w+ ]+)");
         Matcher matcher = patternForAttack.matcher(command);
+        if (matcher.matches()){
+            System.out.println("matches");
+        }
         String cardId = matcher.group("cardId");
         if (matcher.matches()) {
             String result = GameController.attack(cardId, Battle.getCurrentBattle());
@@ -1181,7 +1184,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfInsert() {
-        Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " (?<cardName>[\\w+ ]+) in  \\((?<x>\\d),(?<y>\\d)\\)");
+        Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " (?<cardName>[\\w+ ]+) in \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForInsert.matcher(command);
         if (matcher.matches()) {
             String cardName = matcher.group("cardName");

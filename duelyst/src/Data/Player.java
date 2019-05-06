@@ -129,8 +129,11 @@ public class Player {
 
     private void setHand() {
         Random random = new Random();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             int n = random.nextInt() % this.copyMainDeck.getCards().size();
+            while (n < 0) {
+                n = random.nextInt() % this.copyMainDeck.getCards().size();
+            }
             this.hand.addCard(copyMainDeck.getCards().get(n));
             this.copyMainDeck.getCards().remove(n);
         }

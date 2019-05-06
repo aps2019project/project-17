@@ -95,6 +95,8 @@ public class BattleView extends View {
             System.out.printf("name: %s, type: %s\n", card.getName(), type);
         }
         Card card = battle.whoseTurn().getNextCard();
+        if (card == null)
+            return;
         String type = "Minion";
         if (card instanceof Spell)
             type = "Spell";

@@ -133,7 +133,7 @@ public class Minion extends Card {
         ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
         specialSituationBuffs.add(specialSituationBuff);
         increaseNumberOfAttack();
-        if (specialSituation.equals(SpecialSituation.ATTACK))
+        if (specialSituationBuff!=null && specialSituation.equals(SpecialSituation.ATTACK))
             this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
         this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
         if (this.attackType.equals(AttackType.ON_ATTACK))
