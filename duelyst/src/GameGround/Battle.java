@@ -7,6 +7,7 @@ import Data.Player;
 import effects.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Battle {
@@ -132,6 +133,7 @@ public class Battle {
             whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
             cellDestination.setItem(null);
         }
+        // if cell has buff ?!
         return "ok";
     }
 
@@ -191,6 +193,8 @@ public class Battle {
             this.whoseTurn().removeCardFromHand(card);
             return "spell successfully inserted";
         }
+
+        // if cell has buff ?!
         return "ok";
     }
 
@@ -201,7 +205,7 @@ public class Battle {
             toShow.append("you dont have item right know ");
         } else {
             for (int i = 0; i < toPrint.size(); i++) {
-                toShow.append(i).append(": ").append(toPrint.get(i).getName()).append("\n");
+                toShow.append(i).append(": ").append(toPrint.get(i).getName()).append(" ").append(toPrint.get(i).getDesc()).append("\n");
             }
         }
         return toShow.toString();
@@ -272,7 +276,7 @@ public class Battle {
             return "you don't have enough mana";
 
         whoseTurn().getMainDeck().getHero().useSpecialPower(cell);
-        return "special power successfully added";
+        return "special power successfully used";
     }
 
     private Card returnCardFromBoard(String id, Player player) {
@@ -441,32 +445,52 @@ public class Battle {
         return nearestMinions.get(r);
     }
 
-    public ArrayList<Minion> getMinionsSquare(int x, int y) {
-        ArrayList<Minion> toReturn = new ArrayList<>();
+    public ArrayList<Cell> getMinionsSquare(int x, int y) {
+        ArrayList<Cell> cells = new ArrayList<>();
         for (int i = x - 1; i <= x; i++) {
             for (int j = y - 1; j <= y; j++) {
-                Minion minion = (Minion) getCellFromBoard(i + 1, j + 1).getCard();
-                if (minion == null)
-                    continue;
-                toReturn.add(minion);
+                cells.add(getCellFromBoard(i + 1, j + 1));
             }
         }
-        return toReturn;
+        return cells;
     }
 
-    public ArrayList<Minion> getMinionsCube(int x, int y) {
-        ArrayList<Minion> toReturn = new ArrayList<>();
+    public ArrayList<Cell> getMinionsCube(int x, int y) {
+        ArrayList<Cell> cells = new ArrayList<>();
         for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
-                Minion minion = (Minion) getCellFromBoard(i + 1, j + 1).getCard();
-                if (minion == null)
-                    continue;
-                toReturn.add(minion);
+                cells.add(getCellFromBoard(i + i, j + 1));
             }
         }
-        return toReturn;
+        return cells;
     }
 
     protected void setPrice(){
+    }
+
+    public String GraveYard_showInfo(String cardID){
+        if (whoseTurn().getGraveYard().size() == 0)
+            return "grave yard is empty";
+        for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
+            if (whoseTurn().getGraveYard().get(i).getId().equals(cardID))
+                return (whoseTurn().getGraveYard().get(i).getName() + " " + whoseTurn().getGraveYard().get(i).getDesc());
+        }
+        return "invalid card ID";
+    }
+
+    public String GraveYard_showCards(){
+        StringBuilder toReturn = new StringBuilder();
+        if (whoseTurn().getGraveYard().size() == 0)
+            return "grave yard is empty";
+        for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
+            Card card = whoseTurn().getGraveYard().get(i);
+            toReturn.append(card.getName()).append(" ").append(card.getDesc()).append("\n");
+        }
+        return toReturn.toString();
+    }
+
+    public ArrayList<Minion> minionsOfFirstPlayer(){
+        ArrayList<Minion> toReturn = new ArrayList<>();
+        return toReturn;
     }
 }
