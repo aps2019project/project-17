@@ -590,19 +590,23 @@ public class Request {
                 if (mode.equals("kh")) {
                     new AI("Gholi", deck);
                     new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                    menuType=MenuType.BATTLE_MENU;
                 } else if (mode.equals("fh")) {
                     new AI("Gholi", deck);
                     new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                    menuType=MenuType.BATTLE_MENU;
                 }
-                if (mode.equals("cf")) {
+                else if (mode.equals("cf")) {
                     int numberOfFlags = scanner.nextInt();
                     new AI("Gholi", deck);
                     new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
+                    menuType=MenuType.BATTLE_MENU;
                 } else {
+                    System.out.println("hi");
                     error = ErrorType.INVALID_INPUT;
                     return false;
                 }
-                menuType=MenuType.BATTLE_MENU;
+
             }
         } else {
             error = ErrorType.INVALID_INPUT;
