@@ -134,15 +134,19 @@ public class GameController {
     }
 
     public static String showCardInfoFromGraveYard(String cardID, Battle battle) {
-        return battle.showCardInfoFromGraveYard(cardID);
+        return battle.GraveYard_showInfo(cardID);
     }
 
     public static String showCardsOfGraveYard(Battle battle) {
-        return battle.showCardsOfGraveYard();
+        return battle.GraveYard_showCards();
     }
 
     public static String attackCombo(String opponentCardID, Battle battle, String... cardIDs) {
         return battle.attackCombo(opponentCardID, cardIDs);
+    }
+
+    public static String useItem(int x, int y,Battle battle){
+        return battle.useItem(x, y);
     }
 
     public static String logout() {
