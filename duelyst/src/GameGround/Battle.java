@@ -283,6 +283,14 @@ public class Battle {
         return "special power successfully used";
     }
 
+    public String useItem(int x, int y){
+        if (selectedItem == null)
+            return "at first you should select a item";
+        this.selectedItem.action(x, y);
+        return "item successfully used";
+
+    }
+
     private Card returnCardFromBoard(String id, Player player) {
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
