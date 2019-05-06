@@ -7,6 +7,7 @@ import Data.GameData;
 import Data.MatchState;
 import Data.Player;
 import controller.GameController;
+import controller.InstanceBuilder;
 import effects.*;
 
 import java.util.ArrayList;
@@ -39,7 +40,30 @@ public class Battle {
         this.selectedItem = null;
         this.battleType = battleType;
         setHeroesInTheirPosition();
+        setItems();
         situationOfGame = "";
+    }
+
+    private void setItems(){
+        ArrayList<Item> items = InstanceBuilder.getCollectAbleItems();
+        int n = new Random().nextInt() % items.size() / 3 ;
+        while (n < 0)
+            n = new Random().nextInt() % items.size() / 3;
+        if (n == 0)
+            return;
+        for (int i = 0; i < n; i++) {
+            int select = new Random().nextInt() % items.size();
+            while (select < 0)
+                select = new Random().nextInt() % items.size();
+            int x = new Random().nextInt() % 9 + 1;
+            int y = new Random().nextInt() % 5 + 1;
+            while (x < 0 || y < 0){
+                x = new Random().nextInt() % 9 + 1;
+                y = new Random().nextInt() % 5 + 1;
+            }
+            Cell cell = getCellFromBoard(x, y);
+            cell.setItem(items.get(select));
+        }
     }
 
     private void setHeroesInTheirPosition() {
