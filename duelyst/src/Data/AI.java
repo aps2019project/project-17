@@ -20,7 +20,6 @@ public class AI extends Player {
     public AI(String userName, Deck deck) {
 //        Deck deck = Account.getLoginUser().getCollection().findDeck(deckName);
         super(userName, deck);
-        initializeAIStory();
         currentAIPlayer = this;
     }
 
