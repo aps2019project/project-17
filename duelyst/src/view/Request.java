@@ -631,29 +631,38 @@ public class Request {
         Matcher matcher = patternForStartMultiPlayerGame.matcher(command);
         if (matcher.matches()) {
             if (menuType.equals(MenuType.MULTI_PLAYER)) {
-                if (secondPlayerUserName == null) {
+                if (secondPlayerUserName == null || secondPlayerUserName.equals("")) {
                     System.out.println("You have not selected any opponents yet!");
                     return true;
                 }
                 Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
-                if (accountOfPlayerTwo.getMainDeck() == null) {
-                    System.out.println("Selected deck for second player is invalid");
+                if (accountOfPlayerTwo == null) {
+                    System.out.println("invalid username");
+                    return true;
+                }
+
+                if (accountOfPlayerTwo.getMainDeck() == null || !accountOfPlayerTwo.getMainDeck().isDeckValidate()) {
+                    System.out.println("selected deck for second player is invalid");
                     return true;
                 }
                 String mode = matcher.group("mode");
-                if (mode.equals("kh")) {
-                    new BattleKillHero(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
-                    menuType = MenuType.BATTLE_MENU;
-                } else if (mode.equals("hf")) {
-                    new BattleHoldingFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
-                    menuType = MenuType.BATTLE_MENU;
-                } else if (mode.equals("cf")) {
-                    int numberOfFlags = scanner.nextInt();
-                    new BattleCaptureFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer(), numberOfFlags);
-                    menuType = MenuType.BATTLE_MENU;
-                } else {
-                    error = ErrorType.INVALID_INPUT;
-                    return false;
+                switch (mode) {
+                    case "kh":
+                        new BattleKillHero(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
+                        menuType = MenuType.BATTLE_MENU;
+                        break;
+                    case "hf":
+                        new BattleHoldingFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
+                        menuType = MenuType.BATTLE_MENU;
+                        break;
+                    case "cf":
+                        int numberOfFlags = scanner.nextInt();
+                        new BattleCaptureFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer(), numberOfFlags);
+                        menuType = MenuType.BATTLE_MENU;
+                        break;
+                    default:
+                        error = ErrorType.INVALID_INPUT;
+                        return false;
                 }
             }
         } else {
@@ -1130,7 +1139,7 @@ public class Request {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            // TODO: must to be completed with methods
+            GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -1182,7 +1191,7 @@ public class Request {
         Pattern patternForShowCollectibles = Pattern.compile(StringsRq.SHOW_COLLECTIBLES);
         Matcher matcher = patternForShowCollectibles.matcher(command);
         if (matcher.matches()) {
-            BattleView.showCollectAbles();// TODO: must to be completed
+            BattleView.showCollectAbles();
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
