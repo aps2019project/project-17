@@ -47,7 +47,7 @@ public class BattleView extends View {
             return;
         }
         for (Minion minion : minions) {
-            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
+            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]\n", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
         }
 
     }
@@ -59,7 +59,7 @@ public class BattleView extends View {
             return;
         }
         for (Minion minion : minions) {
-            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
+            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]\n", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
         }
     }
 
