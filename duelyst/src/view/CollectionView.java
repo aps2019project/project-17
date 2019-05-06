@@ -17,6 +17,7 @@ public class CollectionView extends View {
                 counter++;
             }
         }
+        System.out.println();
         System.out.print("Items:");
         if (account.getCollection().getItems() != null) {
             int counter = 1;
@@ -27,6 +28,7 @@ public class CollectionView extends View {
                 counter++;
             }
         }
+        System.out.println();
         System.out.print("Cards:");
         if (account.getCollection().getCards() != null) {
             int counter = 1;
@@ -43,6 +45,7 @@ public class CollectionView extends View {
                 counter++;
             }
         }
+        System.out.println();
 
     }
 
@@ -70,12 +73,14 @@ public class CollectionView extends View {
             System.out.print("1 : ");
             deck.getHero().show();
         }
+        System.out.println();
         System.out.print("Items :");
         if (deck.getItem() != null) {
             System.out.println();
             System.out.print("1 : ");
             deck.getItem().show();
         }
+        System.out.println();
         System.out.println("Cards : ");
         int counter = 1;
         for (Card card : deck.getCards()) {
@@ -89,6 +94,7 @@ public class CollectionView extends View {
             }
             counter++;
         }
+        System.out.println();
     }
 
     public static void collectionHelp() {
