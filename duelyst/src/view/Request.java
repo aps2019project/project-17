@@ -606,16 +606,19 @@ public class Request {
                     new AI("Gholi", deck);
                     new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     menuType = MenuType.BATTLE_MENU;
+                    System.out.println("You have entered the Battle,Fight!");
                 } else if (mode.equals("fh")) {
                     new AI("Gholi", deck);
                     new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     menuType = MenuType.BATTLE_MENU;
+                    System.out.println("You have entered the Battle,Fight!");
                 } else if (mode.equals("cf")) {
                     System.out.println("Enter number of flags:");
                     int numberOfFlags = scanner.nextInt();
                     new AI("Gholi", deck);
                     new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
                     menuType = MenuType.BATTLE_MENU;
+                    System.out.println("You have entered the Battle,Fight!");
                 } else {
                     error = ErrorType.INVALID_INPUT;
                     return false;
@@ -653,16 +656,19 @@ public class Request {
                     case "kh":
                         new BattleKillHero(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
                         menuType = MenuType.BATTLE_MENU;
+                        System.out.println("You have entered the Battle,Fight!");
                         break;
                     case "hf":
                         new BattleHoldingFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
                         menuType = MenuType.BATTLE_MENU;
+                        System.out.println("You have entered the Battle,Fight!");
                         break;
                     case "cf":
                         System.out.println("Enter number of flags:");
                         int numberOfFlags = scanner.nextInt();
                         new BattleCaptureFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer(), numberOfFlags);
                         menuType = MenuType.BATTLE_MENU;
+                        System.out.println("You have entered the Battle,Fight!");
                         break;
                     default:
                         error = ErrorType.INVALID_INPUT;
