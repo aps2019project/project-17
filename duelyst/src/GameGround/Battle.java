@@ -2,8 +2,11 @@ package GameGround;
 
 
 import CardCollections.Hand;
+import Data.Account;
 import Data.GameData;
+import Data.MatchState;
 import Data.Player;
+import controller.GameController;
 import effects.*;
 
 import java.util.ArrayList;
@@ -283,7 +286,7 @@ public class Battle {
         return "special power successfully used";
     }
 
-    public String useItem(int x, int y){
+    public String useItem(int x, int y) {
         if (selectedItem == null)
             return "at first you should select a item";
         this.selectedItem.action(x, y);
@@ -508,6 +511,44 @@ public class Battle {
             }
         }
         return toReturn;
+    }
+
+    public void endingGame() {
+        if (whoseTurn().equals(playerOne)) {
+            gameDataPlayerOne.setMatchState(MatchState.LOSE);
+            gameDataPlayerTwo.setMatchState(MatchState.WIN);
+            for (int i = 0; i < GameController.getAccounts().size(); i++) {
+                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfWins();
+                    GameController.getAccounts().get(i).changeDaric(currentBattle.price);
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                }
+                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfLose();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                }
+            }
+            situationOfGame = playerOne.getUserName() + " loses from " + playerTwo.getUserName();
+            currentBattle = null;
+            return;
+        }
+        if (whoseTurn().equals(playerTwo)) {
+            gameDataPlayerOne.setMatchState(MatchState.WIN);
+            gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+            for (int i = 0; i < GameController.getAccounts().size(); i++) {
+                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfWins();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                    GameController.getAccounts().get(i).changeDaric(currentBattle.price);
+                }
+                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfLose();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                }
+            }
+            situationOfGame = playerTwo.getUserName() + " loses from " + playerOne.getUserName();
+            currentBattle = null;
+        }
     }
 
     public void endGame() {
