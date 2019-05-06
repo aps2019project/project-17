@@ -4,7 +4,6 @@ import CardCollections.*;
 import effects.Buff;
 import effects.Card;
 import effects.Item;
-import effects.Minion;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,9 +19,8 @@ public class Player {
     private ArrayList<Item> collectAbleItems;
     private ArrayList<Card> graveYard;
     private int holdingFlags;
-    private boolean playerHasFlag;
     private Card nextCard;
-    private Buff buff;
+    private Buff buff = new Buff();
     private boolean putInGroundAttackEnemyHero;
 
     public Player(String userName, Deck deck) {
@@ -33,7 +31,6 @@ public class Player {
         this.hand = new Hand();
         this.userName = userName;
         this.holdingFlags = 0;
-        this.playerHasFlag = false;
         this.nextCard = null;
         setMainDeck(deck);
     }
@@ -45,7 +42,6 @@ public class Player {
         this.hand = new Hand();
         this.userName = userName;
         this.holdingFlags = 0;
-        this.playerHasFlag = false;
         this.nextCard = null;
         this.mainDeck = null;
     }
@@ -54,17 +50,11 @@ public class Player {
         return buff;
     }
 
+
     public void setPutInGroundAttackEnemyHero(boolean putInGroundAttackEnemyHero) {
         this.putInGroundAttackEnemyHero = putInGroundAttackEnemyHero;
     }
 
-    public Item getItemFromHand(String itemName) {
-        for (Item item : this.collectAbleItems) {
-            if (item.getName().equals(itemName))
-                return item;
-        }
-        return null;
-    }
 
     public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
