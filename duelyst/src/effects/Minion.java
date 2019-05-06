@@ -60,7 +60,7 @@ public class Minion extends Card {
 
     private void makeAttackBuff(int attackPower) {
         this.attack = new Buff();
-        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE, -2, 0, -attackPower);
+        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.NONE, TargetRange.ONE, -2, 0, -attackPower);
         this.attack.addBuff(buffDetail);
     }
 
