@@ -682,6 +682,9 @@ public class Request {
     public boolean checkSyntaxOfSelectUser() {
         Pattern patternForSelectUser = Pattern.compile(StringsRq.SELECT_USER + " (?<userName>\\w+)");
         Matcher matcher = patternForSelectUser.matcher(command);
+        while (secondPlayerUserName == null || secondPlayerUserName.equals("")){
+            secondPlayerUserName = scanner.next();
+        }
         if (matcher.matches()) {
             secondPlayerUserName = matcher.group("userName");
             Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
