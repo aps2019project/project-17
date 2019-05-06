@@ -231,4 +231,19 @@ public class BattleCaptureFlag extends Battle {
             situationOfGame = playerTwo.getUserName() + " win from " + playerOne.getUserName() + " and earn " + price;
         }
     }
+
+    @Override
+    public void endTurn() {
+        super.endTurn();
+        switch (gameMode) {
+            case SINGLE_PLAYER:
+                super.endTurn();
+                ((AI)AI.getCurrentAIPlayer()).action();
+                super.endTurn();
+                break;
+            case MULTI_PLAYER:
+                endTurn();
+                break;
+        }
+    }
 }

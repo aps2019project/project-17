@@ -205,4 +205,21 @@ public class BattleHoldingFlag extends Battle {
             }
         }
     }
+
+    @Override
+    public void endTurn() {
+        if (whoHasFlag != null){
+            this.timeHoldingFlag ++;
+        }
+        switch (gameMode){
+            case SINGLE_PLAYER:
+                super.endTurn();
+                ((AI) AI.getCurrentAIPlayer()).action();
+                super.endTurn();
+                break;
+            case MULTI_PLAYER:
+                super.endTurn();
+                break;
+        }
+    }
 }

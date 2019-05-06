@@ -77,4 +77,10 @@ public class Item {
     public int getPrice() {
         return price;
     }
+
+    public void passTurn() {
+        if (this.buff == null || this.buff.getBuffDetails() == null)
+            return;
+        buff.action(0, 0, buff.getBuffDetails());
+    }
 }

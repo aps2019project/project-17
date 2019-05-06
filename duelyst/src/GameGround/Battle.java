@@ -364,6 +364,8 @@ public class Battle {
 
     public void endTurn() {
         this.turn++;
+        this.selectedCard = null;
+        this.selectedItem = null;
         if (this.turn >= 15) {
             this.playerOne.addMana(-this.playerOne.getMana() + 9);
             this.playerTwo.addMana(-this.playerTwo.getMana() + 9);
@@ -376,11 +378,23 @@ public class Battle {
             this.playerOne.setPreviousMana(this.playerOne.getMana());
             this.playerTwo.setPreviousMana(this.playerTwo.getMana());
         }
-        // minions reset
-        // effect time in buff
-        // time of holding flag
-        //
-        // this part depend on Game Mode
+        for (Minion minion : getAllMinion()) {
+            minion.passTurn();
+        }
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                getCellFromBoard(i + 1, j + 1).passTurn();
+            }
+        }
+        for (Item collectAbleItem : playerOne.getCollectAbleItems()) {
+            collectAbleItem.passTurn();
+        }
+        for (Item collectAbleItem : playerTwo.getCollectAbleItems()) {
+            collectAbleItem.passTurn();
+        }
+        for (int i = 0; i < getAllMinion().size(); i++) {
+            getAllMinion().get(i).resetMinion();
+        }
     }
 
     public static Battle getCurrentBattle() {

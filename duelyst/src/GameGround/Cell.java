@@ -117,4 +117,10 @@ public class Cell {
         int y1 = cell1.getCol();
         return Math.abs(x0 - x1) + Math.abs(y0 - y1);
     }
+
+    public void passTurn() {
+        if (this.buff == null || this.buff.getBuffDetails() == null)
+            return;
+        buff.action(0, 0, buff.getBuffDetails());
+    }
 }

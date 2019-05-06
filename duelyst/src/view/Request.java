@@ -1184,7 +1184,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfInsert() {
-        Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " (?<cardName>[\\w+ ]+) in  \\((?<x>\\d),(?<y>\\d)\\)");
+        Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " (?<cardName>[\\w+ ]+) in \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForInsert.matcher(command);
         if (matcher.matches()) {
             String cardName = matcher.group("cardName");

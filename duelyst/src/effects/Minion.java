@@ -60,7 +60,7 @@ public class Minion extends Card {
 
     private void makeAttackBuff(int attackPower) {
         this.attack = new Buff();
-        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE, -2, 0, -attackPower);
+        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE, 0, 0, -attackPower);
         this.attack.addBuff(buffDetail);
     }
 
@@ -74,6 +74,19 @@ public class Minion extends Card {
                 return "HYBRID";
             default:
                 return null;
+        }
+    }
+
+    public void resetMinion(){
+        if (isStun){
+            canMove = false;
+            canAttack = false;
+            canCounterAttack = false;
+        }
+        else if (isStun){
+            canMove = true;
+            canAttack = true;
+            canCounterAttack = true;
         }
     }
 
@@ -256,5 +269,11 @@ public class Minion extends Card {
 
     public Buff getAttack() {
         return attack;
+    }
+
+    public void passTurn() {
+        if (this.buff == null || this.buff.getBuffDetails() == null)
+            return;
+        buff.action(this.xCoordinate, this.yCoordinate, buff.getBuffDetails());
     }
 }
