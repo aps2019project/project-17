@@ -21,6 +21,7 @@ public class ShopView extends View {
                 counter++;
             }
         }
+        System.out.println();
         System.out.print("Items:");
         if (account.getShop().getItemsInShop() != null) {
             int counter = 1;
@@ -32,6 +33,7 @@ public class ShopView extends View {
                 counter++;
             }
         }
+        System.out.println();
         System.out.print("Cards:");
         if (account.getShop().getShopMinions() != null) {
             int counter = 1;
@@ -50,6 +52,7 @@ public class ShopView extends View {
                 counter++;
             }
         }
+        System.out.println();
     }
 
     public static void showShopProducts(Shop shop, String cardName) {//todo not needed

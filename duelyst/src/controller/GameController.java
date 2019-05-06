@@ -125,6 +125,10 @@ public class GameController {
        return Account.getAccount(userName);
     }
 
+    public static String useSpecialPower(int x, int y,Battle battle){
+        return battle.useSpecialPower(x, y);
+    }
+
     public static String logout() {
         return Account.logout();
     }

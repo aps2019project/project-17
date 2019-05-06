@@ -3,7 +3,7 @@ package effects;
 import java.util.ArrayList;
 
 public class BuffDetail {
-    private String id;
+    private int id;
     private BuffType buffType;
     private int effectTime;
     private int changeAttackPowerValue;
@@ -24,7 +24,7 @@ public class BuffDetail {
     }
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
-        this.id = Integer.toString(id);
+        this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.targetType = targetType;
@@ -34,7 +34,7 @@ public class BuffDetail {
 
     //for change attack power or health buff
     public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
-        this.id = Integer.toString(id);
+        this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.changeAttackPowerValue = changeAttackPowerValue;
@@ -45,7 +45,7 @@ public class BuffDetail {
 
     //for holy buff and change mana
     public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int buffState) {
-        this.id = Integer.toString(id);
+        this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
         if (buffType.equals(BuffType.HOLY))
@@ -88,7 +88,7 @@ public class BuffDetail {
     }
 
     public String getId() {
-        return id;
+        return Integer.toString(id);
     }
 
     public ArrayList<Object> getTarget() {
@@ -115,5 +115,9 @@ public class BuffDetail {
 
     public SpecialSituation getSituation() {
         return situation;
+    }
+
+    public void setChangeHealthValue(int changeHealthValue) {
+        this.changeHealthValue = changeHealthValue;
     }
 }
