@@ -326,6 +326,7 @@ public class Minion extends Card {
     }
 
 
+
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
     }

@@ -18,8 +18,8 @@
   {
     "id": 303,
     "buffType": "SPECIAL_SITUATION_BUFF",
-    "targetType": "INSIDER_HERO",
-    "targetRange": "NOT_MELEE",
+    "targetType": "INSIDER_HERO_NOT_MELEE",
+    "targetRange": "ONE",
     "effectTime": 0,
     "SITUATION": "ATTACK"
   },
@@ -234,8 +234,8 @@
   {
     "id": 320,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "NONE",
-    "targetRange": "MELEE",
+    "targetType": "MELEE",
+    "targetRange": "ALL",
     "effectTime": 0,
     "changeAttackPower": 5,
     "changeHealth": 0

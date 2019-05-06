@@ -1,5 +1,11 @@
 package effects;
 
+import Data.Player;
+import GameGround.Battle;
+import GameGround.Cell;
+
+import java.util.ArrayList;
+
 public class Item {
     private String name;
     private String id;
@@ -12,13 +18,16 @@ public class Item {
         this.name = name;
         this.id = id;
         this.price = price;
-
     }
 
-    public void init ()
-    {
+    public void init() {
         this.buff = new Buff();
     }
+
+    public void action(int x, int y) {
+        buff.action(x, y, buff.getBuffDetails());
+    }
+
     public void setSpecialSituationBuff(BuffDetail buffDetail) {
         this.specialSituationBuff = buffDetail;
     }
