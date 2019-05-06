@@ -108,7 +108,6 @@ public class BattleView extends View {
     }
 
     public static void battleHelp() {
-
     }
 
 
