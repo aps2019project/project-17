@@ -1,6 +1,7 @@
 package Data;
 
 import CardCollections.*;
+import effects.Buff;
 import effects.Card;
 import effects.Item;
 import effects.Minion;
@@ -21,6 +22,8 @@ public class Player {
     private int holdingFlags;
     private boolean playerHasFlag;
     private Card nextCard;
+    private Buff buff;
+    private boolean putInGroundAttackEnemyHero;
 
     public Player(String userName, Deck deck) {
         this.mana = 2;
@@ -45,6 +48,14 @@ public class Player {
         this.playerHasFlag = false;
         this.nextCard = null;
         this.mainDeck = null;
+    }
+
+    public Buff getBuff() {
+        return buff;
+    }
+
+    public void setPutInGroundAttackEnemyHero(boolean putInGroundAttackEnemyHero) {
+        this.putInGroundAttackEnemyHero = putInGroundAttackEnemyHero;
     }
 
     public void allMinionsReset() {

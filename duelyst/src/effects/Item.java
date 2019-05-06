@@ -26,9 +26,14 @@ public class Item {
     }
 
     public void action(int x, int y) {
-        if (specialSituationBuff != null) {
-            ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituationBuff(specialSituationBuff);
-            ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituation(buff.getBuffDetails().get(0).getSituation());
+        for (BuffDetail buffDetail : buff.getBuffDetails()) {
+            if (buffDetail.getBuffType().equals(BuffType.SPECIAL_SITUATION_BUFF) && !buffDetail.getSituation().equals(SpecialSituation.PUTT_IN_GROUND)) {
+                ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituationBuff(specialSituationBuff);
+                ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituation(buffDetail.getSituation());
+            }
+            if (buffDetail.getBuffType().equals(BuffType.SPECIAL_SITUATION_BUFF) && buffDetail.getSituation().equals(SpecialSituation.PUTT_IN_GROUND)) {
+                Battle.getCurrentBattle().whoseTurn().setPutInGroundAttackEnemyHero(true);
+            }
         }
         buff.action(x, y, buff.getBuffDetails());
     }

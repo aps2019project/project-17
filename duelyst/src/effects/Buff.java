@@ -103,7 +103,10 @@ public class Buff {
                 action(targetCell, TargetType.CELL, buffDetail);
                 addBuffToCell(targetCell, buffDetail);
             }
-            action(targetPlayer, TargetType.PLAYER, buffDetail);
+            if (targetPlayer != null) {
+                action(targetPlayer, TargetType.PLAYER, buffDetail);
+                addBuffToPlayer(targetPlayer, buffDetail);
+            }
             passTurn();
         }
     }
@@ -138,6 +141,12 @@ public class Buff {
 
     public void addBuffToCell(Cell cell, BuffDetail buffDetail) {
         buffDetail.addTarget(cell);
+        cell.getBuff().addBuff(buffDetail);
+    }
+
+    public void addBuffToPlayer(Player player, BuffDetail buffDetail) {
+        buffDetail.addTarget(player);
+        player.getBuff().addBuff(buffDetail);
     }
 
     private void actionForPlayer(Player player, BuffDetail buffDetail) {
@@ -203,13 +212,14 @@ public class Buff {
                 case DE_HOLY:
                     ((Minion) target).setHolyBuffState(0);
                     ((Minion) target).getBuff().removeBuff(buffDetail);
-                    break;
+                    return;
                 case WEAKNESS:
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     if (buffDetail.getEffectTime() != -1) {
                         ((Minion) target).changeHealth(-buffDetail.getChangeHealthValue());
                         ((Minion) target).changeAttackPower(-buffDetail.getChangeAttackPowerValue());
                         ((Minion) target).getBuff().removeBuff(buffDetail);
+                        return;
                     }
                     break;
                 case STUN:
@@ -217,7 +227,7 @@ public class Buff {
                 case DISARM:
                     ((Minion) target).setCanAttack(true);
                     ((Minion) target).getBuff().removeBuff(buffDetail);
-                    break;
+                    return;
                 case FIRE_CELL:
                     ((Cell) target).setFireCell(false);
                     break;
@@ -228,7 +238,7 @@ public class Buff {
                 case ANTI:
                     ((Minion) target).setAntiBuff(null);
                     ((Minion) target).getBuff().removeBuff(buffDetail);
-                    break;
+                    return;
             }
             buffDetails.remove(buffDetail);
         }
