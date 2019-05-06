@@ -576,7 +576,7 @@ public class Request {
     }
 
     public boolean checkSyntaxOfStartGame() {
-        Pattern patternForStartGame = Pattern.compile(StringsRq.START_GAME + " (?<deckName>[\\w+ ]+) (?<mode>[\\w+ ]+)");
+        Pattern patternForStartGame = Pattern.compile(StringsRq.START_GAME + " (?<deckName>\\w+) (?<mode>\\w+)");
         Matcher matcher = patternForStartGame.matcher(command);
         if (matcher.matches()) {
             if (menuType.equals(MenuType.SINGLE_PLAYER)) {
@@ -587,14 +587,14 @@ public class Request {
                     System.out.println("Such deck not found");
                     return true;//todo check this part
                 }
-                if (mode.equals("kill hero")) {
+                if (mode.equals("kh")) {
                     new AI("Gholi", deck);
                     new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
-                } else if (mode.equals("hold flag")) {
+                } else if (mode.equals("fh")) {
                     new AI("Gholi", deck);
                     new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                 }
-                if (mode.equals("capture flag")) {
+                if (mode.equals("cf")) {
                     int numberOfFlags = scanner.nextInt();
                     new AI("Gholi", deck);
                     new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
@@ -602,6 +602,7 @@ public class Request {
                     error = ErrorType.INVALID_INPUT;
                     return false;
                 }
+                menuType=MenuType.BATTLE_MENU;
             }
         } else {
             error = ErrorType.INVALID_INPUT;
