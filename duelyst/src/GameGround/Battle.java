@@ -467,10 +467,10 @@ public class Battle {
         return cells;
     }
 
-    protected void setPrice(){
+    protected void setPrice() {
     }
 
-    public String GraveYard_showInfo(String cardID){
+    public String GraveYard_showInfo(String cardID) {
         if (whoseTurn().getGraveYard().size() == 0)
             return "grave yard is empty";
         for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
@@ -480,7 +480,7 @@ public class Battle {
         return "invalid card ID";
     }
 
-    public String GraveYard_showCards(){
+    public String GraveYard_showCards() {
         StringBuilder toReturn = new StringBuilder();
         if (whoseTurn().getGraveYard().size() == 0)
             return "grave yard is empty";
@@ -491,7 +491,7 @@ public class Battle {
         return toReturn.toString();
     }
 
-    public ArrayList<Minion> minionsOfFirstPlayer(){
+    public ArrayList<Minion> minionsOfFirstPlayer() {
         ArrayList<Minion> toReturn = new ArrayList<>();
         return toReturn;
     }
