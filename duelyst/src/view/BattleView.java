@@ -40,6 +40,10 @@ public class BattleView extends View {
 
     public static void showMyMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showMyMinions();
+        if (minions == null || minions.size() == 0) {
+            System.out.println("there isn't any player from you in cell");
+            return;
+        }
         for (Minion minion : minions) {
             System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
         }
@@ -48,6 +52,10 @@ public class BattleView extends View {
 
     public static void showOpponentMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showOpponentMinion();
+        if (minions == null || minions.size() == 0) {
+            System.out.println("there isn't any player from that player in cell");
+            return;
+        }
         for (Minion minion : minions) {
             System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
         }
