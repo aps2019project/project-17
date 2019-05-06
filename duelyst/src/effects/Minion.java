@@ -141,12 +141,6 @@ public class Minion extends Card {
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
     }
 
-    public void move(int x, int y) {
-    }
-
-    public boolean isStun() {
-        return isStun;
-    }
 
     public void setStun(boolean stun) {
         isStun = stun;
