@@ -1,5 +1,7 @@
 package effects;
 
+import java.util.ArrayList;
+
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
@@ -127,7 +129,11 @@ public class Minion extends Card {
     }
 
     public void attack(Minion minion) {
+        ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
+        specialSituationBuffs.add(specialSituationBuff);
         increaseNumberOfAttack();
+        if (specialSituation.equals(SpecialSituation.ATTACK))
+            this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
         this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
         if (this.attackType.equals(AttackType.ON_ATTACK))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
