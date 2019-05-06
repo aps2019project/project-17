@@ -117,6 +117,12 @@ public class Minion extends Card {
 
     public void useSpecialPower(int x, int y) {
         for (BuffDetail buffDetail : specialPower.getBuffDetails()) {
+            ArrayList<BuffDetail> buffDetails = new ArrayList<>();
+            buffDetails.add(buffDetail);
+            if ((buffDetail.getTargetType().equals(TargetType.SELF_NOT_MELEE) && !this.minionType.equals(MinionType.MELEE)) || buffDetail.getTargetRange().equals(TargetRange.SELF)) {
+                specialPower.action(this.xCoordinate, this.yCoordinate, buffDetails);
+                return;
+            }
             if (buffDetail.getChangeHealthValue() == -105)
                 buffDetail.setChangeHealthValue(((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).getNumberOfAttack());
         }
