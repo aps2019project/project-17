@@ -197,6 +197,12 @@ public class Player {
         return false;
     }
 
+    public void action(int x, int y) {
+        if (this.buff == null)
+            return;
+        this.buff.action(x, y, buff.getBuffDetails());
+    }
+
     public int getPreviousMana() {
         return previousMana;
     }
