@@ -9,5 +9,7 @@ public enum TargetType {
     PLAYER,
     SELF_NOT_MELEE,
     INSIDER_NOT_MELEE,
+    INSIDER_HERO_NOT_MELEE,
+    MELEE,
     NONE
 }

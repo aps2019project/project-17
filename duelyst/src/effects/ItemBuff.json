@@ -18,10 +18,10 @@
   {
     "id": 303,
     "buffType": "SPECIAL_SITUATION_BUFF",
-    "targetType": "INSIDER_HERO",
-    "targetRange": "NOT_MELEE",
+    "targetType": "INSIDER_HERO_NOT_MELEE",
+    "targetRange": "ONE",
     "effectTime": 0,
-    "SITUATION": "ATTACK"
+    "situation": "ATTACK"
   },
   {
     "id": -303,
@@ -97,7 +97,7 @@
     "targetType": "INSIDER",
     "targetRange": "RANDOM",
     "effectTime": 0,
-    "SITUATION": "DIE"
+    "situation": "DIE"
   },
   {
     "id": -310,
@@ -123,7 +123,7 @@
     "targetType": "INSIDER",
     "targetRange": "ONE",
     "effectTime": 0,
-    "SITUATION": "ATTACK"
+    "situation": "ATTACK"
   },
   {
     "id": -312,
@@ -157,7 +157,7 @@
     "targetType": "PLAYER",
     "targetRange": "ONE",
     "effectTime": 0,
-    "SITUATION": "PUTT_IN_GROUND"
+    "situation": "PUTT_IN_GROUND"
   },
   {
     "id": -315,
@@ -174,7 +174,7 @@
     "targetType": "PLAYER",
     "targetRange": "ONE",
     "effectTime": 0,
-    "SITUATION": "ATTACK"
+    "situation": "ATTACK"
   },
   {
     "id": -316,
@@ -189,7 +189,7 @@
     "targetType": "INSIDER_HERO",
     "targetRange": "ONE",
     "effectTime": 0,
-    "SITUATION": "ATTACK"
+    "situation": "ATTACK"
   },
   {
     "id": -317,
@@ -204,7 +204,7 @@
     "targetType": "PLAYER",
     "targetRange": "ONE",
     "effectTime": 0,
-    "SITUATION": "DIE"
+    "situation": "DIE"
   },
   {
     "id": -318,
@@ -221,7 +221,7 @@
     "targetType": "PLAYER",
     "targetRange": "ONE",
     "effectTime": 0,
-    "SITUATION": "SPAWN"
+    "situation": "SPAWN"
   },
   {
     "id": -319,
@@ -234,8 +234,8 @@
   {
     "id": 320,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetType": "NONE",
-    "targetRange": "MELEE",
+    "targetType": "MELEE",
+    "targetRange": "ALL",
     "effectTime": 0,
     "changeAttackPower": 5,
     "changeHealth": 0
