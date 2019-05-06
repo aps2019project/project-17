@@ -41,7 +41,7 @@ public class BattleView extends View {
     public static void showMyMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showMyMinions();
         for (Minion minion : minions) {
-            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPower());
+            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
         }
 
     }
@@ -49,7 +49,7 @@ public class BattleView extends View {
     public static void showOpponentMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showOpponentMinion();
         for (Minion minion : minions) {
-            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPower());
+            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
         }
     }
 
@@ -67,7 +67,7 @@ public class BattleView extends View {
             if (((Minion) card).getAttackType().equals(AttackType.COMBO))
                 attackTpe = "have this ability";
             System.out.println("Minion:");
-            System.out.printf("Name: %s\nHP: %d  AP: %d  MP: %d\nRange: %d\nCombo-Ability: %s\nCost: %d\nDesc: %s", card.getName(), ((Minion) card).getHealthPoint(), ((Minion) card).getAttackPower(), ((Minion) card).getManaPoint(), ((Minion) card).getAttackRange(), attackTpe, card.getPrice(), card.getDesc());
+            System.out.printf("Name: %s\nHP: %d  AP: %d  MP: %d\nRange: %d\nCombo-Ability: %s\nCost: %d\nDesc: %s", card.getName(), ((Minion) card).getHealthPoint(), ((Minion) card).getAttackPoint(), ((Minion) card).getManaPoint(), ((Minion) card).getAttackRange(), attackTpe, card.getPrice(), card.getDesc());
             return;
         }
         if (card instanceof Spell) {

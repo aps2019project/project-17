@@ -9,7 +9,7 @@ public class Hero extends Minion {
     }
 
     public void show() {
-        System.out.println("Name : " + this.name + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - Class : " + super.getMinionType() + " - Special power : " + this.desc);
+        System.out.println("Name : " + this.name + " - AP : " + this.attackPoint + " - HP : " + this.healthPoint + " - Class : " + super.getMinionType() + " - Special power : " + this.desc);
     }
 
 }

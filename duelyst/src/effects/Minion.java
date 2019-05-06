@@ -10,7 +10,7 @@ public class Minion extends Card {
     protected Buff buff;
     protected BuffDetail specialSituationBuff;
     protected SpecialSituation specialSituation;
-    protected int attackPower;
+    protected int attackPoint;
     protected int healthPoint;
     protected int manaPoint;
     protected int attackRange;
@@ -29,9 +29,9 @@ public class Minion extends Card {
     protected int numberOfAttack;
     protected BuffType antiBuff;
 
-    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
+    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
         super(name, id, price);
-        this.attackPower = attackPower;
+        this.attackPoint = attackPoint;
         this.healthPoint = healthPoint;
         this.manaPoint = manaPoint;
         this.attackRange = attackRange;
@@ -55,7 +55,7 @@ public class Minion extends Card {
         this.isStun = false;
         this.canAttack = true;
         this.numberOfAttack = 0;
-        makeAttackBuff(attackPower);
+        makeAttackBuff(attackPoint);
     }
 
     private void makeAttackBuff(int attackPower) {
@@ -174,7 +174,7 @@ public class Minion extends Card {
     }
 
     public void changeAttackPower(int changingValue) {
-        this.attackPower += changingValue;
+        this.attackPoint += changingValue;
     }
 
     public void setCoordinate(int x, int y) {
@@ -191,11 +191,11 @@ public class Minion extends Card {
     }
 
     public void show() {
-        System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow().toLowerCase() + " - AP : " + this.attackPower + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.desc);
+        System.out.println("Name : " + this.name + " - Class : " + this.minionTypeShow().toLowerCase() + " - AP : " + this.attackPoint + " - HP : " + this.healthPoint + " - MP : " + this.manaPoint + " - Special Power : " + this.desc);
     }
 
-    public int getAttackPower() {
-        return attackPower;
+    public int getAttackPoint() {
+        return attackPoint;
     }
 
     public int getHealthPoint() {
