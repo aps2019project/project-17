@@ -44,9 +44,9 @@ public class Battle {
         situationOfGame = "";
     }
 
-    private void setItems(){
+    private void setItems() {
         ArrayList<Item> items = InstanceBuilder.getCollectAbleItems();
-        int n = new Random().nextInt() % items.size() / 3 ;
+        int n = new Random().nextInt() % items.size() / 3;
         while (n < 0)
             n = new Random().nextInt() % items.size() / 3;
         if (n == 0)
@@ -57,7 +57,7 @@ public class Battle {
                 select = new Random().nextInt() % items.size();
             int x = new Random().nextInt() % 9 + 1;
             int y = new Random().nextInt() % 5 + 1;
-            while (x < 0 || y < 0){
+            while (x < 0 || y < 0) {
                 x = new Random().nextInt() % 9 + 1;
                 y = new Random().nextInt() % 5 + 1;
             }
@@ -67,6 +67,8 @@ public class Battle {
     }
 
     private void setHeroesInTheirPosition() {
+        playerOne.getMainDeck().getHero().setUserName(playerOne.getUserName());
+        playerTwo.getMainDeck().getHero().setUserName(playerTwo.getUserName());
         int random = new Random().nextInt();
         if (random % 2 == 0) {
             playerOne.getMainDeck().getHero().setCoordinate(3, 1);
@@ -213,7 +215,7 @@ public class Battle {
         if (card instanceof Minion) {
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You don′t have enough mana";
-            if (whoseTurn().isPutInGroundAttackEnemyHero()){
+            if (whoseTurn().isPutInGroundAttackEnemyHero()) {
                 whoseTurn().action(x, y);
             }
 
@@ -346,22 +348,6 @@ public class Battle {
         return minions;
     }
 
-    public Player getPlayerOne() {
-        return playerOne;
-    }
-
-    public Player getPlayerTwo() {
-        return playerTwo;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public int getTurn() {
-        return turn;
-    }
-
     public Card getSelectedCard() {
         return selectedCard;
     }
@@ -385,11 +371,10 @@ public class Battle {
     }
 
     public boolean cardIsMine(Card card, Player player) {
-        if (card == null)
-            return true;
+        if (card == null || card.getUserName() == null)
+            return false;
         // TODO: 2019-05-06
-        if (card.getUserName() == null)
-            return true;
+
         return card.getUserName().equals(player.getUserName());
     }
 
@@ -616,5 +601,9 @@ public class Battle {
 
     public static String getSituationOfGame() {
         return situationOfGame;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
