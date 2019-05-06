@@ -1139,7 +1139,7 @@ public class Request {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            // TODO: must to be completed with methods
+            GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -1191,7 +1191,7 @@ public class Request {
         Pattern patternForShowCollectibles = Pattern.compile(StringsRq.SHOW_COLLECTIBLES);
         Matcher matcher = patternForShowCollectibles.matcher(command);
         if (matcher.matches()) {
-            BattleView.showCollectAbles();// TODO: must to be completed
+            BattleView.showCollectAbles();
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
