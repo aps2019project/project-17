@@ -60,7 +60,7 @@ public class Minion extends Card {
 
     private void makeAttackBuff(int attackPower) {
         this.attack = new Buff();
-        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.ENEMY, TargetRange.ONE, 0, 0, -attackPower);
+        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.NONE, TargetRange.ONE, -2, 0, -attackPower);
         this.attack.addBuff(buffDetail);
     }
 
@@ -146,7 +146,7 @@ public class Minion extends Card {
         ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
         specialSituationBuffs.add(specialSituationBuff);
         increaseNumberOfAttack();
-        if (specialSituation.equals(SpecialSituation.ATTACK))
+        if (specialSituationBuff!=null && specialSituation.equals(SpecialSituation.ATTACK))
             this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
         this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
         if (this.attackType.equals(AttackType.ON_ATTACK))

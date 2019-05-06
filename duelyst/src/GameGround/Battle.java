@@ -45,10 +45,14 @@ public class Battle {
     private void setHeroesInTheirPosition() {
         int random = new Random().nextInt();
         if (random % 2 == 0) {
+            playerOne.getMainDeck().getHero().setCoordinate(3,1);
+            playerTwo.getMainDeck().getHero().setCoordinate(3,9);
             this.board.getCells()[2][0].setCard(this.playerOne.getCopyMainDeck().getHero());
             this.board.getCells()[2][8].setCard(this.playerTwo.getCopyMainDeck().getHero());
             return;
         }
+        playerOne.getMainDeck().getHero().setCoordinate(3,9);
+        playerTwo.getMainDeck().getHero().setCoordinate(3,1);
         this.board.getCells()[2][0].setCard(this.playerTwo.getCopyMainDeck().getHero());
         this.board.getCells()[2][8].setCard(this.playerOne.getCopyMainDeck().getHero());
     }
@@ -108,10 +112,12 @@ public class Battle {
                 }
             }
         }
-        for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
-            if (whoseTurn().getCollectAbleItems().get(i).getId().equals(cardItemID)) {
-                this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
-                return "item successfully selected";
+        if (whoseTurn().getCollectAbleItems().size() != 1){
+            for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
+                if (whoseTurn().getCollectAbleItems().get(i).getId().equals(cardItemID)) {
+                    this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
+                    return "item successfully selected";
+                }
             }
         }
         return "invalid card\\item id";
@@ -183,11 +189,11 @@ public class Battle {
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You don′t have enough mana";
             this.selectedCard = card;
+            ((Minion) card).setCoordinate(x, y);
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
                 ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
             card.setUserName(whoseTurn().getUserName());
             whoseTurn().lessMana(((Minion) card).getManaPoint());
-            ((Minion) card).setCoordinate(x, y);
             whoseTurn().removeCardFromHand(card);
             cell.setCard(card);
             cell.enterCell();
@@ -262,7 +268,7 @@ public class Battle {
         if (attacker == null)
             return "you have to select card at first";
 
-        Minion minion = (Minion) returnCardFromBoard(opponentCardId, theOtherPlayer());
+        Minion minion = (Minion) returnCardFromBoard(opponentCardId, whoseTurn());
         if (minion == null)
             return "invalid card id";
 
@@ -297,6 +303,8 @@ public class Battle {
     private Card returnCardFromBoard(String id, Player player) {
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                if (this.board.getCells()[i][j].getCard() == null)
+                    continue;
                 if (this.board.getCells()[i][j].getCard().getId().equals(id)) {
                     if (cardIsMine(this.board.getCells()[i][j].getCard(), player))
                         return this.board.getCells()[i][j].getCard();
@@ -359,6 +367,11 @@ public class Battle {
     }
 
     public boolean cardIsMine(Card card, Player player) {
+        if (card == null)
+            return true;
+        // TODO: 2019-05-06
+        if (card.getUserName() == null)
+            return true;
         return card.getUserName().equals(player.getUserName());
     }
 

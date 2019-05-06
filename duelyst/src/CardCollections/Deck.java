@@ -132,7 +132,7 @@ public class Deck {
     }
 
     public boolean isDeckValidate() {
-        return cards.size() == 20;
+        return cards.size() >= 1;
     }
 
     public static Deck getDeckKillHero() {

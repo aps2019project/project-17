@@ -36,13 +36,17 @@ public class Buff {
             }
             switch (buffDetail.getTargetRange()) {
                 case ONE:
-                    targets.add(Battle.getCurrentBattle().getCellFromBoard(x, y));
+                    targets.add(Battle.getCurrentBattle().getCellFromBoard(x, y).getCard());
                     break;
                 case TWO:
-                    targets.add(Battle.getCurrentBattle().getMinionsSquare(x, y));
+                    for (Cell cell : Battle.getCurrentBattle().getMinionsSquare(x, y)) {
+                        targets.add(cell.getCard());
+                    }
                     break;
                 case THREE:
-                    targets.add(Battle.getCurrentBattle().getMinionsCube(x, y));
+                    for (Cell cell : Battle.getCurrentBattle().getMinionsCube(x, y)) {
+                        targets.add(cell.getCard());
+                    }
                     break;
                 case ALL:
                     targets.add(Battle.getCurrentBattle().getAllMinion());

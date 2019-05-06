@@ -130,14 +130,11 @@ public class Request {
                 return checkSyntaxOfStartGame();
             case START_MULTI_PLAYER_GAME:
                 return checkSyntaxOfStartMultiPlayer();
-            case SELECT_USER:
-                return checkSyntaxOfSelectUser();
             case EXIT:
                 return checkSyntaxOfExitCommand();
             case EXIT_GAME:
                 menuType = null;
         }
-
         return true;
     }
 
@@ -513,15 +510,17 @@ public class Request {
                     menuType = MenuType.SHOP_MENU;
                     break;
                 case "battle":
-//                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
-//                        System.out.println("selected deck is invalid");
-//                        return false;
-//                    }
+                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
+                        System.out.println("selected deck is invalid");
+                        return false;
+                    }
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
                     checkSyntaxOfEnteringBattle();
-                    checkSyntaxOfGameType();
-                    break;
+                    if (menuType.equals(MenuType.SINGLE_PLAYER)) {
+                        checkSyntaxOfGameType();
+                    }
+                    return true;
                 default:
                     error = ErrorType.INVALID_INPUT;
                     break;
@@ -539,10 +538,11 @@ public class Request {
         if (singleOrMulti.equals("1")) {
             menuType = MenuType.SINGLE_PLAYER;
             BattleView.showGameStateMenu();
-
         } else if (singleOrMulti.equals("2")) {
             menuType = MenuType.MULTI_PLAYER;
             AccountView.showLeaderBoard();
+            System.out.println("Enter your Opponent user name:");
+            secondPlayerUserName=scanner.next();
         } else {
             error = ErrorType.INVALID_INPUT;
         }
@@ -679,25 +679,25 @@ public class Request {
     /**
      * @return the name of the player two for multiPlayer mode
      */
-    public boolean checkSyntaxOfSelectUser() {
-        Pattern patternForSelectUser = Pattern.compile(StringsRq.SELECT_USER + " (?<userName>\\w+)");
-        Matcher matcher = patternForSelectUser.matcher(command);
-        while (secondPlayerUserName == null || secondPlayerUserName.equals("")){
-            secondPlayerUserName = scanner.next();
-        }
-        if (matcher.matches()) {
-            secondPlayerUserName = matcher.group("userName");
-            Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
-            if (accountOfPlayerTwo == null) {
-                System.out.println("Such account not found!");
-                secondPlayerUserName = null;
-            }
-            return true;
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-    }
+//    public boolean checkSyntaxOfSelectUser() {
+//        Pattern patternForSelectUser = Pattern.compile(StringsRq.SELECT_USER + " (?<userName>\\w+)");
+//        Matcher matcher = patternForSelectUser.matcher(command);
+////        while (secondPlayerUserName == null || secondPlayerUserName.equals("")){
+////            secondPlayerUserName = scanner.next();
+////        }
+//        if (matcher.matches()) {
+//            secondPlayerUserName = matcher.group("userName");
+//            Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
+//            if (accountOfPlayerTwo == null) {
+//                System.out.println("Such account not found!");
+//                secondPlayerUserName = null;
+//            }
+//            return true;
+//        } else {
+//            error = ErrorType.INVALID_INPUT;
+//            return false;
+//        }
+//    }
 
     public boolean checkSyntaxOfExitCommand() {
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
@@ -1128,6 +1128,9 @@ public class Request {
     public boolean checkSyntaxOfAttack() {
         Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " (?<cardId>[\\w+ ]+)");
         Matcher matcher = patternForAttack.matcher(command);
+        if (matcher.matches()){
+            System.out.println("matches");
+        }
         String cardId = matcher.group("cardId");
         if (matcher.matches()) {
             String result = GameController.attack(cardId, Battle.getCurrentBattle());
