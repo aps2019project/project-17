@@ -137,7 +137,6 @@ public class Request {
             case EXIT_GAME:
                 menuType = null;
         }
-
         return true;
     }
 
@@ -520,8 +519,10 @@ public class Request {
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
                     checkSyntaxOfEnteringBattle();
-                    checkSyntaxOfGameType();
-                    break;
+                    if (menuType.equals(MenuType.SINGLE_PLAYER)) {
+                        checkSyntaxOfGameType();
+                    }
+                    return true;
                 default:
                     error = ErrorType.INVALID_INPUT;
                     break;
@@ -539,7 +540,6 @@ public class Request {
         if (singleOrMulti.equals("1")) {
             menuType = MenuType.SINGLE_PLAYER;
             BattleView.showGameStateMenu();
-
         } else if (singleOrMulti.equals("2")) {
             menuType = MenuType.MULTI_PLAYER;
             AccountView.showLeaderBoard();
@@ -682,6 +682,9 @@ public class Request {
     public boolean checkSyntaxOfSelectUser() {
         Pattern patternForSelectUser = Pattern.compile(StringsRq.SELECT_USER + " (?<userName>\\w+)");
         Matcher matcher = patternForSelectUser.matcher(command);
+//        while (secondPlayerUserName == null || secondPlayerUserName.equals("")){
+//            secondPlayerUserName = scanner.next();
+//        }
         if (matcher.matches()) {
             secondPlayerUserName = matcher.group("userName");
             Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
