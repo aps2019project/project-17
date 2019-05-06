@@ -49,7 +49,7 @@ public class BattleView extends View {
         for (Minion minion : minions) {
             System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]\n", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
         }
-
+
     }
 
     public static void showOpponentMinions(Battle battle) {
@@ -65,6 +65,7 @@ public class BattleView extends View {
 
     public static void showCardInfo(Battle battle, String cardID) {
         Card card = battle.returnCard(cardID);
+
 
         if (card instanceof Hero) {
             System.out.println("HERO:");
