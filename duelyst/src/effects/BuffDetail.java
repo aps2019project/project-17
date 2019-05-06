@@ -14,6 +14,7 @@ public class BuffDetail {
     private boolean isContinuous;
     private int holyBuffState;
     private int manaIncreaseValue;
+    private SpecialSituation situation;
     private ArrayList<Object> target;
 
     public void init() {
@@ -120,5 +121,9 @@ public class BuffDetail {
 
     public int getHolyBuffState() {
         return holyBuffState;
+    }
+
+    public SpecialSituation getSituation() {
+        return situation;
     }
 }
