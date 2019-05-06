@@ -1,5 +1,6 @@
 package view;
 
+import CardCollections.Deck;
 import Data.AI;
 import Data.Account;
 import GameGround.*;
@@ -122,6 +123,8 @@ public class Request {
                 return checkSyntaxOfEndGame();
             case ENTER_GRAVE_YARD:
                 return checkSyntaxOfEnterGraveYard();
+            case START_GAME:
+                return checkSyntaxOfStartGame();
             case EXIT:
                 return checkSyntaxOfExitCommand();
             case EXIT_GAME:
@@ -556,12 +559,15 @@ public class Request {
                         return;
                     case "capture flag":
                         AI.setAiPlayer(CF);
-                        new BattleCaptureFlag(Account.getLoginUser().getPlayer(),7, SinglePlayerModes.STORY);
+                        new BattleCaptureFlag(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
                         return;
                     default:
                         error = ErrorType.INVALID_INPUT;
                 }
+            } else {
+                CollectionView.showAllDecks(Account.getLoginUser());
+                BattleView.showCustomMode();
             }
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -570,17 +576,33 @@ public class Request {
     }
 
     public boolean checkSyntaxOfStartGame() {
-        Pattern patternForStartGame = Pattern.compile(StringsRq.START_GAME + " (?<deckName>[\\w+ ]+) (?<mode>[\\w+ ]+)");
+        Pattern patternForStartGame = Pattern.compile(StringsRq.START_GAME + " (?<deckName>\\w+) (?<mode>\\w+)");
         Matcher matcher = patternForStartGame.matcher(command);
         if (matcher.matches()) {
             if (menuType.equals(MenuType.SINGLE_PLAYER)) {
                 String deckName = matcher.group("deckName");
                 String mode = matcher.group("mode");
-                if (mode.equals("captureflag")) {
-                    int numberOfFlags = scanner.nextInt();
-                } else {
-
+                Deck deck = Account.getLoginUser().getCollection().findDeck(deckName);
+                if (deck == null) {
+                    System.out.println("Such deck not found");
+                    return true;//todo check this part
                 }
+                if (mode.equals("kh")) {
+                    new AI("Gholi", deck);
+                    new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                } else if (mode.equals("fh")) {
+                    new AI("Gholi", deck);
+                    new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                }
+                if (mode.equals("cf")) {
+                    int numberOfFlags = scanner.nextInt();
+                    new AI("Gholi", deck);
+                    new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
+                } else {
+                    error = ErrorType.INVALID_INPUT;
+                    return false;
+                }
+                menuType=MenuType.BATTLE_MENU;
             }
         } else {
             error = ErrorType.INVALID_INPUT;

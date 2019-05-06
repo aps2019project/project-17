@@ -28,6 +28,12 @@ public class BattleView extends View {
         System.out.println("3.Capture Flag : "+AI.getAIModeCF().getMainDeck().getHero().getName());
     }
 
+    public static void showCustomMode(){
+        System.out.println("1.Kill Hero(KH)");
+        System.out.println("2.Hold Flag(HF)");
+        System.out.println("3.Capture Flag(CF)");
+    }
+
     public static void showGameInfo(Battle battle) {
         System.out.println(battle.showGameInfo());
     }
@@ -102,7 +108,6 @@ public class BattleView extends View {
     }
 
     public static void battleHelp() {
-
     }
 
 
