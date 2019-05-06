@@ -22,9 +22,14 @@ public class Item {
 
     public void init() {
         this.buff = new Buff();
+        this.specialSituationBuff = null;
     }
 
     public void action(int x, int y) {
+        if (specialSituationBuff != null) {
+            ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituationBuff(specialSituationBuff);
+            ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituation(buff.getBuffDetails().get(0).getSituation());
+        }
         buff.action(x, y, buff.getBuffDetails());
     }
 

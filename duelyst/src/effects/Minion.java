@@ -325,7 +325,13 @@ public class Minion extends Card {
         return buff;
     }
 
+    public void setSpecialSituationBuff(BuffDetail specialSituationBuff) {
+        this.specialSituationBuff = specialSituationBuff;
+    }
 
+    public void setSpecialSituation(SpecialSituation specialSituation) {
+        this.specialSituation = specialSituation;
+    }
 
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
