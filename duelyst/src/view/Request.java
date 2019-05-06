@@ -685,28 +685,6 @@ public class Request {
         return true;
     }
 
-    /**
-     * @return the name of the player two for multiPlayer mode
-     */
-//    public boolean checkSyntaxOfSelectUser() {
-//        Pattern patternForSelectUser = Pattern.compile(StringsRq.SELECT_USER + " (?<userName>\\w+)");
-//        Matcher matcher = patternForSelectUser.matcher(command);
-////        while (secondPlayerUserName == null || secondPlayerUserName.equals("")){
-////            secondPlayerUserName = scanner.next();
-////        }
-//        if (matcher.matches()) {
-//            secondPlayerUserName = matcher.group("userName");
-//            Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
-//            if (accountOfPlayerTwo == null) {
-//                System.out.println("Such account not found!");
-//                secondPlayerUserName = null;
-//            }
-//            return true;
-//        } else {
-//            error = ErrorType.INVALID_INPUT;
-//            return false;
-//        }
-//    }
     public boolean checkSyntaxOfExitCommand() {
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
         Matcher matcher = patternForExit.matcher(command);
