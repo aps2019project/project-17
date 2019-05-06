@@ -2,10 +2,12 @@ package view;
 
 import CardCollections.Hand;
 import Data.AI;
+import Data.Player;
 import GameGround.*;
 import effects.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BattleView extends View {
 
@@ -116,6 +118,12 @@ public class BattleView extends View {
     }
 
     public static void battleHelp() {
+        Player player = Battle.getCurrentBattle().whoseTurn();
+        int n = new Random().nextInt() % player.getHand().getCards().size();
+        while (n < 0){
+            n = new Random().nextInt() % player.getHand().getCards().size();
+        }
+        System.out.println("insert " + player.getHand().getCards().get(n).getName());
     }
 
 
