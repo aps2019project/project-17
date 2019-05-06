@@ -1034,6 +1034,12 @@ public class Request {
     }
 
     public boolean checkSyntaxForGameInfo() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForGameInfo = Pattern.compile(StringsRq.GAME_INFO);
         Matcher matcher = patternForGameInfo.matcher(command);
         if (matcher.matches()) {
@@ -1046,6 +1052,12 @@ public class Request {
     }
 
     public boolean checkSyntaxForShowMyMinions() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForShowMyMinions = Pattern.compile(StringsRq.SHOW_MY_MINIONS);
         Matcher matcher = patternForShowMyMinions.matcher(command);
         if (matcher.matches()) {
@@ -1058,6 +1070,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowOpponentMinions() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForShowOpponentMinions = Pattern.compile(StringsRq.SHOW_OPPONENT_MINIONS);
         Matcher matcher = patternForShowOpponentMinions.matcher(command);
         if (matcher.matches()) {
@@ -1070,6 +1088,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCardInfo() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForShowCardInfo = Pattern.compile(StringsRq.SHOW_CARD_INFO + " (?<cardId>[\\w+ ]+)");
         Matcher matcher = patternForShowCardInfo.matcher(command);
         if (matcher.matches()) {
@@ -1083,6 +1107,12 @@ public class Request {
     }
 
     public boolean checkSyntaxForSelect() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForSelect = Pattern.compile(StringsRq.SELECT + " (?<cardId>[\\w+ ]+)");
         Matcher matcher = patternForSelect.matcher(command);
         if (matcher.matches()) {
@@ -1097,6 +1127,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfMoveTO() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForMoveTO = Pattern.compile(StringsRq.MOVE_TO + " \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForMoveTO.matcher(command);
         if (matcher.matches()) {
@@ -1112,6 +1148,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfAttack() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " (?<cardId>[\\w+ ]+)");
         Matcher matcher = patternForAttack.matcher(command);
         String cardId = matcher.group("cardId");
@@ -1126,6 +1168,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfComboAttack() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForAttackCombo = Pattern.compile(StringsRq.ATTACK_COMBO);
         Matcher matcher = patternForAttackCombo.matcher(command);
         if (matcher.matches()) {
@@ -1144,6 +1192,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfUseSpecialPower() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForUserSpecialPower = Pattern.compile(StringsRq.USE_SPECIAL_POWER + " \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForUserSpecialPower.matcher(command);
         if (matcher.matches()) {
@@ -1158,6 +1212,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowHand() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForShowHand = Pattern.compile(StringsRq.SHOW_HAND);
         Matcher matcher = patternForShowHand.matcher(command);
         if (matcher.matches()) {
@@ -1170,6 +1230,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfInsert() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " (?<cardName>[\\w+ ]+) in \\((?<x>\\d),(?<y>\\d)\\)");
         Matcher matcher = patternForInsert.matcher(command);
         if (matcher.matches()) {
@@ -1186,6 +1252,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfEndTurn() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForEndTurn = Pattern.compile(StringsRq.END_TURN);
         Matcher matcher = patternForEndTurn.matcher(command);
         if (matcher.matches()) {
@@ -1198,6 +1270,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCollectibles() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForShowCollectibles = Pattern.compile(StringsRq.SHOW_COLLECTIBLES);
         Matcher matcher = patternForShowCollectibles.matcher(command);
         if (matcher.matches()) {
@@ -1210,6 +1288,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowInfo() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         if (menuType.equals(MenuType.BATTLE_MENU)) {
             Pattern patternForShowInfoInBattleMenu = Pattern.compile(StringsRq.SHOW_INFO);
             Matcher matcher = patternForShowInfoInBattleMenu.matcher(command);
@@ -1236,6 +1320,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfUse() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForUse = Pattern.compile(StringsRq.USE + " \\(\\d,\\d\\)");
         Matcher matcher = patternForUse.matcher(command);
         if (matcher.matches()) {
@@ -1250,6 +1340,12 @@ public class Request {
     }
 
     public boolean checkSyntaxForShowNextCard() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForShowNextCard = Pattern.compile(StringsRq.SHOW_NEXT_CARD);
         Matcher matcher = patternForShowNextCard.matcher(command);
         if (matcher.matches()) {
@@ -1262,6 +1358,12 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCards() {
+        if(comeOutOfTheGame()){
+            System.out.println(Battle.getSituationOfGame());
+            menuType=MenuType.MAIN_MENU;
+            MainMenuView.showMainMenu();
+            return true;
+        }
         Pattern patternForShowCards = Pattern.compile(StringsRq.SHOW_CARDS);
         Matcher matcher = patternForShowCards.matcher(command);
         if (matcher.matches()) {
@@ -1289,5 +1391,9 @@ public class Request {
     public boolean checkSyntaxOfEnterGraveYard() {
         menuType = MenuType.GRAVE_YARD;
         return true;
+    }
+
+    public boolean comeOutOfTheGame(){
+        return Battle.getCurrentBattle() == null;
     }
 }
