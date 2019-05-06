@@ -17,6 +17,7 @@ public class Request {
     protected String command;
     protected ErrorType error = null;
     protected MenuType menuType = null;
+    protected String secondPlayerUserName = null;
 
     public Request() {
         //we set the default menu in constructor
@@ -125,6 +126,8 @@ public class Request {
                 return checkSyntaxOfEnterGraveYard();
             case START_GAME:
                 return checkSyntaxOfStartGame();
+            case SELECT_USER:
+                return checkSyntaxOfSelectUser();
             case EXIT:
                 return checkSyntaxOfExitCommand();
             case EXIT_GAME:
@@ -226,6 +229,8 @@ public class Request {
         Matcher matcherForStartGame = patternForStartGame.matcher(command);
         Pattern patternForStartMultiPlayerGame = Pattern.compile(StringsRq.START_MULTI_PLAYER_GAME + " \\w+");
         Matcher matcherForStartMultiPlayerGame = patternForStartMultiPlayerGame.matcher(command);
+        Pattern patternForSelectUser = Pattern.compile(StringsRq.SELECT_USER + " \\w+");
+        Matcher matcherForSelectUser = patternForSelectUser.matcher(command);
 
         if (matcherForLogIn.matches()) {
             if (menuType.equals(MenuType.ACCOUNT_MENU)) {
@@ -473,6 +478,12 @@ public class Request {
             }
             error = ErrorType.INVALID_INPUT;
             return null;
+        } else if (matcherForSelectUser.matches()) {
+            if (menuType.equals(MenuType.MULTI_PLAYER)) {
+                return RequestType.SELECT_USER;
+            }
+            error = ErrorType.INVALID_INPUT;
+            return null;
         } else if (matcherForHelp.matches()) {
             return RequestType.HELP;
         } else if (matcherForExit.matches()) {
@@ -590,17 +601,16 @@ public class Request {
                 if (mode.equals("kh")) {
                     new AI("Gholi", deck);
                     new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
-                    menuType=MenuType.BATTLE_MENU;
+                    menuType = MenuType.BATTLE_MENU;
                 } else if (mode.equals("fh")) {
                     new AI("Gholi", deck);
                     new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
-                    menuType=MenuType.BATTLE_MENU;
-                }
-                else if (mode.equals("cf")) {
+                    menuType = MenuType.BATTLE_MENU;
+                } else if (mode.equals("cf")) {
                     int numberOfFlags = scanner.nextInt();
                     new AI("Gholi", deck);
                     new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
-                    menuType=MenuType.BATTLE_MENU;
+                    menuType = MenuType.BATTLE_MENU;
                 } else {
                     System.out.println("hi");
                     error = ErrorType.INVALID_INPUT;
@@ -632,6 +642,21 @@ public class Request {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return the name of the player two for multiPlayer mode
+     */
+    public boolean checkSyntaxOfSelectUser() {
+        Pattern patternForSelectUser = Pattern.compile(StringsRq.SELECT_USER + " (?<userName>\\w+)");
+        Matcher matcher = patternForSelectUser.matcher(command);
+        if (matcher.matches()) {
+            secondPlayerUserName = matcher.group("userName");
+            return true;
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
     }
 
     public boolean checkSyntaxOfExitCommand() {

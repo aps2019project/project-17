@@ -44,5 +44,6 @@ public enum RequestType {
     SHOW_CARDS,
     END_GAME,
     START_GAME,
-    START_MULTI_PLAYER_GAME;
+    START_MULTI_PLAYER_GAME,
+    SELECT_USER;
 }
