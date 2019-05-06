@@ -11,6 +11,4 @@ public enum TargetRange {
     SELF,
     CLOSEST_RANDOM,
     RANDOM,
-    NOT_MELEE,
-    MELEE
 }

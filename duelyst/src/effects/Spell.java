@@ -30,6 +30,8 @@ public class Spell extends Card {
             switch (buffDetail.getTargetRange()) {
                 case ONE:
                     switch (buffDetail.getTargetType()) {
+                        case CELL:
+                            break;
                         case ENEMY:
                         case INSIDER:
                         case NONE:
@@ -41,6 +43,7 @@ public class Spell extends Card {
                         case INSIDER_HERO:
                             targetMinions.add(Battle.getCurrentBattle().whoseTurn().getMainDeck().getHero());
                             break;
+
                     }
                     break;
                 case TWO:

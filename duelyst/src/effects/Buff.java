@@ -101,8 +101,6 @@ public class Buff {
                 break;
             case CLEAR:
                 clearBuff(minion, true);
-            case SPECIAL_SITUATION_BUFF:
-
         }
     }
 
