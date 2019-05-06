@@ -55,13 +55,6 @@ public class Player {
         this.putInGroundAttackEnemyHero = putInGroundAttackEnemyHero;
     }
 
-    public Item getItemFromHand(String itemName) {
-        for (Item item : this.collectAbleItems) {
-            if (item.getName().equals(itemName))
-                return item;
-        }
-        return null;
-    }
 
     public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
