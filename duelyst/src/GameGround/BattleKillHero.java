@@ -5,6 +5,7 @@ import Data.GameData;
 import Data.MatchState;
 import Data.Player;
 import controller.GameController;
+import effects.AttackType;
 import effects.Card;
 import effects.Minion;
 import effects.Spell;
@@ -146,6 +147,9 @@ public class BattleKillHero extends Battle {
         for (int i = 0; i < getAllMinion().size(); i++) {
             Minion minion = getAllMinion().get(i);
             if (minion.getHealthPoint() <= 0) {
+                if (minion.getAttackType().equals(AttackType.ON_DEATH))
+                    minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
+
                 Cell cell = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
                 whoseTurn().addCardToGraveYard(minion);
                 stringBuilder.append(minion.getName()).append(" died \n");

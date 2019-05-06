@@ -12,4 +12,17 @@ public class Hero extends Minion {
         System.out.println("Name : " + this.name + " - AP : " + this.attackPoint + " - HP : " + this.healthPoint + " - Class : " + super.getMinionType() + " - Special power : " + this.desc);
     }
 
+    @Override
+    public void resetMinion() {
+        if (isStun){
+            setCanMove(false);
+            setCanAttack(false);
+            setCanCounterAttack(false);
+        }
+        else{
+            setCanMove(true);
+            setCanAttack(true);
+            setCanCounterAttack(true);
+        }
+    }
 }

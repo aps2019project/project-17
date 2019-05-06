@@ -45,14 +45,14 @@ public class Battle {
     private void setHeroesInTheirPosition() {
         int random = new Random().nextInt();
         if (random % 2 == 0) {
-            playerOne.getMainDeck().getHero().setCoordinate(3,1);
-            playerTwo.getMainDeck().getHero().setCoordinate(3,9);
+            playerOne.getMainDeck().getHero().setCoordinate(3, 1);
+            playerTwo.getMainDeck().getHero().setCoordinate(3, 9);
             this.board.getCells()[2][0].setCard(this.playerOne.getCopyMainDeck().getHero());
             this.board.getCells()[2][8].setCard(this.playerTwo.getCopyMainDeck().getHero());
             return;
         }
-        playerOne.getMainDeck().getHero().setCoordinate(3,9);
-        playerTwo.getMainDeck().getHero().setCoordinate(3,1);
+        playerOne.getMainDeck().getHero().setCoordinate(3, 9);
+        playerTwo.getMainDeck().getHero().setCoordinate(3, 1);
         this.board.getCells()[2][0].setCard(this.playerTwo.getCopyMainDeck().getHero());
         this.board.getCells()[2][8].setCard(this.playerOne.getCopyMainDeck().getHero());
     }
@@ -112,7 +112,7 @@ public class Battle {
                 }
             }
         }
-        if (whoseTurn().getCollectAbleItems().size() != 1){
+        if (whoseTurn().getCollectAbleItems().size() != 1) {
             for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
                 if (whoseTurn().getCollectAbleItems().get(i).getId().equals(cardItemID)) {
                     this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
@@ -189,6 +189,10 @@ public class Battle {
         if (card instanceof Minion) {
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You don′t have enough mana";
+            if (whoseTurn().isPutInGroundAttackEnemyHero()){
+
+            }
+
             this.selectedCard = card;
             ((Minion) card).setCoordinate(x, y);
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
@@ -199,6 +203,8 @@ public class Battle {
             cell.setCard(card);
             cell.enterCell();
             check();
+            if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
+                ((Minion) card).useSpecialPower(x, y);
             return "ok";
 
         } else if (card instanceof Spell) {
@@ -242,25 +248,6 @@ public class Battle {
 
     public String showNextCard() {
         return whoseTurn().getNextCard().getName() + " " + whoseTurn().getNextCard().getDesc();
-    }
-
-    public String showCardInfoFromGraveYard(String cardID) {
-        for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
-            if (whoseTurn().getGraveYard().get(i).getId().equals(cardID)) {
-                return whoseTurn().getGraveYard().get(i).getName() + " " + whoseTurn().getGraveYard().get(i).getDesc();
-            }
-        }
-        return "this card doesn't exist in the grave yard";
-    }
-
-    public String showCardsOfGraveYard() {
-        StringBuilder toPrint = new StringBuilder();
-        if (whoseTurn().getGraveYard().size() == 0)
-            return "grave card is empty";
-        for (int i = 0; i < whoseTurn().getGraveYard().size(); i++) {
-            toPrint.append(whoseTurn().getGraveYard().get(i).getName()).append(" ").append(whoseTurn().getGraveYard().get(i).getDesc()).append("\n");
-        }
-        return toPrint.toString();
     }
 
     public String attack(String opponentCardId, boolean isComboAttack, Minion comboAttacker) {
@@ -386,6 +373,10 @@ public class Battle {
         this.turn++;
         this.selectedCard = null;
         this.selectedItem = null;
+        playerTwo.getMainDeck().getHero().resetMinion();
+        playerOne.getMainDeck().getHero().resetMinion();
+        playerOne.addCardToHand();
+        playerTwo.addCardToHand();
         if (this.turn >= 15) {
             this.playerOne.addMana(-this.playerOne.getMana() + 9);
             this.playerTwo.addMana(-this.playerTwo.getMana() + 9);
@@ -399,6 +390,8 @@ public class Battle {
             this.playerTwo.setPreviousMana(this.playerTwo.getMana());
         }
         for (Minion minion : getAllMinion()) {
+            if (minion.getAttackType().equals(AttackType.PASSIVE))
+                minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
             minion.passTurn();
         }
         for (int i = 0; i < this.board.getCells().length; i++) {
@@ -585,7 +578,7 @@ public class Battle {
         }
     }
 
-    public void check(){
+    public void check() {
         currentBattle.deletedDeadMinions();
         currentBattle.endGame();
     }

@@ -58,20 +58,6 @@ public class Player {
         this.putInGroundAttackEnemyHero = putInGroundAttackEnemyHero;
     }
 
-    public void allMinionsReset() {
-        for (int i = 0; i < this.mainDeck.getCards().size(); i++) {
-            if (this.mainDeck.getCards().get(i) instanceof Minion) {
-                Minion minion = (Minion) this.mainDeck.getCards().get(i);
-                minion.setCanAttack(true);
-                minion.setCanMove(true);
-                minion.setCanCounterAttack(true);
-            }
-        }
-        this.mainDeck.getHero().setCanAttack(true);
-        this.mainDeck.getHero().setCanMove(true);
-        this.mainDeck.getHero().setCanCounterAttack(true);
-    }
-
     public Item getItemFromHand(String itemName) {
         for (Item item : this.collectAbleItems) {
             if (item.getName().equals(itemName))
@@ -127,6 +113,10 @@ public class Player {
             copyMainDeck.setHero(mainDeck.getHero());
     }
 
+    public boolean isPutInGroundAttackEnemyHero() {
+        return putInGroundAttackEnemyHero;
+    }
+
     private void setHand() {
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
@@ -165,7 +155,10 @@ public class Player {
 
     private void setNextCard() {
         Random random = new Random();
-        int n = random.nextInt(this.copyMainDeck.getCards().size());
+        int n = random.nextInt() % this.copyMainDeck.getCards().size();
+        while (n < 0) {
+            n = random.nextInt() % this.copyMainDeck.getCards().size();
+        }
         this.nextCard = this.copyMainDeck.getCards().get(n);
         this.copyMainDeck.getCards().remove(n);
     }
@@ -202,6 +195,12 @@ public class Player {
             return this.userName.equals(player1.getUserName());
         }
         return false;
+    }
+
+    public void action(int x, int y) {
+        if (this.buff == null)
+            return;
+        this.buff.action(x, y, buff.getBuffDetails());
     }
 
     public int getPreviousMana() {
