@@ -2,7 +2,9 @@ package GameGround;
 
 import Data.AI;
 import Data.GameData;
+import Data.MatchState;
 import Data.Player;
+import controller.GameController;
 import effects.Card;
 import effects.Minion;
 import effects.Spell;
@@ -100,10 +102,40 @@ public class BattleKillHero extends Battle {
     @Override
     public void endGame() {
         if (playerOne.getMainDeck().getHero().getHealthPoint() <= 0) {
-
+            gameDataPlayerOne.setMatchState(MatchState.LOSE);
+            gameDataPlayerTwo.setMatchState(MatchState.WIN);
+            for (int i = 0; i < GameController.getAccounts().size(); i++) {
+                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                    GameController.getAccounts().get(i).changeDaric(price);
+                    GameController.getAccounts().get(i).incrementNumbOfWins();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                    continue;
+                }
+                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfLose();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                }
+            }
+            situationOfGame = playerTwo.getUserName() + " win from " + playerOne.getUserName() + " and earn " + price;
+            currentBattle = null;
+            return;
         }
         if (playerTwo.getMainDeck().getHero().getHealthPoint() <= 0) {
-
+            gameDataPlayerOne.setMatchState(MatchState.WIN);
+            gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+            for (int i = 0; i < GameController.getAccounts().size(); i++) {
+                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfWins();
+                    GameController.getAccounts().get(i).changeDaric(price);
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                }
+                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfLose();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                }
+            }
+            situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + price;
+            currentBattle = null;
         }
     }
 
@@ -112,9 +144,10 @@ public class BattleKillHero extends Battle {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < getAllMinion().size(); i++) {
             Minion minion = getAllMinion().get(i);
-            if (minion.getHealthPoint() <= 0){
+            if (minion.getHealthPoint() <= 0) {
                 Cell cell = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
-                stringBuilder.append(minion.getName()).append(" died\n");
+                whoseTurn().addCardToGraveYard(minion);
+                stringBuilder.append(minion.getName()).append(" died \n");
                 cell.setCard(null);
             }
         }

@@ -1,8 +1,6 @@
 package GameGround;
 
-import Data.AI;
-import Data.GameData;
-import Data.Player;
+import Data.*;
 import effects.Card;
 import effects.Hero;
 import effects.Minion;
@@ -148,8 +146,11 @@ public class BattleHoldingFlag extends Battle {
         for (int i = 0; i < getAllMinion().size(); i++) {
             if (getAllMinion().get(i) instanceof Hero)
                 continue;
+            if (getAllMinion().get(i).getHealthPoint() > 0)
+                continue;
             Minion minion = getAllMinion().get(i);
-            if (minion.isHasFlag()){
+            whoseTurn().addCardToGraveYard(minion);
+            if (minion.isHasFlag()) {
                 whoHasFlag = null;
                 timeHoldingFlag = 0;
                 cellOfFlag = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
@@ -161,5 +162,47 @@ public class BattleHoldingFlag extends Battle {
             cell.setCard(null);
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public void endGame() {
+        if (whoHasFlag == null)
+            return;
+
+        if (timeHoldingFlag >= 6) {
+            if (whoHasFlag.equals(playerOne)) {
+                gameDataPlayerOne.setMatchState(MatchState.WIN);
+                gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+                for (int i = 0; i < Account.getAccounts().size(); i++) {
+                    if (Account.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                        Account.getAccounts().get(i).incrementNumbOfWins();
+                        Account.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                        Account.getAccounts().get(i).changeDaric(price);
+                        continue;
+                    }
+                    if (Account.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                        Account.getAccounts().get(i).incrementNumbOfLose();
+                        Account.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                    }
+                }
+                situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + price;
+            } else if (whoHasFlag.equals(playerTwo)) {
+                gameDataPlayerTwo.setMatchState(MatchState.WIN);
+                gameDataPlayerOne.setMatchState(MatchState.LOSE);
+                for (int i = 0; i < Account.getAccounts().size(); i++) {
+                    if (Account.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                        Account.getAccounts().get(i).incrementNumbOfWins();
+                        Account.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                        Account.getAccounts().get(i).changeDaric(price);
+                        continue;
+                    }
+                    if (Account.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                        Account.getAccounts().get(i).incrementNumbOfLose();
+                        Account.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                    }
+                }
+                situationOfGame = playerTwo.getUserName() + " win from " + playerOne.getUserName() + " and earn " + price;
+            }
+        }
     }
 }

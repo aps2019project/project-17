@@ -2,7 +2,9 @@ package GameGround;
 
 import Data.AI;
 import Data.GameData;
+import Data.MatchState;
 import Data.Player;
+import controller.GameController;
 import effects.Card;
 import effects.Hero;
 import effects.Minion;
@@ -174,6 +176,7 @@ public class BattleCaptureFlag extends Battle {
             if (getAllMinion().get(i).getHealthPoint() <= 0) {
                 if (getAllMinion().get(i) instanceof Hero)
                     continue;
+                whoseTurn().addCardToGraveYard(getAllMinion().get(i));
                 if (getAllMinion().get(i).isHasFlag()) {
                     minionsHaveFlag.remove(getAllMinion().get(i));
                     Cell cell = getCellFromBoard(getAllMinion().get(i).getXCoordinate(), getAllMinion().get(i).getYCoordinate());
@@ -188,5 +191,44 @@ public class BattleCaptureFlag extends Battle {
             }
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public void endGame() {
+        if (playerOne.getHoldingFlags() >= numberOfFlags / 2) {
+            gameDataPlayerOne.setMatchState(MatchState.WIN);
+            gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+            for (int i = 0; i < GameController.getAccounts().size(); i++) {
+                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                    GameController.getAccounts().get(i).changeDaric(price);
+                    GameController.getAccounts().get(i).incrementNumbOfWins();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                    continue;
+                }
+                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfLose();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                }
+            }
+            situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + price;
+            return;
+        }
+        if (playerTwo.getHoldingFlags() >= numberOfFlags / 2) {
+            gameDataPlayerTwo.setMatchState(MatchState.WIN);
+            gameDataPlayerOne.setMatchState(MatchState.LOSE);
+            for (int i = 0; i < GameController.getAccounts().size(); i++) {
+                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                    GameController.getAccounts().get(i).changeDaric(price);
+                    GameController.getAccounts().get(i).incrementNumbOfWins();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                    continue;
+                }
+                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfLose();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                }
+            }
+            situationOfGame = playerTwo.getUserName() + " win from " + playerOne.getUserName() + " and earn " + price;
+        }
     }
 }

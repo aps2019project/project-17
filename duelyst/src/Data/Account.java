@@ -69,6 +69,9 @@ public class Account implements Comparable<Account> {
         return false;
     }
 
+    public void addGamaData(GameData gameData) {
+        this.matchHistory.addGameData(gameData);
+    }
 
     public static String logout() {
         loginUser = null;
@@ -159,5 +162,9 @@ public class Account implements Comparable<Account> {
     public int getDaric() {
         this.daric = this.collection.getDaric();
         return this.daric;
+    }
+
+    public void changeDaric(int value) {
+        this.daric += value;
     }
 }

@@ -24,6 +24,7 @@ public class Battle {
     protected static Battle currentBattle;
     private SinglePlayerModes singlePlayerModes;
     protected int price;
+    protected static String situationOfGame;
 
     public Battle(Player playerOne, Player playerTwo, GameMode gameMode, BattleType battleType) {
         this.playerOne = playerOne;
@@ -35,6 +36,7 @@ public class Battle {
         this.selectedItem = null;
         this.battleType = battleType;
         setHeroesInTheirPosition();
+        situationOfGame = "";
     }
 
     private void setHeroesInTheirPosition() {
@@ -501,10 +503,13 @@ public class Battle {
     }
 
     public void endGame() {
-
     }
 
     public String deletedDeadMinions() {
         return "ok";
+    }
+
+    public static String getSituationOfGame() {
+        return situationOfGame;
     }
 }
