@@ -58,20 +58,6 @@ public class Player {
         this.putInGroundAttackEnemyHero = putInGroundAttackEnemyHero;
     }
 
-    public void allMinionsReset() {
-        for (int i = 0; i < this.mainDeck.getCards().size(); i++) {
-            if (this.mainDeck.getCards().get(i) instanceof Minion) {
-                Minion minion = (Minion) this.mainDeck.getCards().get(i);
-                minion.setCanAttack(true);
-                minion.setCanMove(true);
-                minion.setCanCounterAttack(true);
-            }
-        }
-        this.mainDeck.getHero().setCanAttack(true);
-        this.mainDeck.getHero().setCanMove(true);
-        this.mainDeck.getHero().setCanCounterAttack(true);
-    }
-
     public Item getItemFromHand(String itemName) {
         for (Item item : this.collectAbleItems) {
             if (item.getName().equals(itemName))
@@ -125,6 +111,10 @@ public class Player {
         }
         if (addHero)
             copyMainDeck.setHero(mainDeck.getHero());
+    }
+
+    public boolean isPutInGroundAttackEnemyHero() {
+        return putInGroundAttackEnemyHero;
     }
 
     private void setHand() {
