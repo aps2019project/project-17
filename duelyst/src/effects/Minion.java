@@ -1,5 +1,7 @@
 package effects;
 
+import GameGround.Battle;
+
 import java.util.ArrayList;
 
 public class Minion extends Card {
@@ -42,6 +44,7 @@ public class Minion extends Card {
 
     public void init() {
         specialPower = new Buff();
+        buff = new Buff();
         this.xCoordinate = 0;
         this.yCoordinate = 0;
         this.holyBuffState = 0;
@@ -113,6 +116,10 @@ public class Minion extends Card {
     }
 
     public void useSpecialPower(int x, int y) {
+        for (BuffDetail buffDetail : specialPower.getBuffDetails()) {
+            if (buffDetail.getChangeHealthValue() == -105)
+                buffDetail.setChangeHealthValue(((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).getNumberOfAttack());
+        }
         specialPower.action(x, y, specialPower.getBuffDetails());
     }
 
@@ -235,5 +242,13 @@ public class Minion extends Card {
 
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
+    }
+
+    public Buff getSpecialPower() {
+        return specialPower;
+    }
+
+    public Buff getAttack() {
+        return attack;
     }
 }

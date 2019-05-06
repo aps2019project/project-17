@@ -1,10 +1,6 @@
 package effects;
 
-import Data.Player;
 import GameGround.Battle;
-import GameGround.Cell;
-
-import java.util.ArrayList;
 
 public class Item {
     private String name;

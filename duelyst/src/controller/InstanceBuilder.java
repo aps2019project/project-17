@@ -26,7 +26,6 @@ public class InstanceBuilder {
     private static BuffDetail[] itemBuff;
     private static Minion[] minions;
     private static BuffDetail[] minionBuff;
-    private static ArrayList<Item> collectAbleItems;
 
     public static void creation() {
         try {
@@ -108,7 +107,7 @@ public class InstanceBuilder {
         for (Minion minion : minions) {
             minion.init();
             for (BuffDetail minionBuff : buffDetails) {
-                minion.init();
+                minionBuff.init();
                 if (minion.getId().equals(minionBuff.getId())) {
                     minion.addSpecialPowerBuff(minionBuff);
                 }
@@ -155,13 +154,13 @@ public class InstanceBuilder {
         return toReturn;
     }
 
-    public static Item[] getIems(){
+    public static Item[] getItems() {
         Item[] items = new Item[getAllItems().length - getCollectAbleItems().size()];
         int counter = 0;
         for (int i = 0; i < getAllItems().length; i++) {
-            if (getAllItems()[i].getPrice() != 0){
+            if (getAllItems()[i].getPrice() != 0) {
                 items[counter] = getAllItems()[i];
-                counter ++;
+                counter++;
             }
         }
         return Arrays.copyOf(items, items.length);

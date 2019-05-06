@@ -23,7 +23,7 @@ public class Shop {
         cardsInShop.addAll(Arrays.asList(InstanceBuilder.getSpells()));
         cardsInShop.addAll(Arrays.asList(InstanceBuilder.getHeroes()));
         cardsInShop.addAll(Arrays.asList(InstanceBuilder.getMinions()));
-        itemsInShop.addAll(Arrays.asList(InstanceBuilder.getIems()));
+        itemsInShop.addAll(Arrays.asList(InstanceBuilder.getItems()));
     }
 
     public String search(String cardName) {
