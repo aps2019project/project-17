@@ -33,7 +33,7 @@ public class Deck {
         Hero[] heroes = InstanceBuilder.getHeroes();
         Minion[] minions = InstanceBuilder.getMinions();
         Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getItems();
+        Item[] items = InstanceBuilder.getAllItems();
         deckKillHero = new Deck("Kill Hero Story");
         deckKillHero.setHero(heroes[0]);
         deckKillHero.setItem(items[0]);
@@ -46,7 +46,7 @@ public class Deck {
         Hero[] heroes = InstanceBuilder.getHeroes();
         Minion[] minions = InstanceBuilder.getMinions();
         Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getItems();
+        Item[] items = InstanceBuilder.getAllItems();
         deckHoldFlag = new Deck("Hold flag Story");
         deckHoldFlag.setHero(heroes[4]);
         deckHoldFlag.setItem(items[17]);
@@ -58,7 +58,7 @@ public class Deck {
         Hero[] heroes = InstanceBuilder.getHeroes();
         Minion[] minions = InstanceBuilder.getMinions();
         Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getItems();
+        Item[] items = InstanceBuilder.getAllItems();
         deckCaptureFlag = new Deck("Capture Flag Story");
         deckCaptureFlag.setHero(heroes[6]);
         deckCaptureFlag.setItem(items[11]);
