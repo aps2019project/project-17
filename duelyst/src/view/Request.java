@@ -510,10 +510,10 @@ public class Request {
                     menuType = MenuType.SHOP_MENU;
                     break;
                 case "battle":
-                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
-                        System.out.println("selected deck is invalid");
-                        return false;
-                    }
+//                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
+//                        System.out.println("selected deck is invalid");
+//                        return false;
+//                    }
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
                     checkSyntaxOfEnteringBattle();
@@ -1008,7 +1008,7 @@ public class Request {
     public boolean checkSyntaxOfSearchCollection() {
         Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH_COLLECTION + " " + "(?<name>[\\w+ ]+)");
         Matcher matcher = patternForSearchCollection.matcher(command);
-        if (matcher.matches()) {//todo what to do if there was more than one card with that name?
+        if (matcher.matches()) {
             String name = matcher.group("name");
             String ID = GameController.search(name, Account.getLoginUser().getCollection());
             System.out.println(ID);
@@ -1291,12 +1291,13 @@ public class Request {
         Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
         Matcher matcher = patternForEndGame.matcher(command);
         if (matcher.matches()) {
-            // TODO: needs a method for ending game
-            return true;
+            Battle.getCurrentBattle().endingGame();
+            System.out.println(Battle.getSituationOfGame());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
         }
+        return true;
     }
 
     public boolean checkSyntaxOfEnterGraveYard() {

@@ -1,6 +1,7 @@
 package GameGround;
 
 import Data.*;
+import effects.AttackType;
 import effects.Card;
 import effects.Hero;
 import effects.Minion;
@@ -138,6 +139,8 @@ public class BattleHoldingFlag extends Battle {
                 continue;
             Minion minion = getAllMinion().get(i);
             whoseTurn().addCardToGraveYard(minion);
+            if (minion.getAttackType().equals(AttackType.ON_DEATH))
+                minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
             if (minion.isHasFlag()) {
                 whoHasFlag = null;
                 timeHoldingFlag = 0;
