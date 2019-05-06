@@ -1,11 +1,5 @@
 package effects;
 
-import Data.Player;
-import GameGround.Battle;
-import GameGround.Cell;
-
-import java.util.ArrayList;
-
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;

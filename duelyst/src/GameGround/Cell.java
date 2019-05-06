@@ -12,6 +12,9 @@ public class Cell {
     private boolean isFireCell;
     private boolean isPoison;
     private boolean isHoly;
+    private BuffDetail poison;
+    private BuffDetail fire;
+    private BuffDetail holy;
 
     Cell(int row, int col) {
         this.row = row;
@@ -68,6 +71,34 @@ public class Cell {
 
     public void setHoly(boolean holy) {
         isHoly = holy;
+    }
+
+    public void enterCell() {
+        if (this.isPoison) {
+            poison = new BuffDetail(-2, BuffType.POISON, -1, TargetType.NONE, TargetRange.ONE);
+            ((Minion) getCard()).addBuff(poison);
+        }
+        if (this.isFireCell) {
+            fire = new BuffDetail(-2, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.NONE, TargetRange.ONE, 0, 0, -2);
+            ((Minion) getCard()).addBuff(fire);
+        }
+        if (this.isHoly) {
+            holy = new BuffDetail(-2, BuffType.HOLY, TargetType.NONE, TargetRange.ONE, -1, 1);
+            ((Minion) getCard()).addBuff(holy);
+        }
+    }
+
+    public void exitCell() {
+        if (this.isPoison) {
+            ((Minion) getCard()).getBuff().removeBuff(poison);
+        }
+        if (this.isFireCell) {
+            ((Minion) getCard()).getBuff().removeBuff(fire);
+        }
+        if (this.isHoly) {
+            ((Minion) getCard()).getBuff().removeBuff(holy);
+        }
+
     }
 
     static int distance(Cell cell, Cell cell1) {
