@@ -190,7 +190,7 @@ public class Battle {
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You don′t have enough mana";
             if (whoseTurn().isPutInGroundAttackEnemyHero()){
-
+                whoseTurn().action(x, y);
             }
 
             this.selectedCard = card;
