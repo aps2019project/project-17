@@ -121,12 +121,28 @@ public class GameController {
         return shop.search(cardName);
     }
 
-    public static Account getAccount(String userName){
-       return Account.getAccount(userName);
+    public static Account getAccount(String userName) {
+        return Account.getAccount(userName);
     }
 
-    public static String useSpecialPower(int x, int y,Battle battle){
+    public static String useSpecialPower(int x, int y, Battle battle) {
         return battle.useSpecialPower(x, y);
+    }
+
+    public static String selectCardOrItem(String cardItemID, Battle battle) {
+        return battle.selectCardOrItem(cardItemID);
+    }
+
+    public static String showCardInfoFromGraveYard(String cardID, Battle battle) {
+        return battle.showCardInfoFromGraveYard(cardID);
+    }
+
+    public static String showCardsOfGraveYard(Battle battle) {
+        return battle.showCardsOfGraveYard();
+    }
+
+    public static String attackCombo(String opponentCardID, Battle battle, String... cardIDs) {
+        return battle.attackCombo(opponentCardID, cardIDs);
     }
 
     public static String logout() {
