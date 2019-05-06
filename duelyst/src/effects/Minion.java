@@ -1,5 +1,7 @@
 package effects;
 
+import java.util.ArrayList;
+
 public class Minion extends Card {
     protected Buff specialPower;
     protected Buff attack;
@@ -102,20 +104,8 @@ public class Minion extends Card {
         return manaPoint;
     }
 
-    public int getMaxRangeToInput() {
-        return maxRangeToInput;
-    }
-
-    public void setMaxRangeToInput(int maxRangeToInput) {
-        this.maxRangeToInput = maxRangeToInput;
-    }
-
     public int getDistanceCanMove() {
         return distanceCanMove;
-    }
-
-    public void setDistanceCanMove(int distanceCanMove) {
-        this.distanceCanMove = distanceCanMove;
     }
 
     private void increaseNumberOfAttack() {
@@ -127,7 +117,11 @@ public class Minion extends Card {
     }
 
     public void attack(Minion minion) {
+        ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
+        specialSituationBuffs.add(specialSituationBuff);
         increaseNumberOfAttack();
+        if (specialSituation.equals(SpecialSituation.ATTACK))
+            this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
         this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
         if (this.attackType.equals(AttackType.ON_ATTACK))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
@@ -203,10 +197,6 @@ public class Minion extends Card {
         return canMove;
     }
 
-    public boolean canCounterAttack() {
-        return canCounterAttack;
-    }
-
     public MinionType getMinionType() {
         return minionType;
     }
@@ -245,9 +235,5 @@ public class Minion extends Card {
 
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
-    }
-
-    public Buff getSpecialPower() {
-        return specialPower;
     }
 }

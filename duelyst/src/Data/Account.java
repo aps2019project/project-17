@@ -29,7 +29,7 @@ public class Account implements Comparable<Account> {
         this.daric = 15000;
         this.matchHistory = new MatchHistory();
         this.collection = new Collection();
-       this.player = new Player(this.userName);
+        this.player = new Player(this.userName);
         Collection.addCollection(this.collection);
         this.shop = new Shop(this.collection);
     }
@@ -60,15 +60,14 @@ public class Account implements Comparable<Account> {
         return "cant find account with this user name";
     }
 
-    public static boolean checkForValidUserName(String userName){
-        for (Account account:GameController.getAccounts()) {
-            if(account.getUserName().equals(userName)){
+    public static boolean checkForValidUserName(String userName) {
+        for (Account account : GameController.getAccounts()) {
+            if (account.getUserName().equals(userName)) {
                 return true;
             }
         }
         return false;
     }
-
 
 
     public static String logout() {

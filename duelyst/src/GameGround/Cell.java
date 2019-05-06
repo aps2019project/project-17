@@ -15,10 +15,15 @@ public class Cell {
     private BuffDetail poison;
     private BuffDetail fire;
     private BuffDetail holy;
+    private Buff buff;
 
     Cell(int row, int col) {
         this.row = row;
         this.col = col;
+    }
+
+    public Buff getBuff() {
+        return buff;
     }
 
     public int getRow() {
