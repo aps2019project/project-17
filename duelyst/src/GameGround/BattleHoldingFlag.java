@@ -95,6 +95,7 @@ public class BattleHoldingFlag extends Battle {
             timeHoldingFlag = 0;
             return selectedCard.getId() + " moved to " + x + " - " + y + " and capture the flag";
         }
+        super.check();
         return selectedCard.getId() + " moved to " + x + " - " + y;
     }
 
@@ -118,26 +119,13 @@ public class BattleHoldingFlag extends Battle {
             return "card successfully inserted";
         }
         //spell
+        super.check();
         return "card successfully inserted";
     }
 
     @Override
     protected void setPrice() {
-        switch (gameMode) {
-            case SINGLE_PLAYER:
-                switch (singlePlayerModes) {
-                    case STORY:
-                        this.price = 1000;
-                        break;
-                    case CUSTOM:
-                        this.price = 1000;
-                        break;
-                }
-                break;
-            case MULTI_PLAYER:
-                this.price = 1000;
-                break;
-        }
+        this.price = 1000;
     }
 
     @Override

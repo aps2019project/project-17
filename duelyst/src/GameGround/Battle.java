@@ -162,6 +162,7 @@ public class Battle {
         }
         Minion firstMinion = (Minion) returnCardFromBoard(cardIDs[0], whoseTurn());
         opponentCard.counterAttack(firstMinion);
+        check();
         return "combo attack successfully done";
     }
 
@@ -197,6 +198,7 @@ public class Battle {
             whoseTurn().removeCardFromHand(card);
             cell.setCard(card);
             cell.enterCell();
+            check();
             return "ok";
 
         } else if (card instanceof Spell) {
@@ -205,10 +207,12 @@ public class Battle {
                 return "you don't have enough mana";
             ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
+            check();
             return "spell successfully inserted";
         }
 
         // if cell has buff ?!
+        check();
         return "ok";
     }
 
@@ -281,6 +285,7 @@ public class Battle {
             return "opponent minion is unavailable for attack";
         attacker.attack(minion);
         minion.counterAttack(attacker);
+        check();
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
@@ -289,6 +294,7 @@ public class Battle {
             return "you don't have enough mana";
 
         whoseTurn().getMainDeck().getHero().useSpecialPower(x, y);
+        check();
         return "special power successfully used";
     }
 
@@ -296,6 +302,7 @@ public class Battle {
         if (selectedItem == null)
             return "at first you should select a item";
         this.selectedItem.action(x, y);
+        check();
         return "item successfully used";
 
     }
@@ -576,6 +583,11 @@ public class Battle {
             situationOfGame = playerTwo.getUserName() + " loses from " + playerOne.getUserName();
             currentBattle = null;
         }
+    }
+
+    public void check(){
+        currentBattle.deletedDeadMinions();
+        currentBattle.endGame();
     }
 
     public void endGame() {
