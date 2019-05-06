@@ -14,7 +14,98 @@ import java.util.ArrayList;
 public class Buff {
     private ArrayList<BuffDetail> buffDetails;
 
-    public void action(Object object, TargetType targetType, BuffDetail buffDetail) {
+    public void action(int x, int y, ArrayList<BuffDetail> buffDetails) {
+        for (BuffDetail buffDetail : buffDetails) {
+            Player targetPlayer = null;
+            ArrayList<Object> targets = new ArrayList<>();
+            ArrayList<Minion> targetMinions = new ArrayList<>();
+            ArrayList<Cell> targetCells = new ArrayList<>();
+            switch (buffDetail.getTargetType()) {
+                case ENEMY_HERO:
+                    targetMinions.add(Battle.getCurrentBattle().theOtherPlayer().getMainDeck().getHero());
+                    break;
+                case INSIDER_HERO_NOT_MELEE:
+                    if (Battle.getCurrentBattle().whoseTurn().getMainDeck().getHero().getMinionType().equals(MinionType.MELEE))
+                        return;
+                case INSIDER_HERO:
+                    targetMinions.add(Battle.getCurrentBattle().whoseTurn().getMainDeck().getHero());
+                    break;
+                case PLAYER:
+                    targetPlayer = Battle.getCurrentBattle().whoseTurn();
+                    break;
+            }
+            switch (buffDetail.getTargetRange()) {
+                case ONE:
+                    targets.add(Battle.getCurrentBattle().getCellFromBoard(x, y));
+                    break;
+                case TWO:
+                    targets.add(Battle.getCurrentBattle().getMinionsSquare(x, y));
+                    break;
+                case THREE:
+                    targets.add(Battle.getCurrentBattle().getMinionsCube(x, y));
+                    break;
+                case ALL:
+                    targets.add(Battle.getCurrentBattle().getAllMinion());
+                    break;
+                case ALL_IN_COLUMN:
+                    targets.add(Battle.getCurrentBattle().returnMinionsInColumn(x, y));
+                    break;
+                case AROUND:
+                    targets.add(Battle.getCurrentBattle().minionsAroundCell(x, y));
+                    break;
+                case DISTANCE_TWO:
+                    targets.add(Battle.getCurrentBattle().returnMinionsWhichDistance(x, y));
+                    break;
+                case CLOSEST_RANDOM:
+                    targets.add(Battle.getCurrentBattle().closestRandomMinion(x, y));
+                    break;
+                case RANDOM:
+                    targets.add(Battle.getCurrentBattle().returnRandomMinion(x, y));
+                    break;
+            }
+            for (Object target : targets) {
+                switch (buffDetail.getTargetType()) {
+                    case ENEMY:
+                        if (target instanceof Minion)
+                            if (!((Minion) target).getUserName().equals(Battle.getCurrentBattle().whoseTurn().getUserName()))
+                                targetMinions.add((Minion) target);
+                        break;
+                    case INSIDER:
+                        if (target instanceof Minion)
+                            if (((Minion) target).getUserName().equals(Battle.getCurrentBattle().whoseTurn().getUserName()))
+                                targetMinions.add((Minion) target);
+                        break;
+                    case NONE:
+                        if (target instanceof Minion)
+                            targetMinions.add((Minion) target);
+                        break;
+                    case CELL:
+                        if (target instanceof Cell)
+                            targetCells.add((Cell) target);
+                        break;
+                    case INSIDER_NOT_MELEE:
+                        if (target instanceof Minion)
+                            if (((Minion) target).getUserName().equals(Battle.getCurrentBattle().whoseTurn().getUserName()) && !((Minion) target).getMinionType().equals(MinionType.MELEE))
+                                targetMinions.add((Minion) target);
+                        break;
+                    case MELEE:
+                        if (target instanceof Minion)
+                            if (((Minion) target).getMinionType().equals(MinionType.MELEE))
+                                targetMinions.add((Minion) target);
+                        break;
+                }
+            }
+            for (Minion targetMinion : targetMinions) {
+                action(targetMinion, TargetType.INSIDER, buffDetail);
+            }
+            for (Cell targetCell : targetCells) {
+                action(targetCell, TargetType.CELL, buffDetail);
+            }
+            action(targetPlayer, TargetType.PLAYER, buffDetail);
+        }
+    }
+
+    private void action(Object object, TargetType targetType, BuffDetail buffDetail) {
         switch (targetType) {
             case NONE:
             case ENEMY_HERO:
