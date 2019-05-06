@@ -510,10 +510,10 @@ public class Request {
                     menuType = MenuType.SHOP_MENU;
                     break;
                 case "battle":
-//                    if(!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()){
-//                        System.out.println("selected deck is invalid");
-//                        return false;
-//                    }
+                    if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()) {
+                        System.out.println("selected deck is invalid");
+                        return false;
+                    }
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
                     checkSyntaxOfEnteringBattle();
@@ -542,7 +542,7 @@ public class Request {
             menuType = MenuType.MULTI_PLAYER;
             AccountView.showLeaderBoard();
             System.out.println("Enter your Opponent user name:");
-            secondPlayerUserName=scanner.next();
+            secondPlayerUserName = scanner.next();
         } else {
             error = ErrorType.INVALID_INPUT;
         }
@@ -698,7 +698,6 @@ public class Request {
 //            return false;
 //        }
 //    }
-
     public boolean checkSyntaxOfExitCommand() {
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
         Matcher matcher = patternForExit.matcher(command);
