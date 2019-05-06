@@ -64,7 +64,7 @@ public class BattleKillHero extends Battle {
         String toReturnFormSuper = super.movingCard(x, y);
         if (!toReturnFormSuper.equals("ok"))
             return toReturnFormSuper;
-
+        super.check();
         // if cell has buff ?!
         return this.selectedCard.getId() + " moved to " + x + " - " + y;
     }
@@ -77,6 +77,7 @@ public class BattleKillHero extends Battle {
         Card card = whoseTurn().getCardFromHand(cardName);
         Cell cell = getCellFromBoard(x, y);
         // spell
+        super.check();
         return "card successfully inserted";
     }
 

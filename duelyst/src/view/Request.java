@@ -1128,9 +1128,6 @@ public class Request {
     public boolean checkSyntaxOfAttack() {
         Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " (?<cardId>[\\w+ ]+)");
         Matcher matcher = patternForAttack.matcher(command);
-        if (matcher.matches()){
-            System.out.println("matches");
-        }
         String cardId = matcher.group("cardId");
         if (matcher.matches()) {
             String result = GameController.attack(cardId, Battle.getCurrentBattle());

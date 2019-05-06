@@ -79,15 +79,13 @@ public class BattleCaptureFlag extends Battle {
     private void setFlagsInBoard() {
         Random r = new Random();
         for (int i = 0; i < this.numberOfFlags / 2; i++) {
-            int x = r.nextInt(6);
-            int y = r.nextInt(6);
-            Cell cell = this.board.getCells()[x - 1][y - 1];
-
-            while ((x == 3 && y == 0) || cell.hasFlag()) {
-                x = r.nextInt(6);
-                y = r.nextInt(6);
-                cell = this.board.getCells()[x - 1][y - 1];
+            int x = r.nextInt(5) + 1;
+            int y = r.nextInt(5) + 1;
+            while (x < 0 || y < 0){
+                x = r.nextInt()% 5 + 1;
+                y = r.nextInt() % 5 + 1;
             }
+            Cell cell = this.board.getCells()[x - 1][y - 1];
             cell.setFlag(true);
         }
         for (int i = 0; i < this.numberOfFlags - this.numberOfFlags / 2; i++) {
@@ -102,6 +100,7 @@ public class BattleCaptureFlag extends Battle {
             }
             cell.setFlag(true);
         }
+        super.check();
     }
 
     @Override
@@ -120,11 +119,13 @@ public class BattleCaptureFlag extends Battle {
             this.minionsHaveFlag.add(minion);
             return "minion successfully moved to " + x + " - " + y + " and captured the flag";
         }
+        super.check();
         return "minion successfully moved to " + x + " - " + y;
     }
 
     @Override
     public String insertingCardFromHand(String cardName, int x, int y) {
+        super.check();
         String returning = super.insertingCardFromHand(cardName, x, y);
         if (!returning.equals("ok"))
             return returning;
@@ -147,6 +148,7 @@ public class BattleCaptureFlag extends Battle {
             return "card successfully inserted";
         }
         // spell
+        super.check();
         return "card successfully inserted";
     }
 
