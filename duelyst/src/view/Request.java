@@ -806,7 +806,7 @@ public class Request {
                     ShopView.shopHelp();
                     break;
                 case BATTLE_MENU:
-                    //todo needs battle help
+                    BattleView.battleHelp();
                     break;
             }
         } else {
