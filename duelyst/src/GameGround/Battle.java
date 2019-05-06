@@ -386,6 +386,8 @@ public class Battle {
         this.turn++;
         this.selectedCard = null;
         this.selectedItem = null;
+        playerOne.addCardToHand();
+        playerTwo.addCardToHand();
         if (this.turn >= 15) {
             this.playerOne.addMana(-this.playerOne.getMana() + 9);
             this.playerTwo.addMana(-this.playerTwo.getMana() + 9);

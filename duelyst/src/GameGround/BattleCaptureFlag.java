@@ -5,10 +5,7 @@ import Data.GameData;
 import Data.MatchState;
 import Data.Player;
 import controller.GameController;
-import effects.Card;
-import effects.Hero;
-import effects.Minion;
-import effects.Spell;
+import effects.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -180,6 +177,8 @@ public class BattleCaptureFlag extends Battle {
                     continue;
                 whoseTurn().addCardToGraveYard(getAllMinion().get(i));
                 if (getAllMinion().get(i).isHasFlag()) {
+                    if (getAllMinion().get(i).getAttackType().equals(AttackType.ON_DEATH))
+                        getAllMinion().get(i).useSpecialPower(getAllMinion().get(i).getXCoordinate(), getAllMinion().get(i).getYCoordinate());
                     minionsHaveFlag.remove(getAllMinion().get(i));
                     Cell cell = getCellFromBoard(getAllMinion().get(i).getXCoordinate(), getAllMinion().get(i).getYCoordinate());
                     cell.setFlag(true);

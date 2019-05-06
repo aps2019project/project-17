@@ -165,7 +165,10 @@ public class Player {
 
     private void setNextCard() {
         Random random = new Random();
-        int n = random.nextInt(this.copyMainDeck.getCards().size());
+        int n = random.nextInt() % this.copyMainDeck.getCards().size();
+        while (n < 0) {
+            n = random.nextInt() % this.copyMainDeck.getCards().size();
+        }
         this.nextCard = this.copyMainDeck.getCards().get(n);
         this.copyMainDeck.getCards().remove(n);
     }
