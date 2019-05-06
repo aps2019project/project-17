@@ -9,26 +9,26 @@ import java.util.ArrayList;
 
 public class BattleView extends View {
 
-    public static void showBattleMenu(){
+    public static void showBattleMenu() {
         System.out.println("Please Select the type you want to play (1/2):");
         System.out.println("1.Single Player");
         System.out.println("2.Multi player");
     }
 
-    public static void showGameStateMenu(){
+    public static void showGameStateMenu() {
         System.out.println("please choose game type:");
         System.out.println("1.story");
         System.out.println("2.custom game");
     }
 
-    public static void showStoryMode(){
+    public static void showStoryMode() {
         AI.initializeAIStory();
-        System.out.println("1.Kill Hero : "+ AI.getAIModeKH().getMainDeck().getHero().getName());
-        System.out.println("2.Hold Flag : "+AI.getAIModeHF().getMainDeck().getHero().getName());
-        System.out.println("3.Capture Flag : "+AI.getAIModeCF().getMainDeck().getHero().getName());
+        System.out.println("1.Kill Hero : " + AI.getAIModeKH().getMainDeck().getHero().getName());
+        System.out.println("2.Hold Flag : " + AI.getAIModeHF().getMainDeck().getHero().getName());
+        System.out.println("3.Capture Flag : " + AI.getAIModeCF().getMainDeck().getHero().getName());
     }
 
-    public static void showCustomMode(){
+    public static void showCustomMode() {
         System.out.println("1.Kill Hero(KH)");
         System.out.println("2.Hold Flag(HF)");
         System.out.println("3.Capture Flag(CF)");
@@ -97,10 +97,8 @@ public class BattleView extends View {
         System.out.println(Battle.getCurrentBattle().showCollectAble());
     }
 
-    public static void showInfo() {
-/**
- * it depends on the item that has been selected in the previous command(check doc page 20)
- */
+    public static String showInfo(Battle battle) {
+        return battle.showInfoOFItem();
     }
 
     public static void showNextCard() {
