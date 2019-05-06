@@ -35,10 +35,6 @@ public class Request {
         return error;
     }
 
-    public void setError(ErrorType error) {
-        this.error = error;
-    }
-
     public boolean isValid() {
         RequestType requestType = getType();
 
