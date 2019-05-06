@@ -566,16 +566,19 @@ public class Request {
                         AI.setAiPlayer(KH);
                         new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
+                        System.out.println("You have entered the Battle,Fight!");
                         return;
                     case "hold flag":
                         AI.setAiPlayer(Hf);
                         new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
+                        System.out.println("You have entered the Battle,Fight!");
                         return;
                     case "capture flag":
                         AI.setAiPlayer(CF);
                         new BattleCaptureFlag(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
+                        System.out.println("You have entered the Battle,Fight!");
                         return;
                     default:
                         error = ErrorType.INVALID_INPUT;
