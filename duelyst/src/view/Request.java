@@ -126,6 +126,8 @@ public class Request {
                 return checkSyntaxOfEnterGraveYard();
             case START_GAME:
                 return checkSyntaxOfStartGame();
+            case START_MULTI_PLAYER_GAME:
+                return checkSyntaxOfStartMultiPlayer();
             case SELECT_USER:
                 return checkSyntaxOfSelectUser();
             case EXIT:

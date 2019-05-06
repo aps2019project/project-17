@@ -121,6 +121,10 @@ public class GameController {
         return shop.search(cardName);
     }
 
+    public static Account getAccount(String userName){
+       return Account.getAccount(userName);
+    }
+
     public static String logout() {
         return Account.logout();
     }
