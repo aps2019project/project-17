@@ -129,6 +129,8 @@ public class Minion extends Card {
     }
 
     public void useSpecialPower(int x, int y) {
+        if (desc.equals("nothing"))
+            return;
         for (BuffDetail buffDetail : specialPower.getBuffDetails()) {
             ArrayList<BuffDetail> buffDetails = new ArrayList<>();
             buffDetails.add(buffDetail);
