@@ -161,8 +161,10 @@ public class Player {
     public void addCardToHand() {
         if (this.hand.getCards().size() >= 5)
             return;
-        hand.addCard(this.nextCard);
-        setNextCard();
+        while (this.hand.getCards().size() < 5) {
+            hand.addCard(this.nextCard);
+            setNextCard();
+        }
     }
 
     public void changeMana(int value) {
@@ -199,9 +201,7 @@ public class Player {
     }
 
     public boolean isPlayerReadyForBattle() {
-        if (mainDeck == null)
-            return false;
-        if (!mainDeck.isDeckValidate())
+        if (mainDeck == null || !mainDeck.isDeckValidate())
             return false;
         setHand();
         return true;

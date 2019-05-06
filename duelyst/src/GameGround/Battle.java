@@ -21,6 +21,8 @@ public class Battle {
     protected GameData gameDataPlayerOne;
     protected GameData gameDataPlayerTwo;
     protected static Battle currentBattle;
+    private SinglePlayerModes singlePlayerModes;
+    protected int price;
 
     public Battle(Player playerOne, Player playerTwo, GameMode gameMode, BattleType battleType) {
         this.playerOne = playerOne;
@@ -86,13 +88,13 @@ public class Battle {
         return null;
     }
 
-    public String selectCardOrItem(String cardID) {
+    public String selectCardOrItem(String cardItemID) {
         for (int i = 0; i < board.getCells().length; i++) {
             for (int j = 0; j < board.getCells()[i].length; j++) {
                 Card card = board.getCells()[i][j].getCard();
                 if (card == null)
                     continue;
-                if (card.getId().equals(cardID)) {
+                if (card.getId().equals(cardItemID)) {
                     if (!cardIsMine(card, whoseTurn()))
                         return "this card doesnt belong to you";
                     this.selectedCard = card;
@@ -101,7 +103,7 @@ public class Battle {
             }
         }
         for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
-            if (whoseTurn().getCollectAbleItems().get(i).getId().equals(cardID)) {
+            if (whoseTurn().getCollectAbleItems().get(i).getId().equals(cardItemID)) {
                 this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
                 return "item successfully selected";
             }
@@ -271,7 +273,7 @@ public class Battle {
         return "special power successfully added";
     }
 
-    Card returnCardFromBoard(String id, Player player) {
+    private Card returnCardFromBoard(String id, Player player) {
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
                 if (this.board.getCells()[i][j].getCard().getId().equals(id)) {
@@ -461,5 +463,8 @@ public class Battle {
             }
         }
         return toReturn;
+    }
+
+    protected void setPrice(){
     }
 }

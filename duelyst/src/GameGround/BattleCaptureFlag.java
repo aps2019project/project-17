@@ -23,6 +23,7 @@ public class BattleCaptureFlag extends Battle {
         this.singlePlayerModes = null;
         setGameDate();
         setFlagsInBoard();
+        setPrice();
         currentBattle = this;
         // Multi Player
     }
@@ -34,6 +35,7 @@ public class BattleCaptureFlag extends Battle {
         this.singlePlayerModes = singlePlayerModes;
         setGameDate();
         setFlagsInBoard();
+        setPrice();
         currentBattle = this;
         // Single Player
     }
@@ -143,5 +145,24 @@ public class BattleCaptureFlag extends Battle {
         }
         // spell
         return "card successfully inserted";
+    }
+
+    @Override
+    protected void setPrice() {
+        switch (gameMode) {
+            case SINGLE_PLAYER:
+                switch (singlePlayerModes) {
+                    case STORY:
+                        this.price = 1500;
+                        break;
+                    case CUSTOM:
+                        this.price = 1000;
+                        break;
+                }
+                break;
+            case MULTI_PLAYER:
+                this.price = 1000;
+                break;
+        }
     }
 }

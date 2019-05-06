@@ -25,6 +25,7 @@ public class BattleHoldingFlag extends Battle {
         this.cellOfFlag = this.board.getCells()[x - 1][y - 1];
         this.cellOfFlag.setFlag(true);
         setGameData();
+        setPrice();
         // Multi Player
     }
 
@@ -39,6 +40,7 @@ public class BattleHoldingFlag extends Battle {
         int y = r.nextInt(6);
         this.cellOfFlag = this.board.getCells()[x - 1][y - 1];
         this.cellOfFlag.setFlag(true);
+        setPrice();
         setGameData();
         // single player
     }
@@ -118,5 +120,24 @@ public class BattleHoldingFlag extends Battle {
         }
         //spell
         return "card successfully inserted";
+    }
+
+    @Override
+    protected void setPrice() {
+        switch (gameMode) {
+            case SINGLE_PLAYER:
+                switch (singlePlayerModes) {
+                    case STORY:
+                        this.price = 1000;
+                        break;
+                    case CUSTOM:
+                        this.price = 1000;
+                        break;
+                }
+                break;
+            case MULTI_PLAYER:
+                this.price = 1000;
+                break;
+        }
     }
 }
