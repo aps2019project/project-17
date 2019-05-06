@@ -4,6 +4,7 @@ import Data.AI;
 import Data.GameData;
 import Data.Player;
 import effects.Card;
+import effects.Hero;
 import effects.Minion;
 import effects.Spell;
 
@@ -164,5 +165,28 @@ public class BattleCaptureFlag extends Battle {
                 this.price = 1000;
                 break;
         }
+    }
+
+    @Override
+    public String deletedDeadMinions() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < getAllMinion().size(); i++) {
+            if (getAllMinion().get(i).getHealthPoint() <= 0) {
+                if (getAllMinion().get(i) instanceof Hero)
+                    continue;
+                if (getAllMinion().get(i).isHasFlag()) {
+                    minionsHaveFlag.remove(getAllMinion().get(i));
+                    Cell cell = getCellFromBoard(getAllMinion().get(i).getXCoordinate(), getAllMinion().get(i).getYCoordinate());
+                    cell.setFlag(true);
+                    Player player = playerOne;
+                    if (getAllMinion().get(i).getUserName().equals(playerTwo.getUserName()))
+                        player = playerTwo;
+                    player.changeNumberOfHoldingFlags(-1);
+                }
+                stringBuilder.append(getAllMinion().get(i).getName()).append(" died \n");
+                getCellFromBoard(getAllMinion().get(i).getXCoordinate(), getAllMinion().get(i).getYCoordinate()).setCard(null);
+            }
+        }
+        return stringBuilder.toString();
     }
 }

@@ -92,8 +92,32 @@ public class BattleKillHero extends Battle {
                 }
                 break;
             case MULTI_PLAYER:
-                this.price =  1000;
+                this.price = 1000;
                 break;
         }
+    }
+
+    @Override
+    public void endGame() {
+        if (playerOne.getMainDeck().getHero().getHealthPoint() <= 0) {
+
+        }
+        if (playerTwo.getMainDeck().getHero().getHealthPoint() <= 0) {
+
+        }
+    }
+
+    @Override
+    public String deletedDeadMinions() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < getAllMinion().size(); i++) {
+            Minion minion = getAllMinion().get(i);
+            if (minion.getHealthPoint() <= 0){
+                Cell cell = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
+                stringBuilder.append(minion.getName()).append(" died\n");
+                cell.setCard(null);
+            }
+        }
+        return stringBuilder.toString();
     }
 }

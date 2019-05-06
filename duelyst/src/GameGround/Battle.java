@@ -379,15 +379,10 @@ public class Battle {
     }
 
     public ArrayList<Minion> getAllMinion() {
-        ArrayList<Minion> allMinion = new ArrayList<>();
-        for (int i = 0; i < this.board.getCells().length; i++) {
-            for (int j = 0; j < this.board.getCells()[i].length; j++) {
-                Cell cell = this.board.getCells()[i][j];
-                if (cell != null)
-                    allMinion.add((Minion) cell.getCard());
-            }
-        }
-        return allMinion;
+        ArrayList<Minion> minions = new ArrayList<>();
+        minions.addAll(minionsOfCurrentPlayer(playerOne));
+        minions.addAll(minionsOfCurrentPlayer(playerTwo));
+        return minions;
     }
 
     public ArrayList<Minion> returnMinionsInColumn(int x, int y) {
@@ -491,8 +486,25 @@ public class Battle {
         return toReturn.toString();
     }
 
-    public ArrayList<Minion> minionsOfFirstPlayer() {
+    public ArrayList<Minion> minionsOfCurrentPlayer(Player player) {
         ArrayList<Minion> toReturn = new ArrayList<>();
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                Minion minion = (Minion) getCellFromBoard(i + 1, j + 1).getCard();
+                if (minion == null)
+                    continue;
+                if (cardIsMine(minion, player))
+                    toReturn.add(minion);
+            }
+        }
         return toReturn;
+    }
+
+    public void endGame() {
+
+    }
+
+    public String deletedDeadMinions() {
+        return "ok";
     }
 }
