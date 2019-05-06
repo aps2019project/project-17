@@ -4,6 +4,7 @@ import Data.AI;
 import Data.GameData;
 import Data.Player;
 import effects.Card;
+import effects.Hero;
 import effects.Minion;
 
 import java.util.Random;
@@ -139,5 +140,26 @@ public class BattleHoldingFlag extends Battle {
                 this.price = 1000;
                 break;
         }
+    }
+
+    @Override
+    public String deletedDeadMinions() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < getAllMinion().size(); i++) {
+            if (getAllMinion().get(i) instanceof Hero)
+                continue;
+            Minion minion = getAllMinion().get(i);
+            if (minion.isHasFlag()){
+                whoHasFlag = null;
+                timeHoldingFlag = 0;
+                cellOfFlag = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
+                cellOfFlag.setFlag(true);
+            }
+            stringBuilder.append(minion.getName()).append(" died \n");
+            Cell cell = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
+            cell.setFlag(true);
+            cell.setCard(null);
+        }
+        return stringBuilder.toString();
     }
 }

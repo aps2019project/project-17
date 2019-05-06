@@ -150,8 +150,6 @@ public class Player {
     }
 
     private void setNextCard() {
-        if (copyMainDeck.getCards().size() == 0)
-            setCopyMainDeck(false);
         Random random = new Random();
         int n = random.nextInt(this.copyMainDeck.getCards().size());
         this.nextCard = this.copyMainDeck.getCards().get(n);

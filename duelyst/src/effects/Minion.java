@@ -102,20 +102,8 @@ public class Minion extends Card {
         return manaPoint;
     }
 
-    public int getMaxRangeToInput() {
-        return maxRangeToInput;
-    }
-
-    public void setMaxRangeToInput(int maxRangeToInput) {
-        this.maxRangeToInput = maxRangeToInput;
-    }
-
     public int getDistanceCanMove() {
         return distanceCanMove;
-    }
-
-    public void setDistanceCanMove(int distanceCanMove) {
-        this.distanceCanMove = distanceCanMove;
     }
 
     private void increaseNumberOfAttack() {
@@ -203,10 +191,6 @@ public class Minion extends Card {
         return canMove;
     }
 
-    public boolean canCounterAttack() {
-        return canCounterAttack;
-    }
-
     public MinionType getMinionType() {
         return minionType;
     }
@@ -245,9 +229,5 @@ public class Minion extends Card {
 
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
-    }
-
-    public Buff getSpecialPower() {
-        return specialPower;
     }
 }

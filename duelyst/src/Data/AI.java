@@ -18,7 +18,6 @@ public class AI extends Player {
     }
 
     public AI(String userName, Deck deck) {
-//        Deck deck = Account.getLoginUser().getCollection().findDeck(deckName);
         super(userName, deck);
         currentAIPlayer = this;
     }
@@ -61,15 +60,17 @@ public class AI extends Player {
         int counters = new Random().nextInt() % 5 + 1;
         Battle battle = Battle.getCurrentBattle();
         for (int i = 0; i < counters; i++) {
-            int r = new Random().nextInt() % 9;
+            int r = new Random().nextInt() % 7;
             switch (r) {
                 case 0:
                     int randomToChoose = new Random().nextInt() % (currentAIPlayer).getMainDeck().getCards().size();
                     battle.selectCardOrItem(currentAIPlayer.getMainDeck().getCards().get(randomToChoose).getId());
                     break;
                 case 1:
-                    int x = new Random().nextInt() % 9 + 1;
-                    int y = new Random().nextInt() % 5 + 1;
+                    int x = new Random().nextInt() % 9;
+                    int y = new Random().nextInt() % 5;
+                    if (battle.getSelectedCard() == null)
+                        continue;
                     battle.movingCard(x, y);
                     break;
                 case 2:
@@ -80,20 +81,24 @@ public class AI extends Player {
                     break;
                 case 3:
                     randomToChoose = new Random().nextInt() % (battle.theOtherPlayer().getMainDeck().getCards().size());
-                    battle.attack(battle.theOtherPlayer().getMainDeck().getCards().get(randomToChoose).getId(), false,null);
+                    battle.attack(battle.theOtherPlayer().getMainDeck().getCards().get(randomToChoose).getId(), false, null);
                     break;
                 case 4:
                     Battle.getCurrentBattle().endTurn();
                     break;
                 case 5:
+                    x = new Random().nextInt() % 9;
+                    y = new Random().nextInt() % 5;
+                    battle.useSpecialPower(x, y);
                     break;
                 case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
+                    x = new Random().nextInt() % 9;
+                    y = new Random().nextInt() % 5;
+                    if (battle.getSelectedItem() != null)
+                        battle.getSelectedItem().action(x, y);
                     break;
             }
         }
+        battle.endTurn();
     }
 }
