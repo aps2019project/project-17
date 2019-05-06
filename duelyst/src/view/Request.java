@@ -508,7 +508,7 @@ public class Request {
                 case "battle":
                     if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()) {
                         System.out.println("selected deck is invalid");
-                        return false;
+                        return true;
                     }
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
