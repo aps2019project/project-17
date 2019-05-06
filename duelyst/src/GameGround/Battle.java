@@ -127,12 +127,14 @@ public class Battle {
             return "this card cant move";
         cellDestination.setCard(minion);
         minion.setCanMove(false);
+        cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
         if (cellDestination.getItem() != null) {
             whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
             cellDestination.setItem(null);
         }
+        cellDestination.enterCell();
         // if cell has buff ?!
         return "ok";
     }
@@ -177,12 +179,13 @@ public class Battle {
                 return "You don′t have enough mana";
             this.selectedCard = card;
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
-                ((Minion) card).useSpecialPower(card);
+                ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
             card.setUserName(whoseTurn().getUserName());
             whoseTurn().lessMana(((Minion) card).getManaPoint());
             ((Minion) card).setCoordinate(x, y);
             whoseTurn().removeCardFromHand(card);
             cell.setCard(card);
+            cell.enterCell();
             return "ok";
 
         } else if (card instanceof Spell) {
@@ -271,11 +274,10 @@ public class Battle {
     }
 
     public String useSpecialPower(int x, int y) {
-        Cell cell = getCellFromBoard(x, y);
         if (whoseTurn().getMainDeck().getHero().getManaPoint() > whoseTurn().getMana())
             return "you don't have enough mana";
 
-        whoseTurn().getMainDeck().getHero().useSpecialPower(cell);
+        whoseTurn().getMainDeck().getHero().useSpecialPower(x, y);
         return "special power successfully used";
     }
 

@@ -74,6 +74,8 @@ public class Cell {
     }
 
     public void enterCell() {
+        if (card == null)
+            return;
         if (this.isPoison) {
             poison = new BuffDetail(-2, BuffType.POISON, -1, TargetType.NONE, TargetRange.ONE);
             ((Minion) getCard()).addBuff(poison);
@@ -89,6 +91,8 @@ public class Cell {
     }
 
     public void exitCell() {
+        if (card == null)
+            return;
         if (this.isPoison) {
             ((Minion) getCard()).getBuff().removeBuff(poison);
         }

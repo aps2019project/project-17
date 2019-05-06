@@ -32,16 +32,6 @@ public class BuffDetail {
 
     }
 
-    //for anti buffs
-    public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange, BuffType antiBuffType) {
-        this.id = Integer.toString(id);
-        this.buffType = buffType;
-        this.effectTime = effectTime;
-        this.targetType = targetType;
-        this.targetRange = targetRange;
-        this.antiBuffType = antiBuffType;
-    }
-
     //for change attack power or health buff
     public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
         this.id = Integer.toString(id);
