@@ -43,6 +43,6 @@ class StringsRq {
     static final String SHOW_CARDS = "show cards";
     static final String END_GAME = "end game";
     static final String START_GAME="start game";
-    static final String START_MULTI_PLAYER_GAME="start multiPlayer game";
+    static final String START_MULTI_PLAYER_GAME="start multiplayer game";
     static final String SELECT_USER="select user";
 }
