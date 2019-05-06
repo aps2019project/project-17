@@ -195,7 +195,7 @@ public class Buff {
         }
     }
 
-    private void removeBuff(BuffDetail buffDetail) {
+    public void removeBuff(BuffDetail buffDetail) {
         for (Object target : buffDetail.getTarget()) {
             if (buffDetail.getId().equals("-1"))
                 continue;
