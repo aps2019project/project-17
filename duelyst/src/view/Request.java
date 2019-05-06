@@ -6,6 +6,8 @@ import Data.Account;
 import GameGround.*;
 import controller.GameController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -609,6 +611,7 @@ public class Request {
                     new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     menuType = MenuType.BATTLE_MENU;
                 } else if (mode.equals("cf")) {
+                    System.out.println("Enter number of flags:");
                     int numberOfFlags = scanner.nextInt();
                     new AI("Gholi", deck);
                     new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
@@ -656,6 +659,7 @@ public class Request {
                         menuType = MenuType.BATTLE_MENU;
                         break;
                     case "cf":
+                        System.out.println("Enter number of flags:");
                         int numberOfFlags = scanner.nextInt();
                         new BattleCaptureFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer(), numberOfFlags);
                         menuType = MenuType.BATTLE_MENU;
@@ -1092,8 +1096,14 @@ public class Request {
     public boolean checkSyntaxForSelect() {
         Pattern patternForSelect = Pattern.compile(StringsRq.SELECT + " (?<cardId>[\\w+ ]+)");
         Matcher matcher = patternForSelect.matcher(command);
-        String cardId = matcher.group("cardId");
-        //todo have to set a method in battle fo selecting item then will complete this method according to id(card or item)
+        if (matcher.matches()) {
+            String cardId = matcher.group("cardId");
+            String result = GameController.selectCardOrItem(cardId, Battle.getCurrentBattle());
+            System.out.println(result);
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
         return true;
     }
 
@@ -1129,7 +1139,18 @@ public class Request {
     public boolean checkSyntaxOfComboAttack() {
         Pattern patternForAttackCombo = Pattern.compile(StringsRq.ATTACK_COMBO);
         Matcher matcher = patternForAttackCombo.matcher(command);
-        // TODO: the combo attack method must   added and the syntax can get more than one card id so this must be handled
+        if (matcher.matches()) {
+            System.out.println("Enter opponent cardId:");
+            String opponentCardId = scanner.nextLine();
+            System.out.println("Enter your cardIds:");
+            String ids = scanner.nextLine();
+            String[] allIds = ids.split(" ");
+            ArrayList<String> toPass = new ArrayList<>(Arrays.asList(allIds));
+            GameController.attackCombo(opponentCardId, Battle.getCurrentBattle(), toPass.toArray(new String[0]));
+        } else {
+            error = ErrorType.INVALID_INPUT;
+            return false;
+        }
         return true;
     }
 
@@ -1204,7 +1225,8 @@ public class Request {
             Pattern patternForShowInfoInBattleMenu = Pattern.compile(StringsRq.SHOW_INFO);
             Matcher matcher = patternForShowInfoInBattleMenu.matcher(command);
             if (matcher.matches()) {
-                BattleView.showInfo();// TODO: must to be completed
+                String result = BattleView.showInfo(Battle.getCurrentBattle());
+                System.out.println(result);
             } else {
                 error = ErrorType.INVALID_INPUT;
                 return false;
@@ -1214,7 +1236,7 @@ public class Request {
             Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
             if (matcher.matches()) {
                 String cardId = matcher.group("cardId");
-                BattleView.showCardInfo(Battle.getCurrentBattle(), cardId);
+                GameController.showCardInfoFromGraveYard(cardId, Battle.getCurrentBattle());
                 return true;
             } else {
                 error = ErrorType.INVALID_INPUT;
@@ -1230,7 +1252,7 @@ public class Request {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            // TODO: must to be completed by adding use method for items
+            GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
             return true;
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -1242,7 +1264,7 @@ public class Request {
         Pattern patternForShowNextCard = Pattern.compile(StringsRq.SHOW_NEXT_CARD);
         Matcher matcher = patternForShowNextCard.matcher(command);
         if (matcher.matches()) {
-            BattleView.showNextCard();// TODO: must to be completed
+            BattleView.showNextCard();
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -1254,7 +1276,7 @@ public class Request {
         Pattern patternForShowCards = Pattern.compile(StringsRq.SHOW_CARDS);
         Matcher matcher = patternForShowCards.matcher(command);
         if (matcher.matches()) {
-            // TODO: a method for showing grave yard cards (easy)
+            GameController.showCardsOfGraveYard(Battle.getCurrentBattle());
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
