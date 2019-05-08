@@ -15,7 +15,7 @@ public class BattleKillHero extends Battle {
     private SinglePlayerModes singlePlayerModes;
 
     public BattleKillHero(Player playerOne, Player playerTwo) {
-        super(playerOne, playerTwo, GameMode.MULTI_PLAYER, BattleType.KILL_HERO);
+        super(playerOne, playerTwo, GameMode.MULTI_PLAYER);
         setGameData();
         setPrice();
         currentBattle = this;
@@ -23,7 +23,7 @@ public class BattleKillHero extends Battle {
     }
 
     public BattleKillHero(Player playerOne, SinglePlayerModes singlePlayerModes) {
-        super(playerOne, AI.getCurrentAIPlayer(), GameMode.SINGLE_PLAYER, BattleType.KILL_HERO);
+        super(playerOne, AI.getCurrentAIPlayer(), GameMode.SINGLE_PLAYER);
         this.singlePlayerModes = singlePlayerModes;
         setGameData();
         setPrice();
@@ -104,39 +104,11 @@ public class BattleKillHero extends Battle {
     @Override
     public void endGame() {
         if (playerOne.getMainDeck().getHero().getHealthPoint() <= 0) {
-            gameDataPlayerOne.setMatchState(MatchState.LOSE);
-            gameDataPlayerTwo.setMatchState(MatchState.WIN);
-            for (int i = 0; i < GameController.getAccounts().size(); i++) {
-                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
-                    GameController.getAccounts().get(i).changeDaric(price);
-                    GameController.getAccounts().get(i).incrementNumbOfWins();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
-                    continue;
-                }
-                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
-                    GameController.getAccounts().get(i).incrementNumbOfLose();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
-                }
-            }
-            situationOfGame = playerTwo.getUserName() + " win from " + playerOne.getUserName() + " and earn " + price;
-            currentBattle = null;
+            playerTwoWon();
             return;
         }
         if (playerTwo.getMainDeck().getHero().getHealthPoint() <= 0) {
-            gameDataPlayerOne.setMatchState(MatchState.WIN);
-            gameDataPlayerTwo.setMatchState(MatchState.LOSE);
-            for (int i = 0; i < GameController.getAccounts().size(); i++) {
-                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
-                    GameController.getAccounts().get(i).incrementNumbOfWins();
-                    GameController.getAccounts().get(i).changeDaric(price);
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
-                }
-                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
-                    GameController.getAccounts().get(i).incrementNumbOfLose();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
-                }
-            }
-            situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + price;
+            playerTwoWon();
             currentBattle = null;
         }
     }

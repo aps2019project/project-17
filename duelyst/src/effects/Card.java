@@ -4,7 +4,7 @@ public class Card {
     protected String name;
     protected String id;
     protected int price;
-    protected String userName;
+    private String userName;
     protected String desc;
 
     public Card(String name, String id, int price) {
@@ -16,10 +16,6 @@ public class Card {
 
     public String getDesc() {
         return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public String getUserName() {

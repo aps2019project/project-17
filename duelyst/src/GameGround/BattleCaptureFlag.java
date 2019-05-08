@@ -17,7 +17,7 @@ public class BattleCaptureFlag extends Battle {
     private SinglePlayerModes singlePlayerModes;
 
     public BattleCaptureFlag(Player playerOne, Player playerTwo, int numberOfFlags) {
-        super(playerOne, playerTwo, GameMode.MULTI_PLAYER, BattleType.CAPTURE_FLAG);
+        super(playerOne, playerTwo, GameMode.MULTI_PLAYER);
         this.numberOfFlags = numberOfFlags;
         this.minionsHaveFlag = new ArrayList<>();
         this.singlePlayerModes = null;
@@ -25,11 +25,10 @@ public class BattleCaptureFlag extends Battle {
         setFlagsInBoard();
         setPrice();
         currentBattle = this;
-        // Multi Player
     }
 
     public BattleCaptureFlag(Player playerOne, int numberOfFlags, SinglePlayerModes singlePlayerModes) {
-        super(playerOne, AI.getCurrentAIPlayer(), GameMode.SINGLE_PLAYER, BattleType.CAPTURE_FLAG);
+        super(playerOne, AI.getCurrentAIPlayer(), GameMode.SINGLE_PLAYER);
         this.numberOfFlags = numberOfFlags;
         this.minionsHaveFlag = new ArrayList<>();
         this.singlePlayerModes = singlePlayerModes;
@@ -37,7 +36,6 @@ public class BattleCaptureFlag extends Battle {
         setFlagsInBoard();
         setPrice();
         currentBattle = this;
-        // Single Player
     }
 
     @Override
@@ -78,8 +76,8 @@ public class BattleCaptureFlag extends Battle {
         for (int i = 0; i < this.numberOfFlags / 2; i++) {
             int x = r.nextInt(5) + 1;
             int y = r.nextInt(5) + 1;
-            while (x < 0 || y < 0){
-                x = r.nextInt()% 5 + 1;
+            while (x < 0 || y < 0) {
+                x = r.nextInt() % 5 + 1;
                 y = r.nextInt() % 5 + 1;
             }
             Cell cell = this.board.getCells()[x - 1][y - 1];
@@ -87,7 +85,11 @@ public class BattleCaptureFlag extends Battle {
         }
         for (int i = 0; i < this.numberOfFlags - this.numberOfFlags / 2; i++) {
             int x = r.nextInt(5);
-            int y = r.nextInt(6);
+            int y = r.nextInt(5);
+            while (x < 0 || y < 0) {
+                x = r.nextInt() % 5 + 1;
+                y = r.nextInt() % 5 + 1;
+            }
             Cell cell = this.board.getCells()[5 + x - 1][y - 1];
 
             while ((x == 3 && y == 9) || cell.hasFlag()) {
@@ -107,8 +109,6 @@ public class BattleCaptureFlag extends Battle {
             return toReturn;
         Cell cellDestination = getCellFromBoard(x, y);
         Minion minion = (Minion) this.selectedCard;
-        // cell has buff ?!
-
         if (cellDestination.hasFlag()) {
             minion.setHasFlag(true);
             cellDestination.setFlag(false);
@@ -144,7 +144,6 @@ public class BattleCaptureFlag extends Battle {
             }
             return "card successfully inserted";
         }
-        // spell
         super.check();
         return "card successfully inserted";
     }
@@ -197,39 +196,11 @@ public class BattleCaptureFlag extends Battle {
     @Override
     public void endGame() {
         if (playerOne.getHoldingFlags() >= numberOfFlags / 2) {
-            gameDataPlayerOne.setMatchState(MatchState.WIN);
-            gameDataPlayerTwo.setMatchState(MatchState.LOSE);
-            for (int i = 0; i < GameController.getAccounts().size(); i++) {
-                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
-                    GameController.getAccounts().get(i).changeDaric(price);
-                    GameController.getAccounts().get(i).incrementNumbOfWins();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
-                    continue;
-                }
-                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
-                    GameController.getAccounts().get(i).incrementNumbOfLose();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
-                }
-            }
-            situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + price;
+            playerOneWon();
             return;
         }
         if (playerTwo.getHoldingFlags() >= numberOfFlags / 2) {
-            gameDataPlayerTwo.setMatchState(MatchState.WIN);
-            gameDataPlayerOne.setMatchState(MatchState.LOSE);
-            for (int i = 0; i < GameController.getAccounts().size(); i++) {
-                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
-                    GameController.getAccounts().get(i).changeDaric(price);
-                    GameController.getAccounts().get(i).incrementNumbOfWins();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
-                    continue;
-                }
-                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
-                    GameController.getAccounts().get(i).incrementNumbOfLose();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
-                }
-            }
-            situationOfGame = playerTwo.getUserName() + " win from " + playerOne.getUserName() + " and earn " + price;
+            playerTwoWon();
         }
     }
 
@@ -239,11 +210,11 @@ public class BattleCaptureFlag extends Battle {
         switch (gameMode) {
             case SINGLE_PLAYER:
                 super.endTurn();
-                ((AI)AI.getCurrentAIPlayer()).action();
+                ((AI) AI.getCurrentAIPlayer()).action();
                 super.endTurn();
                 break;
             case MULTI_PLAYER:
-                endTurn();
+                super.endTurn();
                 break;
         }
     }

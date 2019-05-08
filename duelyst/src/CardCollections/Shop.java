@@ -94,18 +94,6 @@ public class Shop {
         return "item successfully sell";
     }
 
-    public void addCardToShop(Card card) {
-        cardsInShop.add(card);
-    }
-
-    public void addItemToShop(Item item) {
-        itemsInShop.add(item);
-    }
-
-    public ArrayList<Card> getCardsInShop() {
-        return cardsInShop;
-    }
-
     public ArrayList<Item> getItemsInShop() {
         return itemsInShop;
     }

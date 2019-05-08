@@ -1,7 +1,6 @@
 package GameGround;
 
 import Data.Player;
-import effects.Card;
 import effects.Minion;
 
 public class Board {
@@ -42,7 +41,7 @@ public class Board {
         Cell cell1 = battle.getBoard().getCells()[cell.getRow() - 1 + 1][cell.getCol() - 1 + 1];
         if (cell1 != null && cell1.getCard() != null && cell1.getCard().getUserName() != null && battle.cardIsMine(cell1.getCard(), player))
             return true;
-        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 + 1][cell.getCol() - 1 - 1];
+        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 + 1][cell.getCol() - 1 + 1];
         if (cell1 != null && cell1.getCard() != null && cell1.getCard().getUserName() != null && battle.cardIsMine(cell1.getCard(), player))
             return true;
         cell1 = battle.getBoard().getCells()[cell.getRow() - 1 - 1][cell.getCol() - 1 - 1];

@@ -147,11 +147,7 @@ public class Deck {
         return deckCaptureFlag;
     }
 
-    public int getNumberOfDeckCards() {
-        return this.cards.size();
-    }
-
-    public Card returnCardFromDeck(String cardName) {
+    Card returnCardFromDeck(String cardName) {
         for (Card card : this.cards) {
             if (card.getName().equals(cardName) || card.getId().equals(cardName))
                 return card;

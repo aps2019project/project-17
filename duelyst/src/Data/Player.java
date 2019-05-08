@@ -91,16 +91,17 @@ public class Player {
     public void setMainDeck(Deck deck) {
         this.mainDeck = deck;
         this.copyMainDeck = new Deck(this.mainDeck.getName());
-        setCopyMainDeck(true);
-        collectAbleItems.add(this.mainDeck.getItem());
+        setCopyMainDeck();
+        if (mainDeck.getItem() != null)
+            collectAbleItems.add(this.mainDeck.getItem());
     }
 
-    private void setCopyMainDeck(boolean addHero) {
+    private void setCopyMainDeck() {
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
-        if (addHero)
-            copyMainDeck.setHero(mainDeck.getHero());
+
+        copyMainDeck.setHero(mainDeck.getHero());
     }
 
     public boolean isPutInGroundAttackEnemyHero() {
@@ -144,11 +145,11 @@ public class Player {
     }
 
     private void setNextCard() {
-        Random random = new Random();
-        int n = random.nextInt() % this.copyMainDeck.getCards().size();
+        int n = new Random().nextInt() % copyMainDeck.getCards().size();
         while (n < 0) {
-            n = random.nextInt() % this.copyMainDeck.getCards().size();
+            n = new Random().nextInt() % copyMainDeck.getCards().size();
         }
+
         this.nextCard = this.copyMainDeck.getCards().get(n);
         this.copyMainDeck.getCards().remove(n);
     }

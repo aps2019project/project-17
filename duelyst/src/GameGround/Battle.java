@@ -2,7 +2,6 @@ package GameGround;
 
 
 import CardCollections.Hand;
-import Data.Account;
 import Data.GameData;
 import Data.MatchState;
 import Data.Player;
@@ -11,26 +10,23 @@ import controller.InstanceBuilder;
 import effects.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Battle {
-    protected Player playerOne;
-    protected Player playerTwo;
-    protected Board board;
-    protected int turn;
-    protected GameMode gameMode;
-    protected Card selectedCard;
-    protected Item selectedItem;
-    protected BattleType battleType;
-    protected GameData gameDataPlayerOne;
-    protected GameData gameDataPlayerTwo;
-    protected static Battle currentBattle;
-    private SinglePlayerModes singlePlayerModes;
+    Player playerOne;
+    Player playerTwo;
+    Board board;
+    private int turn;
+    GameMode gameMode;
+    Card selectedCard;
+    private Item selectedItem;
+    GameData gameDataPlayerOne;
+    GameData gameDataPlayerTwo;
+    static Battle currentBattle;
     protected int price;
-    protected static String situationOfGame;
+    private static String situationOfGame;
 
-    public Battle(Player playerOne, Player playerTwo, GameMode gameMode, BattleType battleType) {
+    public Battle(Player playerOne, Player playerTwo, GameMode gameMode) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         this.board = new Board();
@@ -38,7 +34,6 @@ public class Battle {
         this.gameMode = gameMode;
         this.selectedCard = null;
         this.selectedItem = null;
-        this.battleType = battleType;
         setHeroesInTheirPosition();
         setItems();
         situationOfGame = "";
@@ -55,10 +50,10 @@ public class Battle {
             int select = new Random().nextInt() % items.size();
             while (select < 0)
                 select = new Random().nextInt() % items.size();
-            int x = new Random().nextInt() % 9 + 1;
+            int x = new Random().nextInt() % 5 + 1;
             int y = new Random().nextInt() % 5 + 1;
             while (x < 0 || y < 0) {
-                x = new Random().nextInt() % 9 + 1;
+                x = new Random().nextInt() % 5 + 1;
                 y = new Random().nextInt() % 5 + 1;
             }
             Cell cell = getCellFromBoard(x, y);
@@ -242,8 +237,6 @@ public class Battle {
             check();
             return "spell successfully inserted";
         }
-
-        // if cell has buff ?!
         check();
         return "ok";
     }
@@ -373,8 +366,6 @@ public class Battle {
     public boolean cardIsMine(Card card, Player player) {
         if (card == null || card.getUserName() == null)
             return false;
-        // TODO: 2019-05-06
-
         return card.getUserName().equals(player.getUserName());
     }
 
@@ -408,11 +399,14 @@ public class Battle {
                 getCellFromBoard(i + 1, j + 1).passTurn();
             }
         }
-        for (Item collectAbleItem : playerOne.getCollectAbleItems()) {
-            collectAbleItem.passTurn();
+
+        for (int i = 0; i < playerOne.getCollectAbleItems().size(); i++) {
+            if (playerOne.getCollectAbleItems().get(i) != null)
+                playerOne.getCollectAbleItems().get(i).passTurn();
         }
         for (Item collectAbleItem : playerTwo.getCollectAbleItems()) {
-            collectAbleItem.passTurn();
+            if (collectAbleItem != null)
+                collectAbleItem.passTurn();
         }
         for (int i = 0; i < getAllMinion().size(); i++) {
             getAllMinion().get(i).resetMinion();
@@ -535,7 +529,7 @@ public class Battle {
         return toReturn.toString();
     }
 
-    public ArrayList<Minion> minionsOfCurrentPlayer(Player player) {
+    private ArrayList<Minion> minionsOfCurrentPlayer(Player player) {
         ArrayList<Minion> toReturn = new ArrayList<>();
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
@@ -587,7 +581,7 @@ public class Battle {
         }
     }
 
-    public void check() {
+    void check() {
         currentBattle.deletedDeadMinions();
         currentBattle.endGame();
     }
@@ -603,7 +597,37 @@ public class Battle {
         return situationOfGame;
     }
 
-    public Board getBoard() {
+    Board getBoard() {
         return board;
+    }
+
+    void playerOneWon() {
+        gameDataPlayerOne.setMatchState(MatchState.WIN);
+        gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+        loginOfEnding(playerOne, gameDataPlayerOne, playerTwo, gameDataPlayerTwo);
+        currentBattle = null;
+    }
+
+    void playerTwoWon() {
+        gameDataPlayerTwo.setMatchState(MatchState.WIN);
+        gameDataPlayerOne.setMatchState(MatchState.LOSE);
+        loginOfEnding(playerTwo, gameDataPlayerTwo, playerOne, gameDataPlayerOne);
+        currentBattle = null;
+    }
+
+    private void loginOfEnding(Player playerOne, GameData gameDataPlayerOne, Player playerTwo, GameData gameDataPlayerTwo) {
+        for (int i = 0; i < GameController.getAccounts().size(); i++) {
+            if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                GameController.getAccounts().get(i).changeDaric(price);
+                GameController.getAccounts().get(i).incrementNumbOfWins();
+                GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                continue;
+            }
+            if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                GameController.getAccounts().get(i).incrementNumbOfLose();
+                GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+            }
+        }
+        situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + currentBattle.price;
     }
 }

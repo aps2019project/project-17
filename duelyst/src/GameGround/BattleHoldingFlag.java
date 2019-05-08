@@ -15,7 +15,7 @@ public class BattleHoldingFlag extends Battle {
     private Cell cellOfFlag;
 
     public BattleHoldingFlag(Player playerOne, Player playerTwo) {
-        super(playerOne, playerTwo, GameMode.MULTI_PLAYER, BattleType.HOLDING_FLAG);
+        super(playerOne, playerTwo, GameMode.MULTI_PLAYER);
         this.whoHasFlag = null;
         this.timeHoldingFlag = 0;
         currentBattle = this;
@@ -30,7 +30,7 @@ public class BattleHoldingFlag extends Battle {
     }
 
     public BattleHoldingFlag(Player playerOne, SinglePlayerModes singlePlayerModes) {
-        super(playerOne, AI.getCurrentAIPlayer(), GameMode.SINGLE_PLAYER, BattleType.HOLDING_FLAG);
+        super(playerOne, AI.getCurrentAIPlayer(), GameMode.SINGLE_PLAYER);
         this.singlePlayerModes = singlePlayerModes;
         this.whoHasFlag = null;
         this.timeHoldingFlag = 0;
@@ -162,47 +162,19 @@ public class BattleHoldingFlag extends Battle {
 
         if (timeHoldingFlag >= 6) {
             if (whoHasFlag.equals(playerOne)) {
-                gameDataPlayerOne.setMatchState(MatchState.WIN);
-                gameDataPlayerTwo.setMatchState(MatchState.LOSE);
-                for (int i = 0; i < Account.getAccounts().size(); i++) {
-                    if (Account.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
-                        Account.getAccounts().get(i).incrementNumbOfWins();
-                        Account.getAccounts().get(i).addGamaData(gameDataPlayerOne);
-                        Account.getAccounts().get(i).changeDaric(price);
-                        continue;
-                    }
-                    if (Account.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
-                        Account.getAccounts().get(i).incrementNumbOfLose();
-                        Account.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
-                    }
-                }
-                situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + price;
+                playerOneWon();
             } else if (whoHasFlag.equals(playerTwo)) {
-                gameDataPlayerTwo.setMatchState(MatchState.WIN);
-                gameDataPlayerOne.setMatchState(MatchState.LOSE);
-                for (int i = 0; i < Account.getAccounts().size(); i++) {
-                    if (Account.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
-                        Account.getAccounts().get(i).incrementNumbOfWins();
-                        Account.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
-                        Account.getAccounts().get(i).changeDaric(price);
-                        continue;
-                    }
-                    if (Account.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
-                        Account.getAccounts().get(i).incrementNumbOfLose();
-                        Account.getAccounts().get(i).addGamaData(gameDataPlayerOne);
-                    }
-                }
-                situationOfGame = playerTwo.getUserName() + " win from " + playerOne.getUserName() + " and earn " + price;
+                playerTwoWon();
             }
         }
     }
 
     @Override
     public void endTurn() {
-        if (whoHasFlag != null){
-            this.timeHoldingFlag ++;
+        if (whoHasFlag != null) {
+            this.timeHoldingFlag++;
         }
-        switch (gameMode){
+        switch (gameMode) {
             case SINGLE_PLAYER:
                 super.endTurn();
                 ((AI) AI.getCurrentAIPlayer()).action();

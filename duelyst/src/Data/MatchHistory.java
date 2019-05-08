@@ -2,18 +2,14 @@ package Data;
 
 import java.util.ArrayList;
 
-public class MatchHistory {
+class MatchHistory {
     private ArrayList<GameData> gameData;
 
-    public MatchHistory() {
+    MatchHistory() {
         this.gameData = new ArrayList<>();
     }
 
-    public void addGameData(GameData gameData) {
+    void addGameData(GameData gameData) {
         this.gameData.add(gameData);
-    }
-
-    public ArrayList<GameData> getGameData() {
-        return gameData;
     }
 }

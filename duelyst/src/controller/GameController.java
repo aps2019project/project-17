@@ -3,14 +3,8 @@ package controller;
 import CardCollections.*;
 import Data.*;
 import GameGround.Battle;
-import com.google.gson.Gson;
-import effects.*;
 import view.*;
 
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameController {
@@ -145,7 +139,7 @@ public class GameController {
         return battle.attackCombo(opponentCardID, cardIDs);
     }
 
-    public static String useItem(int x, int y,Battle battle){
+    public static String useItem(int x, int y, Battle battle) {
         return battle.useItem(x, y);
     }
 
