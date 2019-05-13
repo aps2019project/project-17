@@ -27,7 +27,7 @@ public class InstanceBuilder {
     private static Minion[] minions;
     private static BuffDetail[] minionBuff;
 
-    public static void creation() {
+    static void creation() {
         try {
             spells = (Spell[]) creatingInstance(InstanceType.SPELL);
             spellBuff = (BuffDetail[]) creatingInstance(InstanceType.BUFF);

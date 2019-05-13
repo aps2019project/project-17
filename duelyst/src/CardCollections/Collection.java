@@ -224,10 +224,6 @@ public class Collection {
     }
 
     void addCardToCollection(Card card) {
-//        for (Card card1 : this.cards) {
-//            if (card1.getId().equals(card.getId()))
-//                return;
-//        }
         this.cards.add(card);
     }
 

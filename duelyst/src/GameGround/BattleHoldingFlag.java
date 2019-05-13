@@ -30,7 +30,6 @@ public class BattleHoldingFlag extends Battle {
         this.cellOfFlag.setFlag(true);
         setGameData();
         setPrice();
-        // Multi Player
     }
 
     public BattleHoldingFlag(Player playerOne, SinglePlayerModes singlePlayerModes) {
@@ -50,7 +49,6 @@ public class BattleHoldingFlag extends Battle {
         this.cellOfFlag.setFlag(true);
         setPrice();
         setGameData();
-        // single player
     }
 
     private void setGameData() {

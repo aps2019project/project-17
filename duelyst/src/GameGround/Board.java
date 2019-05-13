@@ -2,12 +2,12 @@ package GameGround;
 
 import Data.Player;
 
-public class Board {
+class Board {
     private final int rows = 5;
     private final int cols = 9;
     private Cell[][] cells;
 
-    public Board() {
+    Board() {
         this.cells = new Cell[rows][cols];
         for (int row = 0; row < this.cells.length; ++row) {
             for (int col = 0; col < this.cells[row].length; ++col) {

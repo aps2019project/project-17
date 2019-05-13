@@ -139,19 +139,7 @@ public class GameController {
         return battle.attackCombo(opponentCardID, cardIDs);
     }
 
-    public static String useItem(int x, int y, Battle battle) {
-        return battle.useItem(x, y);
-    }
-
     public static String logout() {
         return Account.logout();
-    }
-
-    public static String showGameInfo(Battle battle) {
-        return battle.showGameInfo().toString();
-    }
-
-    public static String selectCard(String cardID) {
-        return Battle.getCurrentBattle().selectCardOrItem(cardID);
     }
 }

@@ -15,7 +15,6 @@ public class BattleKillHero extends Battle {
         setGameData();
         setPrice();
         currentBattle = this;
-        //MULTI PLAYER
     }
 
     public BattleKillHero(Player playerOne, SinglePlayerModes singlePlayerModes) {
@@ -24,7 +23,6 @@ public class BattleKillHero extends Battle {
         setGameData();
         setPrice();
         currentBattle = this;
-        // single Player -> in this case there is no different between custom and story because both of them pass a deck name! the currentAIPlayer should set in Controller!
     }
 
     private void setGameData() {

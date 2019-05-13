@@ -26,7 +26,7 @@ public class Cell {
         return buff;
     }
 
-    public int getRow() {
+    int getRow() {
         return row;
     }
 
@@ -38,11 +38,7 @@ public class Cell {
         this.item = item;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getCol() {
+    int getCol() {
         return col;
     }
 
@@ -54,11 +50,11 @@ public class Cell {
         this.card = card;
     }
 
-    public boolean hasFlag() {
+    boolean hasFlag() {
         return hasFlag;
     }
 
-    public void setFlag(boolean hasFlag) {
+    void setFlag(boolean hasFlag) {
         this.hasFlag = hasFlag;
     }
 
@@ -74,7 +70,7 @@ public class Cell {
         isHoly = holy;
     }
 
-    public void enterCell() {
+    void enterCell() {
         if (card == null)
             return;
         if (this.isPoison) {
@@ -91,7 +87,7 @@ public class Cell {
         }
     }
 
-    public void exitCell() {
+    void exitCell() {
         if (card == null)
             return;
         if (this.isPoison) {
@@ -114,7 +110,7 @@ public class Cell {
         return Math.abs(x0 - x1) + Math.abs(y0 - y1);
     }
 
-    public void passTurn() {
+    void passTurn() {
         if (this.buff == null || this.buff.getBuffDetails() == null)
             return;
         buff.action(0, 0, buff.getBuffDetails());

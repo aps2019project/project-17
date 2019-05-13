@@ -37,7 +37,7 @@ public class Deck {
         deckKillHero = new Deck("Kill Hero Story");
         deckKillHero.setHero(heroes[0]);
         deckKillHero.setItem(items[0]);
-        addToKillHero(minions, 0, 8, 10,10, 12, 16, 17, 20, 21, 25, 37, 35, 39);
+        addToKillHero(minions, 0, 8, 10, 10, 12, 16, 17, 20, 21, 25, 37, 35, 39);
         addToKillHero(spells, 0, 6, 9, 10, 11, 17, 19);
 
     }
