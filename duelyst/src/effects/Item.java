@@ -81,6 +81,6 @@ public class Item {
     public void passTurn() {
         if (this.buff == null || this.buff.getBuffDetails() == null)
             return;
-        buff.action(0, 0, buff.getBuffDetails());
+        buff.action(1, 1, buff.getBuffDetails());
     }
 }

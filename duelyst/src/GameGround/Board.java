@@ -1,7 +1,6 @@
 package GameGround;
 
 import Data.Player;
-import effects.Minion;
 
 public class Board {
     private final int rows = 5;
@@ -21,33 +20,21 @@ public class Board {
         return cells;
     }
 
-    boolean isCoordinateAvailable(Cell cell, Player player, Battle battle) {
-        for (int i = 0; i < this.getCells().length; i++) {
-            for (int j = 0; j < this.getCells()[i].length; j++) {
-                Cell cell1 = Battle.currentBattle.getCellFromBoard(i + 1, j + 1);
-                if (cell1 == null || cell1.getCard() == null || cell1.getCard().getUserName().equals("") || cell1.getCard().getUserName() == null)
+    boolean isCoordinateAvailable(Battle battle, int x, int y) {
+        Player player = battle.whoseTurn();
+        for (int i = x - 2; i <= x; i++) {
+            for (int j = y - 2; j <= y; j++) {
+                if (i > 4 || y > 8 || i < 0 || j < 0)
                     continue;
-                if (Cell.distance(cell, cell1) <= 1) {
-                    Minion minion1 = (Minion) cell1.getCard();
-                    if (minion1 == null)
-                        continue;
-                    if (battle.cardIsMine(cell1.getCard(), player)) {
-                        return true;
-                    }
-                }
-
+                Cell cell = battle.getBoard().getCells()[i][j];
+                if (cell == null)
+                    continue;
+                if (cell.getCard() == null || cell.getCard().getUserName() == null)
+                    continue;
+                if (cell.getCard().getUserName().equals(player.getUserName()))
+                    return true;
             }
         }
-        Cell cell1 = battle.getBoard().getCells()[cell.getRow() - 1 + 1][cell.getCol() - 1 + 1];
-        if (cell1 != null && cell1.getCard() != null && cell1.getCard().getUserName() != null && battle.cardIsMine(cell1.getCard(), player))
-            return true;
-        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 + 1][cell.getCol() - 1 + 1];
-        if (cell1 != null && cell1.getCard() != null && cell1.getCard().getUserName() != null && battle.cardIsMine(cell1.getCard(), player))
-            return true;
-        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 - 1][cell.getCol() - 1 - 1];
-        if (cell1 != null && cell1.getCard() != null && cell1.getCard().getUserName() != null && battle.cardIsMine(cell1.getCard(), player))
-            return true;
-        cell1 = battle.getBoard().getCells()[cell.getRow() - 1 - 1][cell.getCol() - 1 + 1];
-        return cell1 != null && cell1.getCard() != null && cell1.getCard().getUserName() != null && battle.cardIsMine(cell1.getCard(), player);
+        return false;
     }
 }

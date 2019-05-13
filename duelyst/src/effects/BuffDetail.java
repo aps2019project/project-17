@@ -6,7 +6,7 @@ public class BuffDetail {
     private int id;
     private BuffType buffType;
     private int effectTime;
-    private int changeAttackPowerValue;
+    private int changeAttackPower;
     private int changeHealthValue;
     private TargetType targetType;
     private TargetRange targetRange;
@@ -37,7 +37,7 @@ public class BuffDetail {
         this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
-        this.changeAttackPowerValue = changeAttackPowerValue;
+        this.changeAttackPower = changeAttackPowerValue;
         this.changeHealthValue = changeHealthValue;
         this.targetType = targetType;
         this.targetRange = targetRange;
@@ -71,8 +71,8 @@ public class BuffDetail {
         return effectTime == 0;
     }
 
-    public int getChangeAttackPowerValue() {
-        return changeAttackPowerValue;
+    public int getChangeAttackPower() {
+        return changeAttackPower;
     }
 
     public int getChangeHealthValue() {

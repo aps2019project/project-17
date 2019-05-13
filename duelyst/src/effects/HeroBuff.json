@@ -2,7 +2,7 @@
   {
     "id": 201,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
-    "targetTpe": "INSIDER_HERO",
+    "targetType": "INSIDER_HERO",
     "targetRange": "SELF",
     "effectTime": -1,
     "changeAttackPower": 4,

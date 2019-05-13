@@ -21,12 +21,6 @@ public class Hand {
     }
 
     public void removeCard(Card card) {
-        for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i).getName().equals(card.getName())) {
-                cards.remove(i);
-                return;
-            }
-        }
+        cards.remove(card);
     }
-
 }

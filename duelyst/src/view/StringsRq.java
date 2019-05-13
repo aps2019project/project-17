@@ -30,7 +30,7 @@ class StringsRq {
     static final String SELECT = "select";//foe selecting card or item in game ground
     static final String MOVE_TO = "move to";
     static final String ATTACK = "attack";
-    static final String ATTACK_COMBO = "attac combo";
+    static final String ATTACK_COMBO = "attack combo";
     static final String USE_SPECIAL_POWER = "use special power";
     static final String SHOW_HAND = "show hand";
     static final String INSERT = "insert";

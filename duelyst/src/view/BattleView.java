@@ -9,38 +9,38 @@ import effects.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BattleView extends View {
+class BattleView extends View {
 
-    public static void showBattleMenu() {
+    static void showBattleMenu() {
         System.out.println("Please Select the type you want to play (1/2):");
         System.out.println("1.Single Player");
         System.out.println("2.Multi player");
     }
 
-    public static void showGameStateMenu() {
+    static void showGameStateMenu() {
         System.out.println("please choose game type:");
         System.out.println("1.story");
         System.out.println("2.custom game");
     }
 
-    public static void showStoryMode() {
+    static void showStoryMode() {
         AI.initializeAIStory();
         System.out.println("1.Kill Hero : " + AI.getAIModeKH().getMainDeck().getHero().getName());
         System.out.println("2.Hold Flag : " + AI.getAIModeHF().getMainDeck().getHero().getName());
         System.out.println("3.Capture Flag : " + AI.getAIModeCF().getMainDeck().getHero().getName());
     }
 
-    public static void showCustomMode() {
+    static void showCustomMode() {
         System.out.println("1.Kill Hero(KH)");
         System.out.println("2.Hold Flag(HF)");
         System.out.println("3.Capture Flag(CF)");
     }
 
-    public static void showGameInfo(Battle battle) {
+    static void showGameInfo(Battle battle) {
         System.out.println(battle.showGameInfo());
     }
 
-    public static void showMyMinions(Battle battle) {
+    static void showMyMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showMyMinions();
         if (minions == null || minions.size() == 0) {
             System.out.println("there isn't any player from you in cell");
@@ -51,18 +51,18 @@ public class BattleView extends View {
         }
     }
 
-    public static void showOpponentMinions(Battle battle) {
+    static void showOpponentMinions(Battle battle) {
         ArrayList<Minion> minions = battle.showOpponentMinion();
         if (minions == null || minions.size() == 0) {
             System.out.println("there isn't any player from that player in cell");
             return;
         }
         for (Minion minion : minions) {
-            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d]\n", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint());
+            System.out.printf("%s : %s, health:  %d, location : [%d,%d], power : [%d], mana: [%d]\n", minion.getId(), minion.getName(), minion.getHealthPoint(), minion.getXCoordinate(), minion.getYCoordinate(), minion.getAttackPoint(), minion.getManaPoint());
         }
     }
 
-    public static void showCardInfo(Battle battle, String cardID) {
+    static void showCardInfo(Battle battle, String cardID) {
         Card card = battle.returnCard(cardID);
 
         if (card instanceof Hero) {
@@ -85,15 +85,20 @@ public class BattleView extends View {
         }
     }
 
-    public static void showHand(Battle battle) {
+    static void showHand(Battle battle) {
         Hand hand = battle.showHand();
         for (int i = 0; i < hand.getCards().size(); i++) {
             Card card = hand.getCards().get(i);
-            String type;
-            if (card instanceof Minion)
+            String type = "Spell";
+            int mana = 2;
+            if (card instanceof Minion) {
                 type = "Minion";
-            else type = "Spell";
-            System.out.printf("name: %s, type: %s\n", card.getName(), type);
+                mana = ((Minion) card).getManaPoint();
+            } else if (card instanceof Spell){
+                type = "Spell";
+                mana = ((Spell) card).getManaPoint();
+            }
+            System.out.printf("name: %s, type: %s , mana: %d\n", card.getName(), type, mana);
         }
         Card card = battle.whoseTurn().getNextCard();
         if (card == null)
@@ -101,29 +106,31 @@ public class BattleView extends View {
         String type = "Minion";
         if (card instanceof Spell)
             type = "Spell";
-        System.out.printf("next card ->  name : %s , type : %s", card.getName(), type);
+        System.out.printf("next card ->  name : %s , type : %s\n", card.getName(), type);
     }
 
-    public static void showCollectAbles() {
+    static void showCollectAbles() {
         System.out.println(Battle.getCurrentBattle().showCollectAble());
     }
 
-    public static String showInfo(Battle battle) {
+    static String showInfo(Battle battle) {
         return battle.showInfoOFItem();
     }
 
-    public static void showNextCard() {
+    static void showNextCard() {
         System.out.println(Battle.getCurrentBattle().showNextCard());
     }
 
-    public static void battleHelp() {
+    static void battleHelp() {
         Player player = Battle.getCurrentBattle().whoseTurn();
         int n = new Random().nextInt() % player.getHand().getCards().size();
-        while (n < 0){
+        while (n < 0) {
             n = new Random().nextInt() % player.getHand().getCards().size();
         }
         System.out.println("insert " + player.getHand().getCards().get(n).getName());
     }
 
-
+    static void setItems() {
+        System.out.println(Battle.getCurrentBattle().setItems());
+    }
 }

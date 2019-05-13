@@ -2,6 +2,7 @@ package GameGround;
 
 
 import CardCollections.Hand;
+import Data.AI;
 import Data.GameData;
 import Data.MatchState;
 import Data.Player;
@@ -39,26 +40,28 @@ public class Battle {
         situationOfGame = "";
     }
 
-    private void setItems() {
+    public String setItems() {
+        StringBuilder toReturn = new StringBuilder();
         ArrayList<Item> items = InstanceBuilder.getCollectAbleItems();
         int n = new Random().nextInt() % items.size() / 3;
-        while (n < 0)
+        while (n <= 0)
             n = new Random().nextInt() % items.size() / 3;
-        if (n == 0)
-            return;
+
         for (int i = 0; i < n; i++) {
             int select = new Random().nextInt() % items.size();
-            while (select < 0)
+            while (select <= 0)
                 select = new Random().nextInt() % items.size();
             int x = new Random().nextInt() % 5 + 1;
             int y = new Random().nextInt() % 5 + 1;
-            while (x < 0 || y < 0) {
+            while (x <= 0 || y <= 0 || (x == 3 && y == 9) || (x == 3 && y == 1) || getCellFromBoard(x, y).getItem() != null) {
                 x = new Random().nextInt() % 5 + 1;
                 y = new Random().nextInt() % 5 + 1;
             }
             Cell cell = getCellFromBoard(x, y);
             cell.setItem(items.get(select));
+            toReturn.append(items.get(select).getName()).append(" inserted in ").append(x).append(":").append(y).append("\n");
         }
+        return toReturn.toString();
     }
 
     private void setHeroesInTheirPosition() {
@@ -68,19 +71,19 @@ public class Battle {
         if (random % 2 == 0) {
             playerOne.getMainDeck().getHero().setCoordinate(3, 1);
             playerTwo.getMainDeck().getHero().setCoordinate(3, 9);
-            this.board.getCells()[2][0].setCard(this.playerOne.getCopyMainDeck().getHero());
-            this.board.getCells()[2][8].setCard(this.playerTwo.getCopyMainDeck().getHero());
+            this.board.getCells()[2][0].setCard(this.playerOne.getMainDeck().getHero());
+            this.board.getCells()[2][8].setCard(this.playerTwo.getMainDeck().getHero());
             return;
         }
         playerOne.getMainDeck().getHero().setCoordinate(3, 9);
         playerTwo.getMainDeck().getHero().setCoordinate(3, 1);
-        this.board.getCells()[2][0].setCard(this.playerTwo.getCopyMainDeck().getHero());
-        this.board.getCells()[2][8].setCard(this.playerOne.getCopyMainDeck().getHero());
+        this.board.getCells()[2][0].setCard(this.playerTwo.getMainDeck().getHero());
+        this.board.getCells()[2][8].setCard(this.playerOne.getMainDeck().getHero());
     }
 
     public StringBuilder showGameInfo() {
         StringBuilder toReturn = new StringBuilder();
-        toReturn.append("Player One mana: ").append(playerOne.getMana()).append(" player two mana: ").append(playerTwo.getMana()).append("\n");
+        toReturn.append("Player One mana: ").append(playerOne.getMana()).append(" player two mana: ").append(playerTwo.getMana()).append("\n").append("turn:").append(turn).append("\n");
         return toReturn;
     }
 
@@ -147,7 +150,7 @@ public class Battle {
     public String movingCard(int x, int y) {
         if (this.selectedCard == null || this.selectedCard instanceof Spell)
             return "first you have to select a card";
-        if (x > 9 || y > 5)
+        if (x > 5 || y > 9)
             return "invalid target out of range";
         Minion minion = (Minion) this.selectedCard;
         Cell cellFirst = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
@@ -193,14 +196,11 @@ public class Battle {
 
         if (card == null)
             return "invalid card name";
-        if (x > 9 || y > 5)
+        if (x > 5 || y > 9)
             return "invalid target";
 
-        if (cell == null || cell.getCard() != null)
+        if (cell == null)
             return "invalid target ";
-
-        if (!board.isCoordinateAvailable(cell, whoseTurn(), this))
-            return "invalid target";
 
         if (cell.getItem() != null) {
             whoseTurn().addItemToCollectAbleItems(cell.getItem());
@@ -208,6 +208,11 @@ public class Battle {
         }
 
         if (card instanceof Minion) {
+            if (cell.getCard() != null)
+                return "invalid target";
+            if (!board.isCoordinateAvailable(this, x, y))
+                return "invalid target";
+
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You don′t have enough mana";
             if (whoseTurn().isPutInGroundAttackEnemyHero()) {
@@ -223,9 +228,9 @@ public class Battle {
             whoseTurn().removeCardFromHand(card);
             cell.setCard(card);
             cell.enterCell();
-            check();
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
                 ((Minion) card).useSpecialPower(x, y);
+            check();
             return "ok";
 
         } else if (card instanceof Spell) {
@@ -278,15 +283,16 @@ public class Battle {
         if (attacker == null)
             return "you have to select card at first";
 
-        Minion minion = (Minion) returnCardFromBoard(opponentCardId, whoseTurn());
+        Minion minion = (Minion) returnCardFromBoard(opponentCardId, theOtherPlayer());
+
         if (minion == null)
             return "invalid card id";
 
         if (!attacker.getCanAttack())
-            return "this card with " + attacker.getId() + " can't attack";
+            return "this card with " + attacker.getId() + " id can't attack";
 
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
-        Cell cellFirst = this.board.getCells()[(attacker).getXCoordinate() - 1][attacker.getYCoordinate() - 1];
+        Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
         if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
             return "opponent minion is unavailable for attack";
         attacker.attack(minion);
@@ -370,6 +376,9 @@ public class Battle {
     }
 
     public void endTurn() {
+    }
+
+    private void logicEndTurn() {
         this.turn++;
         this.selectedCard = null;
         this.selectedItem = null;
@@ -378,13 +387,13 @@ public class Battle {
         playerOne.addCardToHand();
         playerTwo.addCardToHand();
         if (this.turn >= 15) {
-            this.playerOne.addMana(-this.playerOne.getMana() + 9);
-            this.playerTwo.addMana(-this.playerTwo.getMana() + 9);
+            this.playerOne.setMana(9);
+            this.playerTwo.setMana(9);
         } else {
             if (this.turn % 2 == 0)
-                this.playerTwo.addMana(this.playerTwo.getPreviousMana() + 1);
-            else
-                this.playerOne.addMana(this.playerOne.getPreviousMana() + 1);
+                this.playerTwo.setMana(this.playerTwo.getPreviousMana() + 1);
+            else if (this.turn % 2 == 1)
+                this.playerOne.setMana(this.playerOne.getPreviousMana() + 1);
 
             this.playerOne.setPreviousMana(this.playerOne.getMana());
             this.playerTwo.setPreviousMana(this.playerTwo.getMana());
@@ -451,12 +460,12 @@ public class Battle {
     }
 
     public Minion returnRandomMinion(int x, int y) {
-        int xR = new Random().nextInt() % 10;
-        int yR = new Random().nextInt() % 6;
+        int xR = new Random().nextInt() % 6;
+        int yR = new Random().nextInt() % 10;
 
-        while (xR == x && yR == y || getCellFromBoard(xR, yR).getCard() == null || getCellFromBoard(xR, yR).getCard() instanceof Spell) {
-            xR = new Random().nextInt() % 10;
-            yR = new Random().nextInt() % 6;
+        while (xR <= 0 || yR <= 0 || getCellFromBoard(xR, yR) == null || getCellFromBoard(xR, yR).getCard() instanceof Spell) {
+            xR = new Random().nextInt() % 6;
+            yR = new Random().nextInt() % 10;
         }
         return (Minion) getCellFromBoard(xR, yR).getCard();
     }
@@ -546,7 +555,9 @@ public class Battle {
     public void endingGame() {
         if (whoseTurn().equals(playerOne)) {
             gameDataPlayerOne.setMatchState(MatchState.LOSE);
-            gameDataPlayerTwo.setMatchState(MatchState.WIN);
+            if (gameMode.equals(GameMode.MULTI_PLAYER)) {
+                gameDataPlayerTwo.setMatchState(MatchState.WIN);
+            }
             for (int i = 0; i < GameController.getAccounts().size(); i++) {
                 if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
                     GameController.getAccounts().get(i).incrementNumbOfWins();
@@ -564,7 +575,8 @@ public class Battle {
         }
         if (whoseTurn().equals(playerTwo)) {
             gameDataPlayerOne.setMatchState(MatchState.WIN);
-            gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+            if (gameMode.equals(GameMode.MULTI_PLAYER))
+                gameDataPlayerTwo.setMatchState(MatchState.LOSE);
             for (int i = 0; i < GameController.getAccounts().size(); i++) {
                 if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
                     GameController.getAccounts().get(i).incrementNumbOfWins();
@@ -603,13 +615,15 @@ public class Battle {
 
     void playerOneWon() {
         gameDataPlayerOne.setMatchState(MatchState.WIN);
-        gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+        if (gameMode.equals(GameMode.MULTI_PLAYER))
+            gameDataPlayerTwo.setMatchState(MatchState.LOSE);
         loginOfEnding(playerOne, gameDataPlayerOne, playerTwo, gameDataPlayerTwo);
         currentBattle = null;
     }
 
     void playerTwoWon() {
-        gameDataPlayerTwo.setMatchState(MatchState.WIN);
+        if (gameMode.equals(GameMode.MULTI_PLAYER))
+            gameDataPlayerTwo.setMatchState(MatchState.WIN);
         gameDataPlayerOne.setMatchState(MatchState.LOSE);
         loginOfEnding(playerTwo, gameDataPlayerTwo, playerOne, gameDataPlayerOne);
         currentBattle = null;
@@ -629,5 +643,19 @@ public class Battle {
             }
         }
         situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + currentBattle.price;
+    }
+
+    void endingTurn() {
+        switch (gameMode) {
+            case SINGLE_PLAYER:
+                logicEndTurn();
+                if (playerTwo instanceof AI)
+                    ((AI) playerTwo).actionTurn();
+                logicEndTurn();
+                break;
+            case MULTI_PLAYER:
+                logicEndTurn();
+                break;
+        }
     }
 }

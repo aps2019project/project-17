@@ -2,13 +2,9 @@ package GameGround;
 
 import Data.AI;
 import Data.GameData;
-import Data.MatchState;
 import Data.Player;
-import controller.GameController;
 import effects.AttackType;
-import effects.Card;
 import effects.Minion;
-import effects.Spell;
 
 public class BattleKillHero extends Battle {
 
@@ -75,9 +71,6 @@ public class BattleKillHero extends Battle {
         String toReturnFromSuper = super.insertingCardFromHand(cardName, x, y);
         if (!toReturnFromSuper.equals("ok"))
             return toReturnFromSuper;
-        Card card = whoseTurn().getCardFromHand(cardName);
-        Cell cell = getCellFromBoard(x, y);
-        // spell
         super.check();
         return "card successfully inserted";
     }
@@ -129,5 +122,10 @@ public class BattleKillHero extends Battle {
             }
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public void endTurn() {
+        super.endingTurn();
     }
 }

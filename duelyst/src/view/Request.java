@@ -17,8 +17,8 @@ import static Data.MODE.*;
 public class Request {
     protected Scanner scanner = new Scanner(System.in);
     protected String command;
-    protected ErrorType error = null;
-    protected MenuType menuType = null;
+    protected ErrorType error;
+    protected MenuType menuType;
     protected String secondPlayerUserName = null;
 
     public Request() {
@@ -500,9 +500,11 @@ public class Request {
             String menuName = matcher.group("menuName");
             switch (menuName) {
                 case "collection":
+                    System.out.println("entered collection");
                     menuType = MenuType.COLLECTION_MENU;
                     break;
                 case "shop":
+                    System.out.println("entered shop");
                     menuType = MenuType.SHOP_MENU;
                     break;
                 case "battle":
@@ -553,6 +555,7 @@ public class Request {
         if (type.equals("1") || type.equals("2")) {
             if (type.equals("1")) {
                 BattleView.showStoryMode();
+                AI.initializeAIStory();
                 String mode = scanner.nextLine();
                 while (mode.equals("")) {
                     mode = scanner.nextLine();
@@ -563,18 +566,21 @@ public class Request {
                         new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
+                        BattleView.setItems();
                         return;
                     case "hold flag":
                         AI.setAiPlayer(Hf);
                         new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
+                        BattleView.setItems();
                         return;
                     case "capture flag":
                         AI.setAiPlayer(CF);
                         new BattleCaptureFlag(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
+                        BattleView.setItems();
                         return;
                     default:
                         error = ErrorType.INVALID_INPUT;
@@ -606,7 +612,7 @@ public class Request {
                     new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     menuType = MenuType.BATTLE_MENU;
                     System.out.println("You have entered the Battle,Fight!");
-                } else if (mode.equals("fh")) {
+                } else if (mode.equals("hf")) {
                     new AI("Gholi", deck);
                     new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     menuType = MenuType.BATTLE_MENU;
@@ -1030,9 +1036,9 @@ public class Request {
     }
 
     public boolean checkSyntaxForGameInfo() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1048,9 +1054,9 @@ public class Request {
     }
 
     public boolean checkSyntaxForShowMyMinions() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1066,9 +1072,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowOpponentMinions() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1084,9 +1090,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCardInfo() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1103,9 +1109,9 @@ public class Request {
     }
 
     public boolean checkSyntaxForSelect() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1123,9 +1129,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfMoveTO() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1144,17 +1150,16 @@ public class Request {
     }
 
     public boolean checkSyntaxOfAttack() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
-        Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " (?<cardId>[\\w+ ]+)");
+        Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " " + "(?<cardId>[\\w]+)");
         Matcher matcher = patternForAttack.matcher(command);
-        String cardId = matcher.group("cardId");
         if (matcher.matches()) {
-            String result = GameController.attack(cardId, Battle.getCurrentBattle());
+            String result = GameController.attack(command.split(" ")[1], Battle.getCurrentBattle());
             System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -1164,9 +1169,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfComboAttack() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1188,9 +1193,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfUseSpecialPower() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1208,9 +1213,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowHand() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1226,9 +1231,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfInsert() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1248,9 +1253,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfEndTurn() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1266,9 +1271,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCollectibles() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1284,9 +1289,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowInfo() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1316,9 +1321,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfUse() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1336,9 +1341,9 @@ public class Request {
     }
 
     public boolean checkSyntaxForShowNextCard() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1354,9 +1359,9 @@ public class Request {
     }
 
     public boolean checkSyntaxOfShowCards() {
-        if(comeOutOfTheGame()){
+        if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
-            menuType=MenuType.MAIN_MENU;
+            menuType = MenuType.MAIN_MENU;
             MainMenuView.showMainMenu();
             return true;
         }
@@ -1389,7 +1394,7 @@ public class Request {
         return true;
     }
 
-    public boolean comeOutOfTheGame(){
+    public boolean comeOutOfTheGame() {
         return Battle.getCurrentBattle() == null;
     }
 }

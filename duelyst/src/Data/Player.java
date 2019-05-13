@@ -91,9 +91,6 @@ public class Player {
     public void setMainDeck(Deck deck) {
         this.mainDeck = deck;
         this.copyMainDeck = new Deck(this.mainDeck.getName());
-        setCopyMainDeck();
-        if (mainDeck.getItem() != null)
-            collectAbleItems.add(this.mainDeck.getItem());
     }
 
     private void setCopyMainDeck() {
@@ -118,6 +115,7 @@ public class Player {
             this.hand.addCard(copyMainDeck.getCards().get(n));
             this.copyMainDeck.getCards().remove(n);
         }
+        setNextCard();
     }
 
     public Hand getHand() {
@@ -136,8 +134,8 @@ public class Player {
         this.graveYard.add(card);
     }
 
-    public void addMana(int change) {
-        this.mana += change;
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
     public void lessMana(int change) {
@@ -149,7 +147,6 @@ public class Player {
         while (n < 0) {
             n = new Random().nextInt() % copyMainDeck.getCards().size();
         }
-
         this.nextCard = this.copyMainDeck.getCards().get(n);
         this.copyMainDeck.getCards().remove(n);
     }
@@ -205,6 +202,10 @@ public class Player {
     public boolean isPlayerReadyForBattle() {
         if (mainDeck == null || !mainDeck.isDeckValidate())
             return false;
+        setCopyMainDeck();
+        this.hand = new Hand();
+        if (mainDeck.getItem() != null)
+            collectAbleItems.add(this.mainDeck.getItem());
         setHand();
         return true;
     }
