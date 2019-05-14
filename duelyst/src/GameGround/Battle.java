@@ -136,7 +136,7 @@ public class Battle {
                 }
             }
         }
-        if (whoseTurn().getCollectAbleItems().size() != 1) {
+        if (whoseTurn().getCollectAbleItems().size() != 0) {
             for (int i = 0; i < whoseTurn().getCollectAbleItems().size(); i++) {
                 if (whoseTurn().getCollectAbleItems().get(i).getId().equals(cardItemID)) {
                     this.selectedItem = whoseTurn().getCollectAbleItems().get(i);
