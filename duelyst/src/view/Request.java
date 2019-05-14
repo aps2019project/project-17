@@ -543,6 +543,12 @@ public class Request {
                 AccountView.showLeaderBoard();
                 System.out.println("Enter your Opponent user name:");
                 secondPlayerUserName = scanner.next();
+                Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
+                if (accountOfPlayerTwo == null) {
+                    System.out.println("Invalid opponent username");
+                    menuType=MenuType.MAIN_MENU;
+                    MainMenuView.showMainMenu();
+                }
                 return;
             } else {
                 System.out.println("Please choose one or two!");
@@ -662,7 +668,9 @@ public class Request {
                 }
 
                 if (accountOfPlayerTwo.getMainDeck() == null || !accountOfPlayerTwo.getMainDeck().isDeckValidate()) {
-                    System.out.println("selected deck for second player is invalid");
+                    System.out.println("selected deck for second player is invalid,Try again");
+                    menuType=MenuType.MAIN_MENU;
+                    MainMenuView.showMainMenu();
                     return true;
                 }
                 String mode = matcher.group("mode");
