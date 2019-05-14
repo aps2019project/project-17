@@ -52,7 +52,7 @@
     "id": 306,
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "ENEMY_HERO",
-    "targetRange": "NOT_MELEE",
+    "targetRange": "ONE",
     "effectTime": 0,
     "changeAttackPower": -2,
     "changeHealth": 0

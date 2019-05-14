@@ -36,15 +36,6 @@ public class Shop {
         return returnItemFromShop(cardName).getId();
     }
 
-    public String searchInCollection(String cardName) {
-        if (returnCardFromCollection(cardName) == null && returnItemFromCollection(cardName) == null)
-            return "this card\\item doesnt exist in collection";
-        if (returnCardFromCollection(cardName) != null)
-            return "this card exist in this collection and the cardID is: " + returnCardFromCollection(cardName).getId();
-
-        return "this item exist in this Collection and the itemID is: " + returnItemFromCollection(cardName).getId();
-    }
-
     public String buy(String cardName) {
         if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
             return "this card\\item doesnt exist in shop";

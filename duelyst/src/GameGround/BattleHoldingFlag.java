@@ -20,13 +20,16 @@ public class BattleHoldingFlag extends Battle {
         this.timeHoldingFlag = 0;
         currentBattle = this;
         Random r = new Random();
-        int x = r.nextInt(10);
-        int y = r.nextInt(6);
+        int x = r.nextInt(5);
+        int y = r.nextInt(9);
+        while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9)) {
+            x = r.nextInt(5);
+            y = r.nextInt(9);
+        }
         this.cellOfFlag = this.board.getCells()[x - 1][y - 1];
         this.cellOfFlag.setFlag(true);
         setGameData();
         setPrice();
-        // Multi Player
     }
 
     public BattleHoldingFlag(Player playerOne, SinglePlayerModes singlePlayerModes) {
@@ -36,13 +39,16 @@ public class BattleHoldingFlag extends Battle {
         this.timeHoldingFlag = 0;
         currentBattle = this;
         Random r = new Random();
-        int x = r.nextInt(10);
-        int y = r.nextInt(6);
+        int x = r.nextInt(5) + 1;
+        int y = r.nextInt(9) + 1;
+        while (x <= 0 || y <= 0) {
+            x = r.nextInt(5) + 1;
+            y = r.nextInt(9) + 1;
+        }
         this.cellOfFlag = this.board.getCells()[x - 1][y - 1];
         this.cellOfFlag.setFlag(true);
         setPrice();
         setGameData();
-        // single player
     }
 
     private void setGameData() {
@@ -68,7 +74,7 @@ public class BattleHoldingFlag extends Battle {
     @Override
     public StringBuilder showGameInfo() {
         StringBuilder toPrint = super.showGameInfo();
-        toPrint.append("flag is in Coordinate ->").append(cellOfFlag.getRow()).append(" - ").append(cellOfFlag.getCol());
+        toPrint.append("flag is in Coordinate ->").append(cellOfFlag.getRow() + 1).append(" - ").append(cellOfFlag.getCol() + 1);
         if (whoHasFlag == null) {
             toPrint.append("\nno one has flag in this current time");
         } else
@@ -84,16 +90,15 @@ public class BattleHoldingFlag extends Battle {
 
         Minion minion = (Minion) this.selectedCard;
         Cell cellDestination = getCellFromBoard(x, y);
-        // cell has buf ??
 
         if (minion.isHasFlag())
             cellOfFlag = cellDestination;
 
         if (cellDestination.hasFlag()) {
             minion.setHasFlag(true);
-            cellDestination.setFlag(false);
             whoHasFlag = whoseTurn();
             timeHoldingFlag = 0;
+            cellDestination.setFlag(false);
             return selectedCard.getId() + " moved to " + x + " - " + y + " and capture the flag";
         }
         super.check();
@@ -106,7 +111,7 @@ public class BattleHoldingFlag extends Battle {
         if (!returningFromSuper.equals("ok"))
             return returningFromSuper;
 
-        Card card = whoHasFlag.getCardFromHand(cardName);
+        Card card = whoseTurn().getCardFromHand(cardName);
         Cell cellDestination = getCellFromBoard(x, y);
 
         if (card instanceof Minion) {
@@ -174,15 +179,6 @@ public class BattleHoldingFlag extends Battle {
         if (whoHasFlag != null) {
             this.timeHoldingFlag++;
         }
-        switch (gameMode) {
-            case SINGLE_PLAYER:
-                super.endTurn();
-                ((AI) AI.getCurrentAIPlayer()).action();
-                super.endTurn();
-                break;
-            case MULTI_PLAYER:
-                super.endTurn();
-                break;
-        }
+        super.endingTurn();
     }
 }

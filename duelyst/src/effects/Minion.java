@@ -55,6 +55,8 @@ public class Minion extends Card {
         this.isStun = false;
         this.canAttack = true;
         this.numberOfAttack = 0;
+        if (minionType.equals(MinionType.MELEE))
+            attackRange = 1;
         makeAttackBuff(attackPoint);
     }
 
@@ -77,13 +79,12 @@ public class Minion extends Card {
         }
     }
 
-    public void resetMinion(){
-        if (isStun){
+    public void resetMinion() {
+        if (isStun) {
             canMove = false;
             canAttack = false;
             canCounterAttack = false;
-        }
-        else if (isStun){
+        } else {
             canMove = true;
             canAttack = true;
             canCounterAttack = true;
@@ -134,6 +135,8 @@ public class Minion extends Card {
         for (BuffDetail buffDetail : specialPower.getBuffDetails()) {
             ArrayList<BuffDetail> buffDetails = new ArrayList<>();
             buffDetails.add(buffDetail);
+            if (buffDetail.getTargetType() == null)
+                continue;
             if ((buffDetail.getTargetType().equals(TargetType.SELF_NOT_MELEE) && !this.minionType.equals(MinionType.MELEE)) || buffDetail.getTargetRange().equals(TargetRange.SELF)) {
                 specialPower.action(this.xCoordinate, this.yCoordinate, buffDetails);
                 return;
@@ -148,7 +151,7 @@ public class Minion extends Card {
         ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
         specialSituationBuffs.add(specialSituationBuff);
         increaseNumberOfAttack();
-        if (specialSituationBuff!=null && specialSituation.equals(SpecialSituation.ATTACK))
+        if (specialSituationBuff != null && specialSituation.equals(SpecialSituation.ATTACK))
             this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
         this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
         if (this.attackType.equals(AttackType.ON_ATTACK))
@@ -263,10 +266,6 @@ public class Minion extends Card {
 
     public void addBuff(BuffDetail buffDetail) {
         this.buff.addBuff(buffDetail);
-    }
-
-    public Buff getSpecialPower() {
-        return specialPower;
     }
 
     public Buff getAttack() {

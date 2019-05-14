@@ -2,13 +2,9 @@ package GameGround;
 
 import Data.AI;
 import Data.GameData;
-import Data.MatchState;
 import Data.Player;
-import controller.GameController;
 import effects.AttackType;
-import effects.Card;
 import effects.Minion;
-import effects.Spell;
 
 public class BattleKillHero extends Battle {
 
@@ -19,7 +15,6 @@ public class BattleKillHero extends Battle {
         setGameData();
         setPrice();
         currentBattle = this;
-        //MULTI PLAYER
     }
 
     public BattleKillHero(Player playerOne, SinglePlayerModes singlePlayerModes) {
@@ -28,7 +23,6 @@ public class BattleKillHero extends Battle {
         setGameData();
         setPrice();
         currentBattle = this;
-        // single Player -> in this case there is no different between custom and story because both of them pass a deck name! the currentAIPlayer should set in Controller!
     }
 
     private void setGameData() {
@@ -75,9 +69,6 @@ public class BattleKillHero extends Battle {
         String toReturnFromSuper = super.insertingCardFromHand(cardName, x, y);
         if (!toReturnFromSuper.equals("ok"))
             return toReturnFromSuper;
-        Card card = whoseTurn().getCardFromHand(cardName);
-        Cell cell = getCellFromBoard(x, y);
-        // spell
         super.check();
         return "card successfully inserted";
     }
@@ -129,5 +120,10 @@ public class BattleKillHero extends Battle {
             }
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public void endTurn() {
+        super.endingTurn();
     }
 }

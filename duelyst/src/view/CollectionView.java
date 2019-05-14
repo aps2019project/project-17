@@ -4,9 +4,9 @@ import Data.Account;
 import CardCollections.*;
 import effects.*;
 
-public class CollectionView extends View {
+class CollectionView extends View {
 
-    public static void showUserCollection(Account account) {
+    static void showUserCollection(Account account) {
         System.out.print("Heroes:");
         if (account.getCollection().getCollectionHeroes() != null) {
             int counter = 1;
@@ -49,7 +49,7 @@ public class CollectionView extends View {
 
     }
 
-    public static void showAllDecks(Account account) {
+    static void showAllDecks(Account account) {
         int counter = 1;
         for (Deck deck : account.getCollection().getDecks()) {
             System.out.println(counter + " : " + deck.getName());
@@ -58,7 +58,7 @@ public class CollectionView extends View {
         }
     }
 
-    public static void showDeck(String deckName, Collection collection) {
+    static void showDeck(String deckName, Collection collection) {
         if(collection.findDeck(deckName)!=null){
         showDeck(collection.findDeck(deckName));}
         else {
@@ -66,7 +66,7 @@ public class CollectionView extends View {
         }
     }
 
-    public static void showDeck(Deck deck) {
+    private static void showDeck(Deck deck) {
         System.out.print("Heroes:");
         if (deck.getHero() != null) {
             System.out.println();
@@ -97,7 +97,7 @@ public class CollectionView extends View {
         System.out.println();
     }
 
-    public static void collectionHelp() {
+    static void collectionHelp() {
         System.out.println("command for exit  ->  \"exit\"");
         System.out.println("command for show  ->  \"show\"");
         System.out.println("command for searching card   ->  \"search [card name|item name]\"");

@@ -37,7 +37,7 @@ public class Deck {
         deckKillHero = new Deck("Kill Hero Story");
         deckKillHero.setHero(heroes[0]);
         deckKillHero.setItem(items[0]);
-        addToKillHero(minions, 0, 8, 10, 12, 16, 17, 20, 21, 25, 37, 35, 39);
+        addToKillHero(minions, 0, 8, 10, 10, 12, 16, 17, 20, 21, 25, 37, 35, 39);
         addToKillHero(spells, 0, 6, 9, 10, 11, 17, 19);
 
     }
@@ -50,8 +50,8 @@ public class Deck {
         deckHoldFlag = new Deck("Hold flag Story");
         deckHoldFlag.setHero(heroes[4]);
         deckHoldFlag.setItem(items[17]);
-        addToHoldFlag(minions, 2, 3, 5, 8, 12, 15, 19, 23, 27, 30, 33, 39);
-        addToHoldFlag(spells, 2, 3, 5, 9, 8, 13, 19);
+        addToHoldFlag(minions, 2, 3, 5, 8, 12, 15, 15, 19, 23, 27, 30, 33, 39);
+        addToHoldFlag(spells, 2, 3, 5, 8, 9, 13, 19);
     }
 
     private static void initializeThirdAICF() {

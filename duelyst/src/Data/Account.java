@@ -14,7 +14,6 @@ public class Account implements Comparable<Account> {
     private String userName;
     private String passWord;
     private int numbOfWins;
-    private int numbOfDraw;
     private int numbOfLose;
     private int daric;
     private Shop shop;
@@ -24,9 +23,8 @@ public class Account implements Comparable<Account> {
         this.userName = userName;
         this.passWord = passWord;
         this.numbOfWins = 0;
-        this.numbOfDraw = 0;
         this.numbOfLose = 0;
-        this.daric = 15000;
+        this.daric = 15000000;
         this.matchHistory = new MatchHistory();
         this.collection = new Collection();
         this.player = new Player(this.userName);
@@ -85,18 +83,6 @@ public class Account implements Comparable<Account> {
         return "Saved!";
     }
 
-    public int getNumbOfDraw() {
-        return numbOfDraw;
-    }
-
-    public int getNumbOfLose() {
-        return numbOfLose;
-    }
-
-    public static ArrayList<Account> getAccounts() {
-        return GameController.getAccounts();
-    }
-
     public static Account getLoginUser() {
         return loginUser;
     }
@@ -111,10 +97,6 @@ public class Account implements Comparable<Account> {
 
     public String getUserName() {
         return userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
     }
 
     public int getNumbOfWins() {
@@ -137,16 +119,8 @@ public class Account implements Comparable<Account> {
         return firstNumOfWins.compareTo(secondNumOfWins);
     }
 
-    public MatchHistory getMatchHistory() {
-        return matchHistory;
-    }
-
     public void incrementNumbOfWins() {
         this.numbOfWins++;
-    }
-
-    public void incrementNumbOfDraw() {
-        this.numbOfDraw++;
     }
 
     public void incrementNumbOfLose() {

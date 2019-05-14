@@ -18,7 +18,7 @@ public class Collection {
         this.cards = new ArrayList<>();
         this.items = new ArrayList<>();
         this.decks = new ArrayList<>();
-        this.daric = 15000;
+        this.daric = 150000000;
         this.mainDeck = null;
     }
 
@@ -90,8 +90,6 @@ public class Collection {
                 deck.setHero((Hero) card);
                 return "hero successfully add";
             }
-            if (isCardInDeck(cardID, deckName))
-                return "deck already has this card";
             if (!deckCardsHasStorage(deckName))
                 return "deck Card storage is full";
             deck.addCard(card);
@@ -226,10 +224,6 @@ public class Collection {
     }
 
     void addCardToCollection(Card card) {
-//        for (Card card1 : this.cards) {
-//            if (card1.getId().equals(card.getId()))
-//                return;
-//        }
         this.cards.add(card);
     }
 
