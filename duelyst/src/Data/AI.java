@@ -154,8 +154,8 @@ public class AI extends Player {
                 return;
             }
             randomToChoose = Math.abs(new Random().nextInt() % (currentAIPlayer).getHand().getCards().size());
-            x = ((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2;
-            y = ((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2;
+            x = Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2);
+            y = Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2);
         }
         toReturn.append("AI decided to insert a card but failed!\n");
     }

@@ -1180,6 +1180,10 @@ public class Request {
         }
         Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " " + "(?<cardId>[\\w]+)");
         Matcher matcher = patternForAttack.matcher(command);
+        if (command.split(" ")[1].equals("combo")){
+            checkSyntaxOfComboAttack();
+            return true;
+        }
         if (matcher.matches()) {
             String result = GameController.attack(command.split(" ")[1], Battle.getCurrentBattle());
             System.out.println(result);

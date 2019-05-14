@@ -60,7 +60,6 @@ public class BattleKillHero extends Battle {
         if (!toReturnFormSuper.equals("ok"))
             return toReturnFormSuper;
         super.check();
-        // if cell has buff ?!
         return this.selectedCard.getId() + " moved to " + x + " - " + y;
     }
 

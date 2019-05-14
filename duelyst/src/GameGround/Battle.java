@@ -435,6 +435,8 @@ public class Battle {
         for (int i = 0; i < getAllMinion().size(); i++) {
             getAllMinion().get(i).resetMinion();
         }
+        if (currentBattle != null)
+            currentBattle.check();
     }
 
     public static Battle getCurrentBattle() {
@@ -568,6 +570,32 @@ public class Battle {
     }
 
     public void endingGame() {
+        if (playerOneEndedTheGame()) return;
+        playerTwoEndTheGame();
+    }
+
+    private void playerTwoEndTheGame() {
+        if (whoseTurn().equals(playerTwo)) {
+            gameDataPlayerOne.setMatchState(MatchState.WIN);
+            if (gameMode.equals(GameMode.MULTI_PLAYER))
+                gameDataPlayerTwo.setMatchState(MatchState.LOSE);
+            for (int i = 0; i < GameController.getAccounts().size(); i++) {
+                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfWins();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                    GameController.getAccounts().get(i).changeDaric(currentBattle.price);
+                }
+                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
+                    GameController.getAccounts().get(i).incrementNumbOfLose();
+                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                }
+            }
+            situationOfGame = playerTwo.getUserName() + " loses from " + playerOne.getUserName().concat(" and win ".concat(Integer.toString(this.price)));
+            currentBattle = null;
+        }
+    }
+
+    private boolean playerOneEndedTheGame() {
         if (whoseTurn().equals(playerOne)) {
             gameDataPlayerOne.setMatchState(MatchState.LOSE);
             if (gameMode.equals(GameMode.MULTI_PLAYER)) {
@@ -584,28 +612,11 @@ public class Battle {
                     GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
                 }
             }
-            situationOfGame = playerOne.getUserName() + " loses from " + playerTwo.getUserName();
+            situationOfGame = playerOne.getUserName() + " loses from " + playerTwo.getUserName().concat(" and win ".concat(Integer.toString(this.price)));
             currentBattle = null;
-            return;
+            return true;
         }
-        if (whoseTurn().equals(playerTwo)) {
-            gameDataPlayerOne.setMatchState(MatchState.WIN);
-            if (gameMode.equals(GameMode.MULTI_PLAYER))
-                gameDataPlayerTwo.setMatchState(MatchState.LOSE);
-            for (int i = 0; i < GameController.getAccounts().size(); i++) {
-                if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
-                    GameController.getAccounts().get(i).incrementNumbOfWins();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
-                    GameController.getAccounts().get(i).changeDaric(currentBattle.price);
-                }
-                if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
-                    GameController.getAccounts().get(i).incrementNumbOfLose();
-                    GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
-                }
-            }
-            situationOfGame = playerTwo.getUserName() + " loses from " + playerOne.getUserName();
-            currentBattle = null;
-        }
+        return false;
     }
 
     void check() {
@@ -676,5 +687,9 @@ public class Battle {
 
     public Player getPlayerOne() {
         return playerOne;
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
     }
 }

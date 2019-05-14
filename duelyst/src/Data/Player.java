@@ -1,9 +1,8 @@
 package Data;
 
 import CardCollections.*;
-import effects.Buff;
-import effects.Card;
-import effects.Item;
+import GameGround.Battle;
+import effects.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,8 +23,8 @@ public class Player {
     private boolean putInGroundAttackEnemyHero;
 
     public Player(String userName, Deck deck) {
-        this.mana = 2;
-        this.previousMana = 2;
+        this.mana = 10;
+        this.previousMana = 10;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
         this.hand = new Hand();
@@ -36,7 +35,7 @@ public class Player {
     }
 
     public Player(String userName) {
-        this.mana = 2;
+        this.mana = 120;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
         this.hand = new Hand();
@@ -206,7 +205,33 @@ public class Player {
         this.hand = new Hand();
         if (mainDeck.getItem() != null)
             collectAbleItems.add(this.mainDeck.getItem());
-        setHand();
+        if (this instanceof AI)
+            setHand();
+        else setComboHands();
         return true;
+    }
+
+    private void setComboHands() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < copyMainDeck.getCards().size(); j++) {
+                if (copyMainDeck.getCards().get(j) instanceof Minion) {
+                    if (((Minion) copyMainDeck.getCards().get(j)).getAttackType().equals(AttackType.COMBO)) {
+                        this.hand.addCard(copyMainDeck.getCards().get(j));
+                        this.copyMainDeck.getCards().remove(copyMainDeck.getCards().get(j));
+                        break;
+                    }
+                }
+            }
+        }
+        Random random = new Random();
+        for (int i = 0; i < 2; i++) {
+            int n = random.nextInt() % this.copyMainDeck.getCards().size();
+            while (n < 0) {
+                n = random.nextInt() % this.copyMainDeck.getCards().size();
+            }
+            this.hand.addCard(copyMainDeck.getCards().get(n));
+            this.copyMainDeck.getCards().remove(n);
+        }
+        setNextCard();
     }
 }

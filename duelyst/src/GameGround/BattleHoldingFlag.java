@@ -124,7 +124,6 @@ public class BattleHoldingFlag extends Battle {
             }
             return "card successfully inserted";
         }
-        //spell
         super.check();
         return "card successfully inserted";
     }
@@ -177,7 +176,14 @@ public class BattleHoldingFlag extends Battle {
     @Override
     public void endTurn() {
         if (whoHasFlag != null) {
-            this.timeHoldingFlag++;
+            switch (gameMode) {
+                case SINGLE_PLAYER:
+                    this.timeHoldingFlag += 2;
+                    break;
+                case MULTI_PLAYER:
+                    this.timeHoldingFlag++;
+                    break;
+            }
         }
         super.endingTurn();
     }
