@@ -17,7 +17,7 @@ public class ShopView extends View {
                 System.out.println();
                 System.out.print(counter + " : ");
                 hero.show();
-                System.out.println("Buy Cost : "+hero.getPrice());
+                System.out.println("Buy Cost : " + hero.getPrice());
                 counter++;
             }
         }
@@ -29,7 +29,7 @@ public class ShopView extends View {
                 System.out.println();
                 System.out.println(counter + " : ");
                 item.show();
-                System.out.println("Buy Cost : "+item.getPrice());
+                System.out.println("Buy Cost : " + item.getPrice());
                 counter++;
             }
         }
@@ -37,26 +37,22 @@ public class ShopView extends View {
         System.out.print("Cards:");
         if (account.getShop().getShopMinions() != null) {
             int counter = 1;
-            for (Spell spell : account.getShop().getShopSpells() ) {
+            for (Spell spell : account.getShop().getShopSpells()) {
                 System.out.println();
                 System.out.print(counter + " : Type : Spell - ");
                 spell.show();
-                System.out.println("Buy Cost : "+spell.getPrice());
+                System.out.println("Buy Cost : " + spell.getPrice());
                 counter++;
             }
-            for (Minion minion : account.getShop().getShopMinions() ) {
+            for (Minion minion : account.getShop().getShopMinions()) {
                 System.out.println();
                 System.out.println(counter + " : Type : Minion - ");
                 minion.show();
-                System.out.println("Buy Cost : "+minion.getPrice());
+                System.out.println("Buy Cost : " + minion.getPrice());
                 counter++;
             }
         }
         System.out.println();
-    }
-
-    public static void showShopProducts(Shop shop, String cardName) {//todo not needed
-        System.out.println(shop.search(cardName));
     }
 
     public static void shopHelp() {
