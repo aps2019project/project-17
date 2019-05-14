@@ -546,7 +546,7 @@ public class Request {
                 Account accountOfPlayerTwo = GameController.getAccount(secondPlayerUserName);
                 if (accountOfPlayerTwo == null) {
                     System.out.println("Invalid opponent username");
-                    menuType=MenuType.MAIN_MENU;
+                    menuType = MenuType.MAIN_MENU;
                     MainMenuView.showMainMenu();
                 }
                 return;
@@ -622,28 +622,32 @@ public class Request {
                     System.out.println("Such deck not found");
                     return true;
                 }
-                if (mode.equals("kh")) {
-                    new AI("Gholi", deck);
-                    new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
-                    menuType = MenuType.BATTLE_MENU;
-                    System.out.println("You have entered the Battle,Fight!");
-                } else if (mode.equals("hf")) {
-                    new AI("Gholi", deck);
-                    new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
-                    menuType = MenuType.BATTLE_MENU;
-                    System.out.println("You have entered the Battle,Fight!");
-                } else if (mode.equals("cf")) {
-                    System.out.println("Enter number of flags:");
-                    int numberOfFlags = scanner.nextInt();
-                    new AI("Gholi", deck);
-                    new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
-                    menuType = MenuType.BATTLE_MENU;
-                    System.out.println("You have entered the Battle,Fight!");
-                } else {
-                    error = ErrorType.INVALID_INPUT;
-                    return false;
+                String enterBattle = "You have entered the Battle,Fight!";
+                switch (mode) {
+                    case "kh":
+                        new AI("AI MODE KH", deck);
+                        new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                        menuType = MenuType.BATTLE_MENU;
+                        System.out.println(enterBattle);
+                        break;
+                    case "hf":
+                        new AI("AI MODE HF", deck);
+                        new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                        menuType = MenuType.BATTLE_MENU;
+                        System.out.println(enterBattle);
+                        break;
+                    case "cf":
+                        System.out.println("Enter number of flags:");
+                        int numberOfFlags = scanner.nextInt();
+                        new AI("AI MODE CF", deck);
+                        new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
+                        menuType = MenuType.BATTLE_MENU;
+                        System.out.println(enterBattle);
+                        break;
+                    default:
+                        error = ErrorType.INVALID_INPUT;
+                        return false;
                 }
-
             }
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -669,7 +673,7 @@ public class Request {
 
                 if (accountOfPlayerTwo.getMainDeck() == null || !accountOfPlayerTwo.getMainDeck().isDeckValidate()) {
                     System.out.println("selected deck for second player is invalid,Try again");
-                    menuType=MenuType.MAIN_MENU;
+                    menuType = MenuType.MAIN_MENU;
                     MainMenuView.showMainMenu();
                     return true;
                 }

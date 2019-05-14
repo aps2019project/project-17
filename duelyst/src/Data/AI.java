@@ -21,6 +21,7 @@ public class AI extends Player {
     public AI(String userName, Deck deck) {
         super(userName, deck);
         currentAIPlayer = this;
+        currentAIPlayer.isPlayerReadyForBattle();
     }
 
     public static void setAiPlayer(MODE mode) {
