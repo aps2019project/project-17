@@ -1,0 +1,94 @@
+create account pooya
+1
+login pooya
+1
+enter shop
+buy arash
+Buy Emaindeckpower
+buy Fireball
+buy God Strength
+buy HellFire
+buy Madness
+buy kamaindeckandare fars
+buy shamaindeckshirzane fars
+buy neizedare fars
+buy asbsavare fars
+buy sho
+buy sepahsalare fars
+buy kamaindeckandare toorani
+buy ghollabsangdare toorani
+buy neyzedare toorani
+buy jasoose toorani
+buy gorzdare toorani
+buy dive siah
+buy ghoole sangandaz
+buy Sacrifice
+buy dive gorazsavar
+buy Assassination Dagger
+buy All poison
+exit
+enter collection
+create deck maindeck
+select deck maindeck
+add 1 to deck maindeck
+add 2 to deck maindeck
+add 3 to deck maindeck
+add 4 to deck maindeck
+add 5 to deck maindeck
+add 6 to deck maindeck
+add 7 to deck maindeck
+add 8 to deck maindeck
+add 9 to deck maindeck
+add 10 to deck maindeck
+add 11 to deck maindeck
+add 12 to deck maindeck
+add 13 to deck maindeck
+add 14 to deck maindeck
+add 15 to deck maindeck
+add 16 to deck maindeck
+add 17 to deck maindeck
+add 18 to deck maindeck
+add 19 to deck maindeck
+add 20 to deck maindeck
+add 101 to deck maindeck
+add 102 to deck maindeck
+add 103 to deck maindeck
+add 104 to deck maindeck
+add 105 to deck maindeck
+add 106 to deck maindeck
+add 107 to deck maindeck
+add 108 to deck maindeck
+add 109 to deck maindeck
+add 110 to deck maindeck
+add 111 to deck maindeck
+add 112 to deck maindeck
+add 113 to deck maindeck
+add 114 to deck maindeck
+add 115 to deck maindeck
+add 116 to deck maindeck
+add 117 to deck maindeck
+add 118 to deck maindeck
+add 119 to deck maindeck
+add 120 to deck maindeck
+add 121 to deck maindeck
+add 122 to deck maindeck
+add 123 to deck maindeck
+add 124 to deck maindeck
+add 125 to deck maindeck
+add 126 to deck maindeck
+add 127 to deck maindeck
+add 128 to deck maindeck
+add 129 to deck maindeck
+add 130 to deck maindeck
+add 131 to deck maindeck
+add 132 to deck maindeck
+add 133 to deck maindeck
+add 134 to deck maindeck
+add 135 to deck maindeck
+add 136 to deck maindeck
+add 137 to deck maindeck
+add 138 to deck maindeck
+add 139 to deck maindeck
+add 140 to deck maindeck
+add 207 to deck maindeck
+Add 315 to deck maindeck
