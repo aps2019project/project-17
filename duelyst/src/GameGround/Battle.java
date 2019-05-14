@@ -321,6 +321,7 @@ public class Battle {
 
         whoseTurn().getMainDeck().getHero().useSpecialPower(x, y);
         check();
+        whoseTurn().lessMana(whoseTurn().getMainDeck().getHero().getManaPoint());
         return "special power successfully used";
     }
 
