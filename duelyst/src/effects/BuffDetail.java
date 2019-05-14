@@ -61,14 +61,14 @@ public class BuffDetail {
     }
 
     public boolean increaseEffectTime() {
-        if (effectTime == 100)
+        if (effectTime == 100 || effectTime == -1)
             return false;
         if (effectTime >= 10) {
             effectTime -= 10;
             return false;
         }
         effectTime--;
-        return effectTime == 0;
+        return effectTime <= 0;
     }
 
     public int getChangeAttackPowerValue() {

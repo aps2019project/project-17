@@ -111,8 +111,8 @@ public class Buff {
                 action(targetPlayer, TargetType.PLAYER, buffDetail);
                 addBuffToPlayer(targetPlayer, buffDetail);
             }
-            passTurn();
         }
+        passTurn();
     }
 
     private void action(Object object, TargetType targetType, BuffDetail buffDetail) {
