@@ -293,11 +293,25 @@ public class Battle {
 
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
         Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
-        if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
-            return "opponent minion is unavailable for attack";
+        switch (minion.getMinionType()) {
+            case MELEE:
+                if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
+                    return "opponent minion is unavailable for attack";
+                break;
+            case RANGED:
+                if (Cell.distance(cellDestination, cellFirst) < 2)
+                    return "opponent minion is unavailable for attack";
+                if (Cell.distance(cellDestination, cellFirst) > attacker.getAttackRange())
+                    return "opponent minion is unavailable for attack";
+                break;
+            case HYBRID:
+                break;
+        }
         attacker.attack(minion);
         minion.counterAttack(attacker);
         check();
+        attacker.setCanAttack(false);
+        minion.setCanCounterAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 

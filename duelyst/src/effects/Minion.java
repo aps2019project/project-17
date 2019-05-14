@@ -5,29 +5,29 @@ import GameGround.Battle;
 import java.util.ArrayList;
 
 public class Minion extends Card {
-    protected Buff specialPower;
+    private Buff specialPower;
     protected Buff attack;
     protected Buff buff;
-    protected BuffDetail specialSituationBuff;
-    protected SpecialSituation specialSituation;
-    protected int attackPoint;
-    protected int healthPoint;
-    protected int manaPoint;
-    protected int attackRange;
-    protected int xCoordinate;
-    protected int yCoordinate;
-    protected int distanceCanMove;
-    protected int maxRangeToInput;
-    protected int holyBuffState;
-    protected boolean canMove;
-    protected boolean canCounterAttack;
-    protected boolean isStun;
-    protected boolean canAttack;
-    protected MinionType minionType;
-    protected boolean hasFlag;
-    protected AttackType attackType;
-    protected int numberOfAttack;
-    protected BuffType antiBuff;
+    private BuffDetail specialSituationBuff;
+    private SpecialSituation specialSituation;
+    int attackPoint;
+    int healthPoint;
+    private int manaPoint;
+    private int attackRange;
+    private int xCoordinate;
+    private int yCoordinate;
+    private int distanceCanMove;
+    private int maxRangeToInput;
+    private int holyBuffState;
+    private boolean canMove;
+    private boolean canCounterAttack;
+    boolean isStun;
+    private boolean canAttack;
+    private MinionType minionType;
+    private boolean hasFlag;
+    private AttackType attackType;
+    private int numberOfAttack;
+    private BuffType antiBuff;
 
     public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
         super(name, id, price);
@@ -99,7 +99,7 @@ public class Minion extends Card {
         this.hasFlag = hasFlag;
     }
 
-    public BuffType getAntiBuff() {
+    BuffType getAntiBuff() {
         return antiBuff;
     }
 
@@ -125,8 +125,25 @@ public class Minion extends Card {
         return distanceCanMove;
     }
 
-    private void increaseNumberOfAttack() {
-        this.numberOfAttack++;
+    public void attack(Minion minion) {
+        if (!canAttack)
+            return;
+        ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
+        specialSituationBuffs.add(specialSituationBuff);
+        increaseNumberOfAttack();
+        if (specialSituationBuff != null && specialSituation.equals(SpecialSituation.ATTACK))
+            this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
+        this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
+        if (this.attackType.equals(AttackType.ON_ATTACK))
+            useSpecialPower(minion.xCoordinate, minion.yCoordinate);
+    }
+
+    public void counterAttack(Minion minion) {
+        if (!canCounterAttack)
+            return;
+        this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
+        if (this.attackType.equals(AttackType.ON_DEFEND))
+            useSpecialPower(minion.xCoordinate, minion.yCoordinate);
     }
 
     public void useSpecialPower(int x, int y) {
@@ -147,33 +164,17 @@ public class Minion extends Card {
         specialPower.action(x, y, specialPower.getBuffDetails());
     }
 
-    public void attack(Minion minion) {
-        ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
-        specialSituationBuffs.add(specialSituationBuff);
-        increaseNumberOfAttack();
-        if (specialSituationBuff != null && specialSituation.equals(SpecialSituation.ATTACK))
-            this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
-        this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
-        if (this.attackType.equals(AttackType.ON_ATTACK))
-            useSpecialPower(minion.xCoordinate, minion.yCoordinate);
+    private void increaseNumberOfAttack() {
+        this.numberOfAttack++;
     }
 
-    public void counterAttack(Minion minion) {
-        if (!canCounterAttack)
-            return;
-        this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
-        if (this.attackType.equals(AttackType.ON_DEFEND))
-            useSpecialPower(minion.xCoordinate, minion.yCoordinate);
-    }
-
-
-    public void setStun(boolean stun) {
+    void setStun(boolean stun) {
         isStun = stun;
         this.setCanMove(false);
         this.setCanAttack(false);
     }
 
-    public void activeHolyBuff(int holyBuffState) {
+    void activeHolyBuff(int holyBuffState) {
         this.holyBuffState = holyBuffState;
     }
 
@@ -187,11 +188,11 @@ public class Minion extends Card {
         this.canCounterAttack = canCounterAttack;
     }
 
-    public void changeHealth(int changingValue) {
+    void changeHealth(int changingValue) {
         this.healthPoint += changingValue;
     }
 
-    public void changeAttackPower(int changingValue) {
+    void changeAttackPower(int changingValue) {
         this.attackPoint += changingValue;
     }
 
@@ -236,19 +237,19 @@ public class Minion extends Card {
         return attackType;
     }
 
-    public int getNumberOfAttack() {
+    private int getNumberOfAttack() {
         return numberOfAttack;
     }
 
-    public int getHolyBuffState() {
+    int getHolyBuffState() {
         return holyBuffState;
     }
 
-    public void setHolyBuffState(int holyBuffState) {
+    void setHolyBuffState(int holyBuffState) {
         this.holyBuffState = holyBuffState;
     }
 
-    public void setAntiBuff(BuffType antiBuff) {
+    void setAntiBuff(BuffType antiBuff) {
         this.antiBuff = antiBuff;
     }
 
@@ -256,11 +257,11 @@ public class Minion extends Card {
         return buff;
     }
 
-    public void setSpecialSituationBuff(BuffDetail specialSituationBuff) {
+    void setSpecialSituationBuff(BuffDetail specialSituationBuff) {
         this.specialSituationBuff = specialSituationBuff;
     }
 
-    public void setSpecialSituation(SpecialSituation specialSituation) {
+    void setSpecialSituation(SpecialSituation specialSituation) {
         this.specialSituation = specialSituation;
     }
 
@@ -277,4 +278,6 @@ public class Minion extends Card {
             return;
         buff.action(this.xCoordinate, this.yCoordinate, buff.getBuffDetails());
     }
+
+
 }
