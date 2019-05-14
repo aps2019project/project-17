@@ -532,12 +532,13 @@ public class Request {
     }
 
     private void checkSyntaxOfEnteringBattle() {
-        while (true) {
+        boolean flag=true;
+        while (flag) {
             String singleOrMulti = scanner.next();
             if (singleOrMulti.equals("1")) {
                 menuType = MenuType.SINGLE_PLAYER;
                 BattleView.showGameStateMenu();
-                return;
+                flag=false;
             } else if (singleOrMulti.equals("2")) {
                 menuType = MenuType.MULTI_PLAYER;
                 AccountView.showLeaderBoard();
@@ -549,7 +550,7 @@ public class Request {
                     menuType=MenuType.MAIN_MENU;
                     MainMenuView.showMainMenu();
                 }
-                return;
+                flag=false;
             } else {
                 System.out.println("Please choose one or two!");
             }
@@ -667,7 +668,7 @@ public class Request {
                     return true;
                 }
 
-                if (accountOfPlayerTwo.getMainDeck() == null || !accountOfPlayerTwo.getMainDeck().isDeckValidate()) {
+                if (!accountOfPlayerTwo.getPlayer().isPlayerReadyForBattle()) {
                     System.out.println("selected deck for second player is invalid,Try again");
                     menuType=MenuType.MAIN_MENU;
                     MainMenuView.showMainMenu();
