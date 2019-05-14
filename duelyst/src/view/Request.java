@@ -561,21 +561,21 @@ public class Request {
                     mode = scanner.nextLine();
                 }
                 switch (mode) {
-                    case "kill hero":
+                    case "1":
                         AI.setAiPlayer(KH);
                         new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
                         BattleView.setItems();
                         return;
-                    case "hold flag":
+                    case "2":
                         AI.setAiPlayer(Hf);
                         new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
                         BattleView.setItems();
                         return;
-                    case "capture flag":
+                    case "3":
                         AI.setAiPlayer(CF);
                         new BattleCaptureFlag(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
                         menuType = MenuType.BATTLE_MENU;

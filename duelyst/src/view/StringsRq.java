@@ -27,7 +27,7 @@ class StringsRq {
     static final String SHOW_MY_MINIONS = "show my minions";
     static final String SHOW_OPPONENT_MINIONS = "show opponent minions";
     static final String SHOW_CARD_INFO = "show card info";
-    static final String SELECT = "select";//foe selecting card or item in game ground
+    static final String SELECT = "select";
     static final String MOVE_TO = "move to";
     static final String ATTACK = "attack";
     static final String ATTACK_COMBO = "attack combo";
@@ -36,7 +36,7 @@ class StringsRq {
     static final String INSERT = "insert";
     static final String END_TURN = "end turn";
     static final String SHOW_COLLECTIBLES = "show collectibles";
-    static final String SHOW_INFO = "show info";//for battle or grave yard
+    static final String SHOW_INFO = "show info";
     static final String USE = "use";
     static final String SHOW_NEXT_CARD = "show next card";
     static final String ENTER_GRAVE_YARD = "enter grave yard";

@@ -2,7 +2,9 @@ package Data;
 
 import CardCollections.Deck;
 import GameGround.Battle;
+import effects.Minion;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class AI extends Player {
@@ -56,77 +58,96 @@ public class AI extends Player {
         if (Battle.getCurrentBattle() == null)
             return;
         StringBuilder toReturn = new StringBuilder();
-        int counters = new Random().nextInt(5) + 1;
+        int counters = Math.abs(new Random().nextInt(3));
         Battle battle = Battle.getCurrentBattle();
         for (int i = 0; i < counters; i++) {
-            int r = new Random().nextInt() % 7;
+            int r = Math.abs(new Random().nextInt() % 4);
             switch (r) {
                 default:
                     if (Battle.getCurrentBattle() == null)
                         return;
                 case 0:
-                    int randomToChoose = new Random().nextInt() % (currentAIPlayer).getMainDeck().getCards().size();
-                    while (randomToChoose < 0)
-                        randomToChoose = new Random().nextInt() % (currentAIPlayer).getMainDeck().getCards().size();
-                    battle.selectCardOrItem(currentAIPlayer.getMainDeck().getCards().get(randomToChoose).getId());
-                    toReturn.append("AI decided to select a card\n");
+                    moveAI(toReturn, battle);
                     break;
                 case 1:
-                    int x = new Random().nextInt() % 5;
-                    int y = new Random().nextInt() % 9;
-                    if (battle.getSelectedCard() == null)
-                        continue;
-                    while (x <= 0 || y < 0) {
-                        x = new Random().nextInt() % 5;
-                        y = new Random().nextInt() % 9;
-                    }
-                    battle.movingCard(x, y);
-                    toReturn.append("AI decided to move a card\n");
+                    insertAI(toReturn, battle);
                     break;
                 case 2:
-                    randomToChoose = new Random().nextInt() % (currentAIPlayer).getHand().getCards().size();
-                    x = new Random().nextInt() % 5;
-                    y = new Random().nextInt() % 9;
-                    while (x <= 0 || y <= 0 || randomToChoose < 0) {
-                        x = new Random().nextInt() % 5;
-                        y = new Random().nextInt() % 9;
-                        randomToChoose = new Random().nextInt() % (currentAIPlayer).getHand().getCards().size();
-                    }
-                    battle.insertingCardFromHand(currentAIPlayer.getHand().getCards().get(randomToChoose).getName(), x, y);
-                    toReturn.append("AI decided to insert a card\n");
+                    attackAI(toReturn, battle);
                     break;
                 case 3:
-                    randomToChoose = new Random().nextInt() % (battle.theOtherPlayer().getMainDeck().getCards().size());
-                    while (randomToChoose < 0)
-                        randomToChoose = new Random().nextInt() % (battle.theOtherPlayer().getMainDeck().getCards().size());
-                    battle.attack(battle.theOtherPlayer().getMainDeck().getCards().get(randomToChoose).getId(), false, null);
-                    toReturn.append("AI decided to attack to a card\n");
-                    break;
-                case 4:
-//                    if (i % 2 == 0){
-//                        battle.endingGame();
-//                        toReturn.append("AI decided to end the game :)\n");
-//                        return;
-//                    }
-                case 5:
-                    x = new Random().nextInt() % 5;
-                    y = new Random().nextInt() % 9;
-                    while (x <= 0 || y <= 0) {
-                        x = new Random().nextInt() % 5;
-                        y = new Random().nextInt() % 9;
-                    }
-                    battle.useSpecialPower(x, y);
-                    toReturn.append("AI decided to use special power\n");
-                    break;
-                case 6:
-                    x = new Random().nextInt() % 9;
-                    y = new Random().nextInt() % 5;
-                    if (battle.getSelectedItem() != null)
-                        battle.getSelectedItem().action(x, y);
-                    toReturn.append("AI decided to select a card\\item\n");
+                    specialPowerAI(toReturn, battle);
                     break;
             }
         }
         System.out.println(toReturn);
+    }
+
+    private void specialPowerAI(StringBuilder toReturn, Battle battle) {
+        int x;
+        int y;
+        x = new Random().nextInt() % 5;
+        y = new Random().nextInt() % 9;
+        while (x <= 0 || y <= 0) {
+            x = new Random().nextInt() % 5;
+            y = new Random().nextInt() % 9;
+        }
+        battle.useSpecialPower(x, y);
+        toReturn.append("AI decided to use special power\n");
+    }
+
+    private void attackAI(StringBuilder toReturn, Battle battle) {
+        int randomToChoose = Math.abs(new Random().nextInt() % battle.minionsOfCurrentPlayer(battle.getPlayerOne()).size());
+        String s;
+        for (int i = 0; i < 4; i++) {
+            s = battle.attack(battle.minionsOfCurrentPlayer(battle.getPlayerOne()).get(randomToChoose).getId(), false, null);
+            if (s.contains("attacked")) {
+                toReturn.append("AI decided to attack").append(battle.minionsOfCurrentPlayer(battle.theOtherPlayer()).get(randomToChoose).getName()).append("and ".concat(s).concat("\n"));
+                return;
+            }
+            randomToChoose = Math.abs(new Random().nextInt() % battle.minionsOfCurrentPlayer(battle.theOtherPlayer()).size());
+        }
+        toReturn.append("AI decided to attack but failed!\n");
+    }
+
+    private void insertAI(StringBuilder toReturn, Battle battle) {
+        int randomToChoose = 1;
+        int x = 1;
+        int y = 1;
+        String s;
+        for (int i = 0; i < 4; i++) {
+            s = battle.insertingCardFromHand(currentAIPlayer.getHand().getCards().get(randomToChoose).getName(), x, y);
+            if (s.contains("successfully")) {
+                toReturn.append("AI decided to insert ").append(currentAIPlayer.getHand().getCards().get(randomToChoose).getName()).append(" in ").append(x).append(" - ").append(y).append(" and then ".concat(s).concat("\n"));
+                return;
+            }
+            randomToChoose = Math.abs(new Random().nextInt() % (currentAIPlayer).getHand().getCards().size());
+            x = Math.abs(new Random().nextInt() % 5) + 1;
+            y = Math.abs(new Random().nextInt() % 9) + 1;
+        }
+        toReturn.append("AI decided to insert a card but failed!\n");
+    }
+
+    private void moveAI(StringBuilder toReturn, Battle battle) {
+        int randomToChoose;
+        int x;
+        int y;
+        String s;
+        if (battle.getSelectedCard() == null) {
+            ArrayList<Minion> minions = battle.minionsOfCurrentPlayer(currentAIPlayer);
+            randomToChoose = Math.abs(new Random().nextInt() % minions.size());
+            battle.selectCardOrItem(minions.get(randomToChoose).getId());
+            toReturn.append("AI selected ").append(battle.getSelectedCard().getName()).append("\n");
+        }
+        for (int i = 0; i < 4; i++) {
+            x = ((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2;
+            y = ((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2;
+            s = battle.movingCard(x, y);
+            if (s.contains("moved")) {
+                toReturn.append("AI decided to move ").append(battle.getSelectedCard().getName()).append(" into ").append(x).append(" - ").append(y).append(" and ".concat(s).concat("\n"));
+                return;
+            }
+        }
+        toReturn.append("AI decided to move a card but failed!\n");
     }
 }

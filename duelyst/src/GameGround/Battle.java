@@ -538,7 +538,7 @@ public class Battle {
         return toReturn.toString();
     }
 
-    private ArrayList<Minion> minionsOfCurrentPlayer(Player player) {
+    public ArrayList<Minion> minionsOfCurrentPlayer(Player player) {
         ArrayList<Minion> toReturn = new ArrayList<>();
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
@@ -657,5 +657,9 @@ public class Battle {
                 logicEndTurn();
                 break;
         }
+    }
+
+    public Player getPlayerOne() {
+        return playerOne;
     }
 }

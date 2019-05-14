@@ -59,9 +59,9 @@ class CollectionView extends View {
     }
 
     static void showDeck(String deckName, Collection collection) {
-        if(collection.findDeck(deckName)!=null){
-        showDeck(collection.findDeck(deckName));}
-        else {
+        if (collection.findDeck(deckName) != null) {
+            showDeck(collection.findDeck(deckName));
+        } else {
             System.out.println("deck not found!");
         }
     }
@@ -109,6 +109,6 @@ class CollectionView extends View {
         System.out.println("command for selecting card  ->  \"select deck [deck name]\"");
         System.out.println("command for show all decks  ->  \"show all decks\"");
         System.out.println("command for show deck  ->  \"show deck [deck name]\"");
-        System.out.println("help");
+        System.out.println("command for help  ->   \"help\"");
     }
 }
