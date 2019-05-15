@@ -140,7 +140,7 @@ public class Request {
             return null;
         }
 
-        Pattern patternForEnter = Pattern.compile(StringsRq.ENTER + " [\\w+ ]+");
+        Pattern patternForEnter = Pattern.compile(StringsRq.ENTER + " \\w+");
         Matcher matcherForEnter = patternForEnter.matcher(command);
         Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " " + "[\\w+ ]+");
         Matcher matcherForCreateAccount = patternForCreateAccount.matcher(command);
@@ -1394,7 +1394,8 @@ public class Request {
         Pattern patternForShowCards = Pattern.compile(StringsRq.SHOW_CARDS);
         Matcher matcher = patternForShowCards.matcher(command);
         if (matcher.matches()) {
-            GameController.showCardsOfGraveYard(Battle.getCurrentBattle());
+            String result =GameController.showCardsOfGraveYard(Battle.getCurrentBattle());
+            System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
