@@ -158,8 +158,8 @@ public class Minion extends Card {
                 specialPower.action(this.xCoordinate, this.yCoordinate, buffDetails);
                 return;
             }
-            if (buffDetail.getChangeHealthValue() == -105)
-                buffDetail.setChangeHealthValue(((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).getNumberOfAttack());
+            if (buffDetail.getChangeHealth() == -105)
+                buffDetail.setChangeHealth(((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).getNumberOfAttack());
         }
         specialPower.action(x, y, specialPower.getBuffDetails());
     }

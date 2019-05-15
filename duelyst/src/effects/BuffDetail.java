@@ -7,7 +7,7 @@ public class BuffDetail {
     private BuffType buffType;
     private int effectTime;
     private int changeAttackPower;
-    private int changeHealthValue;
+    private int changeHealth;
     private TargetType targetType;
     private TargetRange targetRange;
     private BuffType antiBuffType;
@@ -20,7 +20,7 @@ public class BuffDetail {
     public void init() {
         this.isContinuous = effectTime == 100;
         if (buffType.equals(BuffType.POISON))
-            changeHealthValue = -1;
+            changeHealth = -1;
     }
 
     public BuffDetail(int id, BuffType buffType, int effectTime, TargetType targetType, TargetRange targetRange) {
@@ -33,12 +33,12 @@ public class BuffDetail {
     }
 
     //for change attack power or health buff
-    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealthValue) {
+    public BuffDetail(int id, BuffType buffType, TargetType targetType, TargetRange targetRange, int effectTime, int changeAttackPowerValue, int changeHealth) {
         this.id = id;
         this.buffType = buffType;
         this.effectTime = effectTime;
         this.changeAttackPower = changeAttackPowerValue;
-        this.changeHealthValue = changeHealthValue;
+        this.changeHealth = changeHealth;
         this.targetType = targetType;
         this.targetRange = targetRange;
     }
@@ -75,8 +75,8 @@ public class BuffDetail {
         return changeAttackPower;
     }
 
-    public int getChangeHealthValue() {
-        return changeHealthValue;
+    public int getChangeHealth() {
+        return changeHealth;
     }
 
     public BuffType getBuffType() {
@@ -117,7 +117,7 @@ public class BuffDetail {
         return situation;
     }
 
-    public void setChangeHealthValue(int changeHealthValue) {
-        this.changeHealthValue = changeHealthValue;
+    public void setChangeHealth(int changeHealth) {
+        this.changeHealth = changeHealth;
     }
 }

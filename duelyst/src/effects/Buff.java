@@ -40,29 +40,38 @@ public class Buff {
             }
             switch (buffDetails.get(i).getTargetRange()) {
                 case ONE:
-                    targets.add(Battle.getCurrentBattle().getCellFromBoard(x, y).getCard());
+                    if (buffDetails.get(i).getTargetType() == TargetType.CELL)
+                        targets.add(Battle.getCurrentBattle().getCellFromBoard(x, y));
+                    else
+                        targets.add((Battle.getCurrentBattle().getCellFromBoard(x, y)).getCard());
                     break;
                 case TWO:
                     for (Cell cell : Battle.getCurrentBattle().getMinionsSquare(x, y)) {
-                        targets.add(cell.getCard());
+                        if (buffDetails.get(i).getTargetType() == TargetType.CELL)
+                            targets.add(cell);
+                        else
+                            targets.add(cell.getCard());
                     }
                     break;
                 case THREE:
                     for (Cell cell : Battle.getCurrentBattle().getMinionsCube(x, y)) {
-                        targets.add(cell.getCard());
+                        if (buffDetails.get(i).getTargetType() == TargetType.CELL)
+                            targets.add(cell);
+                        else
+                            targets.add(cell.getCard());
                     }
                     break;
                 case ALL:
-                    targets.add(Battle.getCurrentBattle().getAllMinion());
+                    targets.addAll(Battle.getCurrentBattle().getAllMinion());
                     break;
                 case ALL_IN_COLUMN:
-                    targets.add(Battle.getCurrentBattle().returnMinionsInColumn(x, y));
+                    targets.addAll(Battle.getCurrentBattle().returnMinionsInColumn(x, y));
                     break;
                 case AROUND:
-                    targets.add(Battle.getCurrentBattle().minionsAroundCell(x, y));
+                    targets.addAll(Battle.getCurrentBattle().minionsAroundCell(x, y));
                     break;
                 case DISTANCE_TWO:
-                    targets.add(Battle.getCurrentBattle().returnMinionsWhichDistance(x, y));
+                    targets.addAll(Battle.getCurrentBattle().returnMinionsWhichDistance(x, y));
                     break;
                 case CLOSEST_RANDOM:
                     targets.add(Battle.getCurrentBattle().closestRandomMinion(x, y));
@@ -142,17 +151,17 @@ public class Buff {
         this.buffDetails.add(buffDetail);
     }
 
-    public void addBuffToMinion(Minion minion, BuffDetail buffDetail) {
+    private void addBuffToMinion(Minion minion, BuffDetail buffDetail) {
         buffDetail.addTarget(minion);
         minion.addBuff(buffDetail);
     }
 
-    public void addBuffToCell(Cell cell, BuffDetail buffDetail) {
+    private void addBuffToCell(Cell cell, BuffDetail buffDetail) {
         buffDetail.addTarget(cell);
-        cell.getBuff().addBuff(buffDetail);
+        cell.addBuff(buffDetail);
     }
 
-    public void addBuffToPlayer(Player player, BuffDetail buffDetail) {
+    private void addBuffToPlayer(Player player, BuffDetail buffDetail) {
         buffDetail.addTarget(player);
         player.getBuff().addBuff(buffDetail);
     }
@@ -162,7 +171,8 @@ public class Buff {
         if (buffDetail.getBuffType() == BuffType.CHANGE_MANA) {
             player.changeMana(+1);
         }
-
+        if (buffDetail.getBuffType() == BuffType.SPECIAL_SITUATION_BUFF && buffDetail.getSituation() == SpecialSituation.PUTT_IN_GROUND)
+            player.setPutInGroundAttackEnemyHero(true);
     }
 
     private void actionForCell(Cell cell, BuffDetail buffDetail) {
@@ -201,7 +211,7 @@ public class Buff {
             case WEAKNESS:
             case POISON:
             case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
-                changeHealthOrAttack(minion, buffDetail.getChangeHealthValue(), buffDetail.getChangeAttackPower());
+                changeHealthOrAttack(minion, buffDetail.getChangeHealth(), buffDetail.getChangeAttackPower());
                 break;
             case ANTI:
                 antiBuff(minion, buffDetail.getAntiBuffType());
@@ -226,7 +236,7 @@ public class Buff {
                 case WEAKNESS:
                 case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
                     if (buffDetail.getEffectTime() != -1) {
-                        ((Minion) target).changeHealth(-buffDetail.getChangeHealthValue());
+                        ((Minion) target).changeHealth(-buffDetail.getChangeHealth());
                         ((Minion) target).changeAttackPower(-buffDetail.getChangeAttackPower());
                         ((Minion) target).getBuff().removeBuff(buffDetail);
                         return;
@@ -254,25 +264,25 @@ public class Buff {
         }
     }
 
-    public void passTurn() {
+    private void passTurn() {
         for (int i = 0; i < buffDetails.size(); i++) {
             if (buffDetails.get(i).increaseEffectTime())
                 removeBuff(buffDetails.get(i));
         }
     }
 
-    public void holyBuff(Minion minion, int holyBuffState) {
-        if (!minion.getAntiBuff().equals(BuffType.HOLY))
+    private void holyBuff(Minion minion, int holyBuffState) {
+        if (minion.getAntiBuff() == null || !minion.getAntiBuff().equals(BuffType.HOLY))
             minion.activeHolyBuff(holyBuffState);
     }
 
-    public void changeHealthOrAttack(Minion minion, int changeHealthValue, int changeAttackValue) {
+    private void changeHealthOrAttack(Minion minion, int changeHealthValue, int changeAttackValue) {
         changeHealthValue += minion.getHolyBuffState();
         minion.changeHealth(changeHealthValue);
         minion.changeAttackPower(changeAttackValue);
     }
 
-    public void stunBuff(Minion minion) {
+    private void stunBuff(Minion minion) {
         if (minion.getAntiBuff() != null) {
             if (!minion.getAntiBuff().equals(BuffType.STUN)) {
                 minion.setStun(true);
@@ -280,14 +290,14 @@ public class Buff {
         }
     }
 
-    public void disarmBuff(Minion minion) {
+    private void disarmBuff(Minion minion) {
         if (minion.getAntiBuff() == null)
             return;
         if (!minion.getAntiBuff().equals(BuffType.DISARM))
             minion.setCanCounterAttack(false);
     }
 
-    public void clearBuff(Minion minion, boolean isEnemy) {
+    private void clearBuff(Minion minion, boolean isEnemy) {
         for (BuffDetail buffDetail : minion.getBuff().buffDetails) {
             if (isEnemy) {
                 switch (buffDetail.getBuffType()) {
@@ -295,7 +305,7 @@ public class Buff {
                         removeBuff(buffDetail);
                         break;
                     case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
-                        if (buffDetail.getChangeHealthValue() > 0 || buffDetail.getChangeAttackPower() > 0)
+                        if (buffDetail.getChangeHealth() > 0 || buffDetail.getChangeAttackPower() > 0)
                             removeBuff(buffDetail);
                         break;
                 }
@@ -308,7 +318,7 @@ public class Buff {
                         removeBuff(buffDetail);
                         break;
                     case CHANGE_ATTACK_POWER_OR_HEALTH_BUFF:
-                        if (buffDetail.getChangeHealthValue() < 0 || buffDetail.getChangeAttackPower() < 0)
+                        if (buffDetail.getChangeHealth() < 0 || buffDetail.getChangeAttackPower() < 0)
                             removeBuff(buffDetail);
                         break;
                 }
@@ -317,7 +327,7 @@ public class Buff {
         }
     }
 
-    public void antiBuff(Minion minion, BuffType buffType) {
+    private void antiBuff(Minion minion, BuffType buffType) {
         minion.setAntiBuff(buffType);
     }
 

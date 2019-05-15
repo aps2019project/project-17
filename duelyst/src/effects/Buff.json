@@ -36,7 +36,7 @@
     "buffType": "CHANGE_ATTACK_POWER_OR_HEALTH_BUFF",
     "targetType": "INSIDER_HERO",
     "targetRange": "ONE",
-    "effectTime": 1000,
+    "effectTime": 0,
     "changeAttackPower": 4,
     "changeHealth": 0
   },

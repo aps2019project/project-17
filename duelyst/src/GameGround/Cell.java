@@ -26,6 +26,12 @@ public class Cell {
         return buff;
     }
 
+    public void addBuff(BuffDetail buffDetail) {
+        if (buff == null)
+            buff = new Buff();
+        buff.addBuff(buffDetail);
+    }
+
     int getRow() {
         return row;
     }

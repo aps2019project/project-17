@@ -480,7 +480,7 @@ public class Battle {
         int xR = new Random().nextInt() % 6;
         int yR = new Random().nextInt() % 10;
 
-        while (xR <= 0 || yR <= 0 || getCellFromBoard(xR, yR) == null || getCellFromBoard(xR, yR).getCard() instanceof Spell) {
+        while (xR <= 0 || yR <= 0 || getCellFromBoard(xR, yR).getCard() == null || getCellFromBoard(xR, yR).getCard() instanceof Spell) {
             xR = new Random().nextInt() % 6;
             yR = new Random().nextInt() % 10;
         }
