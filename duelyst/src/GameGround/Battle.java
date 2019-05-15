@@ -161,7 +161,7 @@ public class Battle {
         if (!minion.CanMove())
             return "this card cant move";
         cellDestination.setCard(minion);
-        minion.setCanMove(false);
+//        minion.setCanMove(false);
         cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
@@ -309,8 +309,8 @@ public class Battle {
         attacker.attack(minion);
         minion.counterAttack(attacker);
         check();
-        attacker.setCanAttack(false);
-        minion.setCanCounterAttack(false);
+//        attacker.setCanAttack(false);
+//        minion.setCanCounterAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
