@@ -524,7 +524,9 @@ public class Battle {
         ArrayList<Cell> cells = new ArrayList<>();
         for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
-                cells.add(getCellFromBoard(i + i, j + 1));
+                if (i > 4 || j > 8)
+                    continue;
+                cells.add(getCellFromBoard(i + 1, j + 1));
             }
         }
         return cells;
