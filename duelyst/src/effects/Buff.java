@@ -283,11 +283,9 @@ public class Buff {
     }
 
     private void stunBuff(Minion minion) {
-        if (minion.getAntiBuff() != null) {
-            if (!minion.getAntiBuff().equals(BuffType.STUN)) {
+            if (minion.getAntiBuff() == null || !minion.getAntiBuff().equals(BuffType.STUN)) {
                 minion.setStun(true);
             }
-        }
     }
 
     private void disarmBuff(Minion minion) {

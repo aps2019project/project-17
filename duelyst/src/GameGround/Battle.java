@@ -170,7 +170,6 @@ public class Battle {
             cellDestination.setItem(null);
         }
         cellDestination.enterCell();
-        // if cell has buff ?!
         return "ok";
     }
 
