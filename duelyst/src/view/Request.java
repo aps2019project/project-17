@@ -210,6 +210,8 @@ public class Request {
         Matcher matcherForShowCollectibles = patternForShowCollectibles.matcher(command);
         Pattern patternForShowInfo = Pattern.compile(StringsRq.SHOW_INFO);
         Matcher matcherForShowInfo = patternForShowInfo.matcher(command);
+        Pattern patternForShowInfoForGraveYard = Pattern.compile(StringsRq.SHOW_INFO+" \\w+");
+        Matcher matcherForShowInfoForGraveYard = patternForShowInfoForGraveYard.matcher(command);
         Pattern patternForUse = Pattern.compile(StringsRq.USE + " \\(\\d,\\d\\)");
         Matcher matcherForUse = patternForUse.matcher(command);
         Pattern patternForShowNextCard = Pattern.compile(StringsRq.SHOW_NEXT_CARD);
@@ -421,7 +423,7 @@ public class Request {
             }
             error = ErrorType.INVALID_INPUT;
             return null;
-        } else if (matcherForShowInfo.matches()) {
+        } else if (matcherForShowInfo.matches() || matcherForShowInfoForGraveYard.matches()) {
             if (menuType.equals(MenuType.BATTLE_MENU) || menuType.equals(MenuType.GRAVE_YARD)) {
                 return RequestType.SHOW_INFO;
             }
@@ -1336,7 +1338,8 @@ public class Request {
             Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
             if (matcher.matches()) {
                 String cardId = matcher.group("cardId");
-                GameController.showCardInfoFromGraveYard(cardId, Battle.getCurrentBattle());
+                String result=GameController.showCardInfoFromGraveYard(cardId, Battle.getCurrentBattle());
+                System.out.println(result);
                 return true;
             } else {
                 error = ErrorType.INVALID_INPUT;

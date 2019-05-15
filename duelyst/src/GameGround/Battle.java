@@ -253,7 +253,7 @@ public class Battle {
             toShow.append("you dont have item right know ");
         } else {
             for (int i = 0; i < toPrint.size(); i++) {
-                toShow.append(i).append(": ").append(toPrint.get(i).getName()).append(" ").append(toPrint.get(i).getDesc()).append("\n");
+                toShow.append(i + 1).append(": ").append(toPrint.get(i).getName()).append(" ").append(toPrint.get(i).getDesc()).append("\n");
             }
         }
         return toShow.toString();
@@ -687,9 +687,5 @@ public class Battle {
 
     public Player getPlayerOne() {
         return playerOne;
-    }
-
-    public GameMode getGameMode() {
-        return gameMode;
     }
 }
