@@ -126,8 +126,8 @@ public class AI extends Player {
         int x0 = ((Minion) battle.getSelectedCard()).getXCoordinate();
         int y0 = ((Minion) battle.getSelectedCard()).getYCoordinate();
         for (int i = 0; i < 2; i++) {
-            int x = (x0 + new Random().nextInt() % 2) % 6;
-            int y = (y0 + new Random().nextInt() % 2) % 10;
+            int x = (Math.abs(x0 + new Random().nextInt() % 2)) % 5 + 1;
+            int y = (Math.abs(y0 + new Random().nextInt() % 2)) % 9 + 1;
             if (battle.getCellFromBoard(x, y).getCard() == null || battle.getCellFromBoard(x, y).getCard().getUserName().equals(currentAIPlayer.getUserName()))
                 continue;
             Minion minion = (Minion) battle.getCellFromBoard(x, y).getCard();
@@ -154,8 +154,8 @@ public class AI extends Player {
                 return;
             }
             randomToChoose = Math.abs(new Random().nextInt() % (currentAIPlayer).getHand().getCards().size());
-            x = (Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2)) % 6;
-            y = (Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2)) % 10;
+            x = (Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2)) % 5 + 1;
+            y = (Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2)) % 9 + 1;
         }
         toReturn.append("AI decided to insert a card but failed!\n");
     }
@@ -168,8 +168,8 @@ public class AI extends Player {
             battle.selectCardOrItem(selectCard(toReturn).getId());
         }
         for (int i = 0; i < 2; i++) {
-            x = (((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2) % 6;
-            y = (((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2) % 10;
+            y = (Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2)) % 9 + 1;
+            x = (Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2)) % 5 + 1;
             s = battle.movingCard(x, y);
             if (s.contains("moved")) {
                 toReturn.append("AI decided to move ").append(battle.getSelectedCard().getName()).append(" into ").append(x).append(" - ").append(y).append(" and ".concat(s).concat("\n"));
