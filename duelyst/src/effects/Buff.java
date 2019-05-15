@@ -256,9 +256,11 @@ public class Buff {
                 case HOLY_CELL:
                     ((Cell) target).setHoly(false);
                 case ANTI:
-                    ((Minion) target).setAntiBuff(null);
-                    ((Minion) target).getBuff().removeBuff(buffDetail);
-                    return;
+                    if ( target instanceof Minion) {
+                        ((Minion) target).setAntiBuff(null);
+                        ((Minion) target).getBuff().removeBuff(buffDetail);
+                        return;
+                    }
             }
             buffDetails.remove(buffDetail);
         }

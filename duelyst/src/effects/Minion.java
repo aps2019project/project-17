@@ -170,8 +170,8 @@ public class Minion extends Card {
 
     void setStun(boolean stun) {
         isStun = stun;
-        this.setCanMove(false);
-        this.setCanAttack(false);
+        this.canMove = false;
+        this.canAttack = false;
     }
 
     void activeHolyBuff(int holyBuffState) {

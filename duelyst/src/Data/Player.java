@@ -103,19 +103,6 @@ public class Player {
         return putInGroundAttackEnemyHero;
     }
 
-    private void setHand() {
-        Random random = new Random();
-        for (int i = 0; i < 5; i++) {
-            int n = random.nextInt() % this.copyMainDeck.getCards().size();
-            while (n < 0) {
-                n = random.nextInt() % this.copyMainDeck.getCards().size();
-            }
-            this.hand.addCard(copyMainDeck.getCards().get(n));
-            this.copyMainDeck.getCards().remove(n);
-        }
-        setNextCard();
-    }
-
     public Hand getHand() {
         return hand;
     }
@@ -204,26 +191,34 @@ public class Player {
         this.hand = new Hand();
         if (mainDeck.getItem() != null)
             collectAbleItems.add(this.mainDeck.getItem());
-        if (this instanceof AI) {
+        if (this instanceof AI)
             setHand();
-        } else setComboHands();
+        else setHandPoisonLake();
         return true;
     }
 
-    private void setComboHands() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < copyMainDeck.getCards().size(); j++) {
-                if (copyMainDeck.getCards().get(j) instanceof Minion) {
-                    if (((Minion) copyMainDeck.getCards().get(j)).getAttackType().equals(AttackType.COMBO)) {
-                        this.hand.addCard(copyMainDeck.getCards().get(j));
-                        this.copyMainDeck.getCards().remove(copyMainDeck.getCards().get(j));
-                        break;
-                    }
-                }
+    private void setHand() {
+        Random random = new Random();
+        for (int i = 0; i < 5; i++) {
+            int n = random.nextInt() % this.copyMainDeck.getCards().size();
+            while (n < 0) {
+                n = random.nextInt() % this.copyMainDeck.getCards().size();
+            }
+            this.hand.addCard(copyMainDeck.getCards().get(n));
+            this.copyMainDeck.getCards().remove(n);
+        }
+        setNextCard();
+    }
+    private void setHandPoisonLake(){
+        Random random = new Random();
+        for (int i = 0; i < copyMainDeck.getCards().size(); i++) {
+            if (copyMainDeck.getCards().get(i).getId().equals("8")){
+                this.hand.addCard(copyMainDeck.getCards().get(i));
+                copyMainDeck.getCards().remove(i);
+                break;
             }
         }
-        Random random = new Random();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             int n = random.nextInt() % this.copyMainDeck.getCards().size();
             while (n < 0) {
                 n = random.nextInt() % this.copyMainDeck.getCards().size();
