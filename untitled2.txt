@@ -1,4 +1,4 @@
-buy simorgh
+buy arash
 Buy arzhang div
 buy shah ghool
 buy shahzade toorani
@@ -82,4 +82,4 @@ add 137 to deck m
 add 138 to deck m
 add 139 to deck m
 add 140 to deck m
-add 202 to deck m
+add 207 to deck m

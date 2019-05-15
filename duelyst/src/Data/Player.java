@@ -204,7 +204,9 @@ public class Player {
         this.hand = new Hand();
         if (mainDeck.getItem() != null)
             collectAbleItems.add(this.mainDeck.getItem());
-        setHand();
+        if (this instanceof AI) {
+            setHand();
+        } else setComboHands();
         return true;
     }
 

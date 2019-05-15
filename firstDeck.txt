@@ -3,7 +3,7 @@ create account pooya
 login pooya
 1
 enter shop
-buy arash
+buy simorgh
 Buy Emaindeckpower
 buy Fireball
 buy God Strength
@@ -90,5 +90,5 @@ add 137 to deck maindeck
 add 138 to deck maindeck
 add 139 to deck maindeck
 add 140 to deck maindeck
-add 207 to deck maindeck
+add 202 to deck maindeck
 Add 315 to deck maindeck
