@@ -1,7 +1,6 @@
 package view;
 
 import CardCollections.Deck;
-import Data.AI;
 import Data.Account;
 import GameGround.*;
 import controller.GameController;
@@ -210,7 +209,7 @@ public class Request {
         Matcher matcherForShowCollectibles = patternForShowCollectibles.matcher(command);
         Pattern patternForShowInfo = Pattern.compile(StringsRq.SHOW_INFO);
         Matcher matcherForShowInfo = patternForShowInfo.matcher(command);
-        Pattern patternForShowInfoForGraveYard = Pattern.compile(StringsRq.SHOW_INFO+" \\w+");
+        Pattern patternForShowInfoForGraveYard = Pattern.compile(StringsRq.SHOW_INFO + " \\w+");
         Matcher matcherForShowInfoForGraveYard = patternForShowInfoForGraveYard.matcher(command);
         Pattern patternForUse = Pattern.compile(StringsRq.USE + " \\(\\d,\\d\\)");
         Matcher matcherForUse = patternForUse.matcher(command);
@@ -534,13 +533,13 @@ public class Request {
     }
 
     private void checkSyntaxOfEnteringBattle() {
-        boolean flag=true;
+        boolean flag = true;
         while (flag) {
             String singleOrMulti = scanner.next();
             if (singleOrMulti.equals("1")) {
                 menuType = MenuType.SINGLE_PLAYER;
                 BattleView.showGameStateMenu();
-                flag=false;
+                flag = false;
             } else if (singleOrMulti.equals("2")) {
                 menuType = MenuType.MULTI_PLAYER;
                 AccountView.showLeaderBoard();
@@ -552,7 +551,7 @@ public class Request {
                     menuType = MenuType.MAIN_MENU;
                     MainMenuView.showMainMenu();
                 }
-                flag=false;
+                flag = false;
             } else {
                 System.out.println("Please choose one or two!");
             }
@@ -569,7 +568,7 @@ public class Request {
             if (type.equals("1") || type.equals("2")) {
                 if (type.equals("1")) {
                     BattleView.showStoryMode();
-                    AI.initializeAIStory();
+                    GameController.initializeAIStory();
                     while (true) {
                         String mode = scanner.nextLine();
                         while (mode.equals("")) {
@@ -577,22 +576,22 @@ public class Request {
                         }
                         switch (mode) {
                             case "1":
-                                AI.setAiPlayer(KH);
-                                new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+                                GameController.setAiPlayer(KH);
+                                GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                                 menuType = MenuType.BATTLE_MENU;
                                 System.out.println("You have entered the Battle,Fight!");
                                 BattleView.setItems();
                                 return;
                             case "2":
-                                AI.setAiPlayer(Hf);
-                                new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+                                GameController.setAiPlayer(HF);
+                                GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                                 menuType = MenuType.BATTLE_MENU;
                                 System.out.println("You have entered the Battle,Fight!");
                                 BattleView.setItems();
                                 return;
                             case "3":
-                                AI.setAiPlayer(CF);
-                                new BattleCaptureFlag(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
+                                GameController.setAiPlayer(CF);
+                                GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
                                 menuType = MenuType.BATTLE_MENU;
                                 System.out.println("You have entered the Battle,Fight!");
                                 BattleView.setItems();
@@ -628,22 +627,22 @@ public class Request {
                 String enterBattle = "You have entered the Battle,Fight!";
                 switch (mode) {
                     case "kh":
-                        new AI("AI MODE KH", deck);
-                        new BattleKillHero(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                        GameController.createNewAIInstance("AI MODE KH", deck);
+                        GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println(enterBattle);
                         break;
                     case "hf":
-                        new AI("AI MODE HF", deck);
-                        new BattleHoldingFlag(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                        GameController.createNewAIInstance("AI MODE HF", deck);
+                        GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println(enterBattle);
                         break;
                     case "cf":
                         System.out.println("Enter number of flags:");
                         int numberOfFlags = scanner.nextInt();
-                        new AI("AI MODE CF", deck);
-                        new BattleCaptureFlag(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
+                        GameController.createNewAIInstance("AI MODE CF", deck);
+                        GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), numberOfFlags, SinglePlayerModes.CUSTOM);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println(enterBattle);
                         break;
@@ -683,19 +682,19 @@ public class Request {
                 String mode = matcher.group("mode");
                 switch (mode) {
                     case "kh":
-                        new BattleKillHero(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
+                        GameController.createBattleKillHeroMulti(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
                         break;
                     case "hf":
-                        new BattleHoldingFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
+                        GameController.createBattleHoldingFlagMulti(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer());
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
                         break;
                     case "cf":
                         System.out.println("Enter number of flags:");
                         int numberOfFlags = scanner.nextInt();
-                        new BattleCaptureFlag(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer(), numberOfFlags);
+                        GameController.createBattleCaptureFlagMulti(Account.getLoginUser().getPlayer(), accountOfPlayerTwo.getPlayer(), numberOfFlags);
                         menuType = MenuType.BATTLE_MENU;
                         System.out.println("You have entered the Battle,Fight!");
                         break;
@@ -1182,7 +1181,7 @@ public class Request {
         }
         Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " " + "(?<cardId>[\\w]+)");
         Matcher matcher = patternForAttack.matcher(command);
-        if (command.split(" ")[1].equals("combo")){
+        if (command.split(" ")[1].equals("combo")) {
             checkSyntaxOfComboAttack();
             return true;
         }
@@ -1212,7 +1211,8 @@ public class Request {
             String ids = scanner.nextLine();
             String[] allIds = ids.split(" ");
             ArrayList<String> toPass = new ArrayList<>(Arrays.asList(allIds));
-            GameController.attackCombo(opponentCardId, Battle.getCurrentBattle(), toPass.toArray(new String[0]));
+            String result = GameController.attackCombo(opponentCardId, Battle.getCurrentBattle(), toPass.toArray(new String[0]));
+            System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -1232,7 +1232,8 @@ public class Request {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
+            String result = GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
+            System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;
             return false;
@@ -1338,7 +1339,7 @@ public class Request {
             Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
             if (matcher.matches()) {
                 String cardId = matcher.group("cardId");
-                String result=GameController.showCardInfoFromGraveYard(cardId, Battle.getCurrentBattle());
+                String result = GameController.showCardInfoFromGraveYard(cardId, Battle.getCurrentBattle());
                 System.out.println(result);
                 return true;
             } else {
@@ -1361,7 +1362,8 @@ public class Request {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
+            String result = GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
+            System.out.println(result);
             return true;
         } else {
             error = ErrorType.INVALID_INPUT;
@@ -1397,7 +1399,7 @@ public class Request {
         Pattern patternForShowCards = Pattern.compile(StringsRq.SHOW_CARDS);
         Matcher matcher = patternForShowCards.matcher(command);
         if (matcher.matches()) {
-            String result =GameController.showCardsOfGraveYard(Battle.getCurrentBattle());
+            String result = GameController.showCardsOfGraveYard(Battle.getCurrentBattle());
             System.out.println(result);
         } else {
             error = ErrorType.INVALID_INPUT;

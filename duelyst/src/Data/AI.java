@@ -29,7 +29,7 @@ public class AI extends Player {
             case KH:
                 currentAIPlayer = AIModeKH;
                 break;
-            case Hf:
+            case HF:
                 currentAIPlayer = AIModeHF;
                 break;
             case CF:

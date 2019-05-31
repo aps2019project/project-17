@@ -2,6 +2,6 @@ package Data;
 
 public enum MODE {
     KH,
-    Hf,
+    HF,
     CF
 }
