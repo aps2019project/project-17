@@ -21,16 +21,15 @@ public class GameController {
 
     public static void main() {
         InstanceBuilder.creation();
-        Request request = new Request();
         boolean isFinish = false;
         do {
-            request.getNewCommand();
-            if (request.getType() == RequestType.EXIT_GAME) {
+            Request.getNewCommand();
+            if (Request.getType() == RequestType.EXIT_GAME) {
                 isFinish = true;
             }
 
-            if (!request.isValid()) {
-                view.printError(request.getError());
+            if (!Request.isValid()) {
+                view.printError(Request.getError());
 
             }
 

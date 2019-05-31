@@ -20,7 +20,7 @@ public class Request {
     private static MenuType menuType;
     private static String secondPlayerUserName = null;
 
-    public Request() {
+    static {
         //we set the default menu in constructor
         menuType = MenuType.ACCOUNT_MENU;
         error = null;
