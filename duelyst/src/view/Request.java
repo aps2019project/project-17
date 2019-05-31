@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 import static Data.MODE.*;
 
 public class Request {
-    private Scanner scanner = new Scanner(System.in);
-    private String command;
-    private ErrorType error;
-    private MenuType menuType;
-    private String secondPlayerUserName = null;
+    private static Scanner scanner = new Scanner(System.in);
+    private static String command;
+    private static ErrorType error;
+    private static MenuType menuType;
+    private static String secondPlayerUserName = null;
 
     public Request() {
         //we set the default menu in constructor
@@ -26,15 +26,15 @@ public class Request {
         error = null;
     }
 
-    public void getNewCommand() {
+    public static  void getNewCommand() {
         command = scanner.nextLine().toLowerCase().trim();
     }
 
-    public ErrorType getError() {
+    public static ErrorType getError() {
         return error;
     }
 
-    public boolean isValid() {
+    public static boolean isValid() {
         RequestType requestType = getType();
 
         if (requestType == null)
@@ -134,7 +134,7 @@ public class Request {
     }
 
 
-    public RequestType getType() {
+    public static RequestType getType() {
         if (command == null || command.equals("")) {
             return null;
         }
@@ -494,7 +494,7 @@ public class Request {
         return null;
     }
 
-    private boolean checkSyntaxForEnter() {
+    private static boolean checkSyntaxForEnter() {
         Pattern patternForEnter = Pattern.compile(StringsRq.ENTER + " (?<menuName>\\w+)");
         Matcher matcher = patternForEnter.matcher(command);
         if (matcher.matches()) {
@@ -532,7 +532,7 @@ public class Request {
         return true;
     }
 
-    private void checkSyntaxOfEnteringBattle() {
+    private static void checkSyntaxOfEnteringBattle() {
         boolean flag = true;
         while (flag) {
             String singleOrMulti = scanner.next();
@@ -559,7 +559,7 @@ public class Request {
 
     }
 
-    private void checkSyntaxOfGameType() {//story or custom
+    private static void checkSyntaxOfGameType() {//story or custom
         while (true) {
             String type = scanner.nextLine();
             while (type.equals("")) {
@@ -612,7 +612,7 @@ public class Request {
 
     }
 
-    private boolean checkSyntaxOfStartGame() {
+    private static boolean checkSyntaxOfStartGame() {
         Pattern patternForStartGame = Pattern.compile(StringsRq.START_GAME + " (?<deckName>\\w+) (?<mode>\\w+)");
         Matcher matcher = patternForStartGame.matcher(command);
         if (matcher.matches()) {
@@ -658,7 +658,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfStartMultiPlayer() {
+    private static boolean checkSyntaxOfStartMultiPlayer() {
         Pattern patternForStartMultiPlayerGame = Pattern.compile(StringsRq.START_MULTI_PLAYER_GAME + " (?<mode>[\\w+ ]+)");
         Matcher matcher = patternForStartMultiPlayerGame.matcher(command);
         if (matcher.matches()) {
@@ -710,7 +710,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfExitCommand() {
+    private static boolean checkSyntaxOfExitCommand() {
         Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
         Matcher matcher = patternForExit.matcher(command);
         if (matcher.matches()) {
@@ -728,7 +728,7 @@ public class Request {
     }
 
 
-    private boolean checkSyntaxOfCreateAccountCommand() {
+    private static boolean checkSyntaxOfCreateAccountCommand() {
         Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " (?<userName>\\w+)");
         Matcher matcher = patternForCreateAccount.matcher(command);
         if (matcher.matches()) {
@@ -747,7 +747,7 @@ public class Request {
         return false;
     }
 
-    private boolean checkSyntaxOfLoginCommand() {
+    private static boolean checkSyntaxOfLoginCommand() {
         Pattern patternForLogIn = Pattern.compile(StringsRq.LOGIN + " (?<userName>\\w+)");
         Matcher matcher = patternForLogIn.matcher(command);
         if (matcher.matches()) {
@@ -771,7 +771,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowLeaderBoardCommand() {
+    private static boolean checkSyntaxOfShowLeaderBoardCommand() {
         Pattern patternForShowLeaderBoard = Pattern.compile(StringsRq.SHOW_LEADER_BOARD);
         Matcher matcher = patternForShowLeaderBoard.matcher(command);
         if (matcher.matches()) {
@@ -783,7 +783,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfSaveCommand() {
+    private static boolean checkSyntaxOfSaveCommand() {
         Pattern patternForSave = Pattern.compile(StringsRq.SAVE);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
@@ -805,7 +805,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfLogOutCommand() {
+    private static boolean checkSyntaxOfLogOutCommand() {
         if (command.toLowerCase().matches(StringsRq.LOGOUT)) {
             String result = GameController.logout();
             System.out.println(result);
@@ -817,7 +817,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfHelpCommand() {
+    private static boolean checkSyntaxOfHelpCommand() {
         Pattern patternForSave = Pattern.compile(StringsRq.HELP);
         Matcher matcher = patternForSave.matcher(command);
         if (matcher.matches()) {
@@ -845,7 +845,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowCommand() {
+    private static boolean checkSyntaxOfShowCommand() {
         Pattern patternForShow = Pattern.compile(StringsRq.SHOW);
         Matcher matcher = patternForShow.matcher(command);
         if (menuType.equals(MenuType.COLLECTION_MENU)) {
@@ -866,7 +866,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfSearchCommand() {
+    private static boolean checkSyntaxOfSearchCommand() {
         Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSearchCollection.matcher(command);
         if (menuType.equals(MenuType.COLLECTION_MENU)) {
@@ -891,7 +891,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfCreateDeck() {
+    private static boolean checkSyntaxOfCreateDeck() {
         Pattern patternForSCreateDeck = Pattern.compile(StringsRq.CREATE_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSCreateDeck.matcher(command);
         if (matcher.matches()) {
@@ -905,7 +905,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfDeleteDeck() {
+    private static boolean checkSyntaxOfDeleteDeck() {
         Pattern patternForDeleteDeck = Pattern.compile(StringsRq.DELETE_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForDeleteDeck.matcher(command);
         if (matcher.matches()) {
@@ -920,7 +920,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfAddToDeck() {
+    private static boolean checkSyntaxOfAddToDeck() {
 
         Pattern patternForAddToDeck = Pattern.compile(StringsRq.ADD_TO_DECK + " (?<cardId>[\\w+ ]+) to deck (?<deckName>[\\w+ ]+)");
         Matcher matcher = patternForAddToDeck.matcher(command);
@@ -936,7 +936,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfRemoveFromDeck() {
+    private static boolean checkSyntaxOfRemoveFromDeck() {
         Pattern patternForRemoveFromDeck = Pattern.compile(StringsRq.REMOVE_FROM_DECK + " (?<cardId>[\\w+ ]+) from deck (?<deckName>[\\w+ ]+)");
         Matcher matcher = patternForRemoveFromDeck.matcher(command);
         if (matcher.matches()) {
@@ -951,7 +951,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfValidateDeck() {
+    private static boolean checkSyntaxOfValidateDeck() {
         Pattern patternForValidateDeck = Pattern.compile(StringsRq.VALIDATE_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForValidateDeck.matcher(command);
         if (matcher.matches()) {
@@ -965,7 +965,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfSelectDeck() {
+    private static boolean checkSyntaxOfSelectDeck() {
         Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSelectDeck.matcher(command);
         if (matcher.matches()) {
@@ -979,7 +979,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowAllDecks() {
+    private static boolean checkSyntaxOfShowAllDecks() {
         Pattern patternForShowAllDecks = Pattern.compile(StringsRq.SHOW_ALL_DECKS);
         Matcher matcher = patternForShowAllDecks.matcher(command);
         if (matcher.matches()) {
@@ -991,7 +991,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowDeck() {
+    private static boolean checkSyntaxOfShowDeck() {
         Pattern patternForShowDeck = Pattern.compile(StringsRq.SHOW_DECK + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForShowDeck.matcher(command);
         if (matcher.matches()) {
@@ -1004,7 +1004,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxForShowForShopMenu() {
+    private static boolean checkSyntaxForShowForShopMenu() {
         Pattern patternForShowForShopMenu = Pattern.compile(StringsRq.SHOW_FOR_SHOP_MENU + "");
         Matcher matcher = patternForShowForShopMenu.matcher(command);
         if (matcher.matches()) {
@@ -1016,7 +1016,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfSearchCollection() {
+    private static boolean checkSyntaxOfSearchCollection() {
         Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH_COLLECTION + " " + "(?<name>[\\w+ ]+)");
         Matcher matcher = patternForSearchCollection.matcher(command);
         if (matcher.matches()) {
@@ -1030,7 +1030,7 @@ public class Request {
         }
     }
 
-    private boolean checkSyntaxOfBuyCommand() {
+    private static boolean checkSyntaxOfBuyCommand() {
         Pattern patternForBuy = Pattern.compile(StringsRq.BUY + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForBuy.matcher(command);
         if (matcher.matches()) {
@@ -1044,7 +1044,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfSellCommand() {
+    private static boolean checkSyntaxOfSellCommand() {
         Pattern patternForSell = Pattern.compile(StringsRq.SELL + " (?<name>[\\w+ ]+)");
         Matcher matcher = patternForSell.matcher(command);
         if (matcher.matches()) {
@@ -1058,7 +1058,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxForGameInfo() {
+    private static boolean checkSyntaxForGameInfo() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1076,7 +1076,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxForShowMyMinions() {
+    private static boolean checkSyntaxForShowMyMinions() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1094,7 +1094,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowOpponentMinions() {
+    private static boolean checkSyntaxOfShowOpponentMinions() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1112,7 +1112,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowCardInfo() {
+    private static boolean checkSyntaxOfShowCardInfo() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1131,7 +1131,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxForSelect() {
+    private static boolean checkSyntaxForSelect() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1151,7 +1151,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfMoveTO() {
+    private static boolean checkSyntaxOfMoveTO() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1172,7 +1172,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfAttack() {
+    private static boolean checkSyntaxOfAttack() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1195,7 +1195,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfComboAttack() {
+    private static boolean checkSyntaxOfComboAttack() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1220,7 +1220,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfUseSpecialPower() {
+    private static boolean checkSyntaxOfUseSpecialPower() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1241,7 +1241,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowHand() {
+    private static boolean checkSyntaxOfShowHand() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1259,7 +1259,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfInsert() {
+    private static boolean checkSyntaxOfInsert() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1281,7 +1281,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfEndTurn() {
+    private static boolean checkSyntaxOfEndTurn() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1299,7 +1299,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowCollectibles() {
+    private static boolean checkSyntaxOfShowCollectibles() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1317,7 +1317,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowInfo() {
+    private static boolean checkSyntaxOfShowInfo() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1350,7 +1350,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfUse() {
+    private static boolean checkSyntaxOfUse() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1371,7 +1371,7 @@ public class Request {
         }
     }
 
-    private boolean checkSyntaxForShowNextCard() {
+    private static boolean checkSyntaxForShowNextCard() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1389,7 +1389,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfShowCards() {
+    private static boolean checkSyntaxOfShowCards() {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             menuType = MenuType.MAIN_MENU;
@@ -1408,7 +1408,7 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfEndGame() {
+    private static boolean checkSyntaxOfEndGame() {
         Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
         Matcher matcher = patternForEndGame.matcher(command);
         if (matcher.matches()) {
@@ -1421,12 +1421,12 @@ public class Request {
         return true;
     }
 
-    private boolean checkSyntaxOfEnterGraveYard() {
+    private static boolean checkSyntaxOfEnterGraveYard() {
         menuType = MenuType.GRAVE_YARD;
         return true;
     }
 
-    private boolean comeOutOfTheGame() {
+    private static boolean comeOutOfTheGame() {
         return Battle.getCurrentBattle() == null;
     }
 }
