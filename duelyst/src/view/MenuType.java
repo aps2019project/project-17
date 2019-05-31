@@ -9,4 +9,7 @@ public enum MenuType {
     GRAVE_YARD,
     SINGLE_PLAYER,
     MULTI_PLAYER;
+
+
 }
+

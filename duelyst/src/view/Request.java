@@ -5,8 +5,6 @@ import Data.Account;
 import GameGround.*;
 import controller.GameController;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,12 +24,20 @@ public class Request {
         error = null;
     }
 
-    public static  void getNewCommand() {
+    public static void getNewCommand() {
         command = scanner.nextLine().toLowerCase().trim();
     }
 
     public static ErrorType getError() {
         return error;
+    }
+
+    static void changeMenuType(MenuType target) {
+        menuType = target;
+    }
+
+    static void changeErrorType() {
+        error = ErrorType.INVALID_INPUT;
     }
 
     public static boolean isValid() {
@@ -44,83 +50,83 @@ public class Request {
             case ENTER:
                 return checkSyntaxForEnter();
             case CREATE_ACCOUNT:
-                return checkSyntaxOfCreateAccountCommand();
+                return AccountRequest.checkSyntaxOfCreateAccountCommand(command, scanner);
             case LOGIN:
-                return checkSyntaxOfLoginCommand();
+                return AccountRequest.checkSyntaxOfLoginCommand(command, scanner);
             case SHOW_LEADER_BOARD:
-                return checkSyntaxOfShowLeaderBoardCommand();
+                return AccountRequest.checkSyntaxOfShowLeaderBoardCommand(command);
             case LOGOUT:
-                return checkSyntaxOfLogOutCommand();
+                return AccountRequest.checkSyntaxOfLogOutCommand(command);
             case HELP:
-                return checkSyntaxOfHelpCommand();
+                return CommonRequests.checkSyntaxOfHelpCommand(command, menuType);
             case SAVE:
-                return checkSyntaxOfSaveCommand();
+                return CommonRequests.checkSyntaxOfSaveCommand(command, menuType);
             case SHOW:
-                return checkSyntaxOfShowCommand();
+                return CommonRequests.checkSyntaxOfShowCommand(command, menuType);
             case SEARCH:
-                return checkSyntaxOfSearchCommand();
+                return CommonRequests.checkSyntaxOfSearchCommand(command, menuType);
             case CREATE_DECK:
-                return checkSyntaxOfCreateDeck();
+                return CollectionRequest.checkSyntaxOfCreateDeck(command);
             case DELETE_DECK:
-                return checkSyntaxOfDeleteDeck();
+                return CollectionRequest.checkSyntaxOfDeleteDeck(command);
             case ADD_TO_DECK:
-                return checkSyntaxOfAddToDeck();
+                return CollectionRequest.checkSyntaxOfAddToDeck(command);
             case REMOVE_FROM_DECK:
-                return checkSyntaxOfRemoveFromDeck();
+                return CollectionRequest.checkSyntaxOfRemoveFromDeck(command);
             case VALIDATE_DECK:
-                return checkSyntaxOfValidateDeck();
+                return CollectionRequest.checkSyntaxOfValidateDeck(command);
             case SELECT_DECK:
-                return checkSyntaxOfSelectDeck();
+                return CollectionRequest.checkSyntaxOfSelectDeck(command);
             case SHOW_ALL_DECKS:
-                return checkSyntaxOfShowAllDecks();
+                return CollectionRequest.checkSyntaxOfShowAllDecks(command);
             case SHOW_DECK:
-                return checkSyntaxOfShowDeck();
+                return CollectionRequest.checkSyntaxOfShowDeck(command);
             case SHOW_fOR_SHOP_MENU:
-                return checkSyntaxForShowForShopMenu();
+                return ShopRequest.checkSyntaxForShowForShopMenu(command);
             case SEARCH_COLLECTION:
-                return checkSyntaxOfSearchCollection();
+                return ShopRequest.checkSyntaxOfSearchCollection(command);
             case BUY:
-                return checkSyntaxOfBuyCommand();
+                return ShopRequest.checkSyntaxOfBuyCommand(command);
             case SELL:
-                return checkSyntaxOfSellCommand();
+                return ShopRequest.checkSyntaxOfSellCommand(command);
             case GAME_INFO:
-                return checkSyntaxForGameInfo();
+                return BattleRequest.checkSyntaxForGameInfo(command);
             case SHOW_MY_MINIONS:
-                return checkSyntaxForShowMyMinions();
+                return BattleRequest.checkSyntaxForShowMyMinions(command);
             case SHOW_OPPONENT_MINIONS:
-                return checkSyntaxOfShowOpponentMinions();
+                return BattleRequest.checkSyntaxOfShowOpponentMinions(command);
             case SHOW_CARD_INFO:
-                return checkSyntaxOfShowCardInfo();
+                return BattleRequest.checkSyntaxOfShowCardInfo(command);
             case SELECT:
-                return checkSyntaxForSelect();
+                return BattleRequest.checkSyntaxForSelect(command);
             case MOVE_TO:
-                return checkSyntaxOfMoveTO();
+                return BattleRequest.checkSyntaxOfMoveTO(command);
             case ATTACK:
-                return checkSyntaxOfAttack();
+                return BattleRequest.checkSyntaxOfAttack(command, scanner);
             case ATTACK_COMBO:
-                return checkSyntaxOfComboAttack();
+                return BattleRequest.checkSyntaxOfComboAttack(command, scanner);
             case USE_SPECIAL_POWER:
-                return checkSyntaxOfUseSpecialPower();
+                return BattleRequest.checkSyntaxOfUseSpecialPower(command);
             case SHOW_HAND:
-                return checkSyntaxOfShowHand();
+                return BattleRequest.checkSyntaxOfShowHand(command);
             case INSERT:
-                return checkSyntaxOfInsert();
+                return BattleRequest.checkSyntaxOfInsert(command);
             case END_TURN:
-                return checkSyntaxOfEndTurn();
+                return BattleRequest.checkSyntaxOfEndTurn(command);
             case SHOW_COLLECTIBLES:
-                return checkSyntaxOfShowCollectibles();
+                return BattleRequest.checkSyntaxOfShowCollectibles(command);
             case SHOW_INFO:
-                return checkSyntaxOfShowInfo();
+                return CommonRequests.checkSyntaxOfShowInfo(command, menuType);
             case USE:
-                return checkSyntaxOfUse();
+                return BattleRequest.checkSyntaxOfUse(command);
             case SHOW_NEXT_CARD:
-                return checkSyntaxForShowNextCard();
+                return BattleRequest.checkSyntaxForShowNextCard(command);
             case SHOW_CARDS:
-                return checkSyntaxOfShowCards();
+                return GraveYardRequest.checkSyntaxOfShowCards(command);
             case END_GAME:
-                return checkSyntaxOfEndGame();
+                return BattleRequest.checkSyntaxOfEndGame(command);
             case ENTER_GRAVE_YARD:
-                return checkSyntaxOfEnterGraveYard();
+                return GraveYardRequest.checkSyntaxOfEnterGraveYard();
             case START_GAME:
                 return checkSyntaxOfStartGame();
             case START_MULTI_PLAYER_GAME:
@@ -727,706 +733,4 @@ public class Request {
         return true;
     }
 
-
-    private static boolean checkSyntaxOfCreateAccountCommand() {
-        Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " (?<userName>\\w+)");
-        Matcher matcher = patternForCreateAccount.matcher(command);
-        if (matcher.matches()) {
-            String userName = matcher.group("userName");
-            if (!GameController.checkForValidUserName(userName)) {
-                System.out.println("Please enter your password:");
-                String passWord = scanner.nextLine();
-                System.out.println(GameController.createAccount(userName, passWord));
-                return true;
-            } else {
-                System.out.println("UserName Already Exist! Please Try again with another UserName.");
-                return true;
-            }
-        }
-        error = ErrorType.INVALID_INPUT;
-        return false;
-    }
-
-    private static boolean checkSyntaxOfLoginCommand() {
-        Pattern patternForLogIn = Pattern.compile(StringsRq.LOGIN + " (?<userName>\\w+)");
-        Matcher matcher = patternForLogIn.matcher(command);
-        if (matcher.matches()) {
-            String userName = matcher.group("userName");
-            if (GameController.checkForValidUserName(userName)) {
-                System.out.println("password: ");
-                String passWord = scanner.nextLine();
-                String result = GameController.login(userName, passWord);
-                System.out.println(result);
-                if (!result.equals("your password is wrong!")) {
-                    menuType = MenuType.MAIN_MENU;
-                    MainMenuView.showMainMenu();
-                }
-            } else {
-                System.out.println("cant find account with this user name");
-            }
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowLeaderBoardCommand() {
-        Pattern patternForShowLeaderBoard = Pattern.compile(StringsRq.SHOW_LEADER_BOARD);
-        Matcher matcher = patternForShowLeaderBoard.matcher(command);
-        if (matcher.matches()) {
-            AccountView.showLeaderBoard();
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfSaveCommand() {
-        Pattern patternForSave = Pattern.compile(StringsRq.SAVE);
-        Matcher matcher = patternForSave.matcher(command);
-        if (matcher.matches()) {
-            switch (menuType) {
-                case ACCOUNT_MENU:
-                    String result = GameController.accountSave(Account.getLoginUser());
-                    System.out.println(result);
-                    break;
-                case COLLECTION_MENU:
-                    result = GameController.collectionSave(Account.getLoginUser().getCollection());
-                    System.out.println(result);
-                    break;
-            }
-
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfLogOutCommand() {
-        if (command.toLowerCase().matches(StringsRq.LOGOUT)) {
-            String result = GameController.logout();
-            System.out.println(result);
-            menuType = MenuType.ACCOUNT_MENU;
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfHelpCommand() {
-        Pattern patternForSave = Pattern.compile(StringsRq.HELP);
-        Matcher matcher = patternForSave.matcher(command);
-        if (matcher.matches()) {
-            switch (menuType) {
-                case MAIN_MENU:
-                    MainMenuView.MainMenuHelp();
-                    break;
-                case ACCOUNT_MENU:
-                    AccountView.accountHelp();
-                    break;
-                case COLLECTION_MENU:
-                    CollectionView.collectionHelp();
-                    break;
-                case SHOP_MENU:
-                    ShopView.shopHelp();
-                    break;
-                case BATTLE_MENU:
-                    BattleView.battleHelp();
-                    break;
-            }
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowCommand() {
-        Pattern patternForShow = Pattern.compile(StringsRq.SHOW);
-        Matcher matcher = patternForShow.matcher(command);
-        if (menuType.equals(MenuType.COLLECTION_MENU)) {
-            if (matcher.matches()) {
-                CollectionView.showUserCollection(Account.getLoginUser());
-            } else {
-                error = ErrorType.INVALID_INPUT;
-                return false;
-            }
-        } else if (menuType.equals(MenuType.SHOP_MENU)) {
-            if (matcher.matches()) {
-                ShopView.showAllProducts(Account.getLoginUser());
-            } else {
-                error = ErrorType.INVALID_INPUT;
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfSearchCommand() {
-        Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForSearchCollection.matcher(command);
-        if (menuType.equals(MenuType.COLLECTION_MENU)) {
-            if (matcher.matches()) {
-                String name = matcher.group("name");
-                String ID = GameController.search(name, Account.getLoginUser().getCollection());
-                System.out.println(ID);
-            } else {
-                error = ErrorType.INVALID_INPUT;
-                return false;
-            }
-        } else if (menuType.equals(MenuType.SHOP_MENU)) {
-            if (matcher.matches()) {
-                String name = matcher.group("name");
-                String ID = GameController.searchInShop(name, Account.getLoginUser().getShop());
-                System.out.println(ID);
-            } else {
-                error = ErrorType.INVALID_INPUT;
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfCreateDeck() {
-        Pattern patternForSCreateDeck = Pattern.compile(StringsRq.CREATE_DECK + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForSCreateDeck.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            String result = GameController.createDeck(name, Account.getLoginUser().getCollection());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfDeleteDeck() {
-        Pattern patternForDeleteDeck = Pattern.compile(StringsRq.DELETE_DECK + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForDeleteDeck.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            String result = GameController.deleteDeck(name, Account.getLoginUser().getCollection());
-
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfAddToDeck() {
-
-        Pattern patternForAddToDeck = Pattern.compile(StringsRq.ADD_TO_DECK + " (?<cardId>[\\w+ ]+) to deck (?<deckName>[\\w+ ]+)");
-        Matcher matcher = patternForAddToDeck.matcher(command);
-        if (matcher.matches()) {
-            String cardId = matcher.group("cardId");
-            String deckName = matcher.group("deckName");
-            String result = GameController.addToDeck(cardId, deckName, Account.getLoginUser().getCollection());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfRemoveFromDeck() {
-        Pattern patternForRemoveFromDeck = Pattern.compile(StringsRq.REMOVE_FROM_DECK + " (?<cardId>[\\w+ ]+) from deck (?<deckName>[\\w+ ]+)");
-        Matcher matcher = patternForRemoveFromDeck.matcher(command);
-        if (matcher.matches()) {
-            String cardId = matcher.group("cardId");
-            String deckName = matcher.group("deckName");
-            String result = GameController.removeFromDeck(cardId, deckName, Account.getLoginUser().getCollection());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfValidateDeck() {
-        Pattern patternForValidateDeck = Pattern.compile(StringsRq.VALIDATE_DECK + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForValidateDeck.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            String result = GameController.isDeckValidate(name, Account.getLoginUser().getCollection());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfSelectDeck() {
-        Pattern patternForSelectDeck = Pattern.compile(StringsRq.SELECT_DECK + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForSelectDeck.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            String result = GameController.setMainDeck(name, Account.getLoginUser().getCollection());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowAllDecks() {
-        Pattern patternForShowAllDecks = Pattern.compile(StringsRq.SHOW_ALL_DECKS);
-        Matcher matcher = patternForShowAllDecks.matcher(command);
-        if (matcher.matches()) {
-            CollectionView.showAllDecks(Account.getLoginUser());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowDeck() {
-        Pattern patternForShowDeck = Pattern.compile(StringsRq.SHOW_DECK + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForShowDeck.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            CollectionView.showDeck(name, Account.getLoginUser().getCollection());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxForShowForShopMenu() {
-        Pattern patternForShowForShopMenu = Pattern.compile(StringsRq.SHOW_FOR_SHOP_MENU + "");
-        Matcher matcher = patternForShowForShopMenu.matcher(command);
-        if (matcher.matches()) {
-            CollectionView.showUserCollection(Account.getLoginUser());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfSearchCollection() {
-        Pattern patternForSearchCollection = Pattern.compile(StringsRq.SEARCH_COLLECTION + " " + "(?<name>[\\w+ ]+)");
-        Matcher matcher = patternForSearchCollection.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            String ID = GameController.search(name, Account.getLoginUser().getCollection());
-            System.out.println(ID);
-            return true;
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-    }
-
-    private static boolean checkSyntaxOfBuyCommand() {
-        Pattern patternForBuy = Pattern.compile(StringsRq.BUY + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForBuy.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            String result = GameController.buy(name, Account.getLoginUser().getShop());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfSellCommand() {
-        Pattern patternForSell = Pattern.compile(StringsRq.SELL + " (?<name>[\\w+ ]+)");
-        Matcher matcher = patternForSell.matcher(command);
-        if (matcher.matches()) {
-            String name = matcher.group("name");
-            String result = GameController.sell(name, Account.getLoginUser().getShop());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxForGameInfo() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForGameInfo = Pattern.compile(StringsRq.GAME_INFO);
-        Matcher matcher = patternForGameInfo.matcher(command);
-        if (matcher.matches()) {
-            BattleView.showGameInfo(Battle.getCurrentBattle());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxForShowMyMinions() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForShowMyMinions = Pattern.compile(StringsRq.SHOW_MY_MINIONS);
-        Matcher matcher = patternForShowMyMinions.matcher(command);
-        if (matcher.matches()) {
-            BattleView.showMyMinions(Battle.getCurrentBattle());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowOpponentMinions() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForShowOpponentMinions = Pattern.compile(StringsRq.SHOW_OPPONENT_MINIONS);
-        Matcher matcher = patternForShowOpponentMinions.matcher(command);
-        if (matcher.matches()) {
-            BattleView.showOpponentMinions(Battle.getCurrentBattle());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowCardInfo() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForShowCardInfo = Pattern.compile(StringsRq.SHOW_CARD_INFO + " (?<cardId>[\\w+ ]+)");
-        Matcher matcher = patternForShowCardInfo.matcher(command);
-        if (matcher.matches()) {
-            String cardId = matcher.group("cardId");
-            BattleView.showCardInfo(Battle.getCurrentBattle(), cardId);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxForSelect() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForSelect = Pattern.compile(StringsRq.SELECT + " (?<cardId>[\\w+ ]+)");
-        Matcher matcher = patternForSelect.matcher(command);
-        if (matcher.matches()) {
-            String cardId = matcher.group("cardId");
-            String result = GameController.selectCardOrItem(cardId, Battle.getCurrentBattle());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfMoveTO() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForMoveTO = Pattern.compile(StringsRq.MOVE_TO + " \\((?<x>\\d),(?<y>\\d)\\)");
-        Matcher matcher = patternForMoveTO.matcher(command);
-        if (matcher.matches()) {
-            int x = Integer.parseInt(matcher.group("x"));
-            int y = Integer.parseInt(matcher.group("y"));
-            String result = GameController.movingCard(x, y, Battle.getCurrentBattle());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfAttack() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForAttack = Pattern.compile(StringsRq.ATTACK + " " + "(?<cardId>[\\w]+)");
-        Matcher matcher = patternForAttack.matcher(command);
-        if (command.split(" ")[1].equals("combo")) {
-            checkSyntaxOfComboAttack();
-            return true;
-        }
-        if (matcher.matches()) {
-            String result = GameController.attack(command.split(" ")[1], Battle.getCurrentBattle());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfComboAttack() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForAttackCombo = Pattern.compile(StringsRq.ATTACK_COMBO);
-        Matcher matcher = patternForAttackCombo.matcher(command);
-        if (matcher.matches()) {
-            System.out.println("Enter opponent cardId:");
-            String opponentCardId = scanner.nextLine();
-            System.out.println("Enter your cardIds:");
-            String ids = scanner.nextLine();
-            String[] allIds = ids.split(" ");
-            ArrayList<String> toPass = new ArrayList<>(Arrays.asList(allIds));
-            String result = GameController.attackCombo(opponentCardId, Battle.getCurrentBattle(), toPass.toArray(new String[0]));
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfUseSpecialPower() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForUserSpecialPower = Pattern.compile(StringsRq.USE_SPECIAL_POWER + " \\((?<x>\\d),(?<y>\\d)\\)");
-        Matcher matcher = patternForUserSpecialPower.matcher(command);
-        if (matcher.matches()) {
-            int x = Integer.parseInt(matcher.group("x"));
-            int y = Integer.parseInt(matcher.group("y"));
-            String result = GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowHand() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForShowHand = Pattern.compile(StringsRq.SHOW_HAND);
-        Matcher matcher = patternForShowHand.matcher(command);
-        if (matcher.matches()) {
-            BattleView.showHand(Battle.getCurrentBattle());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfInsert() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForInsert = Pattern.compile(StringsRq.INSERT + " (?<cardName>[\\w+ ]+) in \\((?<x>\\d),(?<y>\\d)\\)");
-        Matcher matcher = patternForInsert.matcher(command);
-        if (matcher.matches()) {
-            String cardName = matcher.group("cardName");
-            int x = Integer.parseInt(matcher.group("x"));
-            int y = Integer.parseInt(matcher.group("y"));
-            String result = GameController.insertCard(cardName, x, y, Battle.getCurrentBattle());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfEndTurn() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForEndTurn = Pattern.compile(StringsRq.END_TURN);
-        Matcher matcher = patternForEndTurn.matcher(command);
-        if (matcher.matches()) {
-            GameController.endTurn(Battle.getCurrentBattle());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowCollectibles() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForShowCollectibles = Pattern.compile(StringsRq.SHOW_COLLECTIBLES);
-        Matcher matcher = patternForShowCollectibles.matcher(command);
-        if (matcher.matches()) {
-            BattleView.showCollectAbles();
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowInfo() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        if (menuType.equals(MenuType.BATTLE_MENU)) {
-            Pattern patternForShowInfoInBattleMenu = Pattern.compile(StringsRq.SHOW_INFO);
-            Matcher matcher = patternForShowInfoInBattleMenu.matcher(command);
-            if (matcher.matches()) {
-                String result = BattleView.showInfo(Battle.getCurrentBattle());
-                System.out.println(result);
-            } else {
-                error = ErrorType.INVALID_INPUT;
-                return false;
-            }
-        } else if (menuType.equals(MenuType.GRAVE_YARD)) {
-            Pattern patternForShowInfoInBGraveYardMenu = Pattern.compile(StringsRq.SHOW_INFO + " (?<cardId>[\\w+ ]+)");
-            Matcher matcher = patternForShowInfoInBGraveYardMenu.matcher(command);
-            if (matcher.matches()) {
-                String cardId = matcher.group("cardId");
-                String result = GameController.showCardInfoFromGraveYard(cardId, Battle.getCurrentBattle());
-                System.out.println(result);
-                return true;
-            } else {
-                error = ErrorType.INVALID_INPUT;
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfUse() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForUse = Pattern.compile(StringsRq.USE + " \\(\\d,\\d\\)");
-        Matcher matcher = patternForUse.matcher(command);
-        if (matcher.matches()) {
-            int x = Integer.parseInt(matcher.group("x"));
-            int y = Integer.parseInt(matcher.group("y"));
-            String result = GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
-            System.out.println(result);
-            return true;
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-    }
-
-    private static boolean checkSyntaxForShowNextCard() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForShowNextCard = Pattern.compile(StringsRq.SHOW_NEXT_CARD);
-        Matcher matcher = patternForShowNextCard.matcher(command);
-        if (matcher.matches()) {
-            BattleView.showNextCard();
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfShowCards() {
-        if (comeOutOfTheGame()) {
-            System.out.println(Battle.getSituationOfGame());
-            menuType = MenuType.MAIN_MENU;
-            MainMenuView.showMainMenu();
-            return true;
-        }
-        Pattern patternForShowCards = Pattern.compile(StringsRq.SHOW_CARDS);
-        Matcher matcher = patternForShowCards.matcher(command);
-        if (matcher.matches()) {
-            String result = GameController.showCardsOfGraveYard(Battle.getCurrentBattle());
-            System.out.println(result);
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfEndGame() {
-        Pattern patternForEndGame = Pattern.compile(StringsRq.END_GAME);
-        Matcher matcher = patternForEndGame.matcher(command);
-        if (matcher.matches()) {
-            Battle.getCurrentBattle().endingGame();
-            System.out.println(Battle.getSituationOfGame());
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfEnterGraveYard() {
-        menuType = MenuType.GRAVE_YARD;
-        return true;
-    }
-
-    private static boolean comeOutOfTheGame() {
-        return Battle.getCurrentBattle() == null;
-    }
 }
