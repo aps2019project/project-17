@@ -132,7 +132,7 @@ public class Request {
             case START_MULTI_PLAYER_GAME:
                 return checkSyntaxOfStartMultiPlayer();
             case EXIT:
-                return checkSyntaxOfExitCommand();
+                return CommonRequests.checkSyntaxOfExitCommand(command,menuType);
             case EXIT_GAME:
                 menuType = null;
         }
@@ -708,23 +708,6 @@ public class Request {
                         error = ErrorType.INVALID_INPUT;
                         return false;
                 }
-            }
-        } else {
-            error = ErrorType.INVALID_INPUT;
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean checkSyntaxOfExitCommand() {
-        Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
-        Matcher matcher = patternForExit.matcher(command);
-        if (matcher.matches()) {
-            if (menuType == MenuType.GRAVE_YARD) {
-                menuType = MenuType.BATTLE_MENU;
-            } else {
-                menuType = MenuType.MAIN_MENU;
-                MainMenuView.showMainMenu();
             }
         } else {
             error = ErrorType.INVALID_INPUT;

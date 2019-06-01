@@ -139,4 +139,21 @@ class CommonRequests {
         return true;
     }
 
+    static boolean checkSyntaxOfExitCommand(String command,MenuType menuType) {
+        Pattern patternForExit = Pattern.compile(StringsRq.EXIT);
+        Matcher matcher = patternForExit.matcher(command);
+        if (matcher.matches()) {
+            if (menuType == MenuType.GRAVE_YARD) {
+                Request.changeMenuType(MenuType.BATTLE_MENU);
+            } else {
+                Request.changeMenuType(MenuType.MAIN_MENU);
+                MainMenuView.showMainMenu();
+            }
+        } else {
+            Request.changeErrorType();
+            return false;
+        }
+        return true;
+    }
+
 }
