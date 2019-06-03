@@ -11,6 +11,7 @@ import controller.InstanceBuilder;
 import effects.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Battle {
@@ -347,18 +348,17 @@ public class Battle {
         return null;
     }
 
-    public ArrayList<Minion> minionsAroundCell(int x, int y) {
-        ArrayList<Minion> minions = new ArrayList<>();
+    public ArrayList<Cell> getCellsAroundCell(int x, int y) {
+        ArrayList<Cell> cells = new ArrayList<>();
         for (int i = x - 2; i <= x; i++) {
             for (int j = y - 2; j <= y; j++) {
                 if (i == x - 1 && j == y - 1)
                     continue;
                 Cell cell = getCellFromBoard(i + 1, j + 1);
-                if (cell.getCard() != null && cell.getCard() instanceof Minion)
-                    minions.add((Minion) cell.getCard());
+                cells.add(cell);
             }
         }
-        return minions;
+        return cells;
     }
 
     public Card getSelectedCard() {
@@ -446,6 +446,14 @@ public class Battle {
         return this.board.getCells()[x - 1][y - 1];
     }
 
+    public ArrayList<Cell> getAllCells() {
+        ArrayList<Cell> toReturn = new ArrayList<>();
+        for (Cell[] cells : board.getCells()) {
+            toReturn.addAll(Arrays.asList(cells));
+        }
+        return toReturn;
+    }
+
     public ArrayList<Minion> getAllMinion() {
         ArrayList<Minion> minions = new ArrayList<>();
         minions.addAll(minionsOfCurrentPlayer(playerOne));
@@ -453,23 +461,23 @@ public class Battle {
         return minions;
     }
 
-    public ArrayList<Minion> returnMinionsInColumn(int x, int y) {
-        ArrayList<Minion> toReturn = new ArrayList<>();
+    public ArrayList<Cell> returnCellsInColumn(int x, int y) {
+        ArrayList<Cell> toReturn = new ArrayList<>();
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
                 if (i == x - 1 && j != y - 1 && getCellFromBoard(i + 1, j + 1).getCard() != null)
-                    toReturn.add((Minion) getCellFromBoard(i, j).getCard());
+                    toReturn.add(getCellFromBoard(i, j));
             }
         }
         return toReturn;
     }
 
-    public ArrayList<Minion> returnMinionsWhichDistance(int x, int y) {
-        ArrayList<Minion> toReturn = new ArrayList<>();
+    public ArrayList<Cell> getCellsWhichDistance(int x, int y) {
+        ArrayList<Cell> toReturn = new ArrayList<>();
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
                 if (Cell.distance(getCellFromBoard(x, y), getCellFromBoard(i + 1, j + 1)) <= 2 && getCellFromBoard(i + 1, j + 1).getCard() != null)
-                    toReturn.add((Minion) getCellFromBoard(i + 1, j + 1).getCard());
+                    toReturn.add(getCellFromBoard(i + 1, j + 1));
             }
         }
         return toReturn;
@@ -636,7 +644,7 @@ public class Battle {
         return situationOfGame;
     }
 
-    Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 

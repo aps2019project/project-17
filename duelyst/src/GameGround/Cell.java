@@ -32,7 +32,7 @@ public class Cell {
         buff.addBuff(buffDetail);
     }
 
-    int getRow() {
+    public int getRow() {
         return row;
     }
 
@@ -44,7 +44,7 @@ public class Cell {
         this.item = item;
     }
 
-    int getCol() {
+    public int getCol() {
         return col;
     }
 

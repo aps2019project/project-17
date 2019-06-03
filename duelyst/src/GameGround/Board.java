@@ -2,7 +2,7 @@ package GameGround;
 
 import Data.Player;
 
-class Board {
+public class Board {
     private final int rows = 5;
     private final int cols = 9;
     private Cell[][] cells;
@@ -16,7 +16,7 @@ class Board {
         }
     }
 
-    Cell[][] getCells() {
+    public Cell[][] getCells() {
         return cells;
     }
 
