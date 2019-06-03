@@ -4,6 +4,9 @@ import Cards.Card;
 import Cards.Item;
 import Cards.Minion;
 import effects.*;
+import effects.enums.BuffType;
+import effects.enums.TargetRange;
+import effects.enums.TargetType;
 
 
 public class Cell {

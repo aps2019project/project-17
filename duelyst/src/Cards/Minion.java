@@ -2,6 +2,7 @@ package Cards;
 
 import GameGround.Battle;
 import effects.*;
+import effects.enums.*;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package effects;
+package effects.enums;
 
 public enum MinionType {
     MELEE,

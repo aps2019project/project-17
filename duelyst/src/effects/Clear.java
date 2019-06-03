@@ -1,6 +1,9 @@
 package effects;
 
 import Cards.Minion;
+import effects.enums.TargetDetail;
+import effects.enums.TargetRange;
+import effects.enums.TargetType;
 
 public class Clear extends Effect {
 

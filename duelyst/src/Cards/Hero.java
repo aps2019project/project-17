@@ -1,7 +1,7 @@
 package Cards;
 
-import effects.AttackType;
-import effects.MinionType;
+import effects.enums.AttackType;
+import effects.enums.MinionType;
 
 public class Hero extends Minion {
     private int coolDown;

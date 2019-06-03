@@ -1,6 +1,10 @@
 package effects;
 
 import Cards.Minion;
+import effects.enums.BuffType;
+import effects.enums.TargetDetail;
+import effects.enums.TargetRange;
+import effects.enums.TargetType;
 
 public class Holy extends Effect {
     private int holyBuffState;

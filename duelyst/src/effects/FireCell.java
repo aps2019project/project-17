@@ -1,20 +1,20 @@
 package effects;
 
-import Cards.Minion;
+import GameGround.Cell;
 import effects.enums.TargetDetail;
 import effects.enums.TargetRange;
 import effects.enums.TargetType;
 
-public class Stun extends Effect {
-    public Stun(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
+public class FireCell extends Effect {
+    public FireCell(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
         super(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
     }
 
     @Override
     public void effect(Object... targets) {
         for (Object target : targets) {
-            Minion minion = (Minion) target;
-            minion.setStun(true);
+            Cell cell = (Cell) target;
+            ((Cell) target).setFireCell(true);
         }
     }
 

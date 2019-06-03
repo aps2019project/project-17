@@ -1,5 +1,10 @@
 package effects;
 
+import effects.enums.BuffType;
+import effects.enums.SpecialSituation;
+import effects.enums.TargetRange;
+import effects.enums.TargetType;
+
 import java.util.ArrayList;
 
 public class BuffDetail {

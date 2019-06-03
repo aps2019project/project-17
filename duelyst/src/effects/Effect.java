@@ -3,6 +3,9 @@ package effects;
 import Cards.Minion;
 import GameGround.Battle;
 import GameGround.Cell;
+import effects.enums.TargetDetail;
+import effects.enums.TargetRange;
+import effects.enums.TargetType;
 
 import java.util.ArrayList;
 

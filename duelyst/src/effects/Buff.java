@@ -4,6 +4,10 @@ import Cards.Minion;
 import Data.Player;
 import GameGround.Battle;
 import GameGround.Cell;
+import effects.enums.BuffType;
+import effects.enums.MinionType;
+import effects.enums.SpecialSituation;
+import effects.enums.TargetType;
 
 import java.util.ArrayList;
 

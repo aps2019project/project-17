@@ -3,8 +3,8 @@ package Cards;
 import GameGround.Battle;
 import effects.Buff;
 import effects.BuffDetail;
-import effects.BuffType;
-import effects.SpecialSituation;
+import effects.enums.BuffType;
+import effects.enums.SpecialSituation;
 
 public class Item {
     private String name;
