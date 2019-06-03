@@ -3,7 +3,8 @@ package Data;
 import CardCollections.*;
 import Cards.Card;
 import Cards.Item;
-import effects.*;
+import Effects.*;
+import Effects.Player.SpecialSituation;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,7 +22,7 @@ public class Player {
     private int holdingFlags;
     private Card nextCard;
     private Buff buff = new Buff();
-    private boolean putInGroundAttackEnemyHero;
+    private SpecialSituation specialSituation;
 
     public Player(String userName, Deck deck) {
         this.mana = 10;
@@ -211,10 +212,15 @@ public class Player {
         }
         setNextCard();
     }
-    private void setHandPoisonLake(){
+
+    public void setSpecialSituation(SpecialSituation specialSituation) {
+        this.specialSituation = specialSituation;
+    }
+
+    private void setHandPoisonLake() {
         Random random = new Random();
         for (int i = 0; i < copyMainDeck.getCards().size(); i++) {
-            if (copyMainDeck.getCards().get(i).getId().equals("8")){
+            if (copyMainDeck.getCards().get(i).getId().equals("8")) {
                 this.hand.addCard(copyMainDeck.getCards().get(i));
                 copyMainDeck.getCards().remove(i);
                 break;

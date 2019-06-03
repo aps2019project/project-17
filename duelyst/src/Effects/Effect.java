@@ -1,11 +1,12 @@
-package effects;
+package Effects;
 
 import Cards.Minion;
 import GameGround.Battle;
 import GameGround.Cell;
-import effects.enums.TargetDetail;
-import effects.enums.TargetRange;
-import effects.enums.TargetType;
+import Effects.enums.MinionType;
+import Effects.enums.TargetDetail;
+import Effects.enums.TargetRange;
+import Effects.enums.TargetType;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,7 @@ public abstract class Effect {
                 minions.add(Battle.getCurrentBattle().returnRandomMinion(cell.getRow(), cell.getCol()));
                 break;
             case ENEMY_HERO:
-                minions.add(Battle.getCurrentBattle().theOtherPlayer().getMainDeck().getHero())
+                minions.add(Battle.getCurrentBattle().theOtherPlayer().getMainDeck().getHero());
                 break;
             case INSIDER_HERO:
                 break;
@@ -99,10 +100,12 @@ public abstract class Effect {
                             continue;
                         break;
                     case MELEE:
+                        if (!targetMinion.getMinionType().equals(MinionType.MELEE))
+                            continue;
                         break;
                     case INSIDER_NOT_MELEE:
-                        break;
-                    case NONE:
+                        if (targetMinion.getMinionType().equals(MinionType.MELEE) || !targetMinion.getUserName().equals(ownerUserName))
+                            continue;
                         break;
                 }
                 minions.add((Minion) targetCell.getCard());

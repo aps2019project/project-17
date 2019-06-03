@@ -1,9 +1,10 @@
-package effects;
+package Effects.MinionEffects;
 
 import Cards.Minion;
-import effects.enums.TargetDetail;
-import effects.enums.TargetRange;
-import effects.enums.TargetType;
+import Effects.Effect;
+import Effects.enums.TargetDetail;
+import Effects.enums.TargetRange;
+import Effects.enums.TargetType;
 
 public class Clear extends Effect {
 

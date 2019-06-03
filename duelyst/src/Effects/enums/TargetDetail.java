@@ -1,4 +1,4 @@
-package effects.enums;
+package Effects.enums;
 
 public enum TargetDetail {
     ENEMY,

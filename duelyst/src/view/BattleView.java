@@ -8,7 +8,7 @@ import Cards.Spell;
 import Data.AI;
 import Data.Player;
 import GameGround.*;
-import effects.enums.AttackType;
+import Effects.enums.AttackType;
 
 import java.util.ArrayList;
 import java.util.Random;

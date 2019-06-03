@@ -1,10 +1,9 @@
 package Cards;
 
 import GameGround.Battle;
-import effects.Buff;
-import effects.BuffDetail;
-import effects.enums.BuffType;
-import effects.enums.SpecialSituation;
+import Effects.BuffDetail;
+import Effects.enums.BuffType;
+import Effects.enums.SpecialSituation;
 
 public class Item {
     private String name;

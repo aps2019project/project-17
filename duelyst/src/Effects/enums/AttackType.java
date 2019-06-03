@@ -1,4 +1,4 @@
-package effects.enums;
+package Effects.enums;
 
 public enum AttackType {
     ON_SPAWN,

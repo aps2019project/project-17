@@ -1,9 +1,9 @@
-package effects;
+package Effects;
 
-import effects.enums.BuffType;
-import effects.enums.SpecialSituation;
-import effects.enums.TargetRange;
-import effects.enums.TargetType;
+import Effects.enums.BuffType;
+import Effects.enums.SpecialSituation;
+import Effects.enums.TargetRange;
+import Effects.enums.TargetType;
 
 import java.util.ArrayList;
 

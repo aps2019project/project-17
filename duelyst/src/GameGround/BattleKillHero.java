@@ -3,7 +3,7 @@ package GameGround;
 import Data.AI;
 import Data.GameData;
 import Data.Player;
-import effects.enums.AttackType;
+import Effects.enums.AttackType;
 import Cards.Minion;
 
 public class BattleKillHero extends Battle {

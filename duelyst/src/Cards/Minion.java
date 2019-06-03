@@ -1,8 +1,8 @@
 package Cards;
 
 import GameGround.Battle;
-import effects.*;
-import effects.enums.*;
+import Effects.*;
+import Effects.enums.*;
 
 import java.util.ArrayList;
 
@@ -251,7 +251,7 @@ public class Minion extends Card {
         this.holyBuffState = holyBuffState;
     }
 
-    void setAntiBuff(BuffType antiBuff) {
+    public void setAntiBuff(BuffType antiBuff) {
         this.antiBuff = antiBuff;
     }
 

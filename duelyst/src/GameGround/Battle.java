@@ -12,7 +12,7 @@ import Data.MatchState;
 import Data.Player;
 import controller.GameController;
 import controller.InstanceBuilder;
-import effects.enums.AttackType;
+import Effects.enums.AttackType;
 
 import java.util.ArrayList;
 import java.util.Arrays;

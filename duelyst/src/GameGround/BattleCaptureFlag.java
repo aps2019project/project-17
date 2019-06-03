@@ -6,7 +6,7 @@ import Cards.Minion;
 import Data.AI;
 import Data.GameData;
 import Data.Player;
-import effects.enums.AttackType;
+import Effects.enums.AttackType;
 
 import java.util.ArrayList;
 import java.util.Random;

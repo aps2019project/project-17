@@ -1,7 +1,7 @@
 package GameGround;
 
 import Data.*;
-import effects.enums.AttackType;
+import Effects.enums.AttackType;
 import Cards.Card;
 import Cards.Hero;
 import Cards.Minion;

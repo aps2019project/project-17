@@ -1,8 +1,9 @@
-package effects;
+package Effects.MinionEffects;
 
 import Cards.Minion;
-import effects.enums.TargetRange;
-import effects.enums.TargetType;
+import Effects.Effect;
+import Effects.enums.TargetRange;
+import Effects.enums.TargetType;
 
 public class ChangeProperties extends Effect {
     private int changeHealthValue;

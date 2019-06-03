@@ -3,10 +3,10 @@ package GameGround;
 import Cards.Card;
 import Cards.Item;
 import Cards.Minion;
-import effects.*;
-import effects.enums.BuffType;
-import effects.enums.TargetRange;
-import effects.enums.TargetType;
+import Effects.*;
+import Effects.enums.BuffType;
+import Effects.enums.TargetRange;
+import Effects.enums.TargetType;
 
 
 public class Cell {

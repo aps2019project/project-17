@@ -1,9 +1,10 @@
-package effects;
+package Effects.CellEffects;
 
 import GameGround.Cell;
-import effects.enums.TargetDetail;
-import effects.enums.TargetRange;
-import effects.enums.TargetType;
+import Effects.Effect;
+import Effects.enums.TargetDetail;
+import Effects.enums.TargetRange;
+import Effects.enums.TargetType;
 
 public class Poison extends Effect {
     public Poison(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {

@@ -5,7 +5,7 @@ import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
 import com.google.gson.Gson;
-import effects.*;
+import Effects.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class InstanceBuilder {
-    private static final String addressOfBuff = "duelyst//src//effects//Buff.json";
-    private static final String addressOfHero = "duelyst//src//effects//Hero.json";
-    private static final String addressOfHeroBuff = "duelyst//src//effects//HeroBuff.json";
-    private static final String addressOfItem = "duelyst//src//effects//Item.json";
-    private static final String addressOfItemBuff = "duelyst//src//effects//ItemBuff.json";
-    private static final String addressOfMinion = "duelyst//src//effects//Minion.json";
-    private static final String addressOfMinionBuff = "duelyst//src//effects//minionBuff.json";
-    private static final String addressOfSpell = "duelyst//src//effects//Spell.json";
+    private static final String addressOfBuff = "duelyst//src//Effects//Buff.json";
+    private static final String addressOfHero = "duelyst//src//Effects//Hero.json";
+    private static final String addressOfHeroBuff = "duelyst//src//Effects//HeroBuff.json";
+    private static final String addressOfItem = "duelyst//src//Effects//Item.json";
+    private static final String addressOfItemBuff = "duelyst//src//Effects//ItemBuff.json";
+    private static final String addressOfMinion = "duelyst//src//Effects//Minion.json";
+    private static final String addressOfMinionBuff = "duelyst//src//Effects//minionBuff.json";
+    private static final String addressOfSpell = "duelyst//src//Effects//Spell.json";
     private static Spell[] spells;
     private static BuffDetail[] spellBuff;
     private static Hero[] heroes;
