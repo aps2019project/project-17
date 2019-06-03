@@ -11,4 +11,6 @@ public enum TargetRange {
     SELF,
     CLOSEST_RANDOM,
     RANDOM,
+    ENEMY_HERO,
+    INSIDER_HERO
 }
