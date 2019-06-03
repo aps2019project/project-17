@@ -1,4 +1,4 @@
-package effects;
+package Cards;
 
 public class Card {
     protected String name;

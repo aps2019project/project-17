@@ -1,11 +1,9 @@
 package CardCollections;
 
+import Cards.*;
 import Data.Account;
-import effects.*;
 
 import java.util.ArrayList;
-
-import effects.Card;
 
 public class Collection {
     private ArrayList<Card> cards;

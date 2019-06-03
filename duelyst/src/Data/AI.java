@@ -2,7 +2,7 @@ package Data;
 
 import CardCollections.Deck;
 import GameGround.Battle;
-import effects.Minion;
+import Cards.Minion;
 
 import java.util.Random;
 

@@ -1,5 +1,7 @@
 package effects;
 
+import Cards.Minion;
+
 public class Disarm extends Effect {
 
     public Disarm(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {

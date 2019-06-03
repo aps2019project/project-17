@@ -1,6 +1,8 @@
 package Data;
 
 import CardCollections.*;
+import Cards.Card;
+import Cards.Item;
 import effects.*;
 
 import java.util.ArrayList;

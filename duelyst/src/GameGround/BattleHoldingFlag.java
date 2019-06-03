@@ -2,9 +2,9 @@ package GameGround;
 
 import Data.*;
 import effects.AttackType;
-import effects.Card;
-import effects.Hero;
-import effects.Minion;
+import Cards.Card;
+import Cards.Hero;
+import Cards.Minion;
 
 import java.util.Random;
 

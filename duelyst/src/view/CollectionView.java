@@ -1,8 +1,8 @@
 package view;
 
+import Cards.*;
 import Data.Account;
 import CardCollections.*;
-import effects.*;
 
 class CollectionView extends View {
 

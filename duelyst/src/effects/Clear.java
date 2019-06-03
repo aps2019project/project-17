@@ -1,5 +1,7 @@
 package effects;
 
+import Cards.Minion;
+
 public class Clear extends Effect {
 
     public Clear(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {

@@ -1,5 +1,7 @@
 package effects;
 
+import Cards.Minion;
+
 public class Stun extends Effect {
     public Stun(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
         super(startTime, endTime, isContinues, targetRange, targetType, targetDetail);

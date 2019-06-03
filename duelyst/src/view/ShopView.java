@@ -1,11 +1,10 @@
 package view;
 
-import CardCollections.Shop;
 import Data.Account;
-import effects.Hero;
-import effects.Item;
-import effects.Minion;
-import effects.Spell;
+import Cards.Hero;
+import Cards.Item;
+import Cards.Minion;
+import Cards.Spell;
 
 public class ShopView extends View {
 

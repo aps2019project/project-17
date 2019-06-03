@@ -1,5 +1,7 @@
 package effects;
 
+import Cards.Minion;
+
 public class Anti extends Effect {
     private BuffType buffType;
 

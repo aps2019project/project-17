@@ -1,5 +1,7 @@
 package effects;
 
+import Cards.Minion;
+
 public class ChangeProperties extends Effect {
     private int changeHealthValue;
     private int changePowerValue;

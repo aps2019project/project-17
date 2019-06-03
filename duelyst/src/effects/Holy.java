@@ -1,5 +1,7 @@
 package effects;
 
+import Cards.Minion;
+
 public class Holy extends Effect {
     private int holyBuffState;
 

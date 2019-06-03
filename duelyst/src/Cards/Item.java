@@ -1,6 +1,10 @@
-package effects;
+package Cards;
 
 import GameGround.Battle;
+import effects.Buff;
+import effects.BuffDetail;
+import effects.BuffType;
+import effects.SpecialSituation;
 
 public class Item {
     private String name;

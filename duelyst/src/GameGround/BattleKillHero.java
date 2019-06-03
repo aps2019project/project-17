@@ -4,7 +4,7 @@ import Data.AI;
 import Data.GameData;
 import Data.Player;
 import effects.AttackType;
-import effects.Minion;
+import Cards.Minion;
 
 public class BattleKillHero extends Battle {
 

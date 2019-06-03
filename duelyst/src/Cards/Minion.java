@@ -1,6 +1,7 @@
-package effects;
+package Cards;
 
 import GameGround.Battle;
+import effects.*;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,7 @@
-package effects;
+package Cards;
+
+import effects.Buff;
+import effects.BuffDetail;
 
 public class Spell extends Card {
     private int manaPoint;

@@ -1,7 +1,7 @@
 package CardCollections;
 
+import Cards.*;
 import controller.InstanceBuilder;
-import effects.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

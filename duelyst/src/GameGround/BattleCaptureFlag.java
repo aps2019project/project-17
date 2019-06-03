@@ -1,5 +1,8 @@
 package GameGround;
 
+import Cards.Card;
+import Cards.Hero;
+import Cards.Minion;
 import Data.AI;
 import Data.GameData;
 import Data.Player;

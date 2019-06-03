@@ -1,5 +1,6 @@
 package effects;
 
+import Cards.Minion;
 import GameGround.Battle;
 import GameGround.Cell;
 

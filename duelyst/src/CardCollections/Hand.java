@@ -1,6 +1,6 @@
 package CardCollections;
 
-import effects.Card;
+import Cards.Card;
 
 import java.util.ArrayList;
 

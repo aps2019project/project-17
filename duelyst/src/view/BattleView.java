@@ -1,6 +1,10 @@
 package view;
 
 import CardCollections.Hand;
+import Cards.Card;
+import Cards.Hero;
+import Cards.Minion;
+import Cards.Spell;
 import Data.AI;
 import Data.Player;
 import GameGround.*;
