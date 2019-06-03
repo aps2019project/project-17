@@ -1,9 +1,10 @@
 package Data;
 
-import CardCollections.*;
+import CardCollections.Deck;
+import CardCollections.Hand;
 import Cards.Card;
 import Cards.Item;
-import Effects.*;
+import Effects.Effect;
 import Effects.Player.SpecialSituation;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Player {
     private ArrayList<Card> graveYard;
     private int holdingFlags;
     private Card nextCard;
-    private Buff buff = new Buff();
+    private ArrayList<Effect> effects;
     private SpecialSituation specialSituation;
 
     public Player(String userName, Deck deck) {
@@ -46,16 +47,6 @@ public class Player {
         this.nextCard = null;
         this.mainDeck = null;
     }
-
-    public Buff getBuff() {
-        return buff;
-    }
-
-
-    public void setPutInGroundAttackEnemyHero(boolean putInGroundAttackEnemyHero) {
-        this.putInGroundAttackEnemyHero = putInGroundAttackEnemyHero;
-    }
-
 
     public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
@@ -102,9 +93,6 @@ public class Player {
         copyMainDeck.setHero(mainDeck.getHero());
     }
 
-    public boolean isPutInGroundAttackEnemyHero() {
-        return putInGroundAttackEnemyHero;
-    }
 
     public Hand getHand() {
         return hand;
@@ -174,9 +162,7 @@ public class Player {
     }
 
     public void action(int x, int y) {
-        if (this.buff == null)
-            return;
-        this.buff.action(x, y, buff.getBuffDetails());
+
     }
 
     public int getPreviousMana() {
