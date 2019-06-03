@@ -1,5 +1,6 @@
 package Cards;
 
+import Effects.MinionEffects.ChangeProperties;
 import GameGround.Battle;
 import Effects.*;
 import Effects.enums.*;
@@ -7,11 +8,11 @@ import Effects.enums.*;
 import java.util.ArrayList;
 
 public class Minion extends Card {
-    private Buff specialPower;
-    protected Buff attack;
-    protected Buff buff;
-    private BuffDetail specialSituationBuff;
-    private SpecialSituation specialSituation;
+    protected ArrayList<Effect> specialPower = new ArrayList<>();
+    protected Effect attack;
+    protected ArrayList<Effect> effects = new ArrayList<>();
+    protected ArrayList<Effect> specialSituationBuff = new ArrayList<>();
+    protected SpecialSituation specialSituation;
     int attackPoint;
     int healthPoint;
     private int manaPoint;
@@ -45,8 +46,6 @@ public class Minion extends Card {
     }
 
     public void init() {
-        specialPower = new Buff();
-        buff = new Buff();
         this.xCoordinate = 0;
         this.yCoordinate = 0;
         this.holyBuffState = 0;
@@ -59,13 +58,11 @@ public class Minion extends Card {
         this.numberOfAttack = 0;
         if (minionType.equals(MinionType.MELEE))
             attackRange = 1;
-        makeAttackBuff(attackPoint);
+        makeAttackBuff();
     }
 
-    private void makeAttackBuff(int attackPower) {
-        this.attack = new Buff();
-        BuffDetail buffDetail = new BuffDetail(-1, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.NONE, TargetRange.ONE, -2, 0, -attackPower);
-        this.attack.addBuff(buffDetail);
+    private void makeAttackBuff() {
+        this.attack = new ChangeProperties(0, 0, false, TargetRange.ONE, TargetType.MINION, TargetDetail.ENEMY, -this.attackPoint, 0, false);
     }
 
     private String minionTypeShow() {
@@ -105,10 +102,6 @@ public class Minion extends Card {
         return antiBuff;
     }
 
-    public void addSpecialPowerBuff(BuffDetail buffDetail) {
-        this.specialPower.addBuff(buffDetail);
-    }
-
     public boolean getCanAttack() {
         return canAttack;
     }
@@ -130,12 +123,14 @@ public class Minion extends Card {
     public void attack(Minion minion) {
         if (!canAttack)
             return;
-        ArrayList<BuffDetail> specialSituationBuffs = new ArrayList<>();
-        specialSituationBuffs.add(specialSituationBuff);
         increaseNumberOfAttack();
-        if (specialSituationBuff != null && specialSituation.equals(SpecialSituation.ATTACK))
-            this.buff.action(minion.getXCoordinate(), minion.yCoordinate, specialSituationBuffs);
-        this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
+
+        if (specialSituation.equals(SpecialSituation.ATTACK)) {
+            for (Effect effect : this.specialPower) {
+                effect.action(Battle.getCurrentBattle().getCellFromBoard(this.xCoordinate, this.yCoordinate));
+            }
+        }
+        this.attack.action(Battle.getCurrentBattle().getCellFromBoard(this.xCoordinate, this.yCoordinate));
         if (this.attackType.equals(AttackType.ON_ATTACK))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
     }
@@ -143,7 +138,7 @@ public class Minion extends Card {
     public void counterAttack(Minion minion) {
         if (!canCounterAttack)
             return;
-        this.attack.action(minion.xCoordinate, minion.yCoordinate, attack.getBuffDetails());
+        this.attack.action(Battle.getCurrentBattle().getCellFromBoard(minion.xCoordinate, minion.yCoordinate));
         if (this.attackType.equals(AttackType.ON_DEFEND))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
     }
@@ -151,19 +146,9 @@ public class Minion extends Card {
     public void useSpecialPower(int x, int y) {
         if (desc.equals("nothing"))
             return;
-        for (BuffDetail buffDetail : specialPower.getBuffDetails()) {
-            ArrayList<BuffDetail> buffDetails = new ArrayList<>();
-            buffDetails.add(buffDetail);
-            if (buffDetail.getTargetType() == null)
-                continue;
-            if ((buffDetail.getTargetType().equals(TargetType.SELF_NOT_MELEE) && !this.minionType.equals(MinionType.MELEE)) || buffDetail.getTargetRange().equals(TargetRange.SELF)) {
-                specialPower.action(this.xCoordinate, this.yCoordinate, buffDetails);
-                return;
-            }
-            if (buffDetail.getChangeHealth() == -105)
-                buffDetail.setChangeHealth(((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).getNumberOfAttack());
+        for (Effect effect : specialPower) {
+            effect.action(Battle.getCurrentBattle().getCellFromBoard(x, y));
         }
-        specialPower.action(x, y, specialPower.getBuffDetails());
     }
 
     private void increaseNumberOfAttack() {
@@ -190,11 +175,11 @@ public class Minion extends Card {
         this.canCounterAttack = canCounterAttack;
     }
 
-    void changeHealth(int changingValue) {
+    public void changeHealth(int changingValue) {
         this.healthPoint += changingValue;
     }
 
-    void changeAttackPower(int changingValue) {
+    public void changeAttackPower(int changingValue) {
         this.attackPoint += changingValue;
     }
 
@@ -255,30 +240,9 @@ public class Minion extends Card {
         this.antiBuff = antiBuff;
     }
 
-    public Buff getBuff() {
-        return buff;
-    }
-
-    void setSpecialSituationBuff(BuffDetail specialSituationBuff) {
-        this.specialSituationBuff = specialSituationBuff;
-    }
 
     void setSpecialSituation(SpecialSituation specialSituation) {
         this.specialSituation = specialSituation;
-    }
-
-    public void addBuff(BuffDetail buffDetail) {
-        this.buff.addBuff(buffDetail);
-    }
-
-    public Buff getAttack() {
-        return attack;
-    }
-
-    public void passTurn() {
-        if (this.buff == null || this.buff.getBuffDetails() == null)
-            return;
-        buff.action(this.xCoordinate, this.yCoordinate, buff.getBuffDetails());
     }
 
 

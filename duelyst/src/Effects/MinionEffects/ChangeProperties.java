@@ -2,17 +2,20 @@ package Effects.MinionEffects;
 
 import Cards.Minion;
 import Effects.Effect;
+import Effects.enums.TargetDetail;
 import Effects.enums.TargetRange;
 import Effects.enums.TargetType;
 
 public class ChangeProperties extends Effect {
     private int changeHealthValue;
     private int changePowerValue;
+    private boolean returnEffect;
 
-    public ChangeProperties(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, int changeHealthValue, int changePowerValue) {
-        super(startTime, endTime, isContinues, targetRange, targetType);
+    public ChangeProperties(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail, int changeHealthValue, int changePowerValue, boolean returnEffect) {
+        super(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
         this.changeHealthValue = changeHealthValue;
         this.changePowerValue = changePowerValue;
+        this.returnEffect = returnEffect;
     }
 
     @Override
