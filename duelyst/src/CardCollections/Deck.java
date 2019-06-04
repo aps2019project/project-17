@@ -2,7 +2,7 @@ package CardCollections;
 
 
 import Cards.*;
-import controller.InstanceBuilder;
+import InstanceMaker.CardMaker;
 
 
 import java.util.ArrayList;
@@ -30,10 +30,10 @@ public class Deck {
     }
 
     private static void initializeFirstAIKH() {
-        Hero[] heroes = InstanceBuilder.getHeroes();
-        Minion[] minions = InstanceBuilder.getMinions();
-        Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getAllItems();
+        Hero[] heroes = CardMaker.getHeroes();
+        Minion[] minions = CardMaker.getMinions();
+        Spell[] spells = CardMaker.getSpells();
+        Item[] items = CardMaker.getAllItems();
         deckKillHero = new Deck("Kill Hero Story");
         deckKillHero.setHero(heroes[0]);
         deckKillHero.setItem(items[0]);
@@ -43,10 +43,10 @@ public class Deck {
     }
 
     private static void initializeSecondAIHF() {
-        Hero[] heroes = InstanceBuilder.getHeroes();
-        Minion[] minions = InstanceBuilder.getMinions();
-        Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getAllItems();
+        Hero[] heroes = CardMaker.getHeroes();
+        Minion[] minions = CardMaker.getMinions();
+        Spell[] spells = CardMaker.getSpells();
+        Item[] items = CardMaker.getAllItems();
         deckHoldFlag = new Deck("Hold flag Story");
         deckHoldFlag.setHero(heroes[4]);
         deckHoldFlag.setItem(items[17]);
@@ -55,10 +55,10 @@ public class Deck {
     }
 
     private static void initializeThirdAICF() {
-        Hero[] heroes = InstanceBuilder.getHeroes();
-        Minion[] minions = InstanceBuilder.getMinions();
-        Spell[] spells = InstanceBuilder.getSpells();
-        Item[] items = InstanceBuilder.getAllItems();
+        Hero[] heroes = CardMaker.getHeroes();
+        Minion[] minions = CardMaker.getMinions();
+        Spell[] spells = CardMaker.getSpells();
+        Item[] items = CardMaker.getAllItems();
         deckCaptureFlag = new Deck("Capture Flag Story");
         deckCaptureFlag.setHero(heroes[6]);
         deckCaptureFlag.setItem(items[11]);

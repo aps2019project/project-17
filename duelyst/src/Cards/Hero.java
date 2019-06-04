@@ -27,4 +27,8 @@ public class Hero extends Minion {
             setCanCounterAttack(true);
         }
     }
+
+    public int getCoolDown() {
+        return coolDown;
+    }
 }

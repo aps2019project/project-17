@@ -256,6 +256,10 @@ public class Minion extends Card {
         return numberOfAttack;
     }
 
+    public int getMaxRangeToInput() {
+        return maxRangeToInput;
+    }
+
     public void setAntiBuff(BuffType antiBuff) {
         this.antiBuff = antiBuff;
     }

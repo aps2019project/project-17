@@ -20,7 +20,6 @@ public class GameController {
     }
 
     public static void main() {
-        InstanceBuilder.creation();
         boolean isFinish = false;
         do {
             Request.getNewCommand();
