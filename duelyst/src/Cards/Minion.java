@@ -62,7 +62,9 @@ public class Minion extends Card {
     }
 
     private void makeAttackBuff() {
-        this.attack = new ChangeProperties(0, 0, false, TargetRange.ONE, TargetType.MINION, TargetDetail.ENEMY, -this.attackPoint, 0, false);
+        Effect changeProperties = new ChangeProperties(0, 0, false, TargetRange.ONE, TargetType.MINION, TargetDetail.ENEMY, -this.attackPoint, 0, false);
+        changeProperties.setOwnerUserName(getUserName());
+        this.attack = changeProperties;
     }
 
     private String minionTypeShow() {
@@ -132,6 +134,14 @@ public class Minion extends Card {
         }
     }
 
+    public void addSpecialPower(Effect effect) {
+        specialPower.add(effect);
+    }
+
+    public void addEffect(Effect effect) {
+        effects.add(effect);
+    }
+
     public void addSpeciaSituationBuff(Effect effect) {
         specialSituationBuff.add(effect);
     }
@@ -192,6 +202,9 @@ public class Minion extends Card {
 
     public void changeHealth(int changingValue) {
         this.healthPoint += changingValue;
+        if (changingValue < 0) {
+            healthPoint += holyBuffState;
+        }
     }
 
     public void changeAttackPower(int changingValue) {
@@ -249,6 +262,20 @@ public class Minion extends Card {
 
     public void setSpecialSituation(SpecialSituation specialSituation) {
         this.specialSituation = specialSituation;
+    }
+
+    public void passTurn() {
+        if (attackType.equals(AttackType.PASSIVE))
+            useSpecialSituationBuff(xCoordinate, yCoordinate);
+        for (Effect effect : effects) {
+            effect.action(Battle.getCurrentBattle().getCellFromBoard(xCoordinate, yCoordinate));
+            effect.checkForRemove();
+        }
+        for (int i = 0; i < effects.size(); i++) {
+            Effect effect = effects.get(i);
+            if (effect.isDisable())
+                effects.remove(effect);
+        }
     }
 
 }

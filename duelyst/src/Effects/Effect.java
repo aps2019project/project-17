@@ -21,7 +21,7 @@ public abstract class Effect {
     private ArrayList<Object> impacts = new ArrayList<>();
     private boolean isDisable;
 
-    public Effect(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
+    public Effect(int startTime, int endTime, boolean isContinues,TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isContinues = isContinues;
@@ -44,10 +44,7 @@ public abstract class Effect {
             return;
         }
         boolean isCell;
-        if (targetType == TargetType.CELL)
-            isCell = true;
-        else
-            isCell = false;
+        isCell = targetType == TargetType.CELL;
         ArrayList<Cell> cells = new ArrayList<>();
         ArrayList<Minion> minions = new ArrayList<>();
         switch (this.targetRange) {
@@ -111,7 +108,9 @@ public abstract class Effect {
                             continue;
                         break;
                 }
-                minions.add((Minion) targetCell.getCard());
+                Minion minion = (Minion) targetCell.getCard();
+                minions.add(minion);
+                minion.addEffect(this);
             }
         }
         effect(minions);
@@ -143,5 +142,17 @@ public abstract class Effect {
 
     public boolean isContinues() {
         return isContinues;
+    }
+
+    public boolean isDisable() {
+        return isDisable;
+    }
+
+    public String getOwnerUserName() {
+        return ownerUserName;
+    }
+
+    public void setOwnerUserName(String ownerUserName) {
+        this.ownerUserName = ownerUserName;
     }
 }

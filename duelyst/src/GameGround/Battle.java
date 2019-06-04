@@ -10,6 +10,7 @@ import Data.AI;
 import Data.GameData;
 import Data.MatchState;
 import Data.Player;
+import Effects.enums.SpecialSituation;
 import controller.GameController;
 import controller.InstanceBuilder;
 import Effects.enums.AttackType;
@@ -174,7 +175,6 @@ public class Battle {
             whoseTurn().addItemToCollectAbleItems(cellDestination.getItem());
             cellDestination.setItem(null);
         }
-        cellDestination.enterCell();
         return "ok";
     }
 
@@ -228,9 +228,10 @@ public class Battle {
             whoseTurn().lessMana(((Minion) card).getManaPoint());
             whoseTurn().removeCardFromHand(card);
             cell.setCard(card);
-            cell.enterCell();
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
                 ((Minion) card).useSpecialPower(x, y);
+            if (whoseTurn().getSpecialSituation().equals(SpecialSituation.PUTT_IN_GROUND))
+                whoseTurn().useSpecialSituationBuff();
             check();
             return "ok";
 
@@ -311,8 +312,8 @@ public class Battle {
         attacker.attack(minion);
         minion.counterAttack(attacker);
         check();
-//        attacker.setCanAttack(false);
-//        minion.setCanCounterAttack(false);
+        attacker.setCanAttack(false);
+        minion.setCanCounterAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
@@ -416,14 +417,14 @@ public class Battle {
         for (Minion minion : getAllMinion()) {
             if (minion.getAttackType().equals(AttackType.PASSIVE))
                 minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
+            minion.passTurn();
         }
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
                 getCellFromBoard(i + 1, j + 1).passTurn();
             }
         }
-
-
+        whoseTurn().passTurn();
         if (currentBattle != null)
             currentBattle.check();
     }

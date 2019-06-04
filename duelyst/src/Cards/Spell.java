@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Spell extends Card {
     private int manaPoint;
-    private ArrayList<Effect> effects;
+    private ArrayList<Effect> effects = new ArrayList<>();
 
     public Spell(String name, String id, int price, int manaPoint) {
         super(name, id, price);
@@ -22,6 +22,10 @@ public class Spell extends Card {
         for (Effect effect : effects) {
             effect.action(Battle.getCurrentBattle().getCellFromBoard(x, y));
         }
+    }
+
+    public void addEffect(Effect effect) {
+        effects.add(effect);
     }
 
     public int getManaPoint() {

@@ -1,5 +1,6 @@
 package Effects.CellEffects;
 
+import Effects.MinionEffects.ChangeProperties;
 import GameGround.Cell;
 import Effects.Effect;
 import Effects.enums.TargetDetail;
@@ -15,7 +16,9 @@ public class FireCell extends Effect {
     public void effect(Object... targets) {
         for (Object target : targets) {
             Cell cell = (Cell) target;
-            ((Cell) target).setFireCell(true);
+            cell.setFireCell(true);
+            Effect effect = new ChangeProperties(0, 0, false, TargetRange.ONE, TargetType.MINION, TargetDetail.NONE, -2, 0, false);
+            cell.setEffect(effect);
         }
     }
 

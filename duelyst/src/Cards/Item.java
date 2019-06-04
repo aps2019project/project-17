@@ -2,16 +2,15 @@ package Cards;
 
 import Effects.Effect;
 import GameGround.Battle;
-import Effects.BuffDetail;
-import Effects.enums.BuffType;
-import Effects.enums.SpecialSituation;
+
+import java.util.ArrayList;
 
 public class Item {
     private String name;
     private String id;
     private String desc;
     private int price;
-    private Effect effect;
+    private ArrayList<Effect> effects = new ArrayList<>();
 
     public Item(String name, String id, int price) {
         this.name = name;
@@ -19,12 +18,14 @@ public class Item {
         this.price = price;
     }
 
-    public void init() {
-
+    public void action(int x, int y) {
+        for (Effect effect : effects) {
+            effect.action(Battle.getCurrentBattle().getCellFromBoard(x, y));
+        }
     }
 
-    public void action(int x, int y) {
-
+    public void addEffect(Effect effect) {
+        effects.add(effect);
     }
 
     public String getName() {

@@ -1,5 +1,6 @@
 package Effects.CellEffects;
 
+import Effects.MinionEffects.Holy;
 import GameGround.Cell;
 import Effects.Effect;
 import Effects.enums.TargetDetail;
@@ -16,6 +17,8 @@ public class HolyCell extends Effect {
         for (Object target : targets) {
             Cell cell = (Cell) target;
             cell.setHoly(true);
+            Effect effect = new Holy(0, 100, false, TargetRange.ONE, TargetType.MINION, TargetDetail.NONE, 1);
+            cell.setEffect(effect);
         }
     }
 

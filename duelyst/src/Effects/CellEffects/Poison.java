@@ -1,5 +1,6 @@
 package Effects.CellEffects;
 
+import Effects.MinionEffects.ChangeProperties;
 import GameGround.Cell;
 import Effects.Effect;
 import Effects.enums.TargetDetail;
@@ -16,6 +17,8 @@ public class Poison extends Effect {
         for (Object target : targets) {
             Cell cell = (Cell) target;
             cell.setPoison(true);
+            Effect effect = new ChangeProperties(0, 0, false, TargetRange.ONE, TargetType.MINION, TargetDetail.NONE, -1, 0, false);
+            cell.setEffect(effect);
         }
     }
 

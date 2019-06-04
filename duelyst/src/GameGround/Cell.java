@@ -18,24 +18,15 @@ public class Cell {
     private boolean isFireCell;
     private boolean isPoison;
     private boolean isHoly;
-    private BuffDetail poison;
-    private BuffDetail fire;
-    private BuffDetail holy;
-    private Buff buff;
+    private Effect effect = null;
 
     Cell(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
-    public Buff getBuff() {
-        return buff;
-    }
-
-    public void addBuff(BuffDetail buffDetail) {
-        if (buff == null)
-            buff = new Buff();
-        buff.addBuff(buffDetail);
+    public void setEffect(Effect effect) {
+        this.effect = effect;
     }
 
     public int getRow() {
@@ -82,36 +73,12 @@ public class Cell {
         isHoly = holy;
     }
 
-    void enterCell() {
-        if (card == null)
-            return;
-        if (this.isPoison) {
-            poison = new BuffDetail(-2, BuffType.POISON, -1, TargetType.NONE, TargetRange.ONE);
-            ((Minion) getCard()).addBuff(poison);
-        }
-        if (this.isFireCell) {
-            fire = new BuffDetail(-2, BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF, TargetType.NONE, TargetRange.ONE, 0, 0, -2);
-            ((Minion) getCard()).addBuff(fire);
-        }
-        if (this.isHoly) {
-            holy = new BuffDetail(-2, BuffType.HOLY, TargetType.NONE, TargetRange.ONE, -1, 1);
-            ((Minion) getCard()).addBuff(holy);
-        }
-    }
 
     void exitCell() {
         if (card == null)
             return;
-        if (this.isPoison) {
-            ((Minion) getCard()).getBuff().removeBuff(poison);
-        }
-        if (this.isFireCell) {
-            ((Minion) getCard()).getBuff().removeBuff(fire);
-        }
-        if (this.isHoly) {
-            ((Minion) getCard()).getBuff().removeBuff(holy);
-        }
-
+        effect.remove();
+        effect = null;
     }
 
     static int distance(Cell cell, Cell cell1) {
@@ -123,8 +90,7 @@ public class Cell {
     }
 
     void passTurn() {
-        if (this.buff == null || this.buff.getBuffDetails() == null)
-            return;
-        buff.action(3, 3, buff.getBuffDetails());
+        if (effect != null && getCard() != null)
+            effect.action(this);
     }
 }

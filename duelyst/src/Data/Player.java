@@ -22,8 +22,9 @@ public class Player {
     private ArrayList<Card> graveYard;
     private int holdingFlags;
     private Card nextCard;
-    private ArrayList<Effect> effects;
-    private SpecialSituation specialSituation;
+    private ArrayList<Effect> effects = new ArrayList<>();
+    private ArrayList<Effect> specialSitutionBuff = new ArrayList<>();
+    private SpecialSituation specialSituation = SpecialSituation.NONE;
 
     public Player(String userName, Deck deck) {
         this.mana = 10;
@@ -161,9 +162,6 @@ public class Player {
         return false;
     }
 
-    public void action(int x, int y) {
-
-    }
 
     public int getPreviousMana() {
         return previousMana;
@@ -221,5 +219,31 @@ public class Player {
             this.copyMainDeck.getCards().remove(n);
         }
         setNextCard();
+    }
+
+    public void addEffect(Effect effect) {
+        effects.add(effect);
+    }
+
+    public void passTurn() {
+        for (Effect effect : effects) {
+            effect.action(null);
+            effect.checkForRemove();
+        }
+        for (int i = 0; i < effects.size(); i++) {
+            Effect effect = effects.get(i);
+            if (effect.isDisable())
+                effects.remove(effect);
+        }
+    }
+
+    public void useSpecialSituationBuff() {
+        for (Effect effect : specialSitutionBuff) {
+            effect.action(null);
+        }
+    }
+
+    public SpecialSituation getSpecialSituation() {
+        return specialSituation;
     }
 }
