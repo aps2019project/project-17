@@ -91,7 +91,7 @@ public class Main extends Application {
         loginMenu.setFill(ColorAppearance.CURRENT_MENU_BUTTON);
         signUpMenu.setFill(Color.WHITE);
         leaderBoardMenu.setFill(Color.WHITE);
-        currentButton.setFont(FontAppearance.FONT_CURRECT_BUTTON);
+        currentButton.setFont(FontAppearance.FONT_CORRECT_BUTTON);
         currentButton.setFill(Color.WHITE);
         invalidPassWord.setFont(FontAppearance.FONT_ERRORS);
         invalidUserName.setFont(FontAppearance.FONT_ERRORS);
@@ -114,12 +114,12 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        GameController.main();
+        //GameController.main();
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         window = primaryStage;
         window.setScene(sceneFirstMenu);
         window.show();
