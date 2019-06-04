@@ -6,7 +6,9 @@ import Cards.Minion;
 import Cards.Spell;
 import Effects.enums.AttackType;
 import Effects.enums.MinionType;
+import InstanceMaker.CardMaker;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 class CustomCardRequest {
@@ -17,15 +19,30 @@ class CustomCardRequest {
             input=scanner.nextLine();
             switch (input) {
                 case "1":
-
+                    try {
+                        CardMaker.saveMinion(checkSyntaxOfMakeHero(scanner), true);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case "2":
-
+                    try {
+                        CardMaker.saveMinion(checkSyntaxOfMakeMinion(scanner), false);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case "3":
-
+                    try {
+                        CardMaker.saveItem(checkSyntaxOfMakeItem(scanner));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case "4":
-
+                    break;
                 case "5":
-
+                    break;
             }
         }
         while (!input.equals("end"));

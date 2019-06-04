@@ -92,13 +92,67 @@ public class CardMaker {
             stringBuilder.append("\"attackType\": \"").append(minion.getAttackType()).append("\",\n");
             if (isHero)
                 stringBuilder.append("\"coolDown\": \"").append(((Hero) minion).getCoolDown()).append("\",\n");
-            stringBuilder.append("\"desc\": \"").append(minion.getDesc()).append("\",\n");
+            stringBuilder.append("\"desc\": \"").append(minion.getDesc()).append("\"\n");
+            if (minions.indexOf(minion) != minions.size() - 1)
+                stringBuilder.append("},\n");
+            else
+                stringBuilder.append("}");
         }
+        stringBuilder.append("]");
         BufferedWriter bufferedWriter;
         if (isHero)
             bufferedWriter = new BufferedWriter(new FileWriter(addressOfHero));
         else
             bufferedWriter = new BufferedWriter(new FileWriter(addressOfMinion));
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.flush();
+        bufferedWriter.close();
+    }
+
+    public static void saveItem(Item newItem) throws IOException {
+        Item[] loadedItems = (Item[]) loadInstance(InstanceType.ITEM);
+        assert loadedItems != null;
+        ArrayList<Item> items = new ArrayList<>(Arrays.asList(loadedItems));
+        items.add(newItem);
+        StringBuilder stringBuilder = new StringBuilder("[");
+        for (Item item : items) {
+            stringBuilder.append("{");
+            stringBuilder.append("\"name\": \"").append(item.getName()).append("\",\n");
+            stringBuilder.append("\"id\": \"").append(item.getId()).append("\",\n");
+            stringBuilder.append("\"price\": \"").append(item.getPrice()).append("\",\n");
+            stringBuilder.append("\"desc\": \"").append(item.getDesc()).append("\"\n");
+            if (items.indexOf(item) != items.size() - 1)
+                stringBuilder.append("},\n");
+            else
+                stringBuilder.append("}");
+        }
+        stringBuilder.append("]");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfItem));
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.flush();
+        bufferedWriter.close();
+    }
+
+    public static void saveSpell(Spell newSpell) throws IOException {
+        Spell[] loadedItems = (Spell[]) loadInstance(InstanceType.SPELL);
+        assert loadedItems != null;
+        ArrayList<Spell> spells = new ArrayList<>(Arrays.asList(loadedItems));
+        spells.add(newSpell);
+        StringBuilder stringBuilder = new StringBuilder("[");
+        for (Spell spell : spells) {
+            stringBuilder.append("{");
+            stringBuilder.append("\"name\": \"").append(spell.getName()).append("\",\n");
+            stringBuilder.append("\"id\": \"").append(spell.getId()).append("\",\n");
+            stringBuilder.append("\"price\": \"").append(spell.getPrice()).append("\",\n");
+            stringBuilder.append("\"manaPoint\": \"").append(spell.getManaPoint()).append("\",\n");
+            stringBuilder.append("\"desc\": \"").append(spell.getDesc()).append("\"\n");
+            if (spells.indexOf(spell) != spells.size() - 1)
+                stringBuilder.append("},\n");
+            else
+                stringBuilder.append("}");
+        }
+        stringBuilder.append("]");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfSpell));
         bufferedWriter.write(stringBuilder.toString());
         bufferedWriter.flush();
         bufferedWriter.close();
