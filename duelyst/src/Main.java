@@ -1,6 +1,7 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
+import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -113,6 +114,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        GameController.main();
         launch(args);
     }
 
