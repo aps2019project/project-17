@@ -134,6 +134,8 @@ class MainMenu {
             Main.backToMainMenu();
         });
 
+        shopTxt.setOnMouseClicked(e -> new ShopAppearance());
+
         exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
     }
 }

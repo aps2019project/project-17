@@ -1,6 +1,7 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
+import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -90,7 +91,7 @@ public class Main extends Application {
         loginMenu.setFill(ColorAppearance.CURRENT_MENU_BUTTON);
         signUpMenu.setFill(Color.WHITE);
         leaderBoardMenu.setFill(Color.WHITE);
-        currentButton.setFont(FontAppearance.FONT_CURRECT_BUTTON);
+        currentButton.setFont(FontAppearance.FONT_CURRENT_BUTTON);
         currentButton.setFill(Color.WHITE);
         invalidPassWord.setFont(FontAppearance.FONT_ERRORS);
         invalidUserName.setFont(FontAppearance.FONT_ERRORS);
@@ -111,13 +112,17 @@ public class Main extends Application {
         leaderBoardMenu.setOpacity(0.75);
     }
 
+    static {
+        GameController.getAccounts().add(new Account("a", "1"));
+    }
+
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         window = primaryStage;
         window.setScene(sceneFirstMenu);
         window.show();
@@ -131,7 +136,6 @@ public class Main extends Application {
 
     private static void handleMouse() {
         currentButton.setOnMouseEntered(e -> outBox.setOpacity(0.55));
-        currentButton.setOnMouseExited(e -> outBox.setOpacity(0.15));
         loginMenu.setOnMouseEntered(e -> {
             if (currentChoice != loginMenu)
                 loginMenu.setOpacity(1);
@@ -156,6 +160,10 @@ public class Main extends Application {
             if (currentChoice != leaderBoardMenu)
                 leaderBoardMenu.setOpacity(0.75);
         });
+        outBox.setOnMouseEntered( e -> outBox.setOpacity(0.55));
+        outBox.setOnMouseExited(e -> outBox.setOpacity(0.15));
+        outBox.setOnMouseClicked(e -> setActionButton());
+        enterPassWord.setOnAction(e -> setActionButton());
     }
 
     private static void handleClick() {

@@ -19,7 +19,7 @@ public class Account implements Comparable<Account> {
     private Shop shop;
     private static Account loginUser;
 
-    private Account(String userName, String passWord) {
+    public Account(String userName, String passWord) {
         this.userName = userName;
         this.passWord = passWord;
         this.numbOfWins = 0;
