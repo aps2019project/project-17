@@ -526,7 +526,7 @@ public class Request {
                         checkSyntaxOfGameType();
                     }
                     return true;
-                case "customCard":
+                case "customcard":
                     System.out.println("entered customCard");
                     menuType=MenuType.CustomCard;
                     CustomCardView.showCustomCardMenu();
