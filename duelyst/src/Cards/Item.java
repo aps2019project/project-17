@@ -1,5 +1,6 @@
 package Cards;
 
+import Effects.Effect;
 import GameGround.Battle;
 import Effects.BuffDetail;
 import Effects.enums.BuffType;
@@ -10,8 +11,7 @@ public class Item {
     private String id;
     private String desc;
     private int price;
-    private Buff buff;
-    private BuffDetail specialSituationBuff;
+    private Effect effect;
 
     public Item(String name, String id, int price) {
         this.name = name;
@@ -20,33 +20,11 @@ public class Item {
     }
 
     public void init() {
-        this.buff = new Buff();
-        this.specialSituationBuff = null;
+
     }
 
     public void action(int x, int y) {
-        for (BuffDetail buffDetail : buff.getBuffDetails()) {
-            if (buffDetail.getBuffType().equals(BuffType.SPECIAL_SITUATION_BUFF) && !buffDetail.getSituation().equals(SpecialSituation.PUTT_IN_GROUND)) {
-                ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituationBuff(specialSituationBuff);
-                ((Minion) Battle.getCurrentBattle().getCellFromBoard(x, y).getCard()).setSpecialSituation(buffDetail.getSituation());
-            }
-            if (buffDetail.getBuffType().equals(BuffType.SPECIAL_SITUATION_BUFF) && buffDetail.getSituation().equals(SpecialSituation.PUTT_IN_GROUND)) {
-                Battle.getCurrentBattle().whoseTurn().setPutInGroundAttackEnemyHero(true);
-            }
-        }
-        buff.action(x, y, buff.getBuffDetails());
-    }
 
-    public void setSpecialSituationBuff(BuffDetail buffDetail) {
-        this.specialSituationBuff = buffDetail;
-    }
-
-    public Buff getBuff() {
-        return buff;
-    }
-
-    public void addBuff(BuffDetail buffDetail) {
-        this.buff.addBuff(buffDetail);
     }
 
     public String getName() {
@@ -79,11 +57,5 @@ public class Item {
 
     public int getPrice() {
         return price;
-    }
-
-    public void passTurn() {
-        if (this.buff == null || this.buff.getBuffDetails() == null)
-            return;
-        buff.action(1, 1, buff.getBuffDetails());
     }
 }

@@ -219,9 +219,6 @@ public class Battle {
 
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You don′t have enough mana";
-            if (whoseTurn().isPutInGroundAttackEnemyHero()) {
-                whoseTurn().action(x, y);
-            }
 
             this.selectedCard = card;
             ((Minion) card).setCoordinate(x, y);
@@ -419,7 +416,6 @@ public class Battle {
         for (Minion minion : getAllMinion()) {
             if (minion.getAttackType().equals(AttackType.PASSIVE))
                 minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
-            minion.passTurn();
         }
         for (int i = 0; i < this.board.getCells().length; i++) {
             for (int j = 0; j < this.board.getCells()[i].length; j++) {
@@ -427,17 +423,7 @@ public class Battle {
             }
         }
 
-        for (int i = 0; i < playerOne.getCollectAbleItems().size(); i++) {
-            if (playerOne.getCollectAbleItems().get(i) != null)
-                playerOne.getCollectAbleItems().get(i).passTurn();
-        }
-        for (Item collectAbleItem : playerTwo.getCollectAbleItems()) {
-            if (collectAbleItem != null)
-                collectAbleItem.passTurn();
-        }
-        for (int i = 0; i < getAllMinion().size(); i++) {
-            getAllMinion().get(i).resetMinion();
-        }
+
         if (currentBattle != null)
             currentBattle.check();
     }

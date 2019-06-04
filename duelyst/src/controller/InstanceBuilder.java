@@ -97,39 +97,15 @@ public class InstanceBuilder {
     }
 
     private static void addBuffsToSpell() {
-        for (Spell spell : spells) {
-            for (BuffDetail spellBuff : spellBuff) {
-                spellBuff.init();
-                if (spell.getId().equals(spellBuff.getId())) {
-                    spell.addBuff(spellBuff);
-                }
-            }
-        }
+
     }
 
     private static void addBuffsToMinion(Minion[] minions, BuffDetail[] buffDetails) {
-        for (Minion minion : minions) {
-            minion.init();
-            for (BuffDetail minionBuff : buffDetails) {
-                minionBuff.init();
-                if (minion.getId().equals(minionBuff.getId())) {
-                    minion.addSpecialPowerBuff(minionBuff);
-                }
-            }
-        }
+
     }
 
     private static void addBuffsToItem() {
-        for (Item item : items) {
-            item.init();
-            for (BuffDetail itemBuff : itemBuff) {
-                itemBuff.init();
-                if (item.getId().equals(itemBuff.getId()))
-                    item.addBuff(itemBuff);
-                if (Integer.parseInt(item.getId()) == -Integer.parseInt(itemBuff.getId()))
-                    item.setSpecialSituationBuff(itemBuff);
-            }
-        }
+
     }
 
 

@@ -13,6 +13,7 @@ public class Minion extends Card {
     protected ArrayList<Effect> effects = new ArrayList<>();
     protected ArrayList<Effect> specialSituationBuff = new ArrayList<>();
     protected SpecialSituation specialSituation;
+    private BuffType antiBuff;
     int attackPoint;
     int healthPoint;
     private int manaPoint;
@@ -30,7 +31,6 @@ public class Minion extends Card {
     private boolean hasFlag;
     private AttackType attackType;
     private int numberOfAttack;
-    private BuffType antiBuff;
 
     public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
         super(name, id, price);
@@ -98,7 +98,7 @@ public class Minion extends Card {
         this.hasFlag = hasFlag;
     }
 
-    BuffType getAntiBuff() {
+    public BuffType getAntiBuff() {
         return antiBuff;
     }
 
@@ -155,13 +155,13 @@ public class Minion extends Card {
         this.numberOfAttack++;
     }
 
-    void setStun(boolean stun) {
+    public void setStun(boolean stun) {
         isStun = stun;
         this.canMove = false;
         this.canAttack = false;
     }
 
-    void activeHolyBuff(int holyBuffState) {
+    public void activeHolyBuff(int holyBuffState) {
         this.holyBuffState = holyBuffState;
     }
 
