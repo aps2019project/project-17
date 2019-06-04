@@ -1,9 +1,9 @@
 package Cards;
 
+import Effects.Effect;
 import Effects.MinionEffects.ChangeProperties;
-import GameGround.Battle;
-import Effects.*;
 import Effects.enums.*;
+import GameGround.Battle;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,9 @@ public class Minion extends Card {
     protected ArrayList<Effect> specialPower = new ArrayList<>();
     protected Effect attack;
     protected ArrayList<Effect> effects = new ArrayList<>();
+    protected SpecialSituation specialSituation = SpecialSituation.NONE;
     protected ArrayList<Effect> specialSituationBuff = new ArrayList<>();
-    protected SpecialSituation specialSituation;
+    private AttackType attackType;
     private BuffType antiBuff;
     int attackPoint;
     int healthPoint;
@@ -29,7 +30,6 @@ public class Minion extends Card {
     private boolean canAttack;
     private MinionType minionType;
     private boolean hasFlag;
-    private AttackType attackType;
     private int numberOfAttack;
 
     public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
@@ -124,15 +124,26 @@ public class Minion extends Card {
         if (!canAttack)
             return;
         increaseNumberOfAttack();
-
-        if (specialSituation.equals(SpecialSituation.ATTACK)) {
-            for (Effect effect : this.specialPower) {
-                effect.action(Battle.getCurrentBattle().getCellFromBoard(this.xCoordinate, this.yCoordinate));
-            }
-        }
         this.attack.action(Battle.getCurrentBattle().getCellFromBoard(this.xCoordinate, this.yCoordinate));
         if (this.attackType.equals(AttackType.ON_ATTACK))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
+        if (specialSituation.equals(SpecialSituation.ATTACK)) {
+            useSpecialSituationBuff(minion.xCoordinate, minion.yCoordinate);
+        }
+    }
+
+    public void addSpeciaSituationBuff(Effect effect) {
+        specialSituationBuff.add(effect);
+    }
+
+    public ArrayList<Effect> getSpecialSituationBuff() {
+        return specialSituationBuff;
+    }
+
+    private void useSpecialSituationBuff(int x, int y) {
+        for (Effect effect : specialSituationBuff) {
+            effect.action(Battle.getCurrentBattle().getCellFromBoard(x, y));
+        }
     }
 
     public void counterAttack(Minion minion) {
@@ -236,10 +247,8 @@ public class Minion extends Card {
         this.antiBuff = antiBuff;
     }
 
-
-    void setSpecialSituation(SpecialSituation specialSituation) {
+    public void setSpecialSituation(SpecialSituation specialSituation) {
         this.specialSituation = specialSituation;
     }
-
 
 }

@@ -5,7 +5,7 @@ import CardCollections.Hand;
 import Cards.Card;
 import Cards.Item;
 import Effects.Effect;
-import Effects.Player.SpecialSituation;
+import Effects.enums.SpecialSituation;
 
 import java.util.ArrayList;
 import java.util.Random;
