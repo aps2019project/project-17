@@ -33,6 +33,11 @@ class CustomCardRequest {
                     }
                     break;
                 case "3":
+                    try {
+                        CardMaker.saveItem(checkSyntaxOfMakeItem(scanner));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "4":
                     break;
