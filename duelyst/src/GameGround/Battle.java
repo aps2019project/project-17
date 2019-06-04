@@ -11,8 +11,8 @@ import Data.GameData;
 import Data.MatchState;
 import Data.Player;
 import Effects.enums.SpecialSituation;
+import InstanceMaker.CardMaker;
 import controller.GameController;
-import controller.InstanceBuilder;
 import Effects.enums.AttackType;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class Battle {
 
     public String setItems() {
         StringBuilder toReturn = new StringBuilder();
-        ArrayList<Item> items = InstanceBuilder.getCollectAbleItems();
+        ArrayList<Item> items = CardMaker.getCollectAbleItems();
         int n = new Random().nextInt() % items.size() / 3;
         while (n <= 0)
             n = new Random().nextInt() % items.size() / 3;

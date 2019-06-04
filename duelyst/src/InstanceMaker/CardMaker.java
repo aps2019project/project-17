@@ -1,50 +1,37 @@
-package controller;
+package InstanceMaker;
 
 import Cards.Hero;
 import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
+import Effects.Effect;
 import com.google.gson.Gson;
-import Effects.*;
+import controller.InstanceType;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class InstanceBuilder {
-    private static final String addressOfBuff = "duelyst//src//Effects//Buff.json";
-    private static final String addressOfHero = "duelyst//src//Effects//Hero.json";
-    private static final String addressOfHeroBuff = "duelyst//src//Effects//HeroBuff.json";
-    private static final String addressOfItem = "duelyst//src//Effects//Item.json";
-    private static final String addressOfItemBuff = "duelyst//src//Effects//ItemBuff.json";
-    private static final String addressOfMinion = "duelyst//src//Effects//Minion.json";
-    private static final String addressOfMinionBuff = "duelyst//src//Effects//minionBuff.json";
-    private static final String addressOfSpell = "duelyst//src//Effects//Spell.json";
+public class CardMaker {
+    public static final String addressOfHero = "duelyst//src//InstanceMaker//Hero.json";
+    public static final String addressOfItem = "duelyst//src//InstanceMaker//Item.json";
+    public static final String addressOfMinion = "duelyst//src//InstanceMaker//Minion.json";
+    public static final String addressOfSpell = "duelyst//src//InstanceMaker//Spell.json";
     private static Spell[] spells;
-    private static BuffDetail[] spellBuff;
-    private static Hero[] heroes;
-    private static BuffDetail[] heroBuff;
-    private static Item[] items;
-    private static BuffDetail[] itemBuff;
+    private static Effect[] spellEffects;
     private static Minion[] minions;
-    private static BuffDetail[] minionBuff;
+    private static Effect[] minionsSpecialPower;
+    private static Hero[] heroes;
+    private static Effect[] heroesSpecialPower;
+    private static Item[] items;
+    private static Effect[] itemEffects;
 
     static void creation() {
         try {
             spells = (Spell[]) creatingInstance(InstanceType.SPELL);
-            spellBuff = (BuffDetail[]) creatingInstance(InstanceType.BUFF);
-            addBuffsToSpell();
             heroes = (Hero[]) creatingInstance(InstanceType.HERO);
-            heroBuff = (BuffDetail[]) creatingInstance(InstanceType.HERO_BUFF);
-            addBuffsToMinion(heroes, heroBuff);
             items = (Item[]) creatingInstance(InstanceType.ITEM);
-            itemBuff = (BuffDetail[]) creatingInstance(InstanceType.ITEM_BUFF);
-            addBuffsToItem();
             minions = (Minion[]) creatingInstance(InstanceType.MINION);
-            minionBuff = (BuffDetail[]) creatingInstance(InstanceType.MINION_BUFF);
-            addBuffsToMinion(minions, minionBuff);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,32 +49,20 @@ public class InstanceBuilder {
 
     private static Object[] creatingInstance(InstanceType instanceType) throws IOException {
         Gson gson = new Gson();
-        BuffDetail[] buffDetails;
+
         switch (instanceType) {
-            case BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfBuff), BuffDetail[].class);
-                return buffDetails;
             case HERO:
                 Hero[] heroes;
                 heroes = gson.fromJson(jsonReader(addressOfHero), Hero[].class);
                 return heroes;
-            case HERO_BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfHeroBuff), BuffDetail[].class);
-                return buffDetails;
             case ITEM:
                 Item[] items;
                 items = gson.fromJson(jsonReader(addressOfItem), Item[].class);
                 return items;
-            case ITEM_BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfItemBuff), BuffDetail[].class);
-                return buffDetails;
             case MINION:
                 Minion[] minions;
                 minions = gson.fromJson(jsonReader(addressOfMinion), Minion[].class);
                 return minions;
-            case MINION_BUFF:
-                buffDetails = gson.fromJson(jsonReader(addressOfMinionBuff), BuffDetail[].class);
-                return buffDetails;
             case SPELL:
                 Spell[] spells;
                 spells = gson.fromJson(jsonReader(addressOfSpell), Spell[].class);
@@ -96,18 +71,37 @@ public class InstanceBuilder {
         return null;
     }
 
-    private static void addBuffsToSpell() {
-
+    public static void saveMinion(Minion newMinion) throws IOException {
+        ArrayList<Minion> minions = new ArrayList<>(Arrays.asList(loadAllMinions()));
+        minions.add(newMinion);
+        StringBuilder stringBuilder = new StringBuilder("[\n");
+        for (Minion minion : minions) {
+            stringBuilder.append("{");
+            stringBuilder.append("\"name\": \"").append(minion.getName()).append("\",\n");
+            stringBuilder.append("\"id\": \"").append(minion.getId()).append("\",\n");
+            stringBuilder.append("\"price\": \"").append(minion.getPrice()).append("\",\n");
+            stringBuilder.append("\"manaPoint\": \"").append(minion.getManaPoint()).append("\",\n");
+            stringBuilder.append("\"healthPoint\": \"").append(minion.getHealthPoint()).append("\",\n");
+            stringBuilder.append("\"attackPoint\": \"").append(minion.getAttackPoint()).append("\",\n");
+            stringBuilder.append("\"minionType\": \"").append(minion.getMinionType()).append("\",\n");
+            stringBuilder.append("\"attackRange\": \"").append(minion.getAttackRange()).append("\",\n");
+            stringBuilder.append("\"distanceCanMove\": \"").append(minion.getDistanceCanMove()).append("\",\n");
+            stringBuilder.append("\"maxRangeToInput\": \"").append(minion.getMaxRangeToInput()).append("\",\n");
+            stringBuilder.append("\"attackType\": \"").append(minion.getAttackType()).append("\",\n");
+            stringBuilder.append("\"desc\": \"").append(minion.getDesc()).append("\",\n");
+        }
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfMinion));
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.flush();
+        bufferedWriter.close();
     }
 
-    private static void addBuffsToMinion(Minion[] minions, BuffDetail[] buffDetails) {
-
+    public static Minion[] loadAllMinions() throws IOException {
+        Gson gson = new Gson();
+        Minion[] minions;
+        minions = gson.fromJson(jsonReader(addressOfMinion), Minion[].class);
+        return minions;
     }
-
-    private static void addBuffsToItem() {
-
-    }
-
 
     public static Spell[] getSpells() {
         return Arrays.copyOf(spells, spells.length);

@@ -1,7 +1,7 @@
 package CardCollections;
 
 import Cards.*;
-import controller.InstanceBuilder;
+import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +20,10 @@ public class Shop {
     }
 
     private void initShop() {
-        cardsInShop.addAll(Arrays.asList(InstanceBuilder.getSpells()));
-        cardsInShop.addAll(Arrays.asList(InstanceBuilder.getHeroes()));
-        cardsInShop.addAll(Arrays.asList(InstanceBuilder.getMinions()));
-        itemsInShop.addAll(Arrays.asList(InstanceBuilder.getItems()));
+        cardsInShop.addAll(Arrays.asList(CardMaker.getSpells()));
+        cardsInShop.addAll(Arrays.asList(CardMaker.getHeroes()));
+        cardsInShop.addAll(Arrays.asList(CardMaker.getMinions()));
+        itemsInShop.addAll(Arrays.asList(CardMaker.getItems()));
     }
 
     public String search(String cardName) {
