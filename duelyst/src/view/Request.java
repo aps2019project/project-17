@@ -526,6 +526,12 @@ public class Request {
                         checkSyntaxOfGameType();
                     }
                     return true;
+                case "customCard":
+                    System.out.println("entered customCard");
+                    menuType=MenuType.CustomCard;
+                    CustomCardView.showCustomCardMenu();
+                    CustomCardRequest.checkSyntaxOfCustomCard(scanner);
+                    return true;
                 default:
                     error = ErrorType.INVALID_INPUT;
                     break;

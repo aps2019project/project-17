@@ -9,8 +9,8 @@ public class Spell extends Card {
     private int manaPoint;
     private ArrayList<Effect> effects = new ArrayList<>();
 
-    public Spell(String name, String id, int price, int manaPoint) {
-        super(name, id, price);
+    public Spell(String name, String id, int price, int manaPoint,String desc) {
+        super(name, id, price,desc);
         this.manaPoint = manaPoint;
     }
 

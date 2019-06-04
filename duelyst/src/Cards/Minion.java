@@ -32,8 +32,8 @@ public class Minion extends Card {
     private boolean hasFlag;
     private int numberOfAttack;
 
-    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType) {
-        super(name, id, price);
+    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType,String desc) {
+        super(name, id, price,desc);
         this.attackPoint = attackPoint;
         this.healthPoint = healthPoint;
         this.manaPoint = manaPoint;

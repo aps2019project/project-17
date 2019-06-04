@@ -6,8 +6,8 @@ import Effects.enums.MinionType;
 public class Hero extends Minion {
     private int coolDown;
 
-    public Hero(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType, int coolDown) {
-        super(name, id, price, manaPoint, healthPoint, attackPower, minionType, attackRange, distanceCanMove, maxRangeToInput, attackType);
+    public Hero(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType, int coolDown,String desc) {
+        super(name, id, price, manaPoint, healthPoint, attackPower, minionType, attackRange, distanceCanMove, maxRangeToInput, attackType,desc);
         this.coolDown = coolDown;
     }
 

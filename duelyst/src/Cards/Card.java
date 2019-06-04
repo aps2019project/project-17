@@ -7,11 +7,12 @@ public class Card {
     private String userName;
     protected String desc;
 
-    public Card(String name, String id, int price) {
+    public Card(String name, String id, int price,String desc) {
         this.name = name;
         this.id = id;
         this.price = price;
         this.userName = null;
+        this.desc=desc;
     }
 
     public String getDesc() {

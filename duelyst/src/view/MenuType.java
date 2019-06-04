@@ -8,7 +8,8 @@ public enum MenuType {
     BATTLE_MENU,
     GRAVE_YARD,
     SINGLE_PLAYER,
-    MULTI_PLAYER;
+    MULTI_PLAYER,
+    CustomCard;
 
 
 }
