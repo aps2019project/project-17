@@ -12,10 +12,11 @@ public class Item {
     private int price;
     private ArrayList<Effect> effects = new ArrayList<>();
 
-    public Item(String name, String id, int price) {
+    public Item(String name, String id, int price,String desc) {
         this.name = name;
         this.id = id;
         this.price = price;
+        this.desc=desc;
     }
 
     public void action(int x, int y) {
