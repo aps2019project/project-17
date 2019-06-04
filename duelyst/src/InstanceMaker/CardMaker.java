@@ -28,10 +28,10 @@ public class CardMaker {
 
     static void creation() {
         try {
-            spells = (Spell[]) creatingInstance(InstanceType.SPELL);
-            heroes = (Hero[]) creatingInstance(InstanceType.HERO);
-            items = (Item[]) creatingInstance(InstanceType.ITEM);
-            minions = (Minion[]) creatingInstance(InstanceType.MINION);
+            spells = (Spell[]) loadInstance(InstanceType.SPELL);
+            heroes = (Hero[]) loadInstance(InstanceType.HERO);
+            items = (Item[]) loadInstance(InstanceType.ITEM);
+            minions = (Minion[]) loadInstance(InstanceType.MINION);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class CardMaker {
         return jsonString.toString();
     }
 
-    private static Object[] creatingInstance(InstanceType instanceType) throws IOException {
+    private static Object[] loadInstance(InstanceType instanceType) throws IOException {
         Gson gson = new Gson();
 
         switch (instanceType) {
@@ -71,8 +71,10 @@ public class CardMaker {
         return null;
     }
 
-    public static void saveMinion(Minion newMinion) throws IOException {
-        ArrayList<Minion> minions = new ArrayList<>(Arrays.asList(loadAllMinions()));
+    public static void saveMinion(Minion newMinion, Boolean isHero) throws IOException {
+        Minion[] loadedMinions = (Minion[]) loadInstance(InstanceType.MINION);
+        assert loadedMinions != null;
+        ArrayList<Minion> minions = new ArrayList<>(Arrays.asList(loadedMinions));
         minions.add(newMinion);
         StringBuilder stringBuilder = new StringBuilder("[\n");
         for (Minion minion : minions) {
@@ -88,19 +90,18 @@ public class CardMaker {
             stringBuilder.append("\"distanceCanMove\": \"").append(minion.getDistanceCanMove()).append("\",\n");
             stringBuilder.append("\"maxRangeToInput\": \"").append(minion.getMaxRangeToInput()).append("\",\n");
             stringBuilder.append("\"attackType\": \"").append(minion.getAttackType()).append("\",\n");
+            if (isHero)
+                stringBuilder.append("\"coolDown\": \"").append(((Hero) minion).getCoolDown()).append("\",\n");
             stringBuilder.append("\"desc\": \"").append(minion.getDesc()).append("\",\n");
         }
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfMinion));
+        BufferedWriter bufferedWriter;
+        if (isHero)
+            bufferedWriter = new BufferedWriter(new FileWriter(addressOfHero));
+        else
+            bufferedWriter = new BufferedWriter(new FileWriter(addressOfMinion));
         bufferedWriter.write(stringBuilder.toString());
         bufferedWriter.flush();
         bufferedWriter.close();
-    }
-
-    public static Minion[] loadAllMinions() throws IOException {
-        Gson gson = new Gson();
-        Minion[] minions;
-        minions = gson.fromJson(jsonReader(addressOfMinion), Minion[].class);
-        return minions;
     }
 
     public static Spell[] getSpells() {
