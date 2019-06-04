@@ -25,6 +25,9 @@ public class Anti extends Effect {
 
     @Override
     public void remove() {
-
+        for (Object impact : super.getImpacts()) {
+            Minion minion = (Minion) impact;
+            minion.setAntiBuff(null);
+        }
     }
 }

@@ -19,6 +19,7 @@ public abstract class Effect {
     private TargetType targetType;
     private TargetDetail targetDetail;
     private ArrayList<Object> impacts = new ArrayList<>();
+    private boolean isDisable;
 
     public Effect(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
         this.startTime = startTime;
@@ -30,6 +31,8 @@ public abstract class Effect {
     }
 
     public void action(Cell cell) {
+        if (startTime > 0)
+            return;
         if (this.targetType == TargetType.PLAYER) {
             if (this.targetDetail.equals(TargetDetail.INSIDER)) {
                 effect(Battle.getCurrentBattle().whoseTurn());
@@ -116,7 +119,14 @@ public abstract class Effect {
     }
 
     public void checkForRemove() {
-
+        if (startTime > 0)
+            startTime--;
+        if (endTime > 0)
+            endTime--;
+        if (endTime == 0) {
+            remove();
+            this.isDisable = true;
+        }
     }
 
     public abstract void effect(Object... targets);

@@ -21,6 +21,5 @@ public class Clear extends Effect {
 
     @Override
     public void remove() {
-
     }
 }

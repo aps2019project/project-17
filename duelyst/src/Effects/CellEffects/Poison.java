@@ -21,6 +21,9 @@ public class Poison extends Effect {
 
     @Override
     public void remove() {
-
+        for (Object impact : super.getImpacts()) {
+            Cell cell = (Cell) impact;
+            cell.setPoison(false);
+        }
     }
 }

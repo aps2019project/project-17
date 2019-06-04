@@ -21,6 +21,9 @@ public class HolyCell extends Effect {
 
     @Override
     public void remove() {
-
+        for (Object impact : super.getImpacts()) {
+            Cell cell = (Cell) impact;
+            cell.setHoly(false);
+        }
     }
 }

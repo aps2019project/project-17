@@ -165,6 +165,10 @@ public class Minion extends Card {
         this.holyBuffState = holyBuffState;
     }
 
+    public void deActiveHolyBuff() {
+        this.holyBuffState = 0;
+    }
+
     public void setCanMove(boolean canMove) {
         if (isStun)
             return;
@@ -226,14 +230,6 @@ public class Minion extends Card {
 
     private int getNumberOfAttack() {
         return numberOfAttack;
-    }
-
-    int getHolyBuffState() {
-        return holyBuffState;
-    }
-
-    void setHolyBuffState(int holyBuffState) {
-        this.holyBuffState = holyBuffState;
     }
 
     public void setAntiBuff(BuffType antiBuff) {

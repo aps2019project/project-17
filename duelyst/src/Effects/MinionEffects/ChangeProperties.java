@@ -30,6 +30,12 @@ public class ChangeProperties extends Effect {
 
     @Override
     public void remove() {
-
+        if (!returnEffect)
+            return;
+        for (Object impact : super.getImpacts()) {
+            Minion minion = (Minion) impact;
+            minion.changeAttackPower(-changePowerValue);
+            minion.changeHealth(-changeHealthValue);
+        }
     }
 }
