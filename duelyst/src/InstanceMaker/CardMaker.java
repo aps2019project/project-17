@@ -93,12 +93,41 @@ public class CardMaker {
             if (isHero)
                 stringBuilder.append("\"coolDown\": \"").append(((Hero) minion).getCoolDown()).append("\",\n");
             stringBuilder.append("\"desc\": \"").append(minion.getDesc()).append("\",\n");
+            if (minions.indexOf(minion) != minions.size() - 1)
+                stringBuilder.append("},\n");
+            else
+                stringBuilder.append("}");
         }
+        stringBuilder.append("]");
         BufferedWriter bufferedWriter;
         if (isHero)
             bufferedWriter = new BufferedWriter(new FileWriter(addressOfHero));
         else
             bufferedWriter = new BufferedWriter(new FileWriter(addressOfMinion));
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.flush();
+        bufferedWriter.close();
+    }
+
+    public static void saveItem(Item newItem) throws IOException {
+        Item[] loadedItems = (Item[]) loadInstance(InstanceType.ITEM);
+        assert loadedItems != null;
+        ArrayList<Item> items = new ArrayList<>(Arrays.asList(loadedItems));
+        items.add(newItem);
+        StringBuilder stringBuilder = new StringBuilder("[");
+        for (Item item : items) {
+            stringBuilder.append("{");
+            stringBuilder.append("\"name\": \"").append(item.getName()).append("\",\n");
+            stringBuilder.append("\"id\": \"").append(item.getId()).append("\",\n");
+            stringBuilder.append("\"price\": \"").append(item.getPrice()).append("\",\n");
+            stringBuilder.append("\"desc\": \"").append(item.getDesc()).append("\",\n");
+            if (items.indexOf(item) != items.size() - 1)
+                stringBuilder.append("},\n");
+            else
+                stringBuilder.append("}");
+        }
+        stringBuilder.append("]");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfItem));
         bufferedWriter.write(stringBuilder.toString());
         bufferedWriter.flush();
         bufferedWriter.close();
