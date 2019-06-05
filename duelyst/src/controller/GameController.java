@@ -5,6 +5,7 @@ import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
 import Data.*;
+import Effects.Effect;
 import GameGround.*;
 import InstanceMaker.CardMaker;
 import view.*;
@@ -216,17 +217,20 @@ public class GameController {
      * CustomCard
      */
 
-    public static void saveMinion(Minion newMinion, Boolean isHero) throws IOException{
+    public static void saveMinion(Minion newMinion, Boolean isHero) throws IOException {
         CardMaker.saveMinion(newMinion, isHero);
     }
 
-    public static void saveItem(Item newItem) throws IOException{
+    public static void saveItem(Item newItem) throws IOException {
         CardMaker.saveItem(newItem);
     }
 
-    public static void saveSpell(Spell newSpell) throws IOException{
+    public static void saveSpell(Spell newSpell) throws IOException {
         CardMaker.saveSpell(newSpell);
     }
 
+    public static void saveEffect(Effect newEffect) throws IOException {
+        CardMaker.saveEffect(newEffect);
+    }
 
 }

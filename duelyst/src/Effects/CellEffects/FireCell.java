@@ -8,6 +8,8 @@ import Effects.enums.TargetRange;
 import Effects.enums.TargetType;
 
 public class FireCell extends Effect {
+    public FireCell() {
+    }
     public FireCell(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
         super(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
     }

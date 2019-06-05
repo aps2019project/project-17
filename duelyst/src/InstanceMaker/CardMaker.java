@@ -168,11 +168,15 @@ public class CardMaker {
     }
 
     public static <T extends Effect> void saveEffect(T newEffect) throws IOException {
-        String name = newEffect.getClass().toString().split(".")[newEffect.getClass().toString().split(".").length - 1];
+        String[] names = newEffect.getClass().toString().split("\\.");
+        String name = names[names.length - 1];
         String address = CardMaker.address + name + ".json";
         T[] loadedEffects = (T[]) new Effect[1];
         loadedEffects = loadEffects(loadedEffects, address);
-        ArrayList<T> effects = new ArrayList<>(Arrays.asList(loadedEffects));
+        ArrayList<T> effects = new ArrayList<>();
+        if (loadedEffects != null) {
+            effects.addAll(Arrays.asList(loadedEffects));
+        }
         effects.add(newEffect);
         StringBuilder stringBuilder = new StringBuilder("[");
         for (T effect : effects) {
@@ -180,9 +184,9 @@ public class CardMaker {
             stringBuilder.append("\"id\": \"").append(effect.getId()).append("\",\n");
             stringBuilder.append("\"startTime\": \"").append(effect.getStartTime()).append("\",\n");
             stringBuilder.append("\"endTime\": \"").append(effect.getEndTime()).append("\",\n");
-            stringBuilder.append("\"isContinues\": \"").append(effect.isContinues()).append("\"\n");
-            stringBuilder.append("\"targetRange\": \"").append(effect.getTargetRange()).append("\"\n");
-            stringBuilder.append("\"targetType\": \"").append(effect.getTargetType()).append("\"\n");
+            stringBuilder.append("\"isContinues\": \"").append(effect.isContinues()).append("\",\n");
+            stringBuilder.append("\"targetRange\": \"").append(effect.getTargetRange()).append("\",\n");
+            stringBuilder.append("\"targetType\": \"").append(effect.getTargetType()).append("\",\n");
             stringBuilder.append("\"targetDetail\": \"").append(effect.getTargetType()).append("\"\n");
             if (effects.indexOf(effect) != effects.size() - 1)
                 stringBuilder.append("},\n");

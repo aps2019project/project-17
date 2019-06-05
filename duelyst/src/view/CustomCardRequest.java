@@ -53,6 +53,11 @@ class CustomCardRequest {
                     }
                     break;
                 case "5":
+                    try {
+                        GameController.saveEffect(checkSyntaxOfBuffMaker(scanner));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }
@@ -307,31 +312,51 @@ class CustomCardRequest {
         }
         switch (type) {
             case "1":
-                return new FireCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                FireCell fireCell = new FireCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                fireCell.setId(id);
+                return fireCell;
             case "2":
-                return new HolyCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                HolyCell holyCell = new HolyCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                holyCell.setId(id);
+                return holyCell;
             case "3":
-                return new Poison(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Poison poison = new Poison(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                poison.setId(id);
+                return poison;
             case "4":
-                return new Anti(startTime, endTime, isContinues, targetRange, targetType, targetDetail, buffType);
+                Anti anti = new Anti(startTime, endTime, isContinues, targetRange, targetType, targetDetail, buffType);
+                anti.setId(id);
+                return anti;
             case "5":
-                return new ChangeProperties(startTime, endTime, isContinues, targetRange, targetType, targetDetail, changeHealthValue, changePowerValue, buffModel);
+                ChangeProperties changeProperties = new ChangeProperties(startTime, endTime, isContinues, targetRange, targetType, targetDetail, changeHealthValue, changePowerValue, buffModel);
+                changeProperties.setId(id);
+                return changeProperties;
             case "6":
-                return new Clear(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Clear clear = new Clear(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                clear.setId(id);
+                return clear;
             case "7":
-                return new Disarm(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Disarm disarm = new Disarm(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                disarm.setId(id);
+                return disarm;
             case "8":
-                return new Holy(startTime, endTime, isContinues, targetRange, targetType, targetDetail, holyBuffState);
+                Holy holy = new Holy(startTime, endTime, isContinues, targetRange, targetType, targetDetail, holyBuffState);
+                holy.setId(id);
+                return holy;
             case "9":
-                return new Stun(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Stun stun = new Stun(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                stun.setId(id);
+                return stun;
             case "10":
-                return new ChangeMana(startTime, endTime, isContinues, targetRange, targetType, targetDetail, manaChangeValue);
+                ChangeMana changeMana = new ChangeMana(startTime, endTime, isContinues, targetRange, targetType, targetDetail, manaChangeValue);
+                changeMana.setId(id);
+                return changeMana;
             case "11":
-                return new SpecialSituationBuff(startTime, endTime, isContinues, targetRange, targetType, targetDetail, specialSituation);
-
+                SpecialSituationBuff specialSituationBuff = new SpecialSituationBuff(startTime, endTime, isContinues, targetRange, targetType, targetDetail, specialSituation);
+                specialSituationBuff.setId(id);
+                return specialSituationBuff;
         }
         return null;
-
     }
 
     private static SpecialSituation switchForSpecialSituation(String specialSituationString) {

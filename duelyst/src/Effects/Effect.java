@@ -10,7 +10,7 @@ import Effects.enums.TargetType;
 
 import java.util.ArrayList;
 
-public abstract class Effect {
+public class Effect {
     private String id;
     private int startTime;
     private int endTime;
@@ -21,6 +21,9 @@ public abstract class Effect {
     private TargetDetail targetDetail;
     private ArrayList<Object> impacts = new ArrayList<>();
     private boolean isDisable;
+
+    public Effect() {
+    }
 
     public Effect(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
         this.startTime = startTime;
@@ -129,9 +132,9 @@ public abstract class Effect {
         }
     }
 
-    public abstract void effect(Object... targets);
+    public  void effect(Object... targets){}
 
-    public abstract void remove();
+    public  void remove(){}
 
     public void addToImpacts(Object object) {
         impacts.add(object);

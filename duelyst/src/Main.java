@@ -149,9 +149,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        //GameController.main();
-        Disarm disarm = new Disarm(0,0,false, TargetRange.ONE, TargetType.MINION, TargetDetail.ENEMY);
-
+        GameController.main();
         launch(args);
     }
 
