@@ -4,8 +4,6 @@ import CardCollections.Collection;
 import CardCollections.*;
 import controller.GameController;
 
-import java.util.ArrayList;
-
 public class Account implements Comparable<Account> {
 
     private Player player;
@@ -13,8 +11,8 @@ public class Account implements Comparable<Account> {
     private MatchHistory matchHistory;
     private String userName;
     private String passWord;
-    private int numbOfWins;
-    private int numbOfLose;
+    private int numOfWins;
+    private int numOfLose;
     private int daric;
     private Shop shop;
     private static Account loginUser;
@@ -22,8 +20,8 @@ public class Account implements Comparable<Account> {
     public Account(String userName, String passWord) {
         this.userName = userName;
         this.passWord = passWord;
-        this.numbOfWins = 0;
-        this.numbOfLose = 0;
+        this.numOfWins = 0;
+        this.numOfLose = 0;
         this.daric = 15000000;
         this.matchHistory = new MatchHistory();
         this.collection = new Collection();
@@ -99,9 +97,6 @@ public class Account implements Comparable<Account> {
         return userName;
     }
 
-    public int getNumbOfWins() {
-        return numbOfWins;
-    }
 
     public static Account getAccount(String userName) {
         for (int i = 0; i < GameController.getAccounts().size(); i++) {
@@ -113,18 +108,18 @@ public class Account implements Comparable<Account> {
 
     @Override
     public int compareTo(Account o) {
-        Integer firstNumOfWins = this.numbOfWins;
-        Integer secondNumOfWins = o.numbOfWins;
+        Integer firstNumOfWins = this.numOfWins;
+        Integer secondNumOfWins = o.numOfWins;
 
         return firstNumOfWins.compareTo(secondNumOfWins);
     }
 
     public void incrementNumbOfWins() {
-        this.numbOfWins++;
+        this.numOfWins++;
     }
 
     public void incrementNumbOfLose() {
-        this.numbOfLose++;
+        this.numOfLose++;
     }
 
     public Collection getCollection() {
@@ -139,5 +134,13 @@ public class Account implements Comparable<Account> {
 
     public void changeDaric(int value) {
         this.daric += value;
+    }
+
+    public int getNumOfLose() {
+        return numOfLose;
+    }
+
+    public int getNumOfWins() {
+        return numOfWins;
     }
 }

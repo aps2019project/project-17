@@ -195,6 +195,7 @@ public class Main extends Application {
             leaderBoardMenu.setOpacity(1);
             emptyFieldsErrors();
             currentChoice = leaderBoardMenu;
+            leaderBoardAction();
         });
 
         enterUserName.setOnMouseClicked(e -> emptyErrors());
@@ -264,6 +265,10 @@ public class Main extends Application {
         }
         invalidPassWord.setVisible(false);
         invalidUserName.setVisible(true);
+    }
+
+    private static void leaderBoardAction() {
+        new LeaderBoardWindow();
     }
 
     static Stage getWindow() {
