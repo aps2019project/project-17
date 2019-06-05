@@ -30,4 +30,8 @@ public class Anti extends Effect {
             minion.setAntiBuff(null);
         }
     }
+
+    public BuffType getBuffType() {
+        return buffType;
+    }
 }

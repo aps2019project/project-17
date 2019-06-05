@@ -26,14 +26,14 @@ class CustomCardRequest {
             switch (input) {
                 case "1":
                     try {
-                        GameController.saveMinion(checkSyntaxOfMakeHero(scanner), true);
+                        GameController.saveMinion(checkSyntaxOfMakeHero(scanner));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case "2":
                     try {
-                        GameController.saveMinion(checkSyntaxOfMakeMinion(scanner), false);
+                        GameController.saveMinion(checkSyntaxOfMakeMinion(scanner));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

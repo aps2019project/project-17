@@ -5,6 +5,11 @@ import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
 import Effects.Effect;
+import Effects.MinionEffects.Anti;
+import Effects.MinionEffects.ChangeProperties;
+import Effects.MinionEffects.Holy;
+import Effects.Player.ChangeMana;
+import Effects.SpecialSituationBuff;
 import com.google.gson.Gson;
 import controller.InstanceType;
 
@@ -75,8 +80,12 @@ public class CardMaker {
     }
 
 
-    public static void saveMinion(Minion newMinion, Boolean isHero) throws IOException {
-        Minion[] loadedMinions = (Minion[]) loadInstance(InstanceType.MINION);
+    public static void saveMinion(Minion newMinion) throws IOException {
+        Minion[] loadedMinions;
+        if (newMinion instanceof Hero) {
+            loadedMinions = (Minion[]) loadInstance(InstanceType.HERO);
+        } else
+            loadedMinions = (Minion[]) loadInstance(InstanceType.MINION);
         assert loadedMinions != null;
         ArrayList<Minion> minions = new ArrayList<>(Arrays.asList(loadedMinions));
         minions.add(newMinion);
@@ -94,7 +103,7 @@ public class CardMaker {
             stringBuilder.append("\"distanceCanMove\": \"").append(minion.getDistanceCanMove()).append("\",\n");
             stringBuilder.append("\"maxRangeToInput\": \"").append(minion.getMaxRangeToInput()).append("\",\n");
             stringBuilder.append("\"attackType\": \"").append(minion.getAttackType()).append("\",\n");
-            if (isHero)
+            if (minion instanceof Hero)
                 stringBuilder.append("\"coolDown\": \"").append(((Hero) minion).getCoolDown()).append("\",\n");
             stringBuilder.append("\"desc\": \"").append(minion.getDesc()).append("\"\n");
             if (minions.indexOf(minion) != minions.size() - 1)
@@ -104,7 +113,7 @@ public class CardMaker {
         }
         stringBuilder.append("]");
         BufferedWriter bufferedWriter;
-        if (isHero)
+        if (newMinion instanceof Hero)
             bufferedWriter = new BufferedWriter(new FileWriter(addressOfHero));
         else
             bufferedWriter = new BufferedWriter(new FileWriter(addressOfMinion));
@@ -184,10 +193,23 @@ public class CardMaker {
             stringBuilder.append("\"id\": \"").append(effect.getId()).append("\",\n");
             stringBuilder.append("\"startTime\": \"").append(effect.getStartTime()).append("\",\n");
             stringBuilder.append("\"endTime\": \"").append(effect.getEndTime()).append("\",\n");
-            stringBuilder.append("\"isContinues\": \"").append(effect.isContinues()).append("\",\n");
+            stringBuilder.append("\"isContinues\": ").append(effect.isContinues()).append(",\n");
             stringBuilder.append("\"targetRange\": \"").append(effect.getTargetRange()).append("\",\n");
             stringBuilder.append("\"targetType\": \"").append(effect.getTargetType()).append("\",\n");
             stringBuilder.append("\"targetDetail\": \"").append(effect.getTargetType()).append("\"\n");
+            if (effect instanceof Anti)
+                stringBuilder.append("\"buffType\": \"").append(((Anti) effect).getBuffType()).append("\"\n");
+            if (effect instanceof ChangeProperties) {
+                stringBuilder.append("\"changeHealthValue\": \"").append(((ChangeProperties) effect).getChangeHealthValue()).append("\",\n");
+                stringBuilder.append("\"changePowerValue\": \"").append(((ChangeProperties) effect).getChangePowerValue()).append("\",\n");
+                stringBuilder.append("\"returnEffect\": ").append(((ChangeProperties) effect).isReturnEffect()).append("\n");
+            }
+            if (effect instanceof Holy)
+                stringBuilder.append("\"holyBuffState\": \"").append(((Holy) effect).getHolyBuffState()).append("\"\n");
+            if (effect instanceof ChangeMana)
+                stringBuilder.append("\"manaChangeValue\": \"").append(((ChangeMana) effect).getManaChangeValue()).append("\"\n");
+            if (effect instanceof SpecialSituationBuff)
+                stringBuilder.append("\"specialSituation\": \"").append(((SpecialSituationBuff) effect).getSpecialSituation()).append("\"\n");
             if (effects.indexOf(effect) != effects.size() - 1)
                 stringBuilder.append("},\n");
             else

@@ -38,4 +38,16 @@ public class ChangeProperties extends Effect {
             minion.changeHealth(-changeHealthValue);
         }
     }
+
+    public int getChangeHealthValue() {
+        return changeHealthValue;
+    }
+
+    public int getChangePowerValue() {
+        return changePowerValue;
+    }
+
+    public boolean isReturnEffect() {
+        return returnEffect;
+    }
 }

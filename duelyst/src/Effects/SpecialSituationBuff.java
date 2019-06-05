@@ -43,4 +43,8 @@ public class SpecialSituationBuff extends Effect {
             }
         }
     }
+
+    public SpecialSituation getSpecialSituation() {
+        return specialSituation;
+    }
 }

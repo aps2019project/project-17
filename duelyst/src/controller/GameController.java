@@ -217,8 +217,8 @@ public class GameController {
      * CustomCard
      */
 
-    public static void saveMinion(Minion newMinion, Boolean isHero) throws IOException {
-        CardMaker.saveMinion(newMinion, isHero);
+    public static void saveMinion(Minion newMinion) throws IOException {
+        CardMaker.saveMinion(newMinion);
     }
 
     public static void saveItem(Item newItem) throws IOException {

@@ -31,4 +31,8 @@ public class Holy extends Effect {
             minion.deActiveHolyBuff();
         }
     }
+
+    public int getHolyBuffState() {
+        return holyBuffState;
+    }
 }

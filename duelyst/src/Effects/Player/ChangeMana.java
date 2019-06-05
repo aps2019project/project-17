@@ -26,4 +26,8 @@ public class ChangeMana extends Effect {
     public void remove() {
 
     }
+
+    public int getManaChangeValue() {
+        return manaChangeValue;
+    }
 }
