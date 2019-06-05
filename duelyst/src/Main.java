@@ -7,6 +7,7 @@ import Effects.enums.TargetDetail;
 import Effects.enums.TargetRange;
 import Effects.enums.TargetType;
 import InstanceMaker.CardMaker;
+
 import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -204,25 +205,9 @@ public class Main extends Application {
     }
 
     private static void handleClick() {
-        loginMenu.setOnMouseClicked(e -> {
-            currentChoice.setFill(Color.WHITE);
-            currentChoice.setOpacity(0.75);
-            loginMenu.setFill(ColorAppearance.CURRENT_MENU_BUTTON);
-            loginMenu.setOpacity(1);
-            currentButton.setText("login");
-            emptyFieldsErrors();
-            currentChoice = loginMenu;
-        });
+        loginMenu.setOnMouseClicked(e -> loginMenuOnMouseClicked());
 
-        signUpMenu.setOnMouseClicked(e -> {
-            currentChoice.setFill(Color.WHITE);
-            currentChoice.setOpacity(0.75);
-            signUpMenu.setFill(ColorAppearance.CURRENT_MENU_BUTTON);
-            currentButton.setText("sign up");
-            signUpMenu.setOpacity(1);
-            emptyFieldsErrors();
-            currentChoice = signUpMenu;
-        });
+        signUpMenu.setOnMouseClicked(e -> signUpMenuOnMouseClicked());
 
         leaderBoardMenu.setOnMouseClicked(e -> {
             currentChoice.setOpacity(0.75);
@@ -239,6 +224,26 @@ public class Main extends Application {
         enterUserName.setOnKeyPressed(e -> emptyErrors());
         enterPassWord.setOnKeyPressed(e -> emptyErrors());
         currentButton.setOnMouseClicked(e -> setActionButton());
+    }
+
+    private static void signUpMenuOnMouseClicked() {
+        currentChoice.setFill(Color.WHITE);
+        currentChoice.setOpacity(0.75);
+        signUpMenu.setFill(ColorAppearance.CURRENT_MENU_BUTTON);
+        currentButton.setText("sign up");
+        signUpMenu.setOpacity(1);
+        emptyFieldsErrors();
+        currentChoice = signUpMenu;
+    }
+
+    private static void loginMenuOnMouseClicked() {
+        currentChoice.setFill(Color.WHITE);
+        currentChoice.setOpacity(0.75);
+        loginMenu.setFill(ColorAppearance.CURRENT_MENU_BUTTON);
+        loginMenu.setOpacity(1);
+        currentButton.setText("login");
+        emptyFieldsErrors();
+        currentChoice = loginMenu;
     }
 
     static void emptyFields() {
@@ -297,6 +302,7 @@ public class Main extends Application {
             invalidPassWord.setText("account successfully created");
             invalidPassWord.setFill(Color.GREEN);
             invalidPassWord.setVisible(true);
+            loginMenuOnMouseClicked();
             return;
         }
         invalidPassWord.setVisible(false);

@@ -1,12 +1,6 @@
 package InstanceMaker;
 
-import Cards.Hero;
-import Cards.Item;
-import Cards.Minion;
-import Cards.Spell;
-import Effects.CellEffects.FireCell;
-import Effects.CellEffects.HolyCell;
-import Effects.CellEffects.Poison;
+import Cards.*;
 import Effects.Effect;
 import Effects.MinionEffects.*;
 import Effects.Player.ChangeMana;
@@ -239,6 +233,17 @@ public class CardMaker {
 
     public static Minion[] getMinions() {
         return Arrays.copyOf(minions, minions.length);
+    }
+
+    public static Card[] getAllCards() {
+        creation();
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.addAll(Arrays.asList(getSpells()));
+        cards.addAll(Arrays.asList(getMinions()));
+        cards.addAll(Arrays.asList(getHeroes()));
+        Card[] cardsArray = new Card[cards.size()];
+        cardsArray = cards.toArray(cardsArray);
+        return cardsArray;
     }
 
     public static ArrayList<Item> getCollectAbleItems() {
