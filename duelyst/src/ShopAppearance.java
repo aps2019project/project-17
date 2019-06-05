@@ -14,12 +14,13 @@ import java.io.FileNotFoundException;
 class ShopAppearance {
     private Group root = new Group();
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
-    private Rectangle[][] ShownCards = new Rectangle[2][5];
+    private Rectangle[][] shownCards = new Rectangle[2][5];
     private ImageView imageOfBackGround;
     private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
+    private static Rectangle[] demoCards = new Rectangle[30];
 
     {
         try {
@@ -31,6 +32,7 @@ class ShopAppearance {
     }
 
     ShopAppearance() {
+        initializeDemoCards();
         initializeCards();
         setBackGround();
         addNodes();
@@ -38,14 +40,27 @@ class ShopAppearance {
         display();
     }
 
+    private void initializeDemoCards() {
+        for (int i = 0; i < demoCards.length; i++) {
+            demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - shownCards.length * 70) / 6, Main.HEIGHT_OF_WINDOW / 2.6);
+            if (i < 10) {
+                demoCards[i].setFill(Color.RED);
+            } else if (i < 20) {
+                demoCards[i].setFill(Color.BLUE);
+            } else {
+                demoCards[i].setFill(Color.BLACK);
+            }
+        }
+    }
+
     private void initializeCards() {
-        for (int i = 0; i < ShownCards.length; i++) {
-            for (int j = 0; j < ShownCards[i].length; j++) {
-                ShownCards[i][j] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - ShownCards.length * 70) / 6, Main.HEIGHT_OF_WINDOW / 2.6);
-                ShownCards[i][j].setOpacity(0.4);
-                final Rectangle temp = ShownCards[i][j];
-                ShownCards[i][j].setOnMouseEntered(e -> temp.setOpacity(1));
-                ShownCards[i][j].setOnMouseExited(e -> temp.setOpacity(0.4));
+        for (int i = 0; i < shownCards.length; i++) {
+            for (int j = 0; j < shownCards[i].length; j++) {
+                shownCards[i][j] =demoCards[i*j];
+                shownCards[i][j].setOpacity(0.4);
+                final Rectangle temp = shownCards[i][j];
+                shownCards[i][j].setOnMouseEntered(e -> temp.setOpacity(1));
+                shownCards[i][j].setOnMouseExited(e -> temp.setOpacity(0.4));
             }
         }
 
@@ -81,7 +96,7 @@ class ShopAppearance {
     private void addNodes() {
         root.getChildren().add(fillMenu);
         root.getChildren().addAll(titles);
-        for (Rectangle[] totalCard : ShownCards) {
+        for (Rectangle[] totalCard : shownCards) {
             root.getChildren().addAll(totalCard);
         }
         root.getChildren().addAll(rightDirection, leftDirection);
@@ -97,27 +112,27 @@ class ShopAppearance {
             titles[i].setLayoutX(titles[i - 1].getLayoutX());
             titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 7);
         }
-        for (int i = 0; i < ShownCards.length; i++) {
-            for (int j = 0; j < ShownCards[i].length; j++) {
+        for (int i = 0; i < shownCards.length; i++) {
+            for (int j = 0; j < shownCards[i].length; j++) {
                 if (j == 0) {
                     if (i == 0) {
-                        ShownCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 25);
-                        ShownCards[i][j].setLayoutY(fillMenu.getHeight() / 20);
+                        shownCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 25);
+                        shownCards[i][j].setLayoutY(fillMenu.getHeight() / 20);
                         continue;
                     }
-                    ShownCards[i][j].setLayoutX(ShownCards[i - 1][j].getLayoutX());
-                    ShownCards[i][j].setLayoutY(ShownCards[i - 1][j].getLayoutY() + Main.HEIGHT_OF_WINDOW/2);
+                    shownCards[i][j].setLayoutX(shownCards[i - 1][j].getLayoutX());
+                    shownCards[i][j].setLayoutY(shownCards[i - 1][j].getLayoutY() + Main.HEIGHT_OF_WINDOW / 2);
                     continue;
                 }
-                ShownCards[i][j].setLayoutY(ShownCards[i][j - 1].getLayoutY());
-                ShownCards[i][j].setLayoutX(ShownCards[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW/6);
+                shownCards[i][j].setLayoutY(shownCards[i][j - 1].getLayoutY());
+                shownCards[i][j].setLayoutX(shownCards[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW / 6);
             }
         }
-        double x = shopScene.getWidth() * 30 / 31;
+        double x = shopScene.getWidth() * 28 / 29;
         double y = 18.5 * shopScene.getHeight() / 40;
         rightDirection.setLayoutX(x);
         rightDirection.setLayoutY(y);
-        leftDirection.setLayoutX(shopScene.getWidth() * 2.8 / 31);
+        leftDirection.setLayoutX(shopScene.getWidth() * 3.2 / 31);
         leftDirection.setLayoutY(y);
     }
 
