@@ -1,6 +1,11 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
+import Effects.MinionEffects.ChangeProperties;
+import Effects.MinionEffects.Disarm;
+import Effects.enums.TargetDetail;
+import Effects.enums.TargetRange;
+import Effects.enums.TargetType;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -75,7 +80,7 @@ public class Main extends Application {
             imageOfBackGround.fitWidthProperty().bind(sceneFirstMenu.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(sceneFirstMenu.heightProperty());
             root.getChildren().add(imageOfBackGround);
-            root.getChildren().addAll(backGroundFill, leaderBoardMenu, signUpMenu, loginMenu, enterUserName, invalidUserName, enterPassWord, invalidPassWord, outBox, currentButton,help);
+            root.getChildren().addAll(backGroundFill, leaderBoardMenu, signUpMenu, loginMenu, enterUserName, invalidUserName, enterPassWord, invalidPassWord, outBox, currentButton, help);
             root.setAlignment(Pos.BASELINE_CENTER);
             invalidPassWord.setVisible(false);
             invalidUserName.setVisible(false);
@@ -96,8 +101,8 @@ public class Main extends Application {
         VBox.setMargin(invalidPassWord, new Insets(HEIGHT_OF_WINDOW / 166.8, 0, HEIGHT_OF_WINDOW / 166.8, WIDTH_OF_WINDOW / 2.06));
         VBox.setMargin(outBox, new Insets(HEIGHT_OF_WINDOW / 41.7, 0, HEIGHT_OF_WINDOW / 41.7, WIDTH_OF_WINDOW / 2.06));
         VBox.setMargin(currentButton, new Insets(-HEIGHT_OF_WINDOW / 37.9, 0, -HEIGHT_OF_WINDOW / 37.9, WIDTH_OF_WINDOW / 2.06));
-        VBox.setMargin(help, new Insets( HEIGHT_OF_WINDOW / 10, 0,  HEIGHT_OF_WINDOW / 10, 8 * WIDTH_OF_WINDOW / 9));
-        VBox.setMargin(helpPoPUp, new Insets(-HEIGHT_OF_WINDOW/8, 0, -HEIGHT_OF_WINDOW/8, 4 * WIDTH_OF_WINDOW / 5));
+        VBox.setMargin(help, new Insets(HEIGHT_OF_WINDOW / 10, 0, HEIGHT_OF_WINDOW / 10, 8 * WIDTH_OF_WINDOW / 9));
+        VBox.setMargin(helpPoPUp, new Insets(-HEIGHT_OF_WINDOW / 8, 0, -HEIGHT_OF_WINDOW / 8, 4 * WIDTH_OF_WINDOW / 5));
     }
 
     static {
@@ -144,7 +149,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        //GameController.main();
+//        GameController.main();
         launch(args);
     }
 
@@ -187,7 +192,7 @@ public class Main extends Application {
             if (currentChoice != leaderBoardMenu)
                 leaderBoardMenu.setOpacity(0.75);
         });
-        outBox.setOnMouseEntered( e -> outBox.setOpacity(0.55));
+        outBox.setOnMouseEntered(e -> outBox.setOpacity(0.55));
         outBox.setOnMouseExited(e -> outBox.setOpacity(0.15));
         outBox.setOnMouseClicked(e -> setActionButton());
         enterPassWord.setOnAction(e -> setActionButton());

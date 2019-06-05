@@ -26,14 +26,14 @@ class CustomCardRequest {
             switch (input) {
                 case "1":
                     try {
-                        GameController.saveMinion(checkSyntaxOfMakeHero(scanner), true);
+                        GameController.saveMinion(checkSyntaxOfMakeHero(scanner));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case "2":
                     try {
-                        GameController.saveMinion(checkSyntaxOfMakeMinion(scanner), false);
+                        GameController.saveMinion(checkSyntaxOfMakeMinion(scanner));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -53,6 +53,11 @@ class CustomCardRequest {
                     }
                     break;
                 case "5":
+                    try {
+                        GameController.saveEffect(checkSyntaxOfBuffMaker(scanner));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }
@@ -307,31 +312,51 @@ class CustomCardRequest {
         }
         switch (type) {
             case "1":
-                return new FireCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                FireCell fireCell = new FireCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                fireCell.setId(id);
+                return fireCell;
             case "2":
-                return new HolyCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                HolyCell holyCell = new HolyCell(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                holyCell.setId(id);
+                return holyCell;
             case "3":
-                return new Poison(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Poison poison = new Poison(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                poison.setId(id);
+                return poison;
             case "4":
-                return new Anti(startTime, endTime, isContinues, targetRange, targetType, targetDetail, buffType);
+                Anti anti = new Anti(startTime, endTime, isContinues, targetRange, targetType, targetDetail, buffType);
+                anti.setId(id);
+                return anti;
             case "5":
-                return new ChangeProperties(startTime, endTime, isContinues, targetRange, targetType, targetDetail, changeHealthValue, changePowerValue, buffModel);
+                ChangeProperties changeProperties = new ChangeProperties(startTime, endTime, isContinues, targetRange, targetType, targetDetail, changeHealthValue, changePowerValue, buffModel);
+                changeProperties.setId(id);
+                return changeProperties;
             case "6":
-                return new Clear(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Clear clear = new Clear(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                clear.setId(id);
+                return clear;
             case "7":
-                return new Disarm(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Disarm disarm = new Disarm(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                disarm.setId(id);
+                return disarm;
             case "8":
-                return new Holy(startTime, endTime, isContinues, targetRange, targetType, targetDetail, holyBuffState);
+                Holy holy = new Holy(startTime, endTime, isContinues, targetRange, targetType, targetDetail, holyBuffState);
+                holy.setId(id);
+                return holy;
             case "9":
-                return new Stun(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                Stun stun = new Stun(startTime, endTime, isContinues, targetRange, targetType, targetDetail);
+                stun.setId(id);
+                return stun;
             case "10":
-                return new ChangeMana(startTime, endTime, isContinues, targetRange, targetType, targetDetail, manaChangeValue);
+                ChangeMana changeMana = new ChangeMana(startTime, endTime, isContinues, targetRange, targetType, targetDetail, manaChangeValue);
+                changeMana.setId(id);
+                return changeMana;
             case "11":
-                return new SpecialSituationBuff(startTime, endTime, isContinues, targetRange, targetType, targetDetail, specialSituation);
-
+                SpecialSituationBuff specialSituationBuff = new SpecialSituationBuff(startTime, endTime, isContinues, targetRange, targetType, targetDetail, specialSituation);
+                specialSituationBuff.setId(id);
+                return specialSituationBuff;
         }
         return null;
-
     }
 
     private static SpecialSituation switchForSpecialSituation(String specialSituationString) {
@@ -367,42 +392,36 @@ class CustomCardRequest {
                 buffType = BuffType.HOLY;
                 break;
             case "2":
-                buffType = BuffType.DE_HOLY;
-                break;
-            case "3":
                 buffType = BuffType.WEAKNESS;
                 break;
-            case "4":
+            case "3":
                 buffType = BuffType.STUN;
                 break;
-            case "5":
+            case "4":
                 buffType = BuffType.DISARM;
                 break;
-            case "6":
-                buffType = BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF;
+            case "5":
+                buffType = BuffType.POWER_BUFF;
                 break;
-            case "7":
+            case "6":
                 buffType = BuffType.CLEAR;
                 break;
-            case "8":
+            case "7":
                 buffType = BuffType.FIRE_CELL;
                 break;
-            case "9":
+            case "8":
                 buffType = BuffType.POISON_CELL;
                 break;
-            case "10":
+            case "9":
                 buffType = BuffType.HOLY_CELL;
                 break;
-            case "11":
-                buffType = BuffType.POISON;
-                break;
-            case "12":
+            case "10":
                 buffType = BuffType.ANTI;
                 break;
-            case "13":
+            case "11":
                 buffType = BuffType.CHANGE_MANA;
                 break;
-            case "14":
+            case "12":
                 buffType = BuffType.SPECIAL_SITUATION_BUFF;
                 break;
         }
@@ -411,19 +430,17 @@ class CustomCardRequest {
 
     private static void printBuffType() {
         System.out.println("1.HOLY");
-        System.out.println("2.DE_HOLY");
-        System.out.println("3.WEAKNESS");
-        System.out.println("4.STUN");
-        System.out.println("5.DISARM");
-        System.out.println("6.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF");
-        System.out.println("7.CLEAR");
-        System.out.println("8.FIRE_CELL");
-        System.out.println("9.POISON_CELL");
-        System.out.println("10.HOLY_CELL");
-        System.out.println("11.POISON");
-        System.out.println("12.ANTI");
-        System.out.println("13.CHANGE_MANA");
-        System.out.println("14.SPECIAL_SITUATION_BUFF");
+        System.out.println("2.WEAKNESS");
+        System.out.println("3.STUN");
+        System.out.println("4.DISARM");
+        System.out.println("5.POWER_BUFF");
+        System.out.println("6.CLEAR");
+        System.out.println("7.FIRE_CELL");
+        System.out.println("8.POISON_CELL");
+        System.out.println("9.HOLY_CELL");
+        System.out.println("10.ANTI");
+        System.out.println("11.CHANGE_MANA");
+        System.out.println("12.SPECIAL_SITUATION_BUFF");
     }
 
     private static TargetDetail switchForTargetDetail(String targetDetailString) {
