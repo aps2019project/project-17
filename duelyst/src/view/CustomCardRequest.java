@@ -6,7 +6,7 @@ import Cards.Minion;
 import Cards.Spell;
 import Effects.enums.AttackType;
 import Effects.enums.MinionType;
-import InstanceMaker.CardMaker;
+import controller.GameController;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -14,32 +14,37 @@ import java.util.Scanner;
 class CustomCardRequest {
 
     static void checkSyntaxOfCustomCard(Scanner scanner) {
-        String input=null;
+        String input;
         do {
             input=scanner.nextLine();
             switch (input) {
                 case "1":
                     try {
-                        CardMaker.saveMinion(checkSyntaxOfMakeHero(scanner), true);
+                        GameController.saveMinion(checkSyntaxOfMakeHero(scanner), true);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case "2":
                     try {
-                        CardMaker.saveMinion(checkSyntaxOfMakeMinion(scanner), false);
+                        GameController.saveMinion(checkSyntaxOfMakeMinion(scanner), false);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case "3":
                     try {
-                        CardMaker.saveItem(checkSyntaxOfMakeItem(scanner));
+                        GameController.saveItem(checkSyntaxOfMakeItem(scanner));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case "4":
+                    try {
+                        GameController.saveSpell(checkSyntaxOfMakeSpell(scanner));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "5":
                     break;
@@ -48,7 +53,7 @@ class CustomCardRequest {
         while (!input.equals("end"));
     }
 
-    static Hero checkSyntaxOfMakeHero(Scanner scanner){
+    private static Hero checkSyntaxOfMakeHero(Scanner scanner){
         MinionType minionType=null;
         AttackType attackType=null;
         System.out.println("Enter name:");
@@ -130,7 +135,7 @@ class CustomCardRequest {
 
     }
 
-    static Minion checkSyntaxOfMakeMinion(Scanner scanner){
+    private static Minion checkSyntaxOfMakeMinion(Scanner scanner){
         MinionType minionType=null;
         AttackType attackType=null;
         System.out.println("Enter name:");
@@ -201,7 +206,7 @@ class CustomCardRequest {
 
     }
 
-    static Item checkSyntaxOfMakeItem(Scanner scanner){
+    private static Item checkSyntaxOfMakeItem(Scanner scanner){
         System.out.println("Enter name:");
         String name=scanner.next();
         System.out.println("Enter id:");
@@ -214,7 +219,7 @@ class CustomCardRequest {
         return new Item(name,id,price,desc);
     }
 
-    static Spell checkSyntaxOfMakeSpell(Scanner scanner){
+    private static Spell checkSyntaxOfMakeSpell(Scanner scanner){
         System.out.println("Enter name:");
         String name=scanner.next();
         System.out.println("Enter id:");

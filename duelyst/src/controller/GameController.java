@@ -1,10 +1,15 @@
 package controller;
 
 import CardCollections.*;
+import Cards.Item;
+import Cards.Minion;
+import Cards.Spell;
 import Data.*;
 import GameGround.*;
+import InstanceMaker.CardMaker;
 import view.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static Data.MODE.*;
@@ -205,6 +210,22 @@ public class GameController {
     public static void createNewAIInstance(String userName, Deck deck) {
 
         new AI(userName, deck);
+    }
+
+    /**
+     * CustomCard
+     */
+
+    public static void saveMinion(Minion newMinion, Boolean isHero) throws IOException{
+        CardMaker.saveMinion(newMinion, isHero);
+    }
+
+    public static void saveItem(Item newItem) throws IOException{
+        CardMaker.saveItem(newItem);
+    }
+
+    public static void saveSpell(Spell newSpell) throws IOException{
+        CardMaker.saveSpell(newSpell);
     }
 
 
