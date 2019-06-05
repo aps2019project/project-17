@@ -9,14 +9,16 @@ import com.google.gson.Gson;
 import controller.InstanceType;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CardMaker {
-    public static final String addressOfHero = "duelyst//src//InstanceMaker//Hero.json";
-    public static final String addressOfItem = "duelyst//src//InstanceMaker//Item.json";
-    public static final String addressOfMinion = "duelyst//src//InstanceMaker//Minion.json";
-    public static final String addressOfSpell = "duelyst//src//InstanceMaker//Spell.json";
+    public static final String address = "duelyst//src//InstanceMaker//";
+    public static final String addressOfHero = address + "Hero.json";
+    public static final String addressOfItem = address + "Item.json";
+    public static final String addressOfMinion = address + "Minion.json";
+    public static final String addressOfSpell = address + "Spell.json";
     private static Spell[] spells;
     private static Effect[] spellEffects;
     private static Minion[] minions;
@@ -67,9 +69,11 @@ public class CardMaker {
                 Spell[] spells;
                 spells = gson.fromJson(jsonReader(addressOfSpell), Spell[].class);
                 return spells;
+
         }
         return null;
     }
+
 
     public static void saveMinion(Minion newMinion, Boolean isHero) throws IOException {
         Minion[] loadedMinions = (Minion[]) loadInstance(InstanceType.MINION);
@@ -153,6 +157,40 @@ public class CardMaker {
         }
         stringBuilder.append("]");
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfSpell));
+        bufferedWriter.write(stringBuilder.toString());
+        bufferedWriter.flush();
+        bufferedWriter.close();
+    }
+
+    private static <T extends Effect> T[] loadEffects(T[] load, String address) throws IOException {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonReader(address), (Type) load.getClass());
+    }
+
+    public static <T extends Effect> void saveEffect(T newEffect) throws IOException {
+        String name = newEffect.getClass().toString().split(".")[newEffect.getClass().toString().split(".").length - 1];
+        String address = CardMaker.address + name + ".json";
+        T[] loadedEffects = (T[]) new Effect[1];
+        loadedEffects = loadEffects(loadedEffects, address);
+        ArrayList<T> effects = new ArrayList<>(Arrays.asList(loadedEffects));
+        effects.add(newEffect);
+        StringBuilder stringBuilder = new StringBuilder("[");
+        for (T effect : effects) {
+            stringBuilder.append("{");
+            stringBuilder.append("\"id\": \"").append(effect.getId()).append("\",\n");
+            stringBuilder.append("\"startTime\": \"").append(effect.getStartTime()).append("\",\n");
+            stringBuilder.append("\"endTime\": \"").append(effect.getEndTime()).append("\",\n");
+            stringBuilder.append("\"isContinues\": \"").append(effect.isContinues()).append("\"\n");
+            stringBuilder.append("\"targetRange\": \"").append(effect.getTargetRange()).append("\"\n");
+            stringBuilder.append("\"targetType\": \"").append(effect.getTargetType()).append("\"\n");
+            stringBuilder.append("\"targetDetail\": \"").append(effect.getTargetType()).append("\"\n");
+            if (effects.indexOf(effect) != effects.size() - 1)
+                stringBuilder.append("},\n");
+            else
+                stringBuilder.append("}");
+        }
+        stringBuilder.append("]");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
         bufferedWriter.write(stringBuilder.toString());
         bufferedWriter.flush();
         bufferedWriter.close();

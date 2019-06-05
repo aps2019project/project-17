@@ -11,6 +11,7 @@ import Effects.enums.TargetType;
 import java.util.ArrayList;
 
 public abstract class Effect {
+    private String id;
     private int startTime;
     private int endTime;
     private boolean isContinues;
@@ -21,7 +22,7 @@ public abstract class Effect {
     private ArrayList<Object> impacts = new ArrayList<>();
     private boolean isDisable;
 
-    public Effect(int startTime, int endTime, boolean isContinues,TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
+    public Effect(int startTime, int endTime, boolean isContinues, TargetRange targetRange, TargetType targetType, TargetDetail targetDetail) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isContinues = isContinues;
@@ -154,5 +155,33 @@ public abstract class Effect {
 
     public void setOwnerUserName(String ownerUserName) {
         this.ownerUserName = ownerUserName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public int getEndTime() {
+        return endTime;
+    }
+
+    public TargetRange getTargetRange() {
+        return targetRange;
+    }
+
+    public TargetType getTargetType() {
+        return targetType;
+    }
+
+    public TargetDetail getTargetDetail() {
+        return targetDetail;
     }
 }
