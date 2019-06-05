@@ -367,42 +367,36 @@ class CustomCardRequest {
                 buffType = BuffType.HOLY;
                 break;
             case "2":
-                buffType = BuffType.DE_HOLY;
-                break;
-            case "3":
                 buffType = BuffType.WEAKNESS;
                 break;
-            case "4":
+            case "3":
                 buffType = BuffType.STUN;
                 break;
-            case "5":
+            case "4":
                 buffType = BuffType.DISARM;
                 break;
-            case "6":
-                buffType = BuffType.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF;
+            case "5":
+                buffType = BuffType.POWER_BUFF;
                 break;
-            case "7":
+            case "6":
                 buffType = BuffType.CLEAR;
                 break;
-            case "8":
+            case "7":
                 buffType = BuffType.FIRE_CELL;
                 break;
-            case "9":
+            case "8":
                 buffType = BuffType.POISON_CELL;
                 break;
-            case "10":
+            case "9":
                 buffType = BuffType.HOLY_CELL;
                 break;
-            case "11":
-                buffType = BuffType.POISON;
-                break;
-            case "12":
+            case "10":
                 buffType = BuffType.ANTI;
                 break;
-            case "13":
+            case "11":
                 buffType = BuffType.CHANGE_MANA;
                 break;
-            case "14":
+            case "12":
                 buffType = BuffType.SPECIAL_SITUATION_BUFF;
                 break;
         }
@@ -411,19 +405,17 @@ class CustomCardRequest {
 
     private static void printBuffType() {
         System.out.println("1.HOLY");
-        System.out.println("2.DE_HOLY");
-        System.out.println("3.WEAKNESS");
-        System.out.println("4.STUN");
-        System.out.println("5.DISARM");
-        System.out.println("6.CHANGE_ATTACK_POWER_OR_HEALTH_BUFF");
-        System.out.println("7.CLEAR");
-        System.out.println("8.FIRE_CELL");
-        System.out.println("9.POISON_CELL");
-        System.out.println("10.HOLY_CELL");
-        System.out.println("11.POISON");
-        System.out.println("12.ANTI");
-        System.out.println("13.CHANGE_MANA");
-        System.out.println("14.SPECIAL_SITUATION_BUFF");
+        System.out.println("2.WEAKNESS");
+        System.out.println("3.STUN");
+        System.out.println("4.DISARM");
+        System.out.println("5.POWER_BUFF");
+        System.out.println("6.CLEAR");
+        System.out.println("7.FIRE_CELL");
+        System.out.println("8.POISON_CELL");
+        System.out.println("9.HOLY_CELL");
+        System.out.println("10.ANTI");
+        System.out.println("11.CHANGE_MANA");
+        System.out.println("12.SPECIAL_SITUATION_BUFF");
     }
 
     private static TargetDetail switchForTargetDetail(String targetDetailString) {
