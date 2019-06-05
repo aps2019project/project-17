@@ -1,8 +1,10 @@
 import Appearance.FontAppearance;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -21,6 +23,7 @@ class ShopAppearance {
     private ImageView rightDirection;
     private ImageView leftDirection;
     private Rectangle[] demoCards = new Rectangle[30];
+    private int page = 0;
 
     {
         try {
@@ -42,7 +45,7 @@ class ShopAppearance {
 
     private void initializeDemoCards() {
         for (int i = 0; i < demoCards.length; i++) {
-            demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - shownCards.length * 70) / 6, Main.HEIGHT_OF_WINDOW / 2.6);
+            demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 6, Main.HEIGHT_OF_WINDOW / 2.6);
             if (i < 10) {
                 demoCards[i].setFill(Color.RED);
             } else if (i < 20) {
@@ -56,10 +59,10 @@ class ShopAppearance {
     private void initializeCards() {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
-                if(i==0){
-                    shownCards[i][j]=demoCards[j];
-                }else {
-                    shownCards[i][j]=demoCards[j+5];
+                if (i == 0) {
+                    shownCards[i][j] = demoCards[j + (10 * page)];
+                } else {
+                    shownCards[i][j] = demoCards[(j + 5) + (10 * page)];
                 }
                 shownCards[i][j].setOpacity(0.4);
                 final Rectangle temp = shownCards[i][j];
@@ -80,6 +83,32 @@ class ShopAppearance {
         rightDirection.setOnMouseExited(e -> rightDirection.setOpacity(0.4));
         leftDirection.setOnMouseEntered(e -> leftDirection.setOpacity(1));
         leftDirection.setOnMouseExited(e -> leftDirection.setOpacity(0.4));
+        rightDirection.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (page == 0) {
+                    page = 1;
+                } else if (page == 1) {
+                    page = 2;
+                } else if (page == 2) {
+                    page = 0;
+                }
+                initializeCards();
+            }
+        });
+        leftDirection.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (page == 0) {
+                    page = 2;
+                } else if (page == 1) {
+                    page = 0;
+                } else if (page == 2) {
+                    page = 1;
+                }
+                initializeCards();
+            }
+        });
     }
 
     private void setBackGround() {
