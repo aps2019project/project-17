@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -31,6 +32,7 @@ public class Main extends Application {
     private static TextField enterUserName = new TextField();
     private static PasswordField enterPassWord = new PasswordField();
     private static ImageView imageOfBackGround;
+    private static ImageView help;
     private static Text loginMenu = new Text("login");
     private static Text signUpMenu = new Text("sign up");
     private static Text leaderBoardMenu = new Text("leader board");
@@ -39,8 +41,20 @@ public class Main extends Application {
     private static Text invalidPassWord = new Text("password is wrong");
     private static Text currentChoice;
     private static Scene sceneFirstMenu = new Scene(root, WIDTH_OF_WINDOW, HEIGHT_OF_WINDOW);
+    private static Rectangle helpPoPUp = new Rectangle(WIDTH_OF_WINDOW / 8, HEIGHT_OF_WINDOW / 6, Color.rgb(255, 255, 255, 0.5));
     private static Rectangle backGroundFill = new Rectangle(WIDTH_OF_WINDOW / 2.5, HEIGHT_OF_WINDOW / 2.25);
     private static Rectangle outBox = new Rectangle(WIDTH_OF_WINDOW / 7.2, HEIGHT_OF_WINDOW / 16.68);
+
+    static {
+        try {
+            Image helpIcon = new Image(new FileInputStream("info.png"));
+            help = new ImageView(helpIcon);
+            help.setFitHeight(50);
+            help.setFitWidth(50);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     static {
         backGroundFill.setFill(ColorAppearance.BACKGROUND_FILL_COLOR);
@@ -61,7 +75,7 @@ public class Main extends Application {
             imageOfBackGround.fitWidthProperty().bind(sceneFirstMenu.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(sceneFirstMenu.heightProperty());
             root.getChildren().add(imageOfBackGround);
-            root.getChildren().addAll(backGroundFill, leaderBoardMenu, signUpMenu, loginMenu, enterUserName, invalidUserName, enterPassWord, invalidPassWord, outBox, currentButton);
+            root.getChildren().addAll(backGroundFill, leaderBoardMenu, signUpMenu, loginMenu, enterUserName, invalidUserName, enterPassWord, invalidPassWord, outBox, currentButton,help);
             root.setAlignment(Pos.BASELINE_CENTER);
             invalidPassWord.setVisible(false);
             invalidUserName.setVisible(false);
@@ -82,6 +96,8 @@ public class Main extends Application {
         VBox.setMargin(invalidPassWord, new Insets(HEIGHT_OF_WINDOW / 166.8, 0, HEIGHT_OF_WINDOW / 166.8, WIDTH_OF_WINDOW / 2.06));
         VBox.setMargin(outBox, new Insets(HEIGHT_OF_WINDOW / 41.7, 0, HEIGHT_OF_WINDOW / 41.7, WIDTH_OF_WINDOW / 2.06));
         VBox.setMargin(currentButton, new Insets(-HEIGHT_OF_WINDOW / 37.9, 0, -HEIGHT_OF_WINDOW / 37.9, WIDTH_OF_WINDOW / 2.06));
+        VBox.setMargin(help, new Insets( HEIGHT_OF_WINDOW / 10, 0,  HEIGHT_OF_WINDOW / 10, 8 * WIDTH_OF_WINDOW / 9));
+        VBox.setMargin(helpPoPUp, new Insets(-HEIGHT_OF_WINDOW/8, 0, -HEIGHT_OF_WINDOW/8, 4 * WIDTH_OF_WINDOW / 5));
     }
 
     static {
@@ -97,6 +113,16 @@ public class Main extends Application {
         invalidUserName.setFont(FontAppearance.FONT_ERRORS);
         invalidPassWord.setFill(Color.RED);
         invalidUserName.setFill(Color.RED);
+        helpPoPUp.setArcWidth(20);
+        helpPoPUp.setArcHeight(20);
+        helpPoPUp.setStroke(Color.WHITE);
+        Image img = null;
+        try {
+            img = new Image(new FileInputStream("AccountHelp.png"));
+            helpPoPUp.setFill(new ImagePattern(img));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     static {
@@ -165,6 +191,9 @@ public class Main extends Application {
         outBox.setOnMouseExited(e -> outBox.setOpacity(0.15));
         outBox.setOnMouseClicked(e -> setActionButton());
         enterPassWord.setOnAction(e -> setActionButton());
+
+        help.setOnMouseEntered(event -> root.getChildren().addAll(helpPoPUp));
+        help.setOnMouseExited(event -> root.getChildren().removeAll(helpPoPUp));
     }
 
     private static void handleClick() {
