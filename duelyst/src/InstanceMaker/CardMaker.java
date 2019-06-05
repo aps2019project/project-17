@@ -1,6 +1,9 @@
 package InstanceMaker;
 
 import Cards.*;
+import Effects.CellEffects.FireCell;
+import Effects.CellEffects.HolyCell;
+import Effects.CellEffects.Poison;
 import Effects.Effect;
 import Effects.MinionEffects.*;
 import Effects.Player.ChangeMana;
