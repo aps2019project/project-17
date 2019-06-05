@@ -20,7 +20,7 @@ class ShopAppearance {
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
-    private static Rectangle[] demoCards = new Rectangle[30];
+    private Rectangle[] demoCards = new Rectangle[30];
 
     {
         try {
@@ -56,7 +56,11 @@ class ShopAppearance {
     private void initializeCards() {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
-                shownCards[i][j] =demoCards[i*j];
+                if(i==0){
+                    shownCards[i][j]=demoCards[j];
+                }else {
+                    shownCards[i][j]=demoCards[j+5];
+                }
                 shownCards[i][j].setOpacity(0.4);
                 final Rectangle temp = shownCards[i][j];
                 shownCards[i][j].setOnMouseEntered(e -> temp.setOpacity(1));
