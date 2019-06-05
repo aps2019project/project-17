@@ -19,7 +19,6 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class CardMaker {
     private static final String address = "duelyst//src//InstanceMaker//";
@@ -36,7 +35,7 @@ public class CardMaker {
     private static Item[] items;
     private static Effect[] itemEffects;
 
-    static void creation() {
+    public static void creation() {
         try {
             spells = (Spell[]) loadInstance(InstanceType.SPELL);
             heroes = (Hero[]) loadInstance(InstanceType.HERO);
@@ -64,6 +63,7 @@ public class CardMaker {
             case HERO:
                 Hero[] heroes;
                 heroes = gson.fromJson(jsonReader(addressOfHero), Hero[].class);
+                addEffectToHero(heroes);
                 return heroes;
             case ITEM:
                 Item[] items;
@@ -296,27 +296,37 @@ public class CardMaker {
                 case FIRE_CELL:
                     address = CardMaker.address + "FireCell.json";
                     FireCell[] fireCells = new FireCell[1];
-                    effects.addAll(Arrays.asList(loadEffects(fireCells, address)));
+                    fireCells = loadEffects(fireCells, address);
+                    if (fireCells != null)
+                        effects.addAll(Arrays.asList(fireCells));
                     break;
                 case POISON_CELL:
-                    address = CardMaker.address + "PoisonCell.json";
+                    address = CardMaker.address + "Poison.json";
                     Poison[] poisons = new Poison[1];
-                    effects.addAll(Arrays.asList(loadEffects(poisons, address)));
+                    poisons = loadEffects(poisons, address);
+                    if (poisons != null)
+                        effects.addAll(Arrays.asList(poisons));
                     break;
                 case HOLY_CELL:
                     address = CardMaker.address + "HolyCell.json";
                     HolyCell[] holyCells = new HolyCell[1];
-                    effects.addAll(Arrays.asList(loadEffects(holyCells, address)));
+                    holyCells = loadEffects(holyCells, address);
+                    if (holyCells != null)
+                        effects.addAll(Arrays.asList(holyCells));
                     break;
                 case ANTI:
                     address = CardMaker.address + "Anti.json";
                     Anti[] antis = new Anti[1];
-                    effects.addAll(Arrays.asList(loadEffects(antis, address)));
+                    antis = loadEffects(antis, address);
+                    if (antis != null)
+                        effects.addAll(Arrays.asList(antis));
                     break;
                 case CHANGE_MANA:
                     address = CardMaker.address + "ChangeMana.json";
                     ChangeMana[] changeManas = new ChangeMana[1];
-                    effects.addAll(Arrays.asList(loadEffects(changeManas, address)));
+                    changeManas = loadEffects(changeManas, address);
+                    if (changeManas != null)
+                        effects.addAll(Arrays.asList(changeManas));
                     break;
                 case SPECIAL_SITUATION_BUFF:
                     address = CardMaker.address + "SpecialSituationBuff.json";
@@ -328,9 +338,23 @@ public class CardMaker {
         return effects;
     }
 
-    private static void addEffectToHero(Hero[] heroes) {
+    private static void addEffectToHero(Hero[] heroes) throws IOException {
+        ArrayList<Effect> effects = getAllEffect();
+        Effect specialSituation;
         for (Hero hero : heroes) {
-
+            for (Effect effect : effects) {
+                if (!hero.getId().equals(effect.getId()))
+                    continue;
+                specialSituation = null;
+                for (Effect secondEffect : effects) {
+                    if (effect instanceof SpecialSituationBuff && Integer.parseInt(effect.getId()) == -Integer.parseInt(secondEffect.getId()))
+                        specialSituation = secondEffect;
+                }
+                if (specialSituation != null)
+                    hero.addSpecialSituationBuff(specialSituation);
+                hero.addSpecialPower(effect);
+            }
         }
     }
 }
+

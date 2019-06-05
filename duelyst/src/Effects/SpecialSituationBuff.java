@@ -47,4 +47,8 @@ public class SpecialSituationBuff extends Effect {
     public SpecialSituation getSpecialSituation() {
         return specialSituation;
     }
+
+    public void setSpecialSituation(SpecialSituation specialSituation) {
+        this.specialSituation = specialSituation;
+    }
 }

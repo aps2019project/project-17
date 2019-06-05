@@ -32,8 +32,8 @@ public class Minion extends Card {
     private boolean hasFlag;
     private int numberOfAttack;
 
-    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType,String desc) {
-        super(name, id, price,desc);
+    public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType, String desc) {
+        super(name, id, price, desc);
         this.attackPoint = attackPoint;
         this.healthPoint = healthPoint;
         this.manaPoint = manaPoint;
@@ -135,6 +135,8 @@ public class Minion extends Card {
     }
 
     public void addSpecialPower(Effect effect) {
+        if (specialPower == null)
+            specialPower = new ArrayList<>();
         specialPower.add(effect);
     }
 
@@ -142,7 +144,9 @@ public class Minion extends Card {
         effects.add(effect);
     }
 
-    public void addSpeciaSituationBuff(Effect effect) {
+    public void addSpecialSituationBuff(Effect effect) {
+        if (specialSituationBuff == null)
+            specialSituationBuff = new ArrayList<>();
         specialSituationBuff.add(effect);
     }
 
@@ -282,4 +286,9 @@ public class Minion extends Card {
         }
     }
 
+    public ArrayList<Effect> getSpecialPower() {
+        if (specialPower == null)
+            specialPower = new ArrayList<>();
+        return specialPower;
+    }
 }
