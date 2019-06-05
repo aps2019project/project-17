@@ -67,7 +67,7 @@ public class CardsDataAppearance {
     }
 
     public void dark() {
-        changeLight(0.4);
+        changeLight(0.7);
     }
 
     public Text getNameView() {

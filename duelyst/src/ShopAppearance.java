@@ -1,4 +1,5 @@
 import Appearance.CardsDataAppearance;
+import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Cards.Hero;
 import Cards.Minion;
@@ -22,6 +23,7 @@ class ShopAppearance {
     private Group root = new Group();
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
+    private Rectangle[][] outBox = new Rectangle[2][5];
     private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
@@ -62,7 +64,7 @@ class ShopAppearance {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            demoCards[i].setOpacity(0.4);
+            demoCards[i].setOpacity(0.7);
 
         }
         for (int i = 0; i < shownCards.length; i++) {
@@ -75,6 +77,15 @@ class ShopAppearance {
         for (int i = 0; i < 2; i++) {
             System.arraycopy(demoCards, (5 * i), shownCards[i], 0, 5);
         }
+
+        for (int i = 0; i < outBox.length; i++) {
+            for (int j = 0; j < outBox[i].length; j++) {
+                outBox[i][j] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5, Main.HEIGHT_OF_WINDOW / 2.17);
+                outBox[i][j].setFill(ColorAppearance.BACKGROUND_DATA_CARDS);
+                outBox[i][j].setOpacity(0.7);
+                outBox[i][j].setVisible(false);
+            }
+        }
     }
 
     private void initializeCards() {
@@ -82,10 +93,8 @@ class ShopAppearance {
             title.setFont(FontAppearance.FONT_SHOP_BUTTONS);
             title.setFill(Color.WHITE);
         }
-
         rightDirection.setOpacity(0.4);
         leftDirection.setOpacity(0.4);
-
         rightDirection.setOnMouseEntered(e -> rightDirection.setOpacity(1));
         rightDirection.setOnMouseExited(e -> rightDirection.setOpacity(0.4));
         leftDirection.setOnMouseEntered(e -> leftDirection.setOpacity(1));
@@ -110,9 +119,12 @@ class ShopAppearance {
     private void addNodes() {
         root.getChildren().add(fillMenu);
         root.getChildren().addAll(titles);
-        for (Rectangle[] totalCard : shownCards) {
+        for (Rectangle[] box : outBox)
+            root.getChildren().addAll(box);
+
+        for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
-        }
+
         root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
@@ -156,15 +168,20 @@ class ShopAppearance {
                     if (i == 0) {
                         shownCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 45);
                         shownCards[i][j].setLayoutY(fillMenu.getHeight() / 45);
-
+                        outBox[i][j].setLayoutX(shownCards[i][j].getLayoutX());
+                        outBox[i][j].setLayoutY(shownCards[i][j].getLayoutY());
                         continue;
                     }
                     shownCards[i][j].setLayoutX(shownCards[i - 1][j].getLayoutX());
                     shownCards[i][j].setLayoutY(shownCards[i - 1][j].getLayoutY() + Main.HEIGHT_OF_WINDOW / 2);
+                    outBox[i][j].setLayoutX(shownCards[i][j].getLayoutX());
+                    outBox[i][j].setLayoutY(shownCards[i][j].getLayoutY());
                     continue;
                 }
                 shownCards[i][j].setLayoutY(shownCards[i][j - 1].getLayoutY());
                 shownCards[i][j].setLayoutX(shownCards[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW / 6);
+                outBox[i][j].setLayoutX(shownCards[i][j].getLayoutX());
+                outBox[i][j].setLayoutY(shownCards[i][j].getLayoutY());
             }
         }
     }
@@ -199,10 +216,12 @@ class ShopAppearance {
             demoCards[i].setOnMouseEntered(e -> {
                 temp.setOpacity(1);
                 shownData[value / 5][value % 5].light();
+                outBox[value / 5][value % 5].setVisible(true);
             });
             demoCards[i].setOnMouseExited(e -> {
-                temp.setOpacity(0.4);
+                temp.setOpacity(0.7);
                 shownData[value / 5][value % 5].dark();
+                outBox[value / 5][value % 5].setVisible(false);
             });
         }
     }
