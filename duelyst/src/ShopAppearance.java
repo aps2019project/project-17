@@ -14,10 +14,10 @@ import java.io.FileNotFoundException;
 class ShopAppearance {
     private Group root = new Group();
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
-    private Rectangle[][] totalCards = new Rectangle[2][5];
+    private Rectangle[][] ShownCards = new Rectangle[2][5];
     private ImageView imageOfBackGround;
-    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMs")};
-    private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 12, Main.HEIGHT_OF_WINDOW);
+    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
+    private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
 
@@ -39,13 +39,13 @@ class ShopAppearance {
     }
 
     private void initializeCards() {
-        for (int i = 0; i < totalCards.length; i++) {
-            for (int j = 0; j < totalCards[i].length; j++) {
-                totalCards[i][j] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - totalCards.length * 70) / 6, Main.HEIGHT_OF_WINDOW / 2.6);
-                totalCards[i][j].setOpacity(0.4);
-                final Rectangle temp = totalCards[i][j];
-                totalCards[i][j].setOnMouseEntered(e -> temp.setOpacity(1));
-                totalCards[i][j].setOnMouseExited(e -> temp.setOpacity(0.4));
+        for (int i = 0; i < ShownCards.length; i++) {
+            for (int j = 0; j < ShownCards[i].length; j++) {
+                ShownCards[i][j] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - ShownCards.length * 70) / 6, Main.HEIGHT_OF_WINDOW / 2.6);
+                ShownCards[i][j].setOpacity(0.4);
+                final Rectangle temp = ShownCards[i][j];
+                ShownCards[i][j].setOnMouseEntered(e -> temp.setOpacity(1));
+                ShownCards[i][j].setOnMouseExited(e -> temp.setOpacity(0.4));
             }
         }
 
@@ -66,7 +66,7 @@ class ShopAppearance {
     private void setBackGround() {
         Image image;
         try {
-            image = new Image(new FileInputStream("bg7.jpg"));
+            image = new Image(new FileInputStream("bg0.png"));
             imageOfBackGround = new ImageView(image);
             imageOfBackGround.fitWidthProperty().bind(shopScene.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(shopScene.heightProperty());
@@ -81,7 +81,7 @@ class ShopAppearance {
     private void addNodes() {
         root.getChildren().add(fillMenu);
         root.getChildren().addAll(titles);
-        for (Rectangle[] totalCard : totalCards) {
+        for (Rectangle[] totalCard : ShownCards) {
             root.getChildren().addAll(totalCard);
         }
         root.getChildren().addAll(rightDirection, leftDirection);
@@ -97,20 +97,20 @@ class ShopAppearance {
             titles[i].setLayoutX(titles[i - 1].getLayoutX());
             titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 7);
         }
-        for (int i = 0; i < totalCards.length; i++) {
-            for (int j = 0; j < totalCards[i].length; j++) {
+        for (int i = 0; i < ShownCards.length; i++) {
+            for (int j = 0; j < ShownCards[i].length; j++) {
                 if (j == 0) {
                     if (i == 0) {
-                        totalCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 25);
-                        totalCards[i][j].setLayoutY(fillMenu.getHeight() / 20);
+                        ShownCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 25);
+                        ShownCards[i][j].setLayoutY(fillMenu.getHeight() / 20);
                         continue;
                     }
-                    totalCards[i][j].setLayoutX(totalCards[i - 1][j].getLayoutX());
-                    totalCards[i][j].setLayoutY(totalCards[i - 1][j].getLayoutY() + 400);
+                    ShownCards[i][j].setLayoutX(ShownCards[i - 1][j].getLayoutX());
+                    ShownCards[i][j].setLayoutY(ShownCards[i - 1][j].getLayoutY() + Main.HEIGHT_OF_WINDOW/2);
                     continue;
                 }
-                totalCards[i][j].setLayoutY(totalCards[i][j - 1].getLayoutY());
-                totalCards[i][j].setLayoutX(totalCards[i][j - 1].getLayoutX() + 250);
+                ShownCards[i][j].setLayoutY(ShownCards[i][j - 1].getLayoutY());
+                ShownCards[i][j].setLayoutX(ShownCards[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW/6);
             }
         }
         double x = shopScene.getWidth() * 30 / 31;
