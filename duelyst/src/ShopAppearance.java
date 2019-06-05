@@ -1,11 +1,16 @@
+import Appearance.CardsDataAppearance;
 import Appearance.FontAppearance;
-import javafx.event.EventHandler;
+import Cards.Hero;
+import Cards.Minion;
+import Cards.Spell;
+import InstanceMaker.CardMaker;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -17,13 +22,14 @@ class ShopAppearance {
     private Group root = new Group();
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
-    private ImageView imageOfBackGround;
     private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
-    private Rectangle[] demoCards = new Rectangle[30];
-    private int page = 0;
+    private Rectangle[] demoCards = new Rectangle[CardMaker.getAllCards().length];
+    private int currentPage = 0;
+    private Text currentPageView = new Text();
+    private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
 
     {
         try {
@@ -35,42 +41,43 @@ class ShopAppearance {
     }
 
     ShopAppearance() {
-        initializeDemoCards();
+        initializeDemoCardsAndShownCards();
         initializeCards();
         setBackGround();
         addNodes();
         locateNodes();
+        setMouse();
         display();
     }
 
-    private void initializeDemoCards() {
+    private void initializeDemoCardsAndShownCards() {
         for (int i = 0; i < demoCards.length; i++) {
-            demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 6, Main.HEIGHT_OF_WINDOW / 2.6);
-            if (i < 10) {
-                demoCards[i].setFill(Color.RED);
-            } else if (i < 20) {
-                demoCards[i].setFill(Color.BLUE);
-            } else {
-                demoCards[i].setFill(Color.BLACK);
+            demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
+            try {
+                if (CardMaker.getAllCards()[i] instanceof Hero)
+                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
+                else if ((CardMaker.getAllCards()[i] instanceof Minion))
+                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
+                else demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+            demoCards[i].setOpacity(0.4);
+
+        }
+        for (int i = 0; i < shownCards.length; i++) {
+            for (int j = 0; j < shownCards[i].length; j++) {
+                shownCards[i][j] = demoCards[(5 * i) + j];
+                Spell spell = (Spell) CardMaker.getAllCards()[(5 * i) + j];
+                shownData[i][j] = new CardsDataAppearance(spell.getName(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
+            }
+        }
+        for (int i = 0; i < 2; i++) {
+            System.arraycopy(demoCards, (5 * i), shownCards[i], 0, 5);
         }
     }
 
     private void initializeCards() {
-        for (int i = 0; i < shownCards.length; i++) {
-            for (int j = 0; j < shownCards[i].length; j++) {
-                if (i == 0) {
-                    shownCards[i][j] = demoCards[j + (10 * page)];
-                } else {
-                    shownCards[i][j] = demoCards[(j + 5) + (10 * page)];
-                }
-                shownCards[i][j].setOpacity(0.4);
-                final Rectangle temp = shownCards[i][j];
-                shownCards[i][j].setOnMouseEntered(e -> temp.setOpacity(1));
-                shownCards[i][j].setOnMouseExited(e -> temp.setOpacity(0.4));
-            }
-        }
-
         for (Text title : titles) {
             title.setFont(FontAppearance.FONT_SHOP_BUTTONS);
             title.setFill(Color.WHITE);
@@ -83,39 +90,13 @@ class ShopAppearance {
         rightDirection.setOnMouseExited(e -> rightDirection.setOpacity(0.4));
         leftDirection.setOnMouseEntered(e -> leftDirection.setOpacity(1));
         leftDirection.setOnMouseExited(e -> leftDirection.setOpacity(0.4));
-        rightDirection.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (page == 0) {
-                    page = 1;
-                } else if (page == 1) {
-                    page = 2;
-                } else if (page == 2) {
-                    page = 0;
-                }
-                initializeCards();
-            }
-        });
-        leftDirection.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (page == 0) {
-                    page = 2;
-                } else if (page == 1) {
-                    page = 0;
-                } else if (page == 2) {
-                    page = 1;
-                }
-                initializeCards();
-            }
-        });
     }
 
     private void setBackGround() {
         Image image;
         try {
             image = new Image(new FileInputStream("bg0.png"));
-            imageOfBackGround = new ImageView(image);
+            ImageView imageOfBackGround = new ImageView(image);
             imageOfBackGround.fitWidthProperty().bind(shopScene.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(shopScene.heightProperty());
             imageOfBackGround.setOpacity(0.8);
@@ -132,10 +113,27 @@ class ShopAppearance {
         for (Rectangle[] totalCard : shownCards) {
             root.getChildren().addAll(totalCard);
         }
-        root.getChildren().addAll(rightDirection, leftDirection);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
+        currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 
     private void locateNodes() {
+        locateTitles();
+        locateShownCards();
+        locateDirections();
+        locateData();
+    }
+
+    private void locateDirections() {
+        double x = shopScene.getWidth() * 28 / 29;
+        double y = 18.5 * shopScene.getHeight() / 40;
+        rightDirection.setLayoutX(x);
+        rightDirection.setLayoutY(y);
+        leftDirection.setLayoutX(shopScene.getWidth() * 3.2 / 31);
+        leftDirection.setLayoutY(y);
+    }
+
+    private void locateTitles() {
         for (int i = 0; i < titles.length; i++) {
             if (i == 0) {
                 titles[i].setLayoutX(Main.HEIGHT_OF_WINDOW / 50);
@@ -145,12 +143,20 @@ class ShopAppearance {
             titles[i].setLayoutX(titles[i - 1].getLayoutX());
             titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 7);
         }
+        currentPageView.setLayoutX(Main.WIDTH_OF_WINDOW / 50);
+        currentPageView.setLayoutY(5 * Main.HEIGHT_OF_WINDOW / 6);
+        currentPageView.setFont(FontAppearance.FONT_BUTTON);
+        currentPageView.setFill(Color.WHITE);
+    }
+
+    private void locateShownCards() {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 if (j == 0) {
                     if (i == 0) {
-                        shownCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 25);
-                        shownCards[i][j].setLayoutY(fillMenu.getHeight() / 20);
+                        shownCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 45);
+                        shownCards[i][j].setLayoutY(fillMenu.getHeight() / 45);
+
                         continue;
                     }
                     shownCards[i][j].setLayoutX(shownCards[i - 1][j].getLayoutX());
@@ -161,12 +167,14 @@ class ShopAppearance {
                 shownCards[i][j].setLayoutX(shownCards[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW / 6);
             }
         }
-        double x = shopScene.getWidth() * 28 / 29;
-        double y = 18.5 * shopScene.getHeight() / 40;
-        rightDirection.setLayoutX(x);
-        rightDirection.setLayoutY(y);
-        leftDirection.setLayoutX(shopScene.getWidth() * 3.2 / 31);
-        leftDirection.setLayoutY(y);
+    }
+
+    private void setMouse() {
+        try {
+            shopScene.setCursor(new ImageCursor(new Image(new FileInputStream("sword1.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void display() {
@@ -175,6 +183,76 @@ class ShopAppearance {
     }
 
     private void handleEvents() {
+        rightDirection.setOnMouseClicked(event -> {
+            int size = demoCards.length / 10;
+            currentPage = Math.abs((currentPage + 1) % size);
+            changeCards();
+        });
+        leftDirection.setOnMouseClicked(event -> {
+            int size = demoCards.length / 10;
+            currentPage = Math.abs((currentPage + 1) % size);
+            changeCards();
+        });
+        for (int i = 0; i < demoCards.length; i++) {
+            final Rectangle temp = demoCards[i];
+            final int value = i % 10;
+            demoCards[i].setOnMouseEntered(e -> {
+                temp.setOpacity(1);
+                shownData[value / 5][value % 5].light();
+            });
+            demoCards[i].setOnMouseExited(e -> {
+                temp.setOpacity(0.4);
+                shownData[value / 5][value % 5].dark();
+            });
+        }
+    }
+
+    private void changeCards() {
+        for (int i = 0; i < shownCards.length; i++) {
+            root.getChildren().removeAll(shownCards[i]);
+            for (int j = 0; j < shownCards[i].length; j++) {
+                shownData[i][j].removeAll(root);
+            }
+        }
+        for (int i = 0; i < shownCards.length; i++) {
+            for (int j = 0; j < shownCards[i].length; j++) {
+                shownCards[i][j] = demoCards[(currentPage * 10) + (5 * i) + j];
+                if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
+                    Spell spell = (Spell) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
+                    shownData[i][j] = new CardsDataAppearance(spell.getName(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
+                } else {
+                    Minion minion = (Minion) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
+                    shownData[i][j] = new CardsDataAppearance(minion.getName(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
+                }
+            }
+            root.getChildren().addAll(shownCards[i]);
+        }
+        currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
+        locateShownCards();
+        locateNodes();
+    }
+
+    private void locateData() {
+        for (int i = 0; i < shownData.length; i++) {
+            for (int j = 0; j < shownData[i].length; j++) {
+                shownData[i][j].addAll(root);
+                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * shownCards[i][j].getWidth() / 10);
+                shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * shownCards[i][j].getHeight() / 5);
+
+                shownData[i][j].getMpView().setLayoutX((shownCards[i][j].getLayoutX()) + 18);
+                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + 34);
+
+                shownData[i][j].getPriceView().setLayoutX(shownCards[i][j].getLayoutX() + shownCards[i][j].getWidth() / 2);
+                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * shownCards[i][j].getHeight() / 11);
+
+                if (shownData[i][j].getApView() != null) {
+                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * shownCards[i][j].getWidth() / 4);
+                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + 3.2 * shownCards[i][j].getHeight() / 5);
+
+                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + shownCards[i][j].getWidth() / 2);
+                    shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
+                }
+            }
+        }
     }
 }
-
