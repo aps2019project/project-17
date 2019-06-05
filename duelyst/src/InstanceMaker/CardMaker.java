@@ -4,12 +4,14 @@ import Cards.Hero;
 import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
+import Effects.CellEffects.FireCell;
+import Effects.CellEffects.HolyCell;
+import Effects.CellEffects.Poison;
 import Effects.Effect;
-import Effects.MinionEffects.Anti;
-import Effects.MinionEffects.ChangeProperties;
-import Effects.MinionEffects.Holy;
+import Effects.MinionEffects.*;
 import Effects.Player.ChangeMana;
 import Effects.SpecialSituationBuff;
+import Effects.enums.BuffType;
 import com.google.gson.Gson;
 import controller.InstanceType;
 
@@ -17,13 +19,14 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class CardMaker {
-    public static final String address = "duelyst//src//InstanceMaker//";
-    public static final String addressOfHero = address + "Hero.json";
-    public static final String addressOfItem = address + "Item.json";
-    public static final String addressOfMinion = address + "Minion.json";
-    public static final String addressOfSpell = address + "Spell.json";
+    private static final String address = "duelyst//src//InstanceMaker//";
+    private static final String addressOfHero = address + "Hero.json";
+    private static final String addressOfItem = address + "Item.json";
+    private static final String addressOfMinion = address + "Minion.json";
+    private static final String addressOfSpell = address + "Spell.json";
     private static Spell[] spells;
     private static Effect[] spellEffects;
     private static Minion[] minions;
@@ -191,25 +194,25 @@ public class CardMaker {
         for (T effect : effects) {
             stringBuilder.append("{");
             stringBuilder.append("\"id\": \"").append(effect.getId()).append("\",\n");
-            stringBuilder.append("\"startTime\": \"").append(effect.getStartTime()).append("\",\n");
-            stringBuilder.append("\"endTime\": \"").append(effect.getEndTime()).append("\",\n");
+            stringBuilder.append("\"startTime\": ").append(effect.getStartTime()).append(",\n");
+            stringBuilder.append("\"endTime\": ").append(effect.getEndTime()).append(",\n");
             stringBuilder.append("\"isContinues\": ").append(effect.isContinues()).append(",\n");
             stringBuilder.append("\"targetRange\": \"").append(effect.getTargetRange()).append("\",\n");
             stringBuilder.append("\"targetType\": \"").append(effect.getTargetType()).append("\",\n");
-            stringBuilder.append("\"targetDetail\": \"").append(effect.getTargetType()).append("\"\n");
             if (effect instanceof Anti)
-                stringBuilder.append("\"buffType\": \"").append(((Anti) effect).getBuffType()).append("\"\n");
+                stringBuilder.append("\"buffType\": \"").append(((Anti) effect).getBuffType()).append("\",\n");
             if (effect instanceof ChangeProperties) {
-                stringBuilder.append("\"changeHealthValue\": \"").append(((ChangeProperties) effect).getChangeHealthValue()).append("\",\n");
-                stringBuilder.append("\"changePowerValue\": \"").append(((ChangeProperties) effect).getChangePowerValue()).append("\",\n");
-                stringBuilder.append("\"returnEffect\": ").append(((ChangeProperties) effect).isReturnEffect()).append("\n");
+                stringBuilder.append("\"changeHealthValue\": ").append(((ChangeProperties) effect).getChangeHealthValue()).append(",\n");
+                stringBuilder.append("\"changePowerValue\": ").append(((ChangeProperties) effect).getChangePowerValue()).append(",\n");
+                stringBuilder.append("\"returnEffect\": ").append(((ChangeProperties) effect).isReturnEffect()).append(",\n");
             }
             if (effect instanceof Holy)
-                stringBuilder.append("\"holyBuffState\": \"").append(((Holy) effect).getHolyBuffState()).append("\"\n");
+                stringBuilder.append("\"holyBuffState\": ").append(((Holy) effect).getHolyBuffState()).append(",\n");
             if (effect instanceof ChangeMana)
-                stringBuilder.append("\"manaChangeValue\": \"").append(((ChangeMana) effect).getManaChangeValue()).append("\"\n");
+                stringBuilder.append("\"manaChangeValue\": ").append(((ChangeMana) effect).getManaChangeValue()).append(",\n");
             if (effect instanceof SpecialSituationBuff)
-                stringBuilder.append("\"specialSituation\": \"").append(((SpecialSituationBuff) effect).getSpecialSituation()).append("\"\n");
+                stringBuilder.append("\"specialSituation\": \"").append(((SpecialSituationBuff) effect).getSpecialSituation()).append("\",\n");
+            stringBuilder.append("\"targetDetail\": \"").append(effect.getTargetType()).append("\"\n");
             if (effects.indexOf(effect) != effects.size() - 1)
                 stringBuilder.append("},\n");
             else
@@ -257,5 +260,77 @@ public class CardMaker {
             }
         }
         return Arrays.copyOf(items, items.length);
+    }
+
+    private static ArrayList<Effect> getAllEffect() throws IOException {
+        String address;
+        ArrayList<Effect> effects = new ArrayList<>();
+        for (BuffType value : BuffType.values()) {
+            switch (value) {
+                case HOLY:
+                    address = CardMaker.address + "Holy.json";
+                    Holy[] holy = new Holy[1];
+                    effects.addAll(Arrays.asList(loadEffects(holy, address)));
+                    break;
+                case WEAKNESS:
+                case POWER_BUFF:
+                    address = CardMaker.address + "ChangeProperties.json";
+                    ChangeProperties[] changeProperties = new ChangeProperties[1];
+                    effects.addAll(Arrays.asList(loadEffects(changeProperties, address)));
+                    break;
+                case STUN:
+                    address = CardMaker.address + "Stun.json";
+                    Stun[] stuns = new Stun[1];
+                    effects.addAll(Arrays.asList(loadEffects(stuns, address)));
+                    break;
+                case DISARM:
+                    address = CardMaker.address + "Disarm.json";
+                    Disarm[] disarms = new Disarm[1];
+                    effects.addAll(Arrays.asList(loadEffects(disarms, address)));
+                    break;
+                case CLEAR:
+                    address = CardMaker.address + "Clear.json";
+                    Clear[] clears = new Clear[1];
+                    effects.addAll(Arrays.asList(loadEffects(clears, address)));
+                    break;
+                case FIRE_CELL:
+                    address = CardMaker.address + "FireCell.json";
+                    FireCell[] fireCells = new FireCell[1];
+                    effects.addAll(Arrays.asList(loadEffects(fireCells, address)));
+                    break;
+                case POISON_CELL:
+                    address = CardMaker.address + "PoisonCell.json";
+                    Poison[] poisons = new Poison[1];
+                    effects.addAll(Arrays.asList(loadEffects(poisons, address)));
+                    break;
+                case HOLY_CELL:
+                    address = CardMaker.address + "HolyCell.json";
+                    HolyCell[] holyCells = new HolyCell[1];
+                    effects.addAll(Arrays.asList(loadEffects(holyCells, address)));
+                    break;
+                case ANTI:
+                    address = CardMaker.address + "Anti.json";
+                    Anti[] antis = new Anti[1];
+                    effects.addAll(Arrays.asList(loadEffects(antis, address)));
+                    break;
+                case CHANGE_MANA:
+                    address = CardMaker.address + "ChangeMana.json";
+                    ChangeMana[] changeManas = new ChangeMana[1];
+                    effects.addAll(Arrays.asList(loadEffects(changeManas, address)));
+                    break;
+                case SPECIAL_SITUATION_BUFF:
+                    address = CardMaker.address + "SpecialSituationBuff.json";
+                    SpecialSituationBuff[] specialSituationBuffs = new SpecialSituationBuff[1];
+                    effects.addAll(Arrays.asList(loadEffects(specialSituationBuffs, address)));
+                    break;
+            }
+        }
+        return effects;
+    }
+
+    private static void addEffectToHero(Hero[] heroes) {
+        for (Hero hero : heroes) {
+
+        }
     }
 }

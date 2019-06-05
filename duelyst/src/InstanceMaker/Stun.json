@@ -1,0 +1,16 @@
+[{"id": "202",
+"startTime": 0,
+"endTime": 1,
+"isContinues": false,
+"targetRange": "ALL",
+"targetType": "MINION",
+"targetDetail": "MINION"
+},
+{"id": "204",
+"startTime": 0,
+"endTime": 1,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"targetDetail": "MINION"
+}]

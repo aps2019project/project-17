@@ -1,0 +1,27 @@
+[{"id": "201",
+"startTime": 0,
+"endTime": 100,
+"isContinues": false,
+"targetRange": "SELF",
+"targetType": "MINION",
+"targetDetail": "MINION"
+},
+{"id": "-205",
+"startTime": 0,
+"endTime": 3,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"targetDetail": "MINION"
+},
+{"id": "206",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ALL_IN_COLUMN",
+"targetType": "MINION",
+"changeHealthValue": -4,
+"changePowerValue": 0,
+"returnEffect": false,
+"targetDetail": "MINION"
+}]
