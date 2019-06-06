@@ -27,7 +27,8 @@ class ShopAppearance {
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
     private Rectangle[][] outBox = new Rectangle[2][5];
-    private Text[] titles = {new Text("SHOP"), new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
+    private ImageView shopIcon;
+    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
@@ -62,14 +63,11 @@ class ShopAppearance {
         for (int i = 0; i < demoCards.length; i++) {
             demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
             try {
-                if (i >= CardMaker.getAllCards().length)
-                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("item_template.png"))));
-                else if (CardMaker.getAllCards()[i] instanceof Hero)
+                if (CardMaker.getAllCards()[i] instanceof Hero)
                     demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
                 else if ((CardMaker.getAllCards()[i] instanceof Minion))
                     demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
-                else if (CardMaker.getAllCards()[i] instanceof Spell)
-                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
+                else demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -222,18 +220,18 @@ class ShopAppearance {
         });
         leftDirection.setOnMouseClicked(event -> {
             int size = demoCards.length / 10;
-            currentPage = Math.abs((currentPage + size - 1) % size);
+            currentPage = Math.abs((currentPage +size-1) % size);
             changeCards();
         });
 
         shopScene.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.RIGHT)) {
+            if(event.getCode().equals(KeyCode.RIGHT)){
                 int size = demoCards.length / 10;
                 currentPage = Math.abs((currentPage + 1) % size);
                 changeCards();
-            } else if (event.getCode().equals(KeyCode.LEFT)) {
+            }else if(event.getCode().equals(KeyCode.LEFT)){
                 int size = demoCards.length / 10;
-                currentPage = Math.abs((currentPage + size - 1) % size);
+                currentPage = Math.abs((currentPage +size-1) % size);
                 changeCards();
             }
         });
@@ -264,11 +262,7 @@ class ShopAppearance {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 shownCards[i][j] = demoCards[(currentPage * 10) + (5 * i) + j];
-                if ((currentPage * 10) + (5 * i) + j >= 70){
-                    Item item = CardMaker.getAllItems()[(currentPage * 10) + (5 * i) + j - 70];
-                    shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
-                }
-                else if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
+                if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
                     Spell spell = (Spell) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
                     shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
                 } else {
@@ -284,26 +278,26 @@ class ShopAppearance {
     }
 
     private void locateData() {
-        double cardWidth = shownCards[0][0].getWidth();
-        double cardHeight = shownCards[0][0].getHeight();
+        double cardWidth=shownCards[0][0].getWidth();
+        double cardHeight=shownCards[0][0].getHeight();
         for (int i = 0; i < shownData.length; i++) {
             for (int j = 0; j < shownData[i].length; j++) {
 
                 shownData[i][j].addAll(root);
-                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * cardWidth / 10);
+                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 *cardWidth / 10);
                 shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * cardHeight / 5);
 
                 shownData[i][j].getMpView().setLayoutX((shownCards[i][j].getLayoutX()) + cardWidth / 14.1);
-                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + cardHeight / 9.9);
+                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + cardHeight/9.9);
 
                 shownData[i][j].getPriceView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 2.3);
-                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight / 11);
+                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight/ 11);
 
                 if (shownData[i][j].getApView() != null) {
-                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4.5);
-                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight / 1.55);
+                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth/4.5);
+                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight/1.55);
 
-                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth / 2.1);
+                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth/2.1);
                     shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
                 }
             }
