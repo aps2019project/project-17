@@ -152,7 +152,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         CardMaker.creation();
-        GameController.main();
+        //GameController.main();
         launch(args);
     }
 

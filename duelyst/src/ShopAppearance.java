@@ -5,11 +5,14 @@ import Cards.Hero;
 import Cards.Minion;
 import Cards.Spell;
 import InstanceMaker.CardMaker;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -24,7 +27,7 @@ class ShopAppearance {
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
     private Rectangle[][] outBox = new Rectangle[2][5];
-    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
+    private Text[] titles = {new Text("SHOP"),new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
@@ -71,7 +74,7 @@ class ShopAppearance {
             for (int j = 0; j < shownCards[i].length; j++) {
                 shownCards[i][j] = demoCards[(5 * i) + j];
                 Spell spell = (Spell) CardMaker.getAllCards()[(5 * i) + j];
-                shownData[i][j] = new CardsDataAppearance(spell.getName(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
+                shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
             }
         }
         for (int i = 0; i < 2; i++) {
@@ -104,7 +107,7 @@ class ShopAppearance {
     private void setBackGround() {
         Image image;
         try {
-            image = new Image(new FileInputStream("bg0.png"));
+            image = new Image(new FileInputStream("purpleBackGrouund.jpg"));
             ImageView imageOfBackGround = new ImageView(image);
             imageOfBackGround.fitWidthProperty().bind(shopScene.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(shopScene.heightProperty());
@@ -207,9 +210,22 @@ class ShopAppearance {
         });
         leftDirection.setOnMouseClicked(event -> {
             int size = demoCards.length / 10;
-            currentPage = Math.abs((currentPage + 1) % size);
+            currentPage = Math.abs((currentPage +size-1) % size);
             changeCards();
         });
+
+        shopScene.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.RIGHT)){
+                int size = demoCards.length / 10;
+                currentPage = Math.abs((currentPage + 1) % size);
+                changeCards();
+            }else if(event.getCode().equals(KeyCode.LEFT)){
+                int size = demoCards.length / 10;
+                currentPage = Math.abs((currentPage +size-1) % size);
+                changeCards();
+            }
+        });
+
         for (int i = 0; i < demoCards.length; i++) {
             final Rectangle temp = demoCards[i];
             final int value = i % 10;
@@ -238,37 +254,40 @@ class ShopAppearance {
                 shownCards[i][j] = demoCards[(currentPage * 10) + (5 * i) + j];
                 if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
                     Spell spell = (Spell) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
-                    shownData[i][j] = new CardsDataAppearance(spell.getName(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
+                    shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
                 } else {
                     Minion minion = (Minion) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
-                    shownData[i][j] = new CardsDataAppearance(minion.getName(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
+                    shownData[i][j] = new CardsDataAppearance(minion.getName().toUpperCase(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
                 }
             }
             root.getChildren().addAll(shownCards[i]);
         }
-        currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
+        currentPageView.setText("Page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
         locateShownCards();
         locateNodes();
     }
 
     private void locateData() {
+        double cardWidth=shownCards[0][0].getWidth();
+        double cardHeight=shownCards[0][0].getHeight();
         for (int i = 0; i < shownData.length; i++) {
             for (int j = 0; j < shownData[i].length; j++) {
+
                 shownData[i][j].addAll(root);
-                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * shownCards[i][j].getWidth() / 10);
-                shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * shownCards[i][j].getHeight() / 5);
+                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 *cardWidth / 10);
+                shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * cardHeight / 5);
 
-                shownData[i][j].getMpView().setLayoutX((shownCards[i][j].getLayoutX()) + 18);
-                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + 34);
+                shownData[i][j].getMpView().setLayoutX((shownCards[i][j].getLayoutX()) + cardWidth / 14.1);
+                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + cardHeight/9.9);
 
-                shownData[i][j].getPriceView().setLayoutX(shownCards[i][j].getLayoutX() + shownCards[i][j].getWidth() / 2);
-                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * shownCards[i][j].getHeight() / 11);
+                shownData[i][j].getPriceView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 2.3);
+                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight/ 11);
 
                 if (shownData[i][j].getApView() != null) {
-                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * shownCards[i][j].getWidth() / 4);
-                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + 3.2 * shownCards[i][j].getHeight() / 5);
+                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth/4.5);
+                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight/1.55);
 
-                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + shownCards[i][j].getWidth() / 2);
+                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth/2.1);
                     shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
                 }
             }
