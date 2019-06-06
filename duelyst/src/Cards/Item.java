@@ -11,12 +11,13 @@ public class Item {
     private String desc;
     private int price;
     private ArrayList<Effect> effects = new ArrayList<>();
+    private ArrayList<Effect> specialSituationBuff = new ArrayList<>();
 
-    public Item(String name, String id, int price,String desc) {
+    public Item(String name, String id, int price, String desc) {
         this.name = name;
         this.id = id;
         this.price = price;
-        this.desc=desc;
+        this.desc = desc;
     }
 
     public void action(int x, int y) {
@@ -27,6 +28,10 @@ public class Item {
 
     public void addEffect(Effect effect) {
         effects.add(effect);
+    }
+
+    public void addSpecialSituationBuff(Effect effect) {
+        specialSituationBuff.add(effect);
     }
 
     public String getName() {
