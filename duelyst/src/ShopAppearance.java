@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -40,6 +41,7 @@ class ShopAppearance {
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
     private ImageView coinsImage;
     private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
+    private TextField toSearch = new TextField();
 
     {
         try {
@@ -59,6 +61,7 @@ class ShopAppearance {
         addNodes();
         locateNodes();
         setMouse();
+        setSearchingAppearance();
         display();
     }
 
@@ -100,6 +103,10 @@ class ShopAppearance {
         }
     }
 
+    private void setSearchingAppearance() {
+        toSearch.setMaxWidth(fillMenu.getWidth());
+    }
+
     private void initializeCards() {
         for (Text title : titles) {
             title.setFont(FontAppearance.FONT_SHOP_BUTTONS);
@@ -136,8 +143,7 @@ class ShopAppearance {
 
         for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
-
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue,shopIcon);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue, toSearch, shopIcon);
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 
@@ -159,10 +165,12 @@ class ShopAppearance {
         coinsImage.setLayoutY(12 * Main.HEIGHT_OF_WINDOW / 13);
         moneyValue.setLayoutX(coinsImage.getLayoutX() + Main.WIDTH_OF_WINDOW / 38);
         moneyValue.setLayoutY(coinsImage.getLayoutY() + Main.HEIGHT_OF_WINDOW / 40);
+        toSearch.setLayoutX(0);
+        toSearch.setLayoutY(10 * Main.HEIGHT_OF_WINDOW / 13);
         shopIcon.setLayoutX(0);
         shopIcon.setLayoutY(0);
         shopIcon.setFitWidth(fillMenu.getWidth());
-        shopIcon.setFitHeight(fillMenu.getHeight()/7);
+        shopIcon.setFitHeight(fillMenu.getHeight() / 7);
     }
 
     private void locateTitles() {
@@ -176,7 +184,7 @@ class ShopAppearance {
             titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 20);
         }
         currentPageView.setLayoutX(Main.WIDTH_OF_WINDOW / 50);
-        currentPageView.setLayoutY(5 * Main.HEIGHT_OF_WINDOW / 6);
+        currentPageView.setLayoutY(7 * Main.HEIGHT_OF_WINDOW / 8);
         currentPageView.setFont(FontAppearance.FONT_BUTTON);
         currentPageView.setFill(Color.WHITE);
         moneyValue.setFont(FontAppearance.FONT_MONEY_VALUE);
@@ -281,8 +289,7 @@ class ShopAppearance {
                 if ((currentPage * 10) + (5 * i) + j >= 70) {
                     Item item = CardMaker.getAllItems()[(currentPage * 10) + (5 * i) + j - 70];
                     shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
-                }
-                else if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
+                } else if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
                     Spell spell = (Spell) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
                     shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
                 } else {
