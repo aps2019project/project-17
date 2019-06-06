@@ -6,6 +6,7 @@ import Cards.Minion;
 import Cards.Spell;
 import Data.*;
 import Effects.Effect;
+import Effects.enums.BuffType;
 import GameGround.*;
 import InstanceMaker.CardMaker;
 import view.*;

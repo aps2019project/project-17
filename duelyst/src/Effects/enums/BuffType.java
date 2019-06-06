@@ -8,7 +8,7 @@ public enum BuffType {
     DISARM,
     CLEAR,
     FIRE_CELL,
-    POISON_CELL,
+    POISON,
     HOLY_CELL,
     ANTI,
     CHANGE_MANA,

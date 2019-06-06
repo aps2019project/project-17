@@ -16,6 +16,8 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CardMaker {
     private static final String address = "duelyst//src//InstanceMaker//";
@@ -171,20 +173,66 @@ public class CardMaker {
         bufferedWriter.close();
     }
 
-    private static <T extends Effect> T[] loadEffects(T[] load, String address) throws IOException {
+    private static Effect[] loadEffects(String address) throws IOException {
         Gson gson = new Gson();
-        return gson.fromJson(jsonReader(address), (Type) load.getClass());
+        String[] strings = address.split("//");
+        String[] s = strings[strings.length - 1].split("\\.");
+        String className = s[0].toUpperCase();
+        className = className.replaceFirst("CELL", "_CELL");
+        className = className.replaceFirst("CHANGEPROPERTIES", "POWER_BUFF");
+        className = className.replaceFirst("MANA", "_MANA");
+        className = className.replaceFirst("SPECIALSITUATIONBUFF", "SPECIAL_SITUATION_BUFF");
+        BuffType buffType = BuffType.valueOf(className);
+        switch (buffType) {
+            case HOLY:
+                Holy[] holy = new Holy[1];
+                return gson.fromJson(jsonReader(address), holy.getClass());
+            case WEAKNESS:
+            case POWER_BUFF:
+                ChangeProperties[] changeProperties = new ChangeProperties[1];
+                return gson.fromJson(jsonReader(address), changeProperties.getClass());
+            case STUN:
+                Stun[] stuns = new Stun[1];
+                return gson.fromJson(jsonReader(address), stuns.getClass());
+            case DISARM:
+                Disarm[] disarms = new Disarm[1];
+                return gson.fromJson(jsonReader(address), disarms.getClass());
+            case CLEAR:
+                Clear[] clears = new Clear[1];
+                return gson.fromJson(jsonReader(address), clears.getClass());
+            case FIRE_CELL:
+                FireCell[] fireCells = new FireCell[1];
+                return gson.fromJson(jsonReader(address), fireCells.getClass());
+            case POISON:
+                Poison[] poisons = new Poison[1];
+                return gson.fromJson(jsonReader(address), poisons.getClass());
+            case HOLY_CELL:
+                HolyCell[] holyCells = new HolyCell[1];
+                return gson.fromJson(jsonReader(address), holyCells.getClass());
+            case ANTI:
+                Anti[] antis = new Anti[1];
+                return gson.fromJson(jsonReader(address), antis.getClass());
+            case CHANGE_MANA:
+                ChangeMana[] changeManas = new ChangeMana[1];
+                return gson.fromJson(jsonReader(address), changeManas.getClass());
+            case SPECIAL_SITUATION_BUFF:
+                SpecialSituationBuff[] specialSituationBuffs = new SpecialSituationBuff[1];
+                return gson.fromJson(jsonReader(address), specialSituationBuffs.getClass());
+        }
+        return null;
     }
 
     public static <T extends Effect> void saveEffect(T newEffect) throws IOException {
         String[] names = newEffect.getClass().toString().split("\\.");
         String name = names[names.length - 1];
         String address = CardMaker.address + name + ".json";
-        T[] loadedEffects = (T[]) new Effect[1];
-        loadedEffects = loadEffects(loadedEffects, address);
+        T[] loadedEffects = (T[]) loadEffects(address);
         ArrayList<T> effects = new ArrayList<>();
         if (loadedEffects != null) {
             effects.addAll(Arrays.asList(loadedEffects));
+        }
+        for (T effect : effects) {
+            System.out.println(effect.getClass().toString());
         }
         effects.add(newEffect);
         StringBuilder stringBuilder = new StringBuilder("[");
@@ -277,71 +325,44 @@ public class CardMaker {
             switch (value) {
                 case HOLY:
                     address = CardMaker.address + "Holy.json";
-                    Holy[] holy = new Holy[1];
-                    effects.addAll(Arrays.asList(loadEffects(holy, address)));
                     break;
                 case WEAKNESS:
                 case POWER_BUFF:
                     address = CardMaker.address + "ChangeProperties.json";
-                    ChangeProperties[] changeProperties = new ChangeProperties[1];
-                    effects.addAll(Arrays.asList(loadEffects(changeProperties, address)));
                     break;
                 case STUN:
                     address = CardMaker.address + "Stun.json";
-                    Stun[] stuns = new Stun[1];
-                    effects.addAll(Arrays.asList(loadEffects(stuns, address)));
                     break;
                 case DISARM:
                     address = CardMaker.address + "Disarm.json";
-                    Disarm[] disarms = new Disarm[1];
-                    effects.addAll(Arrays.asList(loadEffects(disarms, address)));
                     break;
                 case CLEAR:
                     address = CardMaker.address + "Clear.json";
-                    Clear[] clears = new Clear[1];
-                    effects.addAll(Arrays.asList(loadEffects(clears, address)));
                     break;
                 case FIRE_CELL:
                     address = CardMaker.address + "FireCell.json";
-                    FireCell[] fireCells = new FireCell[1];
-                    fireCells = loadEffects(fireCells, address);
-                    if (fireCells != null)
-                        effects.addAll(Arrays.asList(fireCells));
                     break;
-                case POISON_CELL:
+                case POISON:
                     address = CardMaker.address + "Poison.json";
-                    Poison[] poisons = new Poison[1];
-                    poisons = loadEffects(poisons, address);
-                    if (poisons != null)
-                        effects.addAll(Arrays.asList(poisons));
                     break;
                 case HOLY_CELL:
                     address = CardMaker.address + "HolyCell.json";
-                    HolyCell[] holyCells = new HolyCell[1];
-                    holyCells = loadEffects(holyCells, address);
-                    if (holyCells != null)
-                        effects.addAll(Arrays.asList(holyCells));
                     break;
                 case ANTI:
                     address = CardMaker.address + "Anti.json";
-                    Anti[] antis = new Anti[1];
-                    antis = loadEffects(antis, address);
-                    if (antis != null)
-                        effects.addAll(Arrays.asList(antis));
                     break;
                 case CHANGE_MANA:
                     address = CardMaker.address + "ChangeMana.json";
-                    ChangeMana[] changeManas = new ChangeMana[1];
-                    changeManas = loadEffects(changeManas, address);
-                    if (changeManas != null)
-                        effects.addAll(Arrays.asList(changeManas));
                     break;
                 case SPECIAL_SITUATION_BUFF:
                     address = CardMaker.address + "SpecialSituationBuff.json";
-                    SpecialSituationBuff[] specialSituationBuffs = new SpecialSituationBuff[1];
-                    effects.addAll(Arrays.asList(loadEffects(specialSituationBuffs, address)));
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + value);
             }
+            Effect[] loadedEffects = loadEffects(address);
+            if (loadedEffects != null)
+                effects.addAll(Arrays.asList(loadedEffects));
         }
         return effects;
     }
