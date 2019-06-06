@@ -423,6 +423,8 @@ class ShopAppearance {
     }
 
     private void searchLogic() {
+        searchAppearance.removeAll(root);
+
         String name = toSearch.getText();
 
         if (name.equals(""))
