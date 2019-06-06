@@ -1,9 +1,0 @@
-[{"id": "205",
-"startTime": 0,
-"endTime": 100,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"specialSituation": "ATTACK",
-"targetDetail": "MINION"
-}]

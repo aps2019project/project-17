@@ -276,6 +276,36 @@ class ShopAppearance {
         for (Text title : titles) {
             title.setOnMouseExited(event -> title.setFill(Color.WHITE));
         }
+
+        titles[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                currentPage =6;
+                changeCards();
+            }
+        });
+
+        titles[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                currentPage =2;
+                changeCards();
+            }
+        });
+        titles[2].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                currentPage =0;
+                changeCards();
+            }
+        });
+        titles[3].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                currentPage =7;
+                changeCards();
+            }
+        });
         shopScene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.RIGHT)) {
                 int size = demoCards.length / 10;

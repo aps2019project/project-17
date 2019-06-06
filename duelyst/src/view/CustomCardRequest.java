@@ -410,7 +410,7 @@ class CustomCardRequest {
                 buffType = BuffType.FIRE_CELL;
                 break;
             case "8":
-                buffType = BuffType.POISON_CELL;
+                buffType = BuffType.POISON;
                 break;
             case "9":
                 buffType = BuffType.HOLY_CELL;
