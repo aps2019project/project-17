@@ -117,7 +117,7 @@ public class Main extends Application {
         helpPoPUp.setArcWidth(20);
         helpPoPUp.setArcHeight(20);
         helpPoPUp.setStroke(Color.WHITE);
-        Image img = null;
+        Image img;
         try {
             img = new Image(new FileInputStream("AccountHelp.png"));
             helpPoPUp.setFill(new ImagePattern(img));
@@ -146,7 +146,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         CardMaker.creation();
-        GameController.main();
+//        GameController.main();
         launch(args);
     }
 
