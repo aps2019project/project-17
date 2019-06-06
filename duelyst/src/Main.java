@@ -1,13 +1,7 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
-import Effects.MinionEffects.ChangeProperties;
-import Effects.MinionEffects.Disarm;
-import Effects.enums.TargetDetail;
-import Effects.enums.TargetRange;
-import Effects.enums.TargetType;
 import InstanceMaker.CardMaker;
-
 import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
