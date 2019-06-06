@@ -423,6 +423,7 @@ class ShopAppearance {
     }
 
     private void searchLogic(){
+        searchAppearance.removeAll(root);
         String name=toSearch.getText();
 
         String result= GameController.searchInShop(name, Account.getLoginUser().getShop());
