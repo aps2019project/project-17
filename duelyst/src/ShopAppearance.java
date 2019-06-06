@@ -433,8 +433,8 @@ class ShopAppearance {
         if (name.equals(""))
             return;
 
-        String result = GameController.searchInShop(name, Account.getLoginUser().getShop());
-        if (result.equals("there is not any card\\item in shop with this name")) {
+        String result = CardMaker.returnSearch(name);
+        if (result.equals("-1")) {
             root.getChildren().add(notFound);
             return;
         } else {
