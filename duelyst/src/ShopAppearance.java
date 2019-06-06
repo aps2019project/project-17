@@ -7,6 +7,7 @@ import Cards.Minion;
 import Cards.Spell;
 import Data.Account;
 import InstanceMaker.CardMaker;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -239,6 +241,13 @@ class ShopAppearance {
             changeCards();
         });
 
+        for (Text title:titles){
+            title.setOnMouseEntered(event -> title.setFill(Color.rgb(178, 46, 90,  1)));
+        }
+
+        for (Text title:titles){
+            title.setOnMouseExited(event -> title.setFill(Color.WHITE));
+        }
         shopScene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.RIGHT)) {
                 int size = demoCards.length / 10;
