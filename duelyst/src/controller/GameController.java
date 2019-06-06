@@ -1,6 +1,7 @@
 package controller;
 
 import CardCollections.*;
+import Cards.Card;
 import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
@@ -122,6 +123,13 @@ public class GameController {
         return shop.search(cardName);
     }
 
+    public static Card getCardFromId(String cardId,Shop shop){
+        return shop.getCardFromId(cardId);
+    }
+
+    public static Item getItemFromId(String itemId,Shop shop){
+        return shop.getItemFromId(itemId);
+    }
     /**
      * Battle
      */

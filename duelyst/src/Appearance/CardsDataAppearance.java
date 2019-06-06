@@ -53,7 +53,7 @@ public class CardsDataAppearance {
         }
     }
 
-    private void setSearchFonts(){
+    private void setSearchFonts() {
         this.idView.setFont(FontAppearance.FONT_NOT_FOUND);
         this.typeView.setFont(FontAppearance.FONT_NOT_FOUND);
         this.inCollectionView.setFont(FontAppearance.FONT_NOT_FOUND);
@@ -88,6 +88,30 @@ public class CardsDataAppearance {
 
     public Text getNameView() {
         return nameView;
+    }
+
+    public Text getTypeView() {
+        return typeView;
+    }
+
+    public void setTypeView(Text typeView) {
+        this.typeView = typeView;
+    }
+
+    public Text getIdView() {
+        return idView;
+    }
+
+    public void setIdView(Text idView) {
+        this.idView = idView;
+    }
+
+    public Text getInCollectionView() {
+        return inCollectionView;
+    }
+
+    public void setInCollectionView(Text inCollectionView) {
+        this.inCollectionView = inCollectionView;
     }
 
     public void setNameView(String nameView) {
