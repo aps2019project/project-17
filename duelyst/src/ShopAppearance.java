@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -97,7 +96,7 @@ class ShopAppearance {
 
         for (int i = 0; i < outBox.length; i++) {
             for (int j = 0; j < outBox[i].length; j++) {
-                outBox[i][j] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5, Main.HEIGHT_OF_WINDOW / 2.17);
+                outBox[i][j] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5 - 8, Main.HEIGHT_OF_WINDOW / 2.17 - 5);
                 outBox[i][j].setFill(ColorAppearance.BACKGROUND_DATA_CARDS);
                 outBox[i][j].setOpacity(0.7);
                 outBox[i][j].setVisible(false);
