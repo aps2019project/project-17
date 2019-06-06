@@ -304,6 +304,9 @@ class ShopAppearance {
                 currentPage = Math.abs((currentPage + size - 1) % size);
                 changeCards();
             }
+            else if (event.getCode().equals(KeyCode.ESCAPE)){
+                new MainMenu();
+            }
         });
 
         for (int i = 0; i < demoCards.length; i++) {
