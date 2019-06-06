@@ -7,7 +7,6 @@ import Cards.Minion;
 import Cards.Spell;
 import Data.Account;
 import InstanceMaker.CardMaker;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -249,6 +247,7 @@ class ShopAppearance {
     private void setMouse() {
         try {
             shopScene.setCursor(new ImageCursor(new Image(new FileInputStream("sword1.png"))));
+            changeColor();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -264,13 +263,11 @@ class ShopAppearance {
             int size = demoCards.length / 10;
             currentPage = Math.abs((currentPage + 1) % size);
             changeCards();
-            changeColor();
         });
         leftDirection.setOnMouseClicked(event -> {
             int size = demoCards.length / 10;
             currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
-            changeColor();
         });
 
         for (Text title : titles) {
@@ -284,37 +281,30 @@ class ShopAppearance {
         titles[0].setOnMouseClicked(event -> {
             currentPage = 6;
             changeCards();
-            changeColor();
         });
 
         titles[1].setOnMouseClicked(event -> {
             currentPage = 2;
             changeCards();
-            changeColor();
         });
         titles[2].setOnMouseClicked(event -> {
             currentPage = 0;
             changeCards();
-            changeColor();
         });
         titles[3].setOnMouseClicked(event -> {
             currentPage = 7;
             changeCards();
-            changeColor();
         });
         shopScene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.RIGHT)) {
                 int size = demoCards.length / 10;
                 currentPage = Math.abs((currentPage + 1) % size);
                 changeCards();
-                changeColor();
             } else if (event.getCode().equals(KeyCode.LEFT)) {
                 int size = demoCards.length / 10;
                 currentPage = Math.abs((currentPage + size - 1) % size);
                 changeCards();
-                changeColor();
-            }
-            else if (event.getCode().equals(KeyCode.ESCAPE)){
+            } else if (event.getCode().equals(KeyCode.ESCAPE)) {
                 new MainMenu();
             }
         });
@@ -361,6 +351,7 @@ class ShopAppearance {
         currentPageView.setText("Page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
         locateShownCards();
         locateNodes();
+        changeColor();
     }
 
     private void locateData() {
@@ -392,22 +383,22 @@ class ShopAppearance {
 
     private void changeColor() {
         if (currentPage == 0 || currentPage == 1) {
-            titles[2].setFill(Color.rgb(178, 46, 90, 1));
+            titles[2].setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
             titles[0].setFill(Color.WHITE);
             titles[1].setFill(Color.WHITE);
             titles[3].setFill(Color.WHITE);
-        } else if (currentPage == 2 || currentPage == 3 || currentPage == 4 || currentPage == 5) {
-            titles[1].setFill(Color.rgb(178, 46, 90, 1));
+        } else if (currentPage >= 2 && currentPage <= 5) {
+            titles[1].setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
             titles[0].setFill(Color.WHITE);
             titles[2].setFill(Color.WHITE);
             titles[3].setFill(Color.WHITE);
         } else if (currentPage == 6) {
-            titles[0].setFill(Color.rgb(178, 46, 90, 1));
+            titles[0].setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
             titles[2].setFill(Color.WHITE);
             titles[1].setFill(Color.WHITE);
             titles[3].setFill(Color.WHITE);
         } else {
-            titles[3].setFill(Color.rgb(178, 46, 90, 1));
+            titles[3].setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
             titles[2].setFill(Color.WHITE);
             titles[1].setFill(Color.WHITE);
             titles[0].setFill(Color.WHITE);
