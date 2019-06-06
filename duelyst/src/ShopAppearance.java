@@ -27,7 +27,8 @@ class ShopAppearance {
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
     private Rectangle[][] outBox = new Rectangle[2][5];
-    private Text[] titles = {new Text("SHOP"),new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
+    private ImageView shopIcon;
+    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
@@ -40,6 +41,7 @@ class ShopAppearance {
         try {
             rightDirection = new ImageView(new Image(new FileInputStream("arrowright.png")));
             leftDirection = new ImageView(new Image(new FileInputStream("leftarrow.png")));
+            shopIcon=new ImageView(new Image(new FileInputStream("price-tag.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -128,7 +130,7 @@ class ShopAppearance {
         for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
 
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView,shopIcon);
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 
@@ -142,6 +144,10 @@ class ShopAppearance {
     private void locateDirections() {
         double x = shopScene.getWidth() * 28 / 29;
         double y = 18.5 * shopScene.getHeight() / 40;
+        shopIcon.setLayoutX(0);
+        shopIcon.setLayoutY(0);
+        shopIcon.setFitWidth(fillMenu.getWidth());
+        shopIcon.setFitHeight(fillMenu.getHeight()/7);
         rightDirection.setLayoutX(x);
         rightDirection.setLayoutY(y);
         leftDirection.setLayoutX(shopScene.getWidth() * 3.2 / 31);
@@ -152,11 +158,11 @@ class ShopAppearance {
         for (int i = 0; i < titles.length; i++) {
             if (i == 0) {
                 titles[i].setLayoutX(Main.HEIGHT_OF_WINDOW / 50);
-                titles[i].setLayoutY(Main.WIDTH_OF_WINDOW / 25);
+                titles[i].setLayoutY(Main.WIDTH_OF_WINDOW / 10);
                 continue;
             }
             titles[i].setLayoutX(titles[i - 1].getLayoutX());
-            titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 7);
+            titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 20);
         }
         currentPageView.setLayoutX(Main.WIDTH_OF_WINDOW / 50);
         currentPageView.setLayoutY(5 * Main.HEIGHT_OF_WINDOW / 6);
