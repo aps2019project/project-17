@@ -26,7 +26,7 @@ public class Account implements Comparable<Account> {
         this.matchHistory = new MatchHistory();
         this.collection = new Collection();
         this.player = new Player(this.userName);
-//        this.shop = new Shop(this.collection);
+        this.shop = new Shop(this.collection);
     }
 
     public static String addUser(String userName, String passWord) {

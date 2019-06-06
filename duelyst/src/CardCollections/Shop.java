@@ -20,6 +20,7 @@ public class Shop {
     }
 
     private void initShop() {
+        CardMaker.creation();
         cardsInShop.addAll(Arrays.asList(CardMaker.getSpells()));
         cardsInShop.addAll(Arrays.asList(CardMaker.getHeroes()));
         cardsInShop.addAll(Arrays.asList(CardMaker.getMinions()));

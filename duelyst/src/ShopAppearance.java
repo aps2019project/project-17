@@ -2,17 +2,16 @@ import Appearance.CardsDataAppearance;
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Cards.Hero;
+import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
 import InstanceMaker.CardMaker;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -32,7 +31,7 @@ class ShopAppearance {
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private ImageView rightDirection;
     private ImageView leftDirection;
-    private Rectangle[] demoCards = new Rectangle[CardMaker.getAllCards().length];
+    private Rectangle[] demoCards = new Rectangle[CardMaker.getAllCards().length + CardMaker.getAllItems().length];
     private int currentPage = 0;
     private Text currentPageView = new Text();
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
@@ -41,7 +40,6 @@ class ShopAppearance {
         try {
             rightDirection = new ImageView(new Image(new FileInputStream("arrowright.png")));
             leftDirection = new ImageView(new Image(new FileInputStream("leftarrow.png")));
-            shopIcon=new ImageView(new Image(new FileInputStream("price-tag.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -130,7 +128,7 @@ class ShopAppearance {
         for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
 
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView,shopIcon);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 
@@ -144,10 +142,6 @@ class ShopAppearance {
     private void locateDirections() {
         double x = shopScene.getWidth() * 28 / 29;
         double y = 18.5 * shopScene.getHeight() / 40;
-        shopIcon.setLayoutX(0);
-        shopIcon.setLayoutY(0);
-        shopIcon.setFitWidth(fillMenu.getWidth());
-        shopIcon.setFitHeight(fillMenu.getHeight()/7);
         rightDirection.setLayoutX(x);
         rightDirection.setLayoutY(y);
         leftDirection.setLayoutX(shopScene.getWidth() * 3.2 / 31);
@@ -158,11 +152,11 @@ class ShopAppearance {
         for (int i = 0; i < titles.length; i++) {
             if (i == 0) {
                 titles[i].setLayoutX(Main.HEIGHT_OF_WINDOW / 50);
-                titles[i].setLayoutY(Main.WIDTH_OF_WINDOW / 10);
+                titles[i].setLayoutY(Main.WIDTH_OF_WINDOW / 25);
                 continue;
             }
             titles[i].setLayoutX(titles[i - 1].getLayoutX());
-            titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 20);
+            titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 7);
         }
         currentPageView.setLayoutX(Main.WIDTH_OF_WINDOW / 50);
         currentPageView.setLayoutY(5 * Main.HEIGHT_OF_WINDOW / 6);
