@@ -16,7 +16,7 @@ public class Collection {
         this.cards = new ArrayList<>();
         this.items = new ArrayList<>();
         this.decks = new ArrayList<>();
-        this.daric = 150000000;
+        this.daric = 15000;
         this.mainDeck = null;
     }
 

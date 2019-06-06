@@ -5,6 +5,7 @@ import Cards.Hero;
 import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
+import Data.Account;
 import InstanceMaker.CardMaker;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
@@ -34,11 +35,14 @@ class ShopAppearance {
     private int currentPage = 0;
     private Text currentPageView = new Text();
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
+    private ImageView coinsImage;
+    private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
 
     {
         try {
             rightDirection = new ImageView(new Image(new FileInputStream("arrowright.png")));
             leftDirection = new ImageView(new Image(new FileInputStream("leftarrow.png")));
+            coinsImage = new ImageView(new Image(new FileInputStream("coins.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -130,7 +134,7 @@ class ShopAppearance {
         for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
 
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue);
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 
@@ -148,6 +152,10 @@ class ShopAppearance {
         rightDirection.setLayoutY(y);
         leftDirection.setLayoutX(shopScene.getWidth() * 3.2 / 31);
         leftDirection.setLayoutY(y);
+        coinsImage.setLayoutX(Main.WIDTH_OF_WINDOW / 45);
+        coinsImage.setLayoutY(12 * Main.HEIGHT_OF_WINDOW / 13);
+        moneyValue.setLayoutX(coinsImage.getLayoutX() + Main.WIDTH_OF_WINDOW / 38);
+        moneyValue.setLayoutY(coinsImage.getLayoutY() + Main.HEIGHT_OF_WINDOW / 40);
     }
 
     private void locateTitles() {
@@ -164,6 +172,8 @@ class ShopAppearance {
         currentPageView.setLayoutY(5 * Main.HEIGHT_OF_WINDOW / 6);
         currentPageView.setFont(FontAppearance.FONT_BUTTON);
         currentPageView.setFill(Color.WHITE);
+        moneyValue.setFont(FontAppearance.FONT_MONEY_VALUE);
+        moneyValue.setFill(ColorAppearance.GOLD_COLOR);
     }
 
     private void locateShownCards() {
