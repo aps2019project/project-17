@@ -63,7 +63,9 @@ class ShopAppearance {
         for (int i = 0; i < demoCards.length; i++) {
             demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
             try {
-                if (CardMaker.getAllCards()[i] instanceof Hero)
+                if (i >= 70)
+                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("item_template.png"))));
+                else if (CardMaker.getAllCards()[i] instanceof Hero)
                     demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
                 else if ((CardMaker.getAllCards()[i] instanceof Minion))
                     demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
@@ -220,18 +222,18 @@ class ShopAppearance {
         });
         leftDirection.setOnMouseClicked(event -> {
             int size = demoCards.length / 10;
-            currentPage = Math.abs((currentPage +size-1) % size);
+            currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
         });
 
         shopScene.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.RIGHT)){
+            if (event.getCode().equals(KeyCode.RIGHT)) {
                 int size = demoCards.length / 10;
                 currentPage = Math.abs((currentPage + 1) % size);
                 changeCards();
-            }else if(event.getCode().equals(KeyCode.LEFT)){
+            } else if (event.getCode().equals(KeyCode.LEFT)) {
                 int size = demoCards.length / 10;
-                currentPage = Math.abs((currentPage +size-1) % size);
+                currentPage = Math.abs((currentPage + size - 1) % size);
                 changeCards();
             }
         });
@@ -278,26 +280,26 @@ class ShopAppearance {
     }
 
     private void locateData() {
-        double cardWidth=shownCards[0][0].getWidth();
-        double cardHeight=shownCards[0][0].getHeight();
+        double cardWidth = shownCards[0][0].getWidth();
+        double cardHeight = shownCards[0][0].getHeight();
         for (int i = 0; i < shownData.length; i++) {
             for (int j = 0; j < shownData[i].length; j++) {
 
                 shownData[i][j].addAll(root);
-                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 *cardWidth / 10);
+                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * cardWidth / 10);
                 shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * cardHeight / 5);
 
                 shownData[i][j].getMpView().setLayoutX((shownCards[i][j].getLayoutX()) + cardWidth / 14.1);
-                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + cardHeight/9.9);
+                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + cardHeight / 9.9);
 
                 shownData[i][j].getPriceView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 2.3);
-                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight/ 11);
+                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight / 11);
 
                 if (shownData[i][j].getApView() != null) {
-                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth/4.5);
-                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight/1.55);
+                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4.5);
+                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight / 1.55);
 
-                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth/2.1);
+                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth / 2.1);
                     shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
                 }
             }
