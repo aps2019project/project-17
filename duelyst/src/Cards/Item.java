@@ -27,10 +27,14 @@ public class Item {
     }
 
     public void addEffect(Effect effect) {
+        if (effects == null)
+            effects = new ArrayList<>();
         effects.add(effect);
     }
 
     public void addSpecialSituationBuff(Effect effect) {
+        if (specialSituationBuff == null)
+            specialSituationBuff = new ArrayList<>();
         specialSituationBuff.add(effect);
     }
 

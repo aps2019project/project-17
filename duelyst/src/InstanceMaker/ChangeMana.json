@@ -1,0 +1,27 @@
+[{"id": "301",
+"startTime": 0,
+"endTime": 3,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "PLAYER",
+"manaChangeValue": 1,
+"targetDetail": "NONE"
+},
+{"id": "308",
+"startTime": 1,
+"endTime": 1,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "PLAYER",
+"manaChangeValue": 3,
+"targetDetail": "NONE"
+},
+{"id": "314",
+"startTime": 0,
+"endTime": 100,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "PLAYER",
+"manaChangeValue": 1,
+"targetDetail": "NONE"
+}]

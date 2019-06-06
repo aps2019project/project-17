@@ -5,7 +5,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "holyBuffState": 3,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "121",
 "startTime": 0,
@@ -14,7 +14,7 @@
 "targetRange": "DISTANCE_TWO",
 "targetType": "MINION",
 "holyBuffState": -1,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "126",
 "startTime": 0,
@@ -23,7 +23,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "holyBuffState": 1,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "126",
 "startTime": 0,
@@ -32,7 +32,7 @@
 "targetRange": "AROUND",
 "targetType": "MINION",
 "holyBuffState": 1,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "137",
 "startTime": 0,
@@ -41,5 +41,41 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "holyBuffState": 12,
-"targetDetail": "MINION"
+"targetDetail": "null"
+},
+{"id": "13",
+"startTime": 0,
+"endTime": 2,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"holyBuffState": 2,
+"targetDetail": "INSIDER"
+},
+{"id": "302",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "INSIDER_HERO",
+"targetType": "MINION",
+"holyBuffState": 12,
+"targetDetail": "INSIDER"
+},
+{"id": "309",
+"startTime": 0,
+"endTime": 2,
+"isContinues": false,
+"targetRange": "RANDOM",
+"targetType": "MINION",
+"holyBuffState": 10,
+"targetDetail": "INSIDER"
+},
+{"id": "-319",
+"startTime": 0,
+"endTime": 2,
+"isContinues": false,
+"targetRange": "SELF",
+"targetType": "MINION",
+"holyBuffState": 1,
+"targetDetail": "NONE"
 }]

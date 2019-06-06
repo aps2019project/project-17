@@ -4,7 +4,7 @@
 "isContinues": false,
 "targetRange": "ALL",
 "targetType": "MINION",
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "204",
 "startTime": 0,
@@ -12,7 +12,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "102",
 "startTime": 0,
@@ -20,7 +20,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "136",
 "startTime": 0,
@@ -28,5 +28,13 @@
 "isContinues": false,
 "targetRange": "AROUND",
 "targetType": "MINION",
-"targetDetail": "MINION"
+"targetDetail": "null"
+},
+{"id": "20",
+"startTime": 0,
+"endTime": 2,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"targetDetail": "ENEMY"
 }]

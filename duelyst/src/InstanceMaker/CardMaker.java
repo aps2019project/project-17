@@ -1,6 +1,5 @@
 package InstanceMaker;
 
-import CardCollections.Shop;
 import Cards.*;
 import Data.Account;
 import Effects.CellEffects.FireCell;
@@ -25,13 +24,9 @@ public class CardMaker {
     private static final String addressOfMinion = address + "Minion.json";
     private static final String addressOfSpell = address + "Spell.json";
     private static Spell[] spells;
-    private static Effect[] spellEffects;
     private static Minion[] minions;
-    private static Effect[] minionsSpecialPower;
     private static Hero[] heroes;
-    private static Effect[] heroesSpecialPower;
     private static Item[] items;
-    private static Effect[] itemEffects;
 
     public static void creation() {
         try {
@@ -409,6 +404,7 @@ public class CardMaker {
                 }
                 if (specialSituation != null)
                     item.addSpecialSituationBuff(specialSituation);
+                item.addEffect(effect);
             }
         }
 
