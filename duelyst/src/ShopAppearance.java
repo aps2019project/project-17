@@ -46,6 +46,7 @@ class ShopAppearance {
             rightDirection = new ImageView(new Image(new FileInputStream("arrowright.png")));
             leftDirection = new ImageView(new Image(new FileInputStream("leftarrow.png")));
             coinsImage = new ImageView(new Image(new FileInputStream("coins.png")));
+            shopIcon=new ImageView(new Image(new FileInputStream("price-tag.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -140,8 +141,7 @@ class ShopAppearance {
 
         for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
-
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue, toSearch);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue, toSearch, shopIcon);
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 
@@ -165,17 +165,21 @@ class ShopAppearance {
         moneyValue.setLayoutY(coinsImage.getLayoutY() + Main.HEIGHT_OF_WINDOW / 40);
         toSearch.setLayoutX(0);
         toSearch.setLayoutY(10 * Main.HEIGHT_OF_WINDOW / 13);
+        shopIcon.setLayoutX(0);
+        shopIcon.setLayoutY(0);
+        shopIcon.setFitWidth(fillMenu.getWidth());
+        shopIcon.setFitHeight(fillMenu.getHeight() / 7);
     }
 
     private void locateTitles() {
         for (int i = 0; i < titles.length; i++) {
             if (i == 0) {
                 titles[i].setLayoutX(Main.HEIGHT_OF_WINDOW / 50);
-                titles[i].setLayoutY(Main.WIDTH_OF_WINDOW / 25);
+                titles[i].setLayoutY(Main.WIDTH_OF_WINDOW / 10);
                 continue;
             }
             titles[i].setLayoutX(titles[i - 1].getLayoutX());
-            titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 7);
+            titles[i].setLayoutY(titles[i - 1].getLayoutY() + Main.HEIGHT_OF_WINDOW / 20);
         }
         currentPageView.setLayoutX(Main.WIDTH_OF_WINDOW / 50);
         currentPageView.setLayoutY(7 * Main.HEIGHT_OF_WINDOW / 8);
