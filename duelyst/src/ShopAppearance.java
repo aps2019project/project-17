@@ -164,7 +164,7 @@ class ShopAppearance {
         moneyValue.setLayoutX(coinsImage.getLayoutX() + Main.WIDTH_OF_WINDOW / 38);
         moneyValue.setLayoutY(coinsImage.getLayoutY() + Main.HEIGHT_OF_WINDOW / 40);
         toSearch.setLayoutX(0);
-        toSearch.setLayoutY(10 * Main.HEIGHT_OF_WINDOW / 13);
+        toSearch.setLayoutY(5 * Main.HEIGHT_OF_WINDOW / 13);
         shopIcon.setLayoutX(0);
         shopIcon.setLayoutY(0);
         shopIcon.setFitWidth(fillMenu.getWidth());
