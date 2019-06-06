@@ -1,0 +1,27 @@
+[{"id": "205",
+"startTime": 0,
+"endTime": 100,
+"isContinues": false,
+"targetRange": "SELF",
+"targetType": "MINION",
+"specialSituation": "ATTACK",
+"targetDetail": "MINION"
+},
+{"id": "117",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "SELF",
+"targetType": "MINION",
+"specialSituation": "DIE",
+"targetDetail": "MINION"
+},
+{"id": "138",
+"startTime": 0,
+"endTime": 0,
+"isContinues": true,
+"targetRange": "SELF",
+"targetType": "MINION",
+"specialSituation": "DIE",
+"targetDetail": "MINION"
+}]

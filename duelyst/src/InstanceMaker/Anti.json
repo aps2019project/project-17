@@ -1,0 +1,18 @@
+[{"id": "120",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "SELF",
+"targetType": "MINION",
+"buffType": "HOLY",
+"targetDetail": "MINION"
+},
+{"id": "128",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "SELF",
+"targetType": "MINION",
+"buffType": "DISARM",
+"targetDetail": "MINION"
+}]

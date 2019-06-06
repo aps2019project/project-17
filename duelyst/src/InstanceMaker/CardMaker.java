@@ -13,11 +13,8 @@ import com.google.gson.Gson;
 import controller.InstanceType;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CardMaker {
     private static final String address = "duelyst//src//InstanceMaker//";
@@ -62,19 +59,22 @@ public class CardMaker {
             case HERO:
                 Hero[] heroes;
                 heroes = gson.fromJson(jsonReader(addressOfHero), Hero[].class);
-                addEffectToHero(heroes);
+                addEffectToCard(heroes);
                 return heroes;
             case ITEM:
                 Item[] items;
                 items = gson.fromJson(jsonReader(addressOfItem), Item[].class);
+                addEffectToItem(items);
                 return items;
             case MINION:
                 Minion[] minions;
                 minions = gson.fromJson(jsonReader(addressOfMinion), Minion[].class);
+                addEffectToCard(minions);
                 return minions;
             case SPELL:
                 Spell[] spells;
                 spells = gson.fromJson(jsonReader(addressOfSpell), Spell[].class);
+                addEffectToCard(spells);
                 return spells;
 
         }
@@ -257,7 +257,7 @@ public class CardMaker {
                 stringBuilder.append("\"manaChangeValue\": ").append(((ChangeMana) effect).getManaChangeValue()).append(",\n");
             if (effect instanceof SpecialSituationBuff)
                 stringBuilder.append("\"specialSituation\": \"").append(((SpecialSituationBuff) effect).getSpecialSituation()).append("\",\n");
-            stringBuilder.append("\"targetDetail\": \"").append(effect.getTargetType()).append("\"\n");
+            stringBuilder.append("\"targetDetail\": \"").append(effect.getTargetDetail()).append("\"\n");
             if (effects.indexOf(effect) != effects.size() - 1)
                 stringBuilder.append("},\n");
             else
@@ -321,12 +321,15 @@ public class CardMaker {
     private static ArrayList<Effect> getAllEffect() throws IOException {
         String address;
         ArrayList<Effect> effects = new ArrayList<>();
+        Effect[] loadedEffects;
         for (BuffType value : BuffType.values()) {
+            loadedEffects = null;
             switch (value) {
                 case HOLY:
                     address = CardMaker.address + "Holy.json";
                     break;
                 case WEAKNESS:
+                    continue;
                 case POWER_BUFF:
                     address = CardMaker.address + "ChangeProperties.json";
                     break;
@@ -360,19 +363,42 @@ public class CardMaker {
                 default:
                     throw new IllegalStateException("Unexpected value: " + value);
             }
-            Effect[] loadedEffects = loadEffects(address);
+            loadedEffects = loadEffects(address);
             if (loadedEffects != null)
                 effects.addAll(Arrays.asList(loadedEffects));
         }
         return effects;
     }
 
-    private static void addEffectToHero(Hero[] heroes) throws IOException {
+    private static void addEffectToCard(Card[] cards) throws IOException {
         ArrayList<Effect> effects = getAllEffect();
         Effect specialSituation;
-        for (Hero hero : heroes) {
+        for (Card card : cards) {
             for (Effect effect : effects) {
-                if (!hero.getId().equals(effect.getId()))
+                if (!card.getId().equals(effect.getId()))
+                    continue;
+                specialSituation = null;
+                for (Effect secondEffect : effects) {
+                    if (effect instanceof SpecialSituationBuff && Integer.parseInt(effect.getId()) == -Integer.parseInt(secondEffect.getId()))
+                        specialSituation = secondEffect;
+                }
+                if (specialSituation != null && card instanceof Minion)
+                    ((Minion) card).addSpecialSituationBuff(specialSituation);
+                if (card instanceof Minion)
+                    ((Minion) card).addSpecialPower(effect);
+                if (card instanceof Spell)
+                    ((Spell) card).addEffect(effect);
+            }
+        }
+
+    }
+
+    private static void addEffectToItem(Item[] items) throws IOException {
+        ArrayList<Effect> effects = getAllEffect();
+        Effect specialSituation;
+        for (Item item : items) {
+            for (Effect effect : effects) {
+                if (!item.getId().equals(effect.getId()))
                     continue;
                 specialSituation = null;
                 for (Effect secondEffect : effects) {
@@ -380,10 +406,10 @@ public class CardMaker {
                         specialSituation = secondEffect;
                 }
                 if (specialSituation != null)
-                    hero.addSpecialSituationBuff(specialSituation);
-                hero.addSpecialPower(effect);
+                    item.addSpecialSituationBuff(specialSituation);
             }
         }
+
     }
 }
 
