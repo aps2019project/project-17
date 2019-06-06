@@ -439,15 +439,15 @@ class ShopAppearance {
             if(GameController.getCardFromId(result, Account.getLoginUser().getShop())!=null){//the searched thing is a card
                 Card card=GameController.getCardFromId(result, Account.getLoginUser().getShop());
                 if(card instanceof Hero){
-                    searchAppearance=new CardsDataAppearance("Hero", "ID="+card.getId(),isInCollection );
+                    searchAppearance=new CardsDataAppearance(new Text("Hero"), new Text("ID="+card.getId()),new Text(isInCollection) );
                 }else if(card instanceof Minion){
-                    searchAppearance=new CardsDataAppearance("Minion", "ID="+card.getId(),isInCollection );
+                    searchAppearance=new CardsDataAppearance(new Text("Minion"), new Text("ID="+card.getId()),new Text(isInCollection) );
                 }else if(card instanceof Spell){
-                    searchAppearance=new CardsDataAppearance("Spell", "ID="+card.getId(),isInCollection );
+                    searchAppearance=new CardsDataAppearance(new Text("Spell"), new Text("ID="+card.getId()),new Text(isInCollection) );
                 }
             }else if(GameController.getItemFromId(result, Account.getLoginUser().getShop())!=null){//the searched thing is an item
                 Item item=GameController.getItemFromId(result, Account.getLoginUser().getShop());
-                searchAppearance=new CardsDataAppearance("Item", "ID="+item.getId(),isInCollection);
+                searchAppearance=new CardsDataAppearance(new Text("Item"), new Text("ID="+item.getId()),new Text(isInCollection));
             }
         }
         searchAppearance.addAll(root);
