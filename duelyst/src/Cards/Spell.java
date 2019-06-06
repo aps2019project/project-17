@@ -25,6 +25,8 @@ public class Spell extends Card {
     }
 
     public void addEffect(Effect effect) {
+        if (effects == null)
+            effects = new ArrayList<>();
         effects.add(effect);
     }
 
