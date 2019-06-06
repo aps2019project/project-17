@@ -7,7 +7,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 4,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "-205",
 "startTime": 0,
@@ -18,7 +18,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "207",
 "startTime": 0,
@@ -29,7 +29,7 @@
 "changeHealthValue": -4,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "105",
 "startTime": 0,
@@ -40,7 +40,7 @@
 "changeHealthValue": -123,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "110",
 "startTime": 0,
@@ -51,7 +51,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "115",
 "startTime": 0,
@@ -62,7 +62,7 @@
 "changeHealthValue": 10,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "-117",
 "startTime": 0,
@@ -73,7 +73,7 @@
 "changeHealthValue": -2,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "118",
 "startTime": 0,
@@ -84,7 +84,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "122",
 "startTime": 1,
@@ -95,7 +95,7 @@
 "changeHealthValue": -4,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "122",
 "startTime": 1,
@@ -106,7 +106,7 @@
 "changeHealthValue": -2,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "123",
 "startTime": 1,
@@ -117,7 +117,7 @@
 "changeHealthValue": -8,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "124",
 "startTime": 1,
@@ -128,7 +128,7 @@
 "changeHealthValue": -6,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "125",
 "startTime": 0,
@@ -139,7 +139,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "125",
 "startTime": 0,
@@ -150,7 +150,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "125",
 "startTime": 0,
@@ -161,7 +161,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": true,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "125",
 "startTime": 0,
@@ -172,7 +172,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": true,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "126",
 "startTime": 0,
@@ -183,7 +183,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "126",
 "startTime": 0,
@@ -194,7 +194,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "127",
 "startTime": 0,
@@ -205,7 +205,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 1,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "131",
 "startTime": 0,
@@ -216,7 +216,7 @@
 "changeHealthValue": -16,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "-138",
 "startTime": 0,
@@ -227,7 +227,7 @@
 "changeHealthValue": -6,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "3",
 "startTime": 0,
@@ -238,7 +238,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "4",
 "startTime": 0,
@@ -249,7 +249,7 @@
 "changeHealthValue": -4,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "5",
 "startTime": 0,
@@ -260,7 +260,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 4,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "7",
 "startTime": 0,
@@ -271,7 +271,7 @@
 "changeHealthValue": -8,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "9",
 "startTime": 0,
@@ -282,7 +282,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 4,
 "returnEffect": true,
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "11",
 "startTime": 0,
@@ -294,4 +294,213 @@
 "changePowerValue": 0,
 "returnEffect": false,
 "targetDetail": "NONE"
+},
+{"id": "13",
+"startTime": 0,
+"endTime": 2,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"changeHealthValue": -6,
+"changePowerValue": 0,
+"returnEffect": true,
+"targetDetail": "INSIDER"
+},
+{"id": "15",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ALL",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 2,
+"returnEffect": false,
+"targetDetail": "INSIDER"
+},
+{"id": "16",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ALL_IN_COLUMN",
+"targetType": "MINION",
+"changeHealthValue": -6,
+"changePowerValue": 0,
+"returnEffect": false,
+"targetDetail": "ENEMY"
+},
+{"id": "17",
+"startTime": 0,
+"endTime": 4,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": -4,
+"returnEffect": true,
+"targetDetail": "NONE"
+},
+{"id": "18",
+"startTime": 0,
+"endTime": 1,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"changeHealthValue": -6,
+"changePowerValue": 0,
+"returnEffect": true,
+"targetDetail": "INSIDER"
+},
+{"id": "18",
+"startTime": 0,
+"endTime": 1,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 8,
+"returnEffect": false,
+"targetDetail": "INSIDER"
+},
+{"id": "19",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "AROUND",
+"targetType": "MINION",
+"changeHealthValue": -100,
+"changePowerValue": 0,
+"returnEffect": false,
+"targetDetail": "NONE"
+},
+{"id": "305",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "RANDOM",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 2,
+"returnEffect": false,
+"targetDetail": "INSIDER_NOT_MELEE"
+},
+{"id": "306",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ENEMY_HERO",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": -2,
+"returnEffect": false,
+"targetDetail": "INSIDER_NOT_MELEE"
+},
+{"id": "307",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "SELF",
+"targetType": "MINION",
+"changeHealthValue": 3,
+"changePowerValue": 0,
+"returnEffect": false,
+"targetDetail": "NONE"
+},
+{"id": "307",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "RANDOM",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 3,
+"returnEffect": false,
+"targetDetail": "NONE"
+},
+{"id": "-310",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "CLOSEST_RANDOM",
+"targetType": "MINION",
+"changeHealthValue": -8,
+"changePowerValue": 0,
+"returnEffect": false,
+"targetDetail": "NONE"
+},
+{"id": "311",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 2,
+"returnEffect": false,
+"targetDetail": "NONE"
+},
+{"id": "-312",
+"startTime": 0,
+"endTime": 2,
+"isContinues": false,
+"targetRange": "RANDOM",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": -2,
+"returnEffect": true,
+"targetDetail": "ENEMY"
+},
+{"id": "313",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "RANDOM",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 6,
+"returnEffect": false,
+"targetDetail": "NONE"
+},
+{"id": "-315",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ENEMY_HERO",
+"targetType": "MINION",
+"changeHealthValue": -1,
+"changePowerValue": 0,
+"returnEffect": false,
+"targetDetail": "ENEMY"
+},
+{"id": "-316",
+"startTime": 0,
+"endTime": 1,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"changeHealthValue": -1,
+"changePowerValue": 0,
+"returnEffect": false,
+"targetDetail": "ENEMY"
+},
+{"id": "-318",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 1,
+"returnEffect": false,
+"targetDetail": "INSIDER"
+},
+{"id": "320",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ALL",
+"targetType": "MINION",
+"changeHealthValue": 0,
+"changePowerValue": 5,
+"returnEffect": false,
+"targetDetail": "INSIDER_NOT_MELEE"
 }]

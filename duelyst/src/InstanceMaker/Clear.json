@@ -4,7 +4,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "135",
 "startTime": 0,
@@ -12,7 +12,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "MINION"
+"targetDetail": "null"
 },
 {"id": "2",
 "startTime": 0,
@@ -20,5 +20,13 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "MINION"
+"targetDetail": "null"
+},
+{"id": "12",
+"startTime": 0,
+"endTime": 0,
+"isContinues": false,
+"targetRange": "ONE",
+"targetType": "MINION",
+"targetDetail": "NONE"
 }]
