@@ -2,13 +2,18 @@ import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
 import javafx.geometry.Pos;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 public class CertainlyOfShop {
@@ -31,7 +36,6 @@ public class CertainlyOfShop {
         no.setFill(Color.RED);
         close.setFill(ColorAppearance.BACKGROUND_DATA_CARDS);
     }
-
 
     public static void disPlay(String cardName, String price) {
         VBox root = new VBox();
