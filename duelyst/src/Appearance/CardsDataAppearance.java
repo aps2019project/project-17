@@ -10,6 +10,9 @@ public class CardsDataAppearance {
     private Text mpView;
     private Text apView;
     private Text hpView;
+    private Text typeView;
+    private Text idView;
+    private Text inCollectionView;
 
     public CardsDataAppearance(String nameView, String priceView, String mpView, String apView, String hpView) {
         this.nameView = new Text(nameView);
@@ -33,6 +36,13 @@ public class CardsDataAppearance {
         fill();
     }
 
+    public CardsDataAppearance(Text typeView, Text idView, Text inCollectionView) {
+        this.typeView = typeView;
+        this.idView = idView;
+        this.inCollectionView = inCollectionView;
+        setSearchFonts();
+    }
+
     private void setFonts() {
         this.nameView.setFont(FontAppearance.FONT_SHOW_CARD_DATA);
         this.priceView.setFont(FontAppearance.FONT_SHOW_CARD_DATA);
@@ -41,6 +51,12 @@ public class CardsDataAppearance {
             this.apView.setFont(FontAppearance.FONT_SHOW_AP);
             this.hpView.setFont(FontAppearance.FONT_SHOW_AP);
         }
+    }
+
+    private void setSearchFonts(){
+        this.idView.setFont(FontAppearance.FONT_NOT_FOUND);
+        this.typeView.setFont(FontAppearance.FONT_NOT_FOUND);
+        this.inCollectionView.setFont(FontAppearance.FONT_NOT_FOUND);
     }
 
     private void changeLight(double value) {

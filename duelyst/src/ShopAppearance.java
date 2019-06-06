@@ -7,6 +7,7 @@ import Cards.Minion;
 import Cards.Spell;
 import Data.Account;
 import InstanceMaker.CardMaker;
+import controller.GameController;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -41,6 +42,7 @@ class ShopAppearance {
     private Text currentPageView = new Text();
     private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
     private TextField toSearch = new TextField();
+    private Text notFound=new Text("Card not Found!");
     private int currentPage = 0;
 
     {
@@ -118,6 +120,8 @@ class ShopAppearance {
                     changeCards();
             }
         });
+        notFound.setFont(FontAppearance.FONT_NOT_FOUND);
+        notFound.setFill(Color.RED);
         search.setFont(FontAppearance.FONT_SEARCH_SHOP);
         search.setFill(Color.BLACK);
         outBoxOfSearch.setOpacity(0.7);
@@ -125,6 +129,7 @@ class ShopAppearance {
         outBoxOfSearch.setOnMouseExited(e -> outBoxOfSearch.setOpacity(0.7));
         search.setOnMouseEntered(e -> outBoxOfSearch.setOpacity(1));
         outBoxOfSearch.setFill(ColorAppearance.COLOR_OUTBOX_SEARCH_SHOP);
+
     }
 
     private void initializeCards() {
@@ -199,6 +204,8 @@ class ShopAppearance {
         search.setLayoutY(6 * Main.HEIGHT_OF_WINDOW / 13);
         outBoxOfSearch.setLayoutX(6.5 * search.getLayoutX() / 10);
         outBoxOfSearch.setLayoutY(9.5 * search.getLayoutY() / 10);
+        notFound.setLayoutX(0);//todo
+        notFound.setLayoutY(outBoxOfSearch.getLayoutY()+1.5*outBoxOfSearch.getHeight());
     }
 
     private void locateTitles() {
@@ -402,6 +409,15 @@ class ShopAppearance {
             titles[2].setFill(Color.WHITE);
             titles[1].setFill(Color.WHITE);
             titles[0].setFill(Color.WHITE);
+        }
+    }
+
+    private void searchLogic(){
+        String name=toSearch.getText();
+
+        String result= GameController.searchInShop(name, Account.getLoginUser().getShop());
+        if(result.equals("there is not any card\\item in shop with this name")){
+            root.getChildren().add(notFound);
         }
     }
 }

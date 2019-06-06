@@ -37,6 +37,25 @@ public class Shop {
         return returnItemFromShop(cardName).getId();
     }
 
+    public Card getCardFromId(String cardId){
+        for (Card card:CardMaker.getAllCards()) {
+            if(card.getId().equals(cardId)){
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public Item getItemFromId(String itemId){
+        for (Item item:CardMaker.getAllItems()) {
+            if(item.getId().equals(itemId)){
+                return item;
+            }
+        }
+        return null;
+    }
+
+
     public String buy(String cardName) {
         if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
             return "this card\\item doesnt exist in shop";
