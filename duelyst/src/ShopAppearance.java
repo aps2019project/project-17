@@ -41,7 +41,7 @@ class ShopAppearance {
     private Text currentPageView = new Text();
     private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
     private TextField toSearch = new TextField();
-    private Text notFound=new Text("Card not Found!");
+    private Text notFound = new Text("Card not Found!");
     private int currentPage = 0;
 
     {
@@ -204,7 +204,7 @@ class ShopAppearance {
         outBoxOfSearch.setLayoutX(6.5 * search.getLayoutX() / 10);
         outBoxOfSearch.setLayoutY(9.5 * search.getLayoutY() / 10);
         notFound.setLayoutX(0);//todo
-        notFound.setLayoutY(outBoxOfSearch.getLayoutY()+1.5*outBoxOfSearch.getHeight());
+        notFound.setLayoutY(outBoxOfSearch.getLayoutY() + 1.5 * outBoxOfSearch.getHeight());
     }
 
     private void locateTitles() {
@@ -266,6 +266,8 @@ class ShopAppearance {
     }
 
     private void handleEvents() {
+        search.setOnMouseClicked(e -> searchLogic());
+        outBoxOfSearch.setOnMouseClicked(e -> searchLogic());
         rightDirection.setOnMouseClicked(event -> {
             int size = allProducts.length / 10;
             currentPage = Math.abs((currentPage + 1) % size);
@@ -422,42 +424,47 @@ class ShopAppearance {
         }
     }
 
-    private void searchLogic(){
-        searchAppearance.removeAll(root);
-        String name=toSearch.getText();
+    private void searchLogic() {
+        if (searchAppearance != null)
+            searchAppearance.removeAll(root);
 
-        String result= GameController.searchInShop(name, Account.getLoginUser().getShop());
-        if(result.equals("there is not any card\\item in shop with this name")){
+        String name = toSearch.getText();
+
+        if (name.equals(""))
+            return;
+
+        String result = CardMaker.returnSearch(name);
+        if (result.equals("-1")) {
             root.getChildren().add(notFound);
             return;
-        }else {
-            String isInCollection=GameController.search(name, Account.getLoginUser().getCollection());
-            if(isInCollection.equals("can't find this card\\item")){
-                isInCollection="You don't have this card";
-            }else {
-                isInCollection="You have this card";
+        } else {
+            String isInCollection = GameController.search(name, Account.getLoginUser().getCollection());
+            if (isInCollection.equals("can't find this card\\item")) {
+                isInCollection = "You don't have this card";
+            } else {
+                isInCollection = "You have this card";
             }
-            if(GameController.getCardFromId(result, Account.getLoginUser().getShop())!=null){//the searched thing is a card
-                Card card=GameController.getCardFromId(result, Account.getLoginUser().getShop());
-                if(card instanceof Hero){
-                    searchAppearance=new CardsDataAppearance(new Text("Hero"), new Text("ID="+card.getId()),new Text(isInCollection) );
-                }else if(card instanceof Minion){
-                    searchAppearance=new CardsDataAppearance(new Text("Minion"), new Text("ID="+card.getId()),new Text(isInCollection) );
-                }else if(card instanceof Spell){
-                    searchAppearance=new CardsDataAppearance(new Text("Spell"), new Text("ID="+card.getId()),new Text(isInCollection) );
+            if (GameController.getCardFromId(result, Account.getLoginUser().getShop()) != null) {//the searched thing is a card
+                Card card = GameController.getCardFromId(result, Account.getLoginUser().getShop());
+                if (card instanceof Hero) {
+                    searchAppearance = new CardsDataAppearance(new Text("Hero"), new Text("ID=" + card.getId()), new Text(isInCollection));
+                } else if (card instanceof Minion) {
+                    searchAppearance = new CardsDataAppearance(new Text("Minion"), new Text("ID=" + card.getId()), new Text(isInCollection));
+                } else if (card instanceof Spell) {
+                    searchAppearance = new CardsDataAppearance(new Text("Spell"), new Text("ID=" + card.getId()), new Text(isInCollection));
                 }
-            }else if(GameController.getItemFromId(result, Account.getLoginUser().getShop())!=null){//the searched thing is an item
-                Item item=GameController.getItemFromId(result, Account.getLoginUser().getShop());
-                searchAppearance=new CardsDataAppearance(new Text("Item"), new Text("ID="+item.getId()),new Text(isInCollection));
+            } else if (GameController.getItemFromId(result, Account.getLoginUser().getShop()) != null) {//the searched thing is an item
+                Item item = GameController.getItemFromId(result, Account.getLoginUser().getShop());
+                searchAppearance = new CardsDataAppearance(new Text("Item"), new Text("ID=" + item.getId()), new Text(isInCollection));
             }
         }
-        searchAppearance.addAll(root);
+        searchAppearance.addAll(root, 0);
         searchAppearance.getNameView().setLayoutX(0);
-        searchAppearance.getNameView().setLayoutY(outBoxOfSearch.getLayoutY()+1.5*outBoxOfSearch.getHeight());
+        searchAppearance.getNameView().setLayoutY(outBoxOfSearch.getLayoutY() + 1.5 * outBoxOfSearch.getHeight());
         searchAppearance.getIdView().setLayoutX(0);
-        searchAppearance.getIdView().setLayoutY(outBoxOfSearch.getLayoutY()+2*outBoxOfSearch.getHeight());
+        searchAppearance.getIdView().setLayoutY(outBoxOfSearch.getLayoutY() + 2 * outBoxOfSearch.getHeight());
         searchAppearance.getInCollectionView().setLayoutX(0);
-        searchAppearance.getInCollectionView().setLayoutY(outBoxOfSearch.getLayoutY()+2.5*outBoxOfSearch.getHeight());
+        searchAppearance.getInCollectionView().setLayoutY(outBoxOfSearch.getLayoutY() + 2.5 * outBoxOfSearch.getHeight());
 
     }
 }

@@ -37,20 +37,36 @@ public class Shop {
         return returnItemFromShop(cardName).getId();
     }
 
-    public Card getCardFromId(String cardId){
-        for (Card card:CardMaker.getAllCards()) {
-            if(card.getId().equals(cardId)){
+    public Card getCardFromId(String cardId) {
+        for (Card card : CardMaker.getAllCards()) {
+            if (card.getId().equals(cardId)) {
                 return card;
             }
         }
         return null;
     }
 
-    public Item getItemFromId(String itemId){
-        for (Item item:CardMaker.getAllItems()) {
-            if(item.getId().equals(itemId)){
+    public Card getCardFromName(String name) {
+        for (Card card : CardMaker.getAllCards()) {
+            if (card.getName().equals(name))
+                return card;
+        }
+        return null;
+    }
+
+    public Item getItemFromId(String itemId) {
+        for (Item item : CardMaker.getAllItems()) {
+            if (item.getId().equals(itemId)) {
                 return item;
             }
+        }
+        return null;
+    }
+
+    public Item getItemFromName(String name) {
+        for (Item item : CardMaker.getAllItems()) {
+            if (item.getName().equals(name))
+                return item;
         }
         return null;
     }
@@ -147,7 +163,7 @@ public class Shop {
         return null;
     }
 
-    public ArrayList<Hero> getShopHeros() {
+    public ArrayList<Hero> getShopHeroes() {
         ArrayList<Hero> shopHeroes = new ArrayList<>();
         for (Card card : this.cardsInShop) {
             if (card instanceof Hero) {

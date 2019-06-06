@@ -10,9 +10,9 @@ public class ShopView extends View {
 
     public static void showAllProducts(Account account) {
         System.out.print("Heroes:");
-        if (account.getShop().getShopHeros() != null) {
+        if (account.getShop().getShopHeroes() != null) {
             int counter = 1;
-            for (Hero hero : account.getShop().getShopHeros()) {
+            for (Hero hero : account.getShop().getShopHeroes()) {
                 System.out.println();
                 System.out.print(counter + " : ");
                 hero.show();

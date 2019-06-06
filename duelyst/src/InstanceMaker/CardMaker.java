@@ -1,6 +1,8 @@
 package InstanceMaker;
 
+import CardCollections.Shop;
 import Cards.*;
+import Data.Account;
 import Effects.CellEffects.FireCell;
 import Effects.CellEffects.HolyCell;
 import Effects.CellEffects.Poison;
@@ -411,5 +413,16 @@ public class CardMaker {
         }
 
     }
+
+    public static String returnSearch(String name) {
+        Card card = Account.getLoginUser().getShop().getCardFromName(name);
+        if (card != null)
+            return card.getId();
+        Item item = Account.getLoginUser().getShop().getItemFromName(name);
+        if (item != null)
+            return item.getId();
+        return "-1";
+    }
+
 }
 
