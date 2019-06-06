@@ -7,7 +7,6 @@ import Cards.Minion;
 import Cards.Spell;
 import Data.Account;
 import InstanceMaker.CardMaker;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -30,25 +28,27 @@ class ShopAppearance {
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
     private Rectangle[][] outBox = new Rectangle[2][5];
-    private ImageView shopIcon;
-    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
+    private Rectangle[] demoCards = new Rectangle[CardMaker.getAllCards().length + CardMaker.getAllItems().length];
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
+    private Rectangle outBoxOfSearch = new Rectangle(85, 30);
+    private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
+    private ImageView shopIcon;
     private ImageView rightDirection;
     private ImageView leftDirection;
-    private Rectangle[] demoCards = new Rectangle[CardMaker.getAllCards().length + CardMaker.getAllItems().length];
-    private int currentPage = 0;
-    private Text currentPageView = new Text();
-    private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
     private ImageView coinsImage;
+    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
+    private Text search = new Text("Search");
+    private Text currentPageView = new Text();
     private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
     private TextField toSearch = new TextField();
+    private int currentPage = 0;
 
     {
         try {
             rightDirection = new ImageView(new Image(new FileInputStream("arrowright.png")));
             leftDirection = new ImageView(new Image(new FileInputStream("leftarrow.png")));
             coinsImage = new ImageView(new Image(new FileInputStream("coins.png")));
-            shopIcon=new ImageView(new Image(new FileInputStream("price-tag.png")));
+            shopIcon = new ImageView(new Image(new FileInputStream("price-tag.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -105,6 +105,26 @@ class ShopAppearance {
 
     private void setSearchingAppearance() {
         toSearch.setMaxWidth(fillMenu.getWidth());
+        toSearch.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case RIGHT:
+                    int size = demoCards.length / 10;
+                    currentPage = Math.abs((currentPage + 1) % size);
+                    changeCards();
+                    break;
+                case LEFT:
+                    size = demoCards.length / 10;
+                    currentPage = Math.abs((currentPage + size - 1) % size);
+                    changeCards();
+            }
+        });
+        search.setFont(FontAppearance.FONT_SEARCH_SHOP);
+        search.setFill(Color.BLACK);
+        outBoxOfSearch.setOpacity(0.7);
+        outBoxOfSearch.setOnMouseEntered(e -> outBoxOfSearch.setOpacity(1));
+        outBoxOfSearch.setOnMouseExited(e -> outBoxOfSearch.setOpacity(0.7));
+        search.setOnMouseEntered(e -> outBoxOfSearch.setOpacity(1));
+        outBoxOfSearch.setFill(ColorAppearance.COLOR_OUTBOX_SEARCH_SHOP);
     }
 
     private void initializeCards() {
@@ -143,7 +163,7 @@ class ShopAppearance {
 
         for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue, toSearch, shopIcon);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue, toSearch, shopIcon, outBoxOfSearch, search);
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 
@@ -151,6 +171,7 @@ class ShopAppearance {
         locateTitles();
         locateShownCards();
         locateDirections();
+        LocateSearchOptions();
         locateData();
     }
 
@@ -165,12 +186,19 @@ class ShopAppearance {
         coinsImage.setLayoutY(12 * Main.HEIGHT_OF_WINDOW / 13);
         moneyValue.setLayoutX(coinsImage.getLayoutX() + Main.WIDTH_OF_WINDOW / 38);
         moneyValue.setLayoutY(coinsImage.getLayoutY() + Main.HEIGHT_OF_WINDOW / 40);
+    }
+
+    private void LocateSearchOptions() {
         toSearch.setLayoutX(0);
-        toSearch.setLayoutY(5 * Main.HEIGHT_OF_WINDOW / 13);
+        toSearch.setLayoutY(5.2 * Main.HEIGHT_OF_WINDOW / 13);
         shopIcon.setLayoutX(0);
         shopIcon.setLayoutY(0);
         shopIcon.setFitWidth(fillMenu.getWidth());
         shopIcon.setFitHeight(fillMenu.getHeight() / 7);
+        search.setLayoutX(3.25 * fillMenu.getWidth() / 10);
+        search.setLayoutY(6 * Main.HEIGHT_OF_WINDOW / 13);
+        outBoxOfSearch.setLayoutX(6.5 * search.getLayoutX() / 10);
+        outBoxOfSearch.setLayoutY(9.5 * search.getLayoutY() / 10);
     }
 
     private void locateTitles() {
@@ -241,11 +269,11 @@ class ShopAppearance {
             changeCards();
         });
 
-        for (Text title:titles){
-            title.setOnMouseEntered(event -> title.setFill(Color.rgb(178, 46, 90,  1)));
+        for (Text title : titles) {
+            title.setOnMouseEntered(event -> title.setFill(Color.rgb(178, 46, 90, 1)));
         }
 
-        for (Text title:titles){
+        for (Text title : titles) {
             title.setOnMouseExited(event -> title.setFill(Color.WHITE));
         }
         shopScene.setOnKeyPressed(event -> {
