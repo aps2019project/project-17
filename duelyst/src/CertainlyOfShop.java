@@ -61,7 +61,7 @@ public class CertainlyOfShop {
             root.getChildren().addAll(label, close);
             close.setOnMouseClicked(e -> popOp.close());
         } else {
-            label.setText("your selection cost ".concat(price.concat(" daric! are you sure ?!")));
+            label.setText("you will lose ".concat(price.concat(" daric! are you sure ?!")));
             root.getChildren().addAll(label);
             root.getChildren().addAll(hBox);
             yes.setOnMouseClicked(e -> {

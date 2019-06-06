@@ -1,6 +1,8 @@
 package Appearance;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -13,6 +15,7 @@ public class CardsDataAppearance {
     private Text typeView;
     private Text idView;
     private Text inCollectionView;
+    private VBox vBoxSearch;
 
     public CardsDataAppearance(String nameView, String priceView, String mpView, String apView, String hpView) {
         this.nameView = new Text(nameView);
@@ -58,8 +61,11 @@ public class CardsDataAppearance {
 
     private void setSearchFonts() {
         this.idView.setFont(FontAppearance.FONT_NOT_FOUND);
+        this.idView.setFill(ColorAppearance.GOLD_COLOR);
         this.typeView.setFont(FontAppearance.FONT_NOT_FOUND);
+        this.typeView.setFill(ColorAppearance.GOLD_COLOR);
         this.inCollectionView.setFont(FontAppearance.FONT_NOT_FOUND);
+        this.inCollectionView.setFill(ColorAppearance.GOLD_COLOR);
     }
 
     private void changeLight(double value) {
@@ -161,11 +167,19 @@ public class CardsDataAppearance {
             group.getChildren().add(hpView);
     }
 
-    public void addAll(Group group, int a){
-        group.getChildren().addAll(typeView, idView, inCollectionView);
+    public void addAll(Group group, double x, double y) {
+        vBoxSearch = new VBox(typeView, idView, inCollectionView);
+        vBoxSearch.setAlignment(Pos.CENTER);
+        vBoxSearch.setLayoutX(x);
+        vBoxSearch.setLayoutY(y);
+        group.getChildren().addAll(vBoxSearch);
     }
 
     public void removeAll(Group group) {
-        group.getChildren().removeAll(nameView, mpView, priceView, apView, hpView);
+        group.getChildren().removeAll(nameView, mpView, priceView, apView, hpView, typeView, idView, inCollectionView);
+    }
+
+    public void removeAll(Group group, int a){
+        group.getChildren().removeAll(vBoxSearch);
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -425,8 +426,9 @@ class ShopAppearance {
     }
 
     private void searchLogic() {
+        root.getChildren().removeAll(notFound);
         if (searchAppearance != null)
-            searchAppearance.removeAll(root);
+            searchAppearance.removeAll(root, 0);
 
         String name = toSearch.getText();
 
@@ -447,24 +449,17 @@ class ShopAppearance {
             if (GameController.getCardFromId(result, Account.getLoginUser().getShop()) != null) {//the searched thing is a card
                 Card card = GameController.getCardFromId(result, Account.getLoginUser().getShop());
                 if (card instanceof Hero) {
-                    searchAppearance = new CardsDataAppearance(new Text("Hero"), new Text("ID=" + card.getId()), new Text(isInCollection));
+                    searchAppearance = new CardsDataAppearance(new Text("Hero"), new Text("ID =  " + card.getId()), new Text(isInCollection));
                 } else if (card instanceof Minion) {
-                    searchAppearance = new CardsDataAppearance(new Text("Minion"), new Text("ID=" + card.getId()), new Text(isInCollection));
+                    searchAppearance = new CardsDataAppearance(new Text("Minion"), new Text("ID =  " + card.getId()), new Text(isInCollection));
                 } else if (card instanceof Spell) {
-                    searchAppearance = new CardsDataAppearance(new Text("Spell"), new Text("ID=" + card.getId()), new Text(isInCollection));
+                    searchAppearance = new CardsDataAppearance(new Text("Spell"), new Text("ID =  " + card.getId()), new Text(isInCollection));
                 }
             } else if (GameController.getItemFromId(result, Account.getLoginUser().getShop()) != null) {//the searched thing is an item
                 Item item = GameController.getItemFromId(result, Account.getLoginUser().getShop());
                 searchAppearance = new CardsDataAppearance(new Text("Item"), new Text("ID=" + item.getId()), new Text(isInCollection));
             }
         }
-        searchAppearance.addAll(root, 0);
-        searchAppearance.getNameView().setLayoutX(0);
-        searchAppearance.getNameView().setLayoutY(outBoxOfSearch.getLayoutY() + 1.5 * outBoxOfSearch.getHeight());
-        searchAppearance.getIdView().setLayoutX(0);
-        searchAppearance.getIdView().setLayoutY(outBoxOfSearch.getLayoutY() + 2 * outBoxOfSearch.getHeight());
-        searchAppearance.getInCollectionView().setLayoutX(0);
-        searchAppearance.getInCollectionView().setLayoutY(outBoxOfSearch.getLayoutY() + 2.5 * outBoxOfSearch.getHeight());
-
+        searchAppearance.addAll(root, 0, outBoxOfSearch.getLayoutY() + 1.5 * outBoxOfSearch.getHeight());
     }
 }
