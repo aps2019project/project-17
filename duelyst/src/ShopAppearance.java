@@ -266,6 +266,8 @@ class ShopAppearance {
     }
 
     private void handleEvents() {
+        search.setOnMouseClicked(e -> searchLogic());
+        outBoxOfSearch.setOnMouseClicked(e -> searchLogic());
         rightDirection.setOnMouseClicked(event -> {
             int size = allProducts.length / 10;
             currentPage = Math.abs((currentPage + 1) % size);
@@ -423,7 +425,8 @@ class ShopAppearance {
     }
 
     private void searchLogic() {
-        searchAppearance.removeAll(root);
+        if (searchAppearance != null)
+            searchAppearance.removeAll(root);
 
         String name = toSearch.getText();
 
@@ -455,7 +458,7 @@ class ShopAppearance {
                 searchAppearance = new CardsDataAppearance(new Text("Item"), new Text("ID=" + item.getId()), new Text(isInCollection));
             }
         }
-        searchAppearance.addAll(root);
+        searchAppearance.addAll(root, 0);
         searchAppearance.getNameView().setLayoutX(0);
         searchAppearance.getNameView().setLayoutY(outBoxOfSearch.getLayoutY() + 1.5 * outBoxOfSearch.getHeight());
         searchAppearance.getIdView().setLayoutX(0);

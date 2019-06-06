@@ -40,6 +40,9 @@ public class CardsDataAppearance {
         this.typeView = typeView;
         this.idView = idView;
         this.inCollectionView = inCollectionView;
+        this.nameView = new Text();
+        this.mpView = new Text();
+        this.priceView = new Text();
         setSearchFonts();
     }
 
@@ -156,6 +159,10 @@ public class CardsDataAppearance {
             group.getChildren().add(apView);
         if (hpView != null)
             group.getChildren().add(hpView);
+    }
+
+    public void addAll(Group group, int a){
+        group.getChildren().addAll(typeView, idView, inCollectionView);
     }
 
     public void removeAll(Group group) {
