@@ -264,7 +264,11 @@ class ShopAppearance {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 shownCards[i][j] = demoCards[(currentPage * 10) + (5 * i) + j];
-                if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
+                if ((currentPage * 10) + (5 * i) + j >= 70) {
+                    Item item = CardMaker.getAllItems()[(currentPage * 10) + (5 * i) + j - 70];
+                    shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
+                }
+                else if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
                     Spell spell = (Spell) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
                     shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
                 } else {
