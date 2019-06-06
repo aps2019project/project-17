@@ -1,12 +1,10 @@
 import Appearance.CardsDataAppearance;
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
-import Cards.Hero;
-import Cards.Item;
-import Cards.Minion;
-import Cards.Spell;
+import Cards.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
+import controller.GameController;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -28,10 +26,12 @@ class ShopAppearance {
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
     private Rectangle[][] outBox = new Rectangle[2][5];
-    private Rectangle[] demoCards = new Rectangle[CardMaker.getAllCards().length + CardMaker.getAllItems().length];
+    private Rectangle[] allProducts = new Rectangle[CardMaker.getAllCards().length + CardMaker.getAllItems().length];
     private Rectangle fillMenu = new Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private Rectangle outBoxOfSearch = new Rectangle(85, 30);
+    private Rectangle currentSelectedRectangle;
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
+    private CardsDataAppearance searchAppearance;
     private ImageView shopIcon;
     private ImageView rightDirection;
     private ImageView leftDirection;
@@ -41,6 +41,7 @@ class ShopAppearance {
     private Text currentPageView = new Text();
     private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
     private TextField toSearch = new TextField();
+    private Text notFound=new Text("Card not Found!");
     private int currentPage = 0;
 
     {
@@ -66,31 +67,31 @@ class ShopAppearance {
     }
 
     private void initializeDemoCardsAndShownCards() {
-        for (int i = 0; i < demoCards.length; i++) {
-            demoCards[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
+        for (int i = 0; i < allProducts.length; i++) {
+            allProducts[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
             try {
                 if (i >= 70)
-                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("item_template.png"))));
+                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("item_template.png"))));
                 else if (CardMaker.getAllCards()[i] instanceof Hero)
-                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
+                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
                 else if ((CardMaker.getAllCards()[i] instanceof Minion))
-                    demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
-                else demoCards[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
+                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
+                else allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            demoCards[i].setOpacity(0.7);
+            allProducts[i].setOpacity(0.7);
 
         }
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
-                shownCards[i][j] = demoCards[(5 * i) + j];
+                shownCards[i][j] = allProducts[(5 * i) + j];
                 Spell spell = (Spell) CardMaker.getAllCards()[(5 * i) + j];
                 shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
             }
         }
         for (int i = 0; i < 2; i++) {
-            System.arraycopy(demoCards, (5 * i), shownCards[i], 0, 5);
+            System.arraycopy(allProducts, (5 * i), shownCards[i], 0, 5);
         }
 
         for (int i = 0; i < outBox.length; i++) {
@@ -108,16 +109,18 @@ class ShopAppearance {
         toSearch.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case RIGHT:
-                    int size = demoCards.length / 10;
+                    int size = allProducts.length / 10;
                     currentPage = Math.abs((currentPage + 1) % size);
                     changeCards();
                     break;
                 case LEFT:
-                    size = demoCards.length / 10;
+                    size = allProducts.length / 10;
                     currentPage = Math.abs((currentPage + size - 1) % size);
                     changeCards();
             }
         });
+        notFound.setFont(FontAppearance.FONT_NOT_FOUND);
+        notFound.setFill(Color.RED);
         search.setFont(FontAppearance.FONT_SEARCH_SHOP);
         search.setFill(Color.BLACK);
         outBoxOfSearch.setOpacity(0.7);
@@ -125,6 +128,7 @@ class ShopAppearance {
         outBoxOfSearch.setOnMouseExited(e -> outBoxOfSearch.setOpacity(0.7));
         search.setOnMouseEntered(e -> outBoxOfSearch.setOpacity(1));
         outBoxOfSearch.setFill(ColorAppearance.COLOR_OUTBOX_SEARCH_SHOP);
+
     }
 
     private void initializeCards() {
@@ -199,6 +203,8 @@ class ShopAppearance {
         search.setLayoutY(6 * Main.HEIGHT_OF_WINDOW / 13);
         outBoxOfSearch.setLayoutX(6.5 * search.getLayoutX() / 10);
         outBoxOfSearch.setLayoutY(9.5 * search.getLayoutY() / 10);
+        notFound.setLayoutX(0);//todo
+        notFound.setLayoutY(outBoxOfSearch.getLayoutY()+1.5*outBoxOfSearch.getHeight());
     }
 
     private void locateTitles() {
@@ -256,52 +262,55 @@ class ShopAppearance {
     private void display() {
         Main.getWindow().setScene(shopScene);
         handleEvents();
+        changeColor();
     }
 
     private void handleEvents() {
         rightDirection.setOnMouseClicked(event -> {
-            int size = demoCards.length / 10;
+            int size = allProducts.length / 10;
             currentPage = Math.abs((currentPage + 1) % size);
             changeCards();
         });
         leftDirection.setOnMouseClicked(event -> {
-            int size = demoCards.length / 10;
+            int size = allProducts.length / 10;
             currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
         });
 
-        for (Text title : titles) {
+        for (Text title : titles)
             title.setOnMouseEntered(event -> title.setFill(Color.rgb(178, 46, 90, 1)));
-        }
 
-        for (Text title : titles) {
+        for (Text title : titles)
             title.setOnMouseExited(event -> title.setFill(Color.WHITE));
-        }
 
         titles[0].setOnMouseClicked(event -> {
             currentPage = 6;
             changeCards();
+            changeColor();
         });
 
         titles[1].setOnMouseClicked(event -> {
             currentPage = 2;
             changeCards();
+            changeColor();
         });
         titles[2].setOnMouseClicked(event -> {
             currentPage = 0;
             changeCards();
+            changeColor();
         });
         titles[3].setOnMouseClicked(event -> {
             currentPage = 7;
             changeCards();
+            changeColor();
         });
         shopScene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.RIGHT)) {
-                int size = demoCards.length / 10;
+                int size = allProducts.length / 10;
                 currentPage = Math.abs((currentPage + 1) % size);
                 changeCards();
             } else if (event.getCode().equals(KeyCode.LEFT)) {
-                int size = demoCards.length / 10;
+                int size = allProducts.length / 10;
                 currentPage = Math.abs((currentPage + size - 1) % size);
                 changeCards();
             } else if (event.getCode().equals(KeyCode.ESCAPE)) {
@@ -309,18 +318,24 @@ class ShopAppearance {
             }
         });
 
-        for (int i = 0; i < demoCards.length; i++) {
-            final Rectangle temp = demoCards[i];
+        for (int i = 0; i < allProducts.length; i++) {
+            final Rectangle temp = allProducts[i];
             final int value = i % 10;
-            demoCards[i].setOnMouseEntered(e -> {
+            allProducts[i].setOnMouseEntered(e -> {
                 temp.setOpacity(1);
                 shownData[value / 5][value % 5].light();
-                outBox[value / 5][value % 5].setVisible(true);
             });
-            demoCards[i].setOnMouseExited(e -> {
+            allProducts[i].setOnMouseExited(e -> {
                 temp.setOpacity(0.7);
                 shownData[value / 5][value % 5].dark();
-                outBox[value / 5][value % 5].setVisible(false);
+            });
+            allProducts[i].setOnMouseClicked(e -> {
+                if (currentSelectedRectangle != null)
+                    currentSelectedRectangle.setVisible(false);
+                outBox[value / 5][value % 5].setVisible(true);
+                currentSelectedRectangle = outBox[value / 5][value % 5];
+                CertainlyOfShop.disPlay(shownData[value / 5][value % 5].getNameView().getText().toLowerCase(), shownData[value / 5][value % 5].getPriceView().getText());
+                moneyValue.setText(Integer.toString(Account.getLoginUser().getDaric()));
             });
         }
     }
@@ -334,7 +349,7 @@ class ShopAppearance {
         }
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
-                shownCards[i][j] = demoCards[(currentPage * 10) + (5 * i) + j];
+                shownCards[i][j] = allProducts[(currentPage * 10) + (5 * i) + j];
                 if ((currentPage * 10) + (5 * i) + j >= 70) {
                     Item item = CardMaker.getAllItems()[(currentPage * 10) + (5 * i) + j - 70];
                     shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
@@ -352,6 +367,8 @@ class ShopAppearance {
         locateShownCards();
         locateNodes();
         changeColor();
+        if (currentSelectedRectangle != null)
+            currentSelectedRectangle.setVisible(false);
     }
 
     private void locateData() {
@@ -403,5 +420,44 @@ class ShopAppearance {
             titles[1].setFill(Color.WHITE);
             titles[0].setFill(Color.WHITE);
         }
+    }
+
+    private void searchLogic(){
+        searchAppearance.removeAll(root);
+        String name=toSearch.getText();
+
+        String result= GameController.searchInShop(name, Account.getLoginUser().getShop());
+        if(result.equals("there is not any card\\item in shop with this name")){
+            root.getChildren().add(notFound);
+            return;
+        }else {
+            String isInCollection=GameController.search(name, Account.getLoginUser().getCollection());
+            if(isInCollection.equals("can't find this card\\item")){
+                isInCollection="You don't have this card";
+            }else {
+                isInCollection="You have this card";
+            }
+            if(GameController.getCardFromId(result, Account.getLoginUser().getShop())!=null){//the searched thing is a card
+                Card card=GameController.getCardFromId(result, Account.getLoginUser().getShop());
+                if(card instanceof Hero){
+                    searchAppearance=new CardsDataAppearance(new Text("Hero"), new Text("ID="+card.getId()),new Text(isInCollection) );
+                }else if(card instanceof Minion){
+                    searchAppearance=new CardsDataAppearance(new Text("Minion"), new Text("ID="+card.getId()),new Text(isInCollection) );
+                }else if(card instanceof Spell){
+                    searchAppearance=new CardsDataAppearance(new Text("Spell"), new Text("ID="+card.getId()),new Text(isInCollection) );
+                }
+            }else if(GameController.getItemFromId(result, Account.getLoginUser().getShop())!=null){//the searched thing is an item
+                Item item=GameController.getItemFromId(result, Account.getLoginUser().getShop());
+                searchAppearance=new CardsDataAppearance(new Text("Item"), new Text("ID="+item.getId()),new Text(isInCollection));
+            }
+        }
+        searchAppearance.addAll(root);
+        searchAppearance.getNameView().setLayoutX(0);
+        searchAppearance.getNameView().setLayoutY(outBoxOfSearch.getLayoutY()+1.5*outBoxOfSearch.getHeight());
+        searchAppearance.getIdView().setLayoutX(0);
+        searchAppearance.getIdView().setLayoutY(outBoxOfSearch.getLayoutY()+2*outBoxOfSearch.getHeight());
+        searchAppearance.getInCollectionView().setLayoutX(0);
+        searchAppearance.getInCollectionView().setLayoutY(outBoxOfSearch.getLayoutY()+2.5*outBoxOfSearch.getHeight());
+
     }
 }
