@@ -2,12 +2,10 @@ import Appearance.CardsDataAppearance;
 import Appearance.FontAppearance;
 import Cards.*;
 import Data.Account;
-import InstanceMaker.CardMaker;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -23,7 +21,7 @@ public class CollectionAppearance {
     private Group root = new Group();
     private Scene collectionScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
-    private Rectangle[] cardsOfUser = new Rectangle[Account.getLoginUser().getCollection().getCards().size()];
+    private Rectangle[] cardsOfUser = new Rectangle[Account.getLoginUser().getCollection().getCards().size() + Account.getLoginUser().getCollection().getItems().size()];
     private Rectangle fillMenu = new javafx.scene.shape.Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
     private ImageView rightDirection;
@@ -54,35 +52,52 @@ public class CollectionAppearance {
         ArrayList<Card> cards = Account.getLoginUser().getCollection().getCards();
         for (int i = 0; i < cardsOfUser.length; i++) {
             cardsOfUser[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
-            try {
-                if (cards.get(i) instanceof Hero)
-                    cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
-                else if (cards.get(i) instanceof Minion)
-                    cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
-                else if (cards.get(i) instanceof Spell)
-                    cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if (i < cards.size()) {
+                try {
+                    if (cards.get(i) instanceof Hero)
+                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
+                    else if (cards.get(i) instanceof Minion)
+                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
+                    else if (cards.get(i) instanceof Spell)
+                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("item_template.png"))));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     private void initShownCards() {
         ArrayList<Card> cards = new ArrayList<>(Account.getLoginUser().getCollection().getCards());
+        ArrayList<Item> items = new ArrayList<>(Account.getLoginUser().getCollection().getItems());
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 if ((5 * i) + j >= cardsOfUser.length)
                     return;
                 shownCards[i][j] = cardsOfUser[(5 * i) + j];
-                String name, price, manaPoint;
-                name = cards.get((5 * i) + j).getName();
-                price = Integer.toString(cards.get((5 * i) + j).getPrice());
-                if (cards.get((5 * i) + j) instanceof Spell) {
-                    manaPoint = Integer.toString(((Spell) cards.get((5 * i) + j)).getManaPoint());
-                    shownData[i][j] = new CardsDataAppearance(name, price, manaPoint);
-                } else if (cards.get((5 * i) + j) instanceof Minion) {
-                    manaPoint = Integer.toString(((Minion) cards.get((5 * i) + j)).getManaPoint());
-                    shownData[i][j] = new CardsDataAppearance(name, price, manaPoint);
+                if (((5 * i) + j) < cards.size()) {
+                    String name, price, manaPoint;
+                    name = cards.get((5 * i) + j).getName();
+                    price = Integer.toString(cards.get((5 * i) + j).getPrice());
+                    if (cards.get((5 * i) + j) instanceof Spell) {
+                        manaPoint = Integer.toString(((Spell) cards.get((5 * i) + j)).getManaPoint());
+                        shownData[i][j] = new CardsDataAppearance(name, price, manaPoint);
+                    } else if (cards.get((5 * i) + j) instanceof Minion) {
+                        manaPoint = Integer.toString(((Minion) cards.get((5 * i) + j)).getManaPoint());
+                        shownData[i][j] = new CardsDataAppearance(name, price, manaPoint);
+                    }
+                } else {
+                    String name, price, manaPoint;
+                    name = items.get((5 * i) + j - cards.size()).getName();
+                    price = Integer.toString(items.get((5 * i) + j - cards.size()).getPrice());
+                    manaPoint = "0";
+                    shownData[i][j] = new CardsDataAppearance(name.toUpperCase(), price, manaPoint);
                 }
             }
         }
@@ -220,11 +235,11 @@ public class CollectionAppearance {
                     new MainMenu();
             }
         });
-        rightDirection.setOnMouseExited(e -> {
+        rightDirection.setOnMouseClicked(e -> {
             currentPage = Math.abs((currentPage + 1) % size);
             changeCards();
         });
-        leftDirection.setOnMouseExited(e -> {
+        leftDirection.setOnMouseClicked(e -> {
             currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
         });
@@ -242,18 +257,25 @@ public class CollectionAppearance {
         }
 
         ArrayList<Card> cards = Account.getLoginUser().getCollection().getCards();
+        ArrayList<Item> items = Account.getLoginUser().getCollection().getItems();
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 if ((currentPage * 10) + (5 * i) + j >= cardsOfUser.length)
                     continue;
                 shownCards[i][j] = cardsOfUser[(currentPage * 10) + (5 * i) + j];
                 root.getChildren().add(shownCards[i][j]);
-                if (cards.get((currentPage * 10) + (5 * i) + j) instanceof Spell) {
-                    Spell spell = (Spell) cards.get((currentPage * 10) + (5 * i) + j);
-                    shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
-                } else {
-                    Minion minion = (Minion) cards.get((currentPage * 10) + (5 * i) + j);
-                    shownData[i][j] = new CardsDataAppearance(minion.getName().toUpperCase(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
+                if ((currentPage * 10) + (5 * i) + j < cards.size()){
+                    if (cards.get((currentPage * 10) + (5 * i) + j) instanceof Spell) {
+                        Spell spell = (Spell) cards.get((currentPage * 10) + (5 * i) + j);
+                        shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
+                    } else {
+                        Minion minion = (Minion) cards.get((currentPage * 10) + (5 * i) + j);
+                        shownData[i][j] = new CardsDataAppearance(minion.getName().toUpperCase(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
+                    }
+                }
+                else {
+                    Item item = items.get((currentPage * 10) + (5 * i) + j - cards.size());
+                    shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
                 }
             }
         }
