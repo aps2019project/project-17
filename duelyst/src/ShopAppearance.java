@@ -61,7 +61,6 @@ class ShopAppearance {
         setBackGround();
         addNodes();
         locateNodes();
-        setMouse();
         setSearchingAppearance();
         display();
     }
@@ -456,7 +455,7 @@ class ShopAppearance {
                 }
             } else if (GameController.getItemFromId(result, Account.getLoginUser().getShop()) != null) {//the searched thing is an item
                 Item item = GameController.getItemFromId(result, Account.getLoginUser().getShop());
-                searchAppearance = new CardsDataAppearance(new Text("Item"), new Text("ID=" + item.getId()), new Text(isInCollection));
+                searchAppearance = new CardsDataAppearance(new Text("Item"), new Text("ID =  " + item.getId()), new Text(isInCollection));
             }
         }
         searchAppearance.addAll(root, 0, outBoxOfSearch.getLayoutY() + 1.5 * outBoxOfSearch.getHeight());

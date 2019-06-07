@@ -2,19 +2,13 @@ import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
 import javafx.geometry.Pos;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 
 public class CertainlyOfShop {
 
@@ -26,8 +20,8 @@ public class CertainlyOfShop {
 
     static {
         popOp.initModality(Modality.APPLICATION_MODAL);
-        popOp.setMaxWidth(Main.WIDTH_OF_WINDOW / 4);
-        popOp.setMaxHeight(Main.HEIGHT_OF_WINDOW / 4);
+        popOp.setMinWidth(Main.WIDTH_OF_WINDOW / 4.6);
+        popOp.setMinHeight(Main.HEIGHT_OF_WINDOW / 6.5);
         label.setFont(FontAppearance.FONT_SEARCH_SHOP);
         yes.setFont(FontAppearance.FONT_SEARCH_SHOP);
         no.setFont(FontAppearance.FONT_SEARCH_SHOP);
@@ -46,9 +40,12 @@ public class CertainlyOfShop {
         hBox.setSpacing(Main.WIDTH_OF_WINDOW / 8);
         popOp.setScene(scene);
         String result = Account.getLoginUser().getShop().search(cardName);
-        if (result.equals("there is not any card\\item in shop with this name")) {
+        if (price.equals("0")) {
+            label.setText("this is a collectable item, not for buy :) earn it in the ground!");
+            root.getChildren().addAll(label, close);
+            close.setOnMouseClicked(e -> popOp.close());
+        } else if (result.equals("there is not any card\\item in shop with this name")) {
             sellLogic(cardName, root, hBox);
-
         } else {
             buyLogic(cardName, price, root, hBox);
         }

@@ -23,7 +23,7 @@ public class Player {
     private int holdingFlags;
     private Card nextCard;
     private ArrayList<Effect> effects = new ArrayList<>();
-    private ArrayList<Effect> specialSitutionBuff = new ArrayList<>();
+    private ArrayList<Effect> specialSituationBuff = new ArrayList<>();
     private SpecialSituation specialSituation = SpecialSituation.NONE;
 
     public Player(String userName, Deck deck) {
@@ -238,7 +238,7 @@ public class Player {
     }
 
     public void useSpecialSituationBuff() {
-        for (Effect effect : specialSitutionBuff) {
+        for (Effect effect : specialSituationBuff) {
             effect.action(null);
         }
     }

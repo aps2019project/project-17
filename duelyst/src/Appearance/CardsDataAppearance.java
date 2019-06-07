@@ -99,64 +99,21 @@ public class CardsDataAppearance {
         return nameView;
     }
 
-    public Text getTypeView() {
-        return typeView;
-    }
-
-    public void setTypeView(Text typeView) {
-        this.typeView = typeView;
-    }
-
-    public Text getIdView() {
-        return idView;
-    }
-
-    public void setIdView(Text idView) {
-        this.idView = idView;
-    }
-
-    public Text getInCollectionView() {
-        return inCollectionView;
-    }
-
-    public void setInCollectionView(Text inCollectionView) {
-        this.inCollectionView = inCollectionView;
-    }
-
-    public void setNameView(String nameView) {
-        this.nameView.setText(nameView);
-    }
-
     public Text getPriceView() {
         return priceView;
-    }
-
-    public void setPriceView(String priceView) {
-        this.priceView.setText(priceView);
     }
 
     public Text getMpView() {
         return mpView;
     }
 
-    public void setMpView(String mpView) {
-        this.mpView.setText(mpView);
-    }
 
     public Text getApView() {
         return apView;
     }
 
-    public void setApView(String apView) {
-        this.apView.setText(apView);
-    }
-
     public Text getHpView() {
         return hpView;
-    }
-
-    public void setHpView(String hpView) {
-        this.hpView.setText(hpView);
     }
 
     public void addAll(Group group) {
