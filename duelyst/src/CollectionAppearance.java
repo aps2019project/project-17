@@ -206,24 +206,35 @@ public class CollectionAppearance {
         if (cardsOfUser.length % 10 != 0)
             sizeVariable++;
         int size = sizeVariable;
-        if (cardsOfUser.length <= 10)
-            return;
         collectionScene.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.RIGHT)) {
-                currentPage = Math.abs((currentPage + 1) % size);
-                changeCards();
-            } else if (event.getCode().equals(KeyCode.LEFT)) {
-                currentPage = Math.abs((currentPage + size - 1) % size);
-                changeCards();
-            } else if (event.getCode().equals(KeyCode.ESCAPE)) {
-                new MainMenu();
+            switch (event.getCode()) {
+                case RIGHT:
+                    currentPage = Math.abs((currentPage + 1) % size);
+                    changeCards();
+                    break;
+                case LEFT:
+                    currentPage = Math.abs((currentPage + size - 1) % size);
+                    changeCards();
+                    break;
+                case ESCAPE:
+                    new MainMenu();
             }
+        });
+        rightDirection.setOnMouseExited(e -> {
+            currentPage = Math.abs((currentPage + 1) % size);
+            changeCards();
+        });
+        leftDirection.setOnMouseExited(e -> {
+            currentPage = Math.abs((currentPage + size - 1) % size);
+            changeCards();
         });
     }
 
     private void changeCards() {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
+                if (shownData[i][j] == null)
+                    continue;
                 shownData[i][j].removeAll(root);
                 root.getChildren().removeAll(shownCards[i][j]);
                 shownCards[i][j] = null;
