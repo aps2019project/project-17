@@ -99,7 +99,9 @@ public class CollectionAppearance {
                         shownData[i][j] = new CardsDataAppearance(name, price, manaPoint);
                     } else if (cards.get((5 * i) + j) instanceof Minion) {
                         manaPoint = Integer.toString(((Minion) cards.get((5 * i) + j)).getManaPoint());
-                        shownData[i][j] = new CardsDataAppearance(name, price, manaPoint);
+                        int ap = ((Minion) cards.get((5 * i) + j)).getAttackPoint();
+                        int hp = ((Minion) cards.get((5 * i) + j)).getAttackPoint();
+                        shownData[i][j] = new CardsDataAppearance(name, price, manaPoint, Integer.toString(ap), Integer.toString(hp));
                     }
                 } else {
                     String name, price, manaPoint;
