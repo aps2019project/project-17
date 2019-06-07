@@ -25,7 +25,7 @@ public class DeletingDeckAppearance {
         label.setFont(FontAppearance.FONT_SEARCH_SHOP);
         close.setFont(FontAppearance.FONT_SEARCH_SHOP);
         close.setFill(ColorAppearance.BACKGROUND_DATA_CARDS);
-        enterDeckName.setMinWidth(Main.WIDTH_OF_WINDOW / 13);
+        enterDeckName.setMaxWidth(Main.WIDTH_OF_WINDOW / 5);
         create.setFont(FontAppearance.FONT_CREATE_DECK);
         create.setFill(ColorAppearance.GOLD_COLOR);
     }

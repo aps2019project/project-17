@@ -44,7 +44,7 @@ class LeaderBoardWindow {
         window.setTitle("LeaderBoard");
         window.setScene(scene);
         window.getScene().getStylesheets().add(getClass().getResource("Table.css").toExternalForm());
-        window.show();
+        window.showAndWait();
     }
 
     private ObservableList<Account> getAllAccounts() {

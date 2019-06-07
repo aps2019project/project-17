@@ -284,7 +284,7 @@ public class CollectionAppearance {
         });
         createDeckIcon.setOnMouseClicked(e -> CreateDeckAppearance.disPlay());
         deleteDeckIcon.setOnMouseClicked(e -> DeletingDeckAppearance.disPlay());
-        selectDeckIcon.setOnMouseClicked(e -> SelectDeckAppearamce.disPlay());
+        selectDeckIcon.setOnMouseClicked(e -> SelectDeckAppearance.disPlay());
     }
 
     private void changeCards() {

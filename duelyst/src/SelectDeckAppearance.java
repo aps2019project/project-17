@@ -10,7 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.CollectionView;
 
-public class SelectDeckAppearamce {
+public class SelectDeckAppearance {
     private static Stage window = new Stage();
     private static TextField enterDeckName = new TextField();
     private static Text create = new Text("Select Deck");
@@ -25,7 +25,7 @@ public class SelectDeckAppearamce {
         label.setFont(FontAppearance.FONT_SEARCH_SHOP);
         close.setFont(FontAppearance.FONT_SEARCH_SHOP);
         close.setFill(ColorAppearance.BACKGROUND_DATA_CARDS);
-        enterDeckName.setMinWidth(Main.WIDTH_OF_WINDOW / 13);
+        enterDeckName.setMaxWidth(Main.WIDTH_OF_WINDOW / 5);
         create.setFont(FontAppearance.FONT_CREATE_DECK);
         create.setFill(ColorAppearance.GOLD_COLOR);
     }
