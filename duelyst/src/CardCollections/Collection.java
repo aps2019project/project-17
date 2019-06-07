@@ -2,6 +2,7 @@ package CardCollections;
 
 import Cards.*;
 import Data.Account;
+import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
 

@@ -4,9 +4,9 @@ import Cards.*;
 import Data.Account;
 import CardCollections.*;
 
-class CollectionView extends View {
+public class CollectionView extends View {
 
-    static void showUserCollection(Account account) {
+    public static void showUserCollection(Account account) {
         System.out.print("Heroes:");
         if (account.getCollection().getCollectionHeroes() != null) {
             int counter = 1;

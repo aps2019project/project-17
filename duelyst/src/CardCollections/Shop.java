@@ -46,7 +46,7 @@ public class Shop {
 
     public Card getCardFromName(String name) {
         for (Card card : CardMaker.getAllCards()) {
-            if (card.getName().equals(name))
+            if (card.getName().toLowerCase().equals(name))
                 return card;
         }
         return null;
@@ -63,7 +63,7 @@ public class Shop {
 
     public Item getItemFromName(String name) {
         for (Item item : CardMaker.getAllItems()) {
-            if (item.getName().equals(name))
+            if (item.getName().toLowerCase().equals(name))
                 return item;
         }
         return null;
