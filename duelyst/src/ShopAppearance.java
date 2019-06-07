@@ -447,7 +447,7 @@ class ShopAppearance {
         root.getChildren().removeAll(notFound);
         if (searchAppearance != null)
             searchAppearance.removeAll(root, 0);
-        String name = toSearch.getText();
+        String name = toSearch.getText().toLowerCase();
         if (name.equals(""))
             return;
         String result = CardMaker.returnSearch(name);
