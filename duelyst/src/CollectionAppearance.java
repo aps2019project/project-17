@@ -264,7 +264,7 @@ public class CollectionAppearance {
                     continue;
                 shownCards[i][j] = cardsOfUser[(currentPage * 10) + (5 * i) + j];
                 root.getChildren().add(shownCards[i][j]);
-                if ((currentPage * 10) + (5 * i) + j < cards.size()){
+                if ((currentPage * 10) + (5 * i) + j < cards.size()) {
                     if (cards.get((currentPage * 10) + (5 * i) + j) instanceof Spell) {
                         Spell spell = (Spell) cards.get((currentPage * 10) + (5 * i) + j);
                         shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
@@ -272,8 +272,7 @@ public class CollectionAppearance {
                         Minion minion = (Minion) cards.get((currentPage * 10) + (5 * i) + j);
                         shownData[i][j] = new CardsDataAppearance(minion.getName().toUpperCase(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
                     }
-                }
-                else {
+                } else {
                     Item item = items.get((currentPage * 10) + (5 * i) + j - cards.size());
                     shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
                 }
