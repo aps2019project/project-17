@@ -76,7 +76,7 @@ public class CollectionAppearance {
                 shownCards[i][j] = cardsOfUser[(5 * i) + j];
                 String name, price, manaPoint;
                 name = cards.get((5 * i) + j).getName();
-                price = Integer.toString(cards.get(i).getPrice());
+                price = Integer.toString(cards.get((5 * i) + j).getPrice());
                 if (cards.get((5 * i) + j) instanceof Spell) {
                     manaPoint = Integer.toString(((Spell) cards.get((5 * i) + j)).getManaPoint());
                     shownData[i][j] = new CardsDataAppearance(name, price, manaPoint);
@@ -202,8 +202,11 @@ public class CollectionAppearance {
     }
 
     private void handleEventsKeyBoards() {
-        int size = cardsOfUser.length / 10;
-        if (size == 0)
+        int sizeVariable = cardsOfUser.length / 10;
+        if (cardsOfUser.length % 10 != 0)
+            sizeVariable++;
+        int size = sizeVariable;
+        if (cardsOfUser.length <= 10)
             return;
         collectionScene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.RIGHT)) {
@@ -231,17 +234,17 @@ public class CollectionAppearance {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 if ((currentPage * 10) + (5 * i) + j >= cardsOfUser.length)
-                    return;
+                    continue;
                 shownCards[i][j] = cardsOfUser[(currentPage * 10) + (5 * i) + j];
-                if (cards.get(i) instanceof Spell) {
-                    Spell spell = (Spell) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
+                root.getChildren().add(shownCards[i][j]);
+                if (cards.get((currentPage * 10) + (5 * i) + j) instanceof Spell) {
+                    Spell spell = (Spell) cards.get((currentPage * 10) + (5 * i) + j);
                     shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
                 } else {
-                    Minion minion = (Minion) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
+                    Minion minion = (Minion) cards.get((currentPage * 10) + (5 * i) + j);
                     shownData[i][j] = new CardsDataAppearance(minion.getName().toUpperCase(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
                 }
             }
-            root.getChildren().addAll(shownCards[i]);
         }
         currentPageView.setText("Page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
         locateNodes();
