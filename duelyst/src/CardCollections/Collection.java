@@ -49,7 +49,7 @@ public class Collection {
 
         else if (findItem(name) != null)
             return findItem(name).getId();
-        return "can't find this card\\item";
+        return "Can't find this card\\item";
     }
 
     public String createDeck(String deckName) {
@@ -275,5 +275,14 @@ public class Collection {
                 items.add(CardMaker.getAllItems()[i]);
             }
         }
+    }
+
+    public Deck returnDeckFromName(String deckName){
+        for (Deck deck:this.decks) {
+            if(deck.getName().equals(deckName)){
+                return deck;
+            }
+        }
+        return null;
     }
 }

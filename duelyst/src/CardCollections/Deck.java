@@ -156,4 +156,13 @@ public class Deck {
         }
         return null;
     }
+
+    public String returnIdFromName(String cardName){
+        Card card=returnCardFromDeck(cardName);
+        if(card==null){
+            return "This deck doesn't have this card";
+        }
+        return card.getId();
+    }
+
 }

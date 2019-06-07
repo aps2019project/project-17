@@ -34,7 +34,7 @@ public class DeckTable {
             // Define our new TableRow
             TableRow<Deck> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                // TODO: 6/7/2019  
+                DeckOperator.display(row.getItem().getName());
             });
             return row;
         });
