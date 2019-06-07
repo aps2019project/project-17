@@ -52,6 +52,7 @@ public class CollectionAppearance {
         setBackGround();
         setDirectionsAction();
         addNodes();
+        setMouse();
         locateNodes();
         disPlay();
     }
@@ -137,6 +138,25 @@ public class CollectionAppearance {
         }
     }
 
+    private void setMouse() {
+        createDeckIcon.setOpacity(0.7);
+        deleteDeckIcon.setOpacity(0.7);
+        selectDeckIcon.setOpacity(0.7);
+        myDecks.setOpacity(0.7);
+
+        createDeckIcon.setOnMouseEntered(e -> createDeckIcon.setOpacity(1));
+        createDeckIcon.setOnMouseExited(e -> createDeckIcon.setOpacity(0.7));
+
+        deleteDeckIcon.setOnMouseEntered(e -> deleteDeckIcon.setOpacity(1));
+        deleteDeckIcon.setOnMouseExited(e -> deleteDeckIcon.setOpacity(0.7));
+
+        selectDeckIcon.setOnMouseEntered(e -> selectDeckIcon.setOpacity(1));
+        selectDeckIcon.setOnMouseExited(e -> selectDeckIcon.setOpacity(0.7));
+
+        myDecks.setOnMouseEntered(e -> myDecks.setOpacity(1));
+        myDecks.setOnMouseExited(e -> myDecks.setOpacity(0.7));
+    }
+
     private void addNodes() {
         root.getChildren().add(fillMenu);
         for (Rectangle[] shownCard : shownCards)
@@ -175,7 +195,7 @@ public class CollectionAppearance {
         createDeckIcon.setLayoutY(7.4 * Main.HEIGHT_OF_WINDOW / 8);
         deleteDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW / 160);
         deleteDeckIcon.setLayoutY(createDeckIcon.getLayoutY());
-        selectDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW  * 0.03884);
+        selectDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW * 0.03884);
         selectDeckIcon.setLayoutY(createDeckIcon.getLayoutY());
         myDecks.setLayoutX(Main.WIDTH_OF_WINDOW / 75);
         myDecks.setLayoutY(1 * Main.HEIGHT_OF_WINDOW / 8);
