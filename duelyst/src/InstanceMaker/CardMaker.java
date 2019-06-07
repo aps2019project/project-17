@@ -17,6 +17,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static Data.Save.jsonReader;
+import static Data.Save.writeInJson;
+
 public class CardMaker {
     private static final String address = "duelyst//src//InstanceMaker//";
     private static final String addressOfHero = address + "Hero.json";
@@ -37,16 +40,6 @@ public class CardMaker {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String jsonReader(String fileAddress) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileAddress));
-        String line;
-        StringBuilder jsonString = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            jsonString.append(line);
-        }
-        return jsonString.toString();
     }
 
     private static Object[] loadInstance(InstanceType instanceType) throws IOException {
@@ -111,14 +104,10 @@ public class CardMaker {
                 stringBuilder.append("}");
         }
         stringBuilder.append("]");
-        BufferedWriter bufferedWriter;
         if (newMinion instanceof Hero)
-            bufferedWriter = new BufferedWriter(new FileWriter(addressOfHero));
+            writeInJson(addressOfHero, stringBuilder.toString());
         else
-            bufferedWriter = new BufferedWriter(new FileWriter(addressOfMinion));
-        bufferedWriter.write(stringBuilder.toString());
-        bufferedWriter.flush();
-        bufferedWriter.close();
+            writeInJson(addressOfMinion, stringBuilder.toString());
     }
 
     public static void saveItem(Item newItem) throws IOException {
@@ -139,10 +128,7 @@ public class CardMaker {
                 stringBuilder.append("}");
         }
         stringBuilder.append("]");
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfItem));
-        bufferedWriter.write(stringBuilder.toString());
-        bufferedWriter.flush();
-        bufferedWriter.close();
+        writeInJson(addressOfItem, stringBuilder.toString());
     }
 
     public static void saveSpell(Spell newSpell) throws IOException {
@@ -164,10 +150,7 @@ public class CardMaker {
                 stringBuilder.append("}");
         }
         stringBuilder.append("]");
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(addressOfSpell));
-        bufferedWriter.write(stringBuilder.toString());
-        bufferedWriter.flush();
-        bufferedWriter.close();
+        writeInJson(addressOfSpell, stringBuilder.toString());
     }
 
     private static Effect[] loadEffects(String address) throws IOException {
@@ -261,10 +244,7 @@ public class CardMaker {
                 stringBuilder.append("}");
         }
         stringBuilder.append("]");
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
-        bufferedWriter.write(stringBuilder.toString());
-        bufferedWriter.flush();
-        bufferedWriter.close();
+        writeInJson(address, stringBuilder.toString());
     }
 
     public static Spell[] getSpells() {
@@ -419,6 +399,7 @@ public class CardMaker {
             return item.getId();
         return "-1";
     }
+
 
 }
 

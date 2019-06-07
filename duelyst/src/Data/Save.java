@@ -3,14 +3,12 @@ package Data;
 import InstanceMaker.CardMaker;
 import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class Save {
-    private final static String address = "duelyst//src//Data//Account.json";
+    private final static String accountAddress = "duelyst//src//Data//Account.json";
 
     public static String save(Object object) throws IllegalAccessException, InstantiationException, IOException {
         StringBuilder stringBuilder = new StringBuilder("{\n");
@@ -41,7 +39,7 @@ public class Save {
                 stringBuilder.append("\n");
         }
         stringBuilder.append("}");
-        writeInJson(address, stringBuilder.toString());
+        writeInJson(accountAddress, stringBuilder.toString());
         return stringBuilder.toString();
     }
 
@@ -49,14 +47,13 @@ public class Save {
     public static Account[] loadAccount() throws IOException {
         Gson gson = new Gson();
         Account[] accounts;
-        accounts = gson.fromJson(CardMaker.jsonReader(address), Account[].class);
+        accounts = gson.fromJson(jsonReader(accountAddress), Account[].class);
         return accounts;
 
     }
 
     public static void writeInJson(String address, String data) throws IOException {
-        BufferedWriter bufferedWriter;
-        bufferedWriter = new BufferedWriter(new FileWriter(address));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));
         bufferedWriter.write(data);
         bufferedWriter.flush();
         bufferedWriter.close();
@@ -65,5 +62,15 @@ public class Save {
 
     public static void save(Player player) {
 
+    }
+
+    public static String jsonReader(String fileAddress) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(fileAddress));
+        String line;
+        StringBuilder jsonString = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            jsonString.append(line);
+        }
+        return jsonString.toString();
     }
 }
