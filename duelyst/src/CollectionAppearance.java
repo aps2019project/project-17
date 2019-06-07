@@ -26,6 +26,9 @@ public class CollectionAppearance {
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
     private ImageView rightDirection;
     private ImageView leftDirection;
+    private ImageView createDeckIcon;
+    private ImageView deleteDeckIcon;
+    private ImageView selectDeckIcon;
     private int currentPage = 0;
     private Text currentPageView = new Text("page : 1");
 
@@ -33,6 +36,9 @@ public class CollectionAppearance {
         try {
             rightDirection = new ImageView(new Image(new FileInputStream("arrowright.png")));
             leftDirection = new ImageView(new Image(new FileInputStream("leftarrow.png")));
+            createDeckIcon = new ImageView(new Image(new FileInputStream("plus.png")));
+            deleteDeckIcon = new ImageView(new Image(new FileInputStream("minus.png")));
+            selectDeckIcon = new ImageView(new Image(new FileInputStream("add.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -135,7 +141,7 @@ public class CollectionAppearance {
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon);
     }
 
     private void locateNodes() {
@@ -161,6 +167,12 @@ public class CollectionAppearance {
         currentPageView.setLayoutY(7 * Main.HEIGHT_OF_WINDOW / 8);
         currentPageView.setFont(FontAppearance.FONT_BUTTON);
         currentPageView.setFill(Color.WHITE);
+        createDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW / 14);
+        createDeckIcon.setLayoutY(7.4 * Main.HEIGHT_OF_WINDOW / 8);
+        deleteDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW / 160);
+        deleteDeckIcon.setLayoutY(createDeckIcon.getLayoutY());
+        selectDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW  * 0.03884);
+        selectDeckIcon.setLayoutY(createDeckIcon.getLayoutY());
     }
 
     private void locateShownCards() {
@@ -243,6 +255,9 @@ public class CollectionAppearance {
             currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
         });
+        createDeckIcon.setOnMouseClicked(e -> CreateDeckAppearance.disPlay());
+        deleteDeckIcon.setOnMouseClicked(e -> DeletingDeckAppearance.disPlay());
+        selectDeckIcon.setOnMouseClicked(e -> SelectDeckAppearamce.disPlay());
     }
 
     private void changeCards() {

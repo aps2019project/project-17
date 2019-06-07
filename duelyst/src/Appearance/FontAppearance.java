@@ -14,4 +14,5 @@ public class FontAppearance {
     public static final Font FONT_MONEY_VALUE = Font.font("Phosphate", FontWeight.BOLD, Screen.getPrimary().getVisualBounds().getWidth() / 72);
     public static final Font FONT_SEARCH_SHOP = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 96);
     public static final Font FONT_NOT_FOUND = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 120);
+    public static final Font FONT_CREATE_DECK = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 74);
 }

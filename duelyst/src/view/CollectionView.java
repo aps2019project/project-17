@@ -49,7 +49,7 @@ public class CollectionView extends View {
 
     }
 
-    static void showAllDecks(Account account) {
+    public static void showAllDecks(Account account) {
         int counter = 1;
         for (Deck deck : account.getCollection().getDecks()) {
             System.out.println(counter + " : " + deck.getName());
