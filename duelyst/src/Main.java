@@ -1,6 +1,7 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
+import Data.Save;
 import InstanceMaker.CardMaker;
 import controller.GameController;
 import javafx.application.Application;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -145,7 +147,12 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        CardMaker.creation();
+        Account account = new Account("ali","123");
+        try {
+            System.out.println(Save.save(account));
+        } catch (IllegalAccessException | InstantiationException | IOException e) {
+            e.printStackTrace();
+        }
 //        GameController.main();
         launch(args);
     }

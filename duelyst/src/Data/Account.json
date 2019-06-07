@@ -1,0 +1,62 @@
+{
+  "player": {
+    "hand": {
+      "cards": []
+    },
+    "mana": 120,
+    "previousMana": 0,
+    "userName": "ali",
+    "collectAbleItems": [],
+    "graveYard": [],
+    "holdingFlags": 0,
+    "effects": [],
+    "specialSituationBuff": [],
+    "specialSituation": "NONE"
+  },
+  "collection": {
+    "cards": [],
+    "items": [],
+    "decks": [],
+    "daric": 15000
+  },
+  "matchHistory": {
+    "gameData": []
+  },
+  "userName": "ali",
+  "passWord": "123",
+  "numOfWins": 0,
+  "numOfLose": 0,
+  "daric": 15000000,
+  "shop": {
+    "cardsInShop": {
+      "serialVersionUID": 8683452581122892189,
+      "DEFAULT_CAPACITY": 10,
+      "EMPTY_ELEMENTDATA": {
+      },
+      "DEFAULTCAPACITY_EMPTY_ELEMENTDATA": {
+      },
+      "elementData": {
+      },
+      "size": 70,
+      "MAX_ARRAY_SIZE": 2147483639
+    },
+    "itemsInShop": {
+      "serialVersionUID": 8683452581122892189,
+      "DEFAULT_CAPACITY": 10,
+      "EMPTY_ELEMENTDATA": {
+      },
+      "DEFAULTCAPACITY_EMPTY_ELEMENTDATA": {
+      },
+      "elementData": {
+      },
+      "size": 11,
+      "MAX_ARRAY_SIZE": 2147483639
+    },
+    "collection": {
+      "cards": [],
+      "items": [],
+      "decks": [],
+      "daric": 15000
+    }
+  }
+}

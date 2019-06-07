@@ -39,7 +39,7 @@ public class CardMaker {
         }
     }
 
-    private static String jsonReader(String fileAddress) throws IOException {
+    public static String jsonReader(String fileAddress) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileAddress));
         String line;
         StringBuilder jsonString = new StringBuilder();

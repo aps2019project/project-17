@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Player {
-
     private Deck mainDeck;
     private Deck copyMainDeck;
     private Hand hand;
@@ -23,8 +22,11 @@ public class Player {
     private int holdingFlags;
     private Card nextCard;
     private ArrayList<Effect> effects = new ArrayList<>();
-    private ArrayList<Effect> specialSitutionBuff = new ArrayList<>();
+    private ArrayList<Effect> specialSituationBuff = new ArrayList<>();
     private SpecialSituation specialSituation = SpecialSituation.NONE;
+
+    public Player() {
+    }
 
     public Player(String userName, Deck deck) {
         this.mana = 10;
@@ -238,7 +240,7 @@ public class Player {
     }
 
     public void useSpecialSituationBuff() {
-        for (Effect effect : specialSitutionBuff) {
+        for (Effect effect : specialSituationBuff) {
             effect.action(null);
         }
     }

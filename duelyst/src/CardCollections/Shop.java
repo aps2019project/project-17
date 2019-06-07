@@ -8,14 +8,12 @@ import java.util.Arrays;
 
 public class Shop {
 
-    private ArrayList<Card> cardsInShop;
-    private ArrayList<Item> itemsInShop;
+    private ArrayList<Card> cardsInShop = new ArrayList<>();
+    private ArrayList<Item> itemsInShop = new ArrayList<>();
     private Collection collection;
 
     public Shop(Collection collection) {
         this.collection = collection;
-        this.cardsInShop = new ArrayList<>();
-        this.itemsInShop = new ArrayList<>();
         this.initShop();
     }
 
