@@ -14,30 +14,8 @@
 "specialSituation": "NONE"
 },
 "collection": {
-"cards": {
-"serialVersionUID": 8683452581122892189,
-"DEFAULT_CAPACITY": 10,
-"EMPTY_ELEMENTDATA": {
-},
-"DEFAULTCAPACITY_EMPTY_ELEMENTDATA": {
-},
-"elementData": {
-},
-"size": 48,
-"MAX_ARRAY_SIZE": 2147483639
-},
-"items": {
-"serialVersionUID": 8683452581122892189,
-"DEFAULT_CAPACITY": 10,
-"EMPTY_ELEMENTDATA": {
-},
-"DEFAULTCAPACITY_EMPTY_ELEMENTDATA": {
-},
-"elementData": {
-},
-"size": 3,
-"MAX_ARRAY_SIZE": 2147483639
-},
+"cards": [],
+"items": [],
 "decks": [],
 "daric": 15000
 },
@@ -75,30 +53,8 @@
 "MAX_ARRAY_SIZE": 2147483639
 },
 "collection": {
-"cards": {
-"serialVersionUID": 8683452581122892189,
-"DEFAULT_CAPACITY": 10,
-"EMPTY_ELEMENTDATA": {
-},
-"DEFAULTCAPACITY_EMPTY_ELEMENTDATA": {
-},
-"elementData": {
-},
-"size": 48,
-"MAX_ARRAY_SIZE": 2147483639
-},
-"items": {
-"serialVersionUID": 8683452581122892189,
-"DEFAULT_CAPACITY": 10,
-"EMPTY_ELEMENTDATA": {
-},
-"DEFAULTCAPACITY_EMPTY_ELEMENTDATA": {
-},
-"elementData": {
-},
-"size": 3,
-"MAX_ARRAY_SIZE": 2147483639
-},
+"cards": [],
+"items": [],
 "decks": [],
 "daric": 15000
 }

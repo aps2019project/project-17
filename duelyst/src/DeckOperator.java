@@ -28,8 +28,8 @@ public class DeckOperator {
     private static Text addToDeck = new Text("Add  this  Card  to  current  Deck");
     private static Text removeFromDeck = new Text("Remove  this  Card  From  current  Deck");
     private static Text searchInDeck = new Text("Search situation of this Card  in  current  Deck");
-    private static Text id = new Text("enter id of card : ");
-    private static Text name = new Text("enter name of the card : ");
+    private static Text id = new Text("enter  id  of  card  :  ");
+    private static Text name = new Text("enter  name  of  the  card  :  ");
     private static Rectangle addToDeckBox = new Rectangle(270, 30);
     private static Rectangle removeDeckBox = new Rectangle(310, 30);
     private static Rectangle searchToDeckBox = new Rectangle(370, 30);
@@ -58,20 +58,20 @@ public class DeckOperator {
         addToDeckBox.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
         removeDeckBox.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
         searchToDeckBox.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
-        addToDeckBox.setOpacity(0.8);
-        removeDeckBox.setOpacity(0.8);
-        searchToDeckBox.setOpacity(0.8);
+        addToDeckBox.setOpacity(0.5);
+        removeDeckBox.setOpacity(0.5);
+        searchToDeckBox.setOpacity(0.5);
     }
 
     static {
         addToDeck.setOnMouseEntered(e -> addToDeckBox.setOpacity(1));
-        addToDeck.setOnMouseExited(e -> addToDeckBox.setOpacity(0.8));
+        addToDeck.setOnMouseExited(e -> addToDeckBox.setOpacity(0.5));
 
         removeFromDeck.setOnMouseEntered(e -> removeDeckBox.setOpacity(1));
-        removeFromDeck.setOnMouseExited(e -> removeDeckBox.setOpacity(0.8));
+        removeFromDeck.setOnMouseExited(e -> removeDeckBox.setOpacity(0.5));
 
         searchInDeck.setOnMouseEntered(e -> searchToDeckBox.setOpacity(1));
-        searchInDeck.setOnMouseExited(e -> searchToDeckBox.setOpacity(0.8));
+        searchInDeck.setOnMouseExited(e -> searchToDeckBox.setOpacity(0.5));
     }
 
     public static void display(String deckName) {
@@ -98,6 +98,13 @@ public class DeckOperator {
         VBox vBox2 = new VBox(vBox3, stackPane3, result);
         vBox2.setSpacing(20);
         vBox2.setAlignment(Pos.CENTER);
+        eventHandler(deckName);
+        root.getChildren().addAll(vBox1, vBox2);
+        popOp.setScene(scene);
+        popOp.showAndWait();
+    }
+
+    public static void eventHandler(String deckName) {
         addToDeck.setOnMouseClicked(event -> {
             String id = cardId.getText().toLowerCase();
             result.setText(GameController.addToDeck(id, deckName, Account.getLoginUser().getCollection()));
@@ -114,8 +121,5 @@ public class DeckOperator {
             result.setText(deck.returnIdFromName(name));
             cardName.setText("");
         });
-        root.getChildren().addAll(vBox1, vBox2);
-        popOp.setScene(scene);
-        popOp.showAndWait();
     }
 }

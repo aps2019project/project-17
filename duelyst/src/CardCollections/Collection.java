@@ -19,7 +19,6 @@ public class Collection {
         this.decks = new ArrayList<>();
         this.daric = 15000;
         this.mainDeck = null;
-        toDelete();
     }
 
     private Card findCard(String cardNameID) {
