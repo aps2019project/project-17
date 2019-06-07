@@ -5,12 +5,14 @@ import Cards.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
 import controller.GameController;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -31,7 +33,7 @@ class ShopAppearance {
     private Rectangle currentSelectedRectangle;
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
     private CardsDataAppearance searchAppearance;
-    private ImageView shopIcon;
+    private ImageView backIcon;
     private ImageView rightDirection;
     private ImageView leftDirection;
     private ImageView coinsImage;
@@ -48,7 +50,7 @@ class ShopAppearance {
             rightDirection = new ImageView(new Image(new FileInputStream("arrowright.png")));
             leftDirection = new ImageView(new Image(new FileInputStream("leftarrow.png")));
             coinsImage = new ImageView(new Image(new FileInputStream("coins.png")));
-            shopIcon = new ImageView(new Image(new FileInputStream("price-tag.png")));
+            backIcon = new ImageView(new Image(new FileInputStream("icon.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -160,7 +162,7 @@ class ShopAppearance {
 
         for (Rectangle[] totalCard : shownCards)
             root.getChildren().addAll(totalCard);
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue, toSearch, shopIcon, outBoxOfSearch, search);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, coinsImage, moneyValue, toSearch, backIcon, outBoxOfSearch, search);
     }
 
     private void locateNodes() {
@@ -187,10 +189,11 @@ class ShopAppearance {
     private void LocateSearchOptions() {
         toSearch.setLayoutX(0);
         toSearch.setLayoutY(5.2 * Main.HEIGHT_OF_WINDOW / 13);
-        shopIcon.setLayoutX(0);
-        shopIcon.setLayoutY(0);
-        shopIcon.setFitWidth(fillMenu.getWidth());
-        shopIcon.setFitHeight(fillMenu.getHeight() / 7);
+        backIcon.setLayoutX(fillMenu.getWidth() / 3);
+        backIcon.setLayoutY(fillMenu.getWidth() / 3);
+        backIcon.setFitWidth(fillMenu.getWidth() / 3);
+        backIcon.setFitHeight(fillMenu.getWidth() / 3);
+        backIcon.setOpacity(0.5);
         search.setLayoutX(3.25 * fillMenu.getWidth() / 10);
         search.setLayoutY(6 * Main.HEIGHT_OF_WINDOW / 13);
         outBoxOfSearch.setLayoutX(6.5 * search.getLayoutX() / 10);
@@ -254,6 +257,7 @@ class ShopAppearance {
         handleEventsTitles();
         handleEventsKeyBoards();
         handleEventsCards();
+        handleEventBack();
     }
 
     private void handleEventsSearch() {
@@ -338,6 +342,12 @@ class ShopAppearance {
             changeCards();
             changeColor();
         });
+    }
+
+    private void handleEventBack() {
+        backIcon.setOnMouseEntered(event -> backIcon.setOpacity(1));
+        backIcon.setOnMouseExited(event -> backIcon.setOpacity(0.5));
+        backIcon.setOnMouseClicked(event -> new MainMenu());
     }
 
     private void handleEventsDirection() {
