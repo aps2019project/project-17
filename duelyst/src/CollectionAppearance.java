@@ -1,4 +1,5 @@
 import Appearance.CardsDataAppearance;
+import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Cards.*;
 import Data.Account;
@@ -31,6 +32,7 @@ public class CollectionAppearance {
     private ImageView selectDeckIcon;
     private int currentPage = 0;
     private Text currentPageView = new Text("page : 1");
+    private Text myDecks = new Text("MY DECKS");
 
     {
         try {
@@ -116,6 +118,8 @@ public class CollectionAppearance {
         leftDirection.setOnMouseExited(e -> leftDirection.setOpacity(0.4));
         rightDirection.setOpacity(0.4);
         leftDirection.setOpacity(0.4);
+        myDecks.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
+        myDecks.setFont(FontAppearance.FONT_SHOP_BUTTONS);
     }
 
     private void setBackGround() {
@@ -141,7 +145,7 @@ public class CollectionAppearance {
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon, myDecks);
     }
 
     private void locateNodes() {
@@ -173,6 +177,8 @@ public class CollectionAppearance {
         deleteDeckIcon.setLayoutY(createDeckIcon.getLayoutY());
         selectDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW  * 0.03884);
         selectDeckIcon.setLayoutY(createDeckIcon.getLayoutY());
+        myDecks.setLayoutX(Main.WIDTH_OF_WINDOW / 75);
+        myDecks.setLayoutY(1 * Main.HEIGHT_OF_WINDOW / 8);
     }
 
     private void locateShownCards() {
