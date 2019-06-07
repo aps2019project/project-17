@@ -19,6 +19,7 @@ public class Collection {
         this.decks = new ArrayList<>();
         this.daric = 15000;
         this.mainDeck = null;
+        toDelete();
     }
 
     private Card findCard(String cardNameID) {
@@ -264,5 +265,16 @@ public class Collection {
 
     public Deck getMainDeck() {
         return mainDeck;
+    }
+
+    private void toDelete() {
+        for (int i = 0; i < 18; i++) {
+            cards.add(CardMaker.getAllCards()[i]);
+        }
+        for (int i = 0; i < 5; i++) {
+            if (CardMaker.getAllItems()[i].getPrice() != 0) {
+                items.add(CardMaker.getAllItems()[i]);
+            }
+        }
     }
 }
