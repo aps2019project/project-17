@@ -133,7 +133,13 @@ public class CardsDataAppearance {
     }
 
     public void removeAll(Group group) {
-        group.getChildren().removeAll(nameView, mpView, priceView, apView, hpView, typeView, idView, inCollectionView);
+        group.getChildren().removeAll(nameView, mpView, priceView);
+        if (apView != null){
+            group.getChildren().removeAll(apView, hpView);
+        }
+        if (typeView != null){
+            group.getChildren().removeAll(typeView, idView, inCollectionView);
+        }
     }
 
     public void removeAll(Group group, int a){

@@ -137,5 +137,7 @@ class MainMenu {
         shopTxt.setOnMouseClicked(e -> new ShopAppearance());
 
         exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
+
+        collectionTxt.setOnMouseClicked(e -> new CollectionAppearance());
     }
 }

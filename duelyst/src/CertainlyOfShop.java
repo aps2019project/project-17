@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import view.CollectionView;
 
 public class CertainlyOfShop {
 
@@ -86,6 +87,7 @@ public class CertainlyOfShop {
         label.setText(result);
         root.getChildren().addAll(close);
         close.setOnMouseClicked(e -> popOp.close());
+        CollectionView.showUserCollection(Account.getLoginUser());
     }
 
     private static void sell(String cardName, VBox root) {

@@ -2,6 +2,7 @@ package CardCollections;
 
 import Cards.*;
 import Data.Account;
+import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class Collection {
         this.decks = new ArrayList<>();
         this.daric = 15000;
         this.mainDeck = null;
+        toDelete();
     }
 
     private Card findCard(String cardNameID) {
@@ -263,5 +265,11 @@ public class Collection {
 
     public Deck getMainDeck() {
         return mainDeck;
+    }
+
+    private void toDelete() {
+        for (int i = 0; i < 20; i++) {
+            cards.add(CardMaker.getAllCards()[i]);
+        }
     }
 }
