@@ -19,15 +19,15 @@ class LeaderBoardWindow {
     private void makeTable() {
         TableView tableView = new TableView();
 
-        TableColumn<String, Account> column1 = new TableColumn<>("UserName");
+        TableColumn<Account,String> column1 = new TableColumn<>("UserName");
         column1.setCellValueFactory(new PropertyValueFactory<>("userName"));
         column1.setMinWidth(100);
 
-        TableColumn<Integer, Account> column2 = new TableColumn<>("Wins");
+        TableColumn<Account,Integer> column2 = new TableColumn<>("Wins");
         column2.setCellValueFactory(new PropertyValueFactory<>("numOfWins"));
         column2.setMinWidth(100);
 
-        TableColumn<Integer, Account> column3 = new TableColumn<>("Loses");
+        TableColumn<Account,Integer> column3 = new TableColumn<>("Loses");
         column3.setCellValueFactory(new PropertyValueFactory<>("numOfLose"));
         column3.setMinWidth(100);
 

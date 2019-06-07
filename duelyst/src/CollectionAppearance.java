@@ -155,6 +155,7 @@ public class CollectionAppearance {
 
         myDecks.setOnMouseEntered(e -> myDecks.setOpacity(1));
         myDecks.setOnMouseExited(e -> myDecks.setOpacity(0.7));
+        myDecks.setOnMouseClicked(e-> myDecksAction());
     }
 
     private void addNodes() {
@@ -321,6 +322,10 @@ public class CollectionAppearance {
         }
         currentPageView.setText("Page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
         locateNodes();
+    }
+
+    private static void myDecksAction() {
+        new DeckTable();
     }
 }
 
