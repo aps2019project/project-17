@@ -8,14 +8,12 @@ import java.util.Arrays;
 
 public class Shop {
 
-    private ArrayList<Card> cardsInShop;
-    private ArrayList<Item> itemsInShop;
+    private ArrayList<Card> cardsInShop = new ArrayList<>();
+    private ArrayList<Item> itemsInShop = new ArrayList<>();
     private Collection collection;
 
     public Shop(Collection collection) {
         this.collection = collection;
-        this.cardsInShop = new ArrayList<>();
-        this.itemsInShop = new ArrayList<>();
         this.initShop();
     }
 
@@ -48,7 +46,7 @@ public class Shop {
 
     public Card getCardFromName(String name) {
         for (Card card : CardMaker.getAllCards()) {
-            if (card.getName().equals(name))
+            if (card.getName().toLowerCase().equals(name))
                 return card;
         }
         return null;
@@ -65,7 +63,7 @@ public class Shop {
 
     public Item getItemFromName(String name) {
         for (Item item : CardMaker.getAllItems()) {
-            if (item.getName().equals(name))
+            if (item.getName().toLowerCase().equals(name))
                 return item;
         }
         return null;

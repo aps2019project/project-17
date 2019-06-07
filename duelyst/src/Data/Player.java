@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Player {
-
     private Deck mainDeck;
     private Deck copyMainDeck;
     private Hand hand;
@@ -25,6 +24,9 @@ public class Player {
     private ArrayList<Effect> effects = new ArrayList<>();
     private ArrayList<Effect> specialSituationBuff = new ArrayList<>();
     private SpecialSituation specialSituation = SpecialSituation.NONE;
+
+    public Player() {
+    }
 
     public Player(String userName, Deck deck) {
         this.mana = 10;
