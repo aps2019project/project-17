@@ -76,7 +76,6 @@ public class SelectModeStorySingle {
     }
 
     static {
-        GameController.initializeAIStory();
         killHero.setOnMouseClicked(e -> {
             GameController.setAiPlayer(KH);
             GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);

@@ -1,4 +1,5 @@
 import Appearance.FontAppearance;
+import controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -65,6 +66,7 @@ public class EnterSinglePlayerGame {
 
     static {
         storyMode.setOnMouseClicked(e -> {
+            GameController.initializeAIStory();
             SelectModeStorySingle.disPlay();
             firstWindow.close();
         });
