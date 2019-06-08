@@ -1,47 +1,48 @@
+import Appearance.ColorAppearance;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class CellAppearance {
 
-    private Rectangle cell;
+    private Rectangle cellRectangle;
 
     public CellAppearance() {
-        cell=new Rectangle(Main.WIDTH_OF_WINDOW / 22, Main.HEIGHT_OF_WINDOW/12);
-        cell.setArcWidth(20);
-        cell.setArcHeight(20);
+        cellRectangle = new Rectangle(Main.WIDTH_OF_WINDOW / 22, Main.HEIGHT_OF_WINDOW / 12);
+        cellRectangle.setArcWidth(20);
+        cellRectangle.setArcHeight(20);
         dark();
         fill();
     }
 
     private void changeLight(double value) {
-        cell.setOpacity(value);
+        cellRectangle.setOpacity(value);
     }
 
     private void fill() {
-        cell.setFill(Color.rgb( 117, 46, 214 ));
+        cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
     }
 
     public void light() {// TODO: 6/8/2019
         changeLight(0.7);
-        cell.setFill(Color.rgb( 214, 46, 102 ));
+        cellRectangle.setFill(Color.rgb(214, 46, 102));
     }
 
     public void dark() {
         changeLight(0.3);
-        cell.setFill(Color.rgb( 117, 46, 214 ));
+        cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
     }
 
     public void add(Group group) {// TODO: 6/8/2019
-        group.getChildren().addAll(cell);
+        group.getChildren().addAll(cellRectangle);
     }
 
-    public Rectangle getCell() {
-        return cell;
+    public Rectangle getCellRectangle() {
+        return cellRectangle;
     }
 
-    public void handleEvents(){
-        cell.setOnMouseEntered(event -> light());
-        cell.setOnMouseExited(event -> dark());
+    public void handleEvents() {
+        cellRectangle.setOnMouseEntered(event -> light());
+        cellRectangle.setOnMouseExited(event -> dark());
     }
 }
