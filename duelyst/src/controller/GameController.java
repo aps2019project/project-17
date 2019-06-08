@@ -14,6 +14,8 @@ import view.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 import static Data.MODE.*;
 
@@ -48,6 +50,12 @@ public class GameController {
      */
 
     public static ArrayList<Account> getAccounts() {
+        try {
+            if (Save.loadInstance(InstanceType.ACCOUNT) != null)
+                accounts.addAll(Arrays.asList((Account[]) Objects.requireNonNull(Save.loadInstance(InstanceType.ACCOUNT))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return accounts;
     }
 
@@ -124,13 +132,14 @@ public class GameController {
         return shop.search(cardName);
     }
 
-    public static Card getCardFromId(String cardId,Shop shop){
+    public static Card getCardFromId(String cardId, Shop shop) {
         return shop.getCardFromId(cardId);
     }
 
-    public static Item getItemFromId(String itemId,Shop shop){
+    public static Item getItemFromId(String itemId, Shop shop) {
         return shop.getItemFromId(itemId);
     }
+
     /**
      * Battle
      */

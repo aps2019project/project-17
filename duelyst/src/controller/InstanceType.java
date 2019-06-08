@@ -1,7 +1,7 @@
 package controller;
 
 public enum InstanceType {
-    EFFECT,
+    ACCOUNT,
     HERO,
     ITEM,
     MINION,

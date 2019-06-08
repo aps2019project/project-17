@@ -3,6 +3,9 @@ package Data;
 import CardCollections.Collection;
 import CardCollections.*;
 import controller.GameController;
+import controller.InstanceType;
+
+import java.io.IOException;
 
 public class Account implements Comparable<Account> {
 
@@ -39,6 +42,11 @@ public class Account implements Comparable<Account> {
         Account account = new Account(userName, passWord);
 
         GameController.getAccounts().add(account);
+        try {
+            Save.save(account, InstanceType.ACCOUNT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "Account Successfully created";
     }
 

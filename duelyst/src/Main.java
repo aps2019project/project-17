@@ -1,9 +1,14 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
+import Cards.Minion;
 import Data.Account;
+import Data.Player;
 import Data.Save;
+import Effects.enums.AttackType;
+import Effects.enums.MinionType;
 import InstanceMaker.CardMaker;
 import controller.GameController;
+import controller.InstanceType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -147,13 +152,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Account account = new Account("ali","123");
-        try {
-            System.out.println(Save.save(account));
-        } catch (IllegalAccessException | InstantiationException | IOException e) {
-            e.printStackTrace();
-        }
-//        GameController.main();
         launch(args);
     }
 
