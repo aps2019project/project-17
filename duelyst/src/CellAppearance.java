@@ -1,3 +1,4 @@
+import Appearance.ColorAppearance;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -19,17 +20,17 @@ public class CellAppearance {
     }
 
     private void fill() {
-        cell.setFill(Color.rgb( 117, 46, 214 ));
+        cell.setFill(ColorAppearance.COLOR_CELL);
     }
 
     public void light() {// TODO: 6/8/2019
         changeLight(0.7);
-        cell.setFill(Color.rgb( 214, 46, 102 ));
+        cell.setFill(ColorAppearance.COLOR_CELL_CLICKED);
     }
 
     public void dark() {
         changeLight(0.3);
-        cell.setFill(Color.rgb( 117, 46, 214 ));
+        cell.setFill(ColorAppearance.COLOR_CELL);
     }
 
     public void add(Group group) {// TODO: 6/8/2019
