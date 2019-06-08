@@ -30,6 +30,7 @@ public class CollectionAppearance {
     private ImageView createDeckIcon;
     private ImageView deleteDeckIcon;
     private ImageView selectDeckIcon;
+    private ImageView backIcon;
     private int currentPage = 0;
     private Text currentPageView = new Text("page : 1");
     private Text myDecks = new Text("MY DECKS");
@@ -41,6 +42,7 @@ public class CollectionAppearance {
             createDeckIcon = new ImageView(new Image(new FileInputStream("plus.png")));
             deleteDeckIcon = new ImageView(new Image(new FileInputStream("minus.png")));
             selectDeckIcon = new ImageView(new Image(new FileInputStream("add.png")));
+            backIcon = new ImageView(new Image(new FileInputStream("icon.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -123,6 +125,10 @@ public class CollectionAppearance {
         leftDirection.setOpacity(0.4);
         myDecks.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
         myDecks.setFont(FontAppearance.FONT_SHOP_BUTTONS);
+        //Back Icon
+        backIcon.setOnMouseEntered(event -> backIcon.setOpacity(1));
+        backIcon.setOnMouseExited(event -> backIcon.setOpacity(0.5));
+        backIcon.setOnMouseClicked(event -> new MainMenu());
     }
 
     private void setBackGround() {
@@ -168,7 +174,7 @@ public class CollectionAppearance {
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon, myDecks);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon, myDecks,backIcon);
     }
 
     private void locateNodes() {
@@ -201,7 +207,13 @@ public class CollectionAppearance {
         selectDeckIcon.setLayoutX(Main.WIDTH_OF_WINDOW * 0.03884);
         selectDeckIcon.setLayoutY(createDeckIcon.getLayoutY());
         myDecks.setLayoutX(Main.WIDTH_OF_WINDOW / 75);
-        myDecks.setLayoutY(1 * Main.HEIGHT_OF_WINDOW / 8);
+        myDecks.setLayoutY(1 * Main.HEIGHT_OF_WINDOW / 6);
+        //Back icon
+        backIcon.setLayoutX(fillMenu.getWidth() / 3);
+        backIcon.setLayoutY(fillMenu.getWidth() / 3);
+        backIcon.setFitWidth(fillMenu.getWidth() / 3);
+        backIcon.setFitHeight(fillMenu.getWidth() / 3);
+        backIcon.setOpacity(0.5);
     }
 
     private void locateShownCards() {

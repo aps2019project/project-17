@@ -35,6 +35,7 @@ public class DeckOperator {
     private static Rectangle searchToDeckBox = new Rectangle(370, 30);
 
     static {
+        popOp.setTitle("DECK OPERATOR");
         popOp.initModality(Modality.APPLICATION_MODAL);
         popOp.setMinWidth(Main.WIDTH_OF_WINDOW / 2.5);
         popOp.setMinHeight(Main.HEIGHT_OF_WINDOW / 4.17);
@@ -52,12 +53,12 @@ public class DeckOperator {
 
     static {
         id.setFont(FontAppearance.FONT_SEARCH_SHOP);
-        id.setFill(ColorAppearance.GOLD_COLOR);
+        id.setFill(Color.BLACK);
         name.setFont(FontAppearance.FONT_SEARCH_SHOP);
-        name.setFill(ColorAppearance.GOLD_COLOR);
-        addToDeckBox.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
-        removeDeckBox.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
-        searchToDeckBox.setFill(ColorAppearance.COLOR_TITLES_OF_SHOP);
+        name.setFill(Color.BLACK);
+        addToDeckBox.setFill(Color.GREEN);
+        removeDeckBox.setFill(Color.RED);
+        searchToDeckBox.setFill(Color.BLUE);
         addToDeckBox.setOpacity(0.5);
         removeDeckBox.setOpacity(0.5);
         searchToDeckBox.setOpacity(0.5);
