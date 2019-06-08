@@ -21,16 +21,19 @@ public class CellAppearance {
 
     private void fill() {
         cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
+        cellRectangle.setFill(ColorAppearance.COLOR_CELL);
     }
 
     public void light() {// TODO: 6/8/2019
         changeLight(0.7);
         cellRectangle.setFill(Color.rgb(214, 46, 102));
+        cellRectangle.setFill(ColorAppearance.COLOR_CELL_CLICKED);
     }
 
     public void dark() {
         changeLight(0.3);
         cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
+        cellRectangle.setFill(ColorAppearance.COLOR_CELL);
     }
 
     public void add(Group group) {// TODO: 6/8/2019
