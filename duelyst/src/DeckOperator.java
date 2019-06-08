@@ -22,14 +22,14 @@ import javafx.stage.Stage;
 public class DeckOperator {
 
     private static Stage popOp = new Stage();
-    private static Text result = new Text("this is the result");
+    private static Text result = new Text();
     private static TextField cardId = new TextField();
     private static TextField cardName = new TextField();
     private static Text addToDeck = new Text("Add  this  Card  to  current  Deck");
     private static Text removeFromDeck = new Text("Remove  this  Card  From  current  Deck");
     private static Text searchInDeck = new Text("Search situation of this Card  in  current  Deck");
-    private static Text id = new Text("enter  id  of  card  :  ");
-    private static Text name = new Text("enter  name  of  the  card  :  ");
+    private static Text id = new Text("Enter  id  of  card  :  ");
+    private static Text name = new Text("Enter  name  of  the  card  :  ");
     private static Rectangle addToDeckBox = new Rectangle(270, 30);
     private static Rectangle removeDeckBox = new Rectangle(310, 30);
     private static Rectangle searchToDeckBox = new Rectangle(370, 30);
@@ -46,8 +46,8 @@ public class DeckOperator {
         removeFromDeck.setFill(Color.BLACK);
         searchInDeck.setFill(Color.BLACK);
         result.setFill(Color.GREEN);
-        cardId.setPromptText("id of card");
-        cardName.setPromptText("name of card");
+        cardId.setPromptText("ID of card");
+        cardName.setPromptText("Name of card");
     }
 
     static {

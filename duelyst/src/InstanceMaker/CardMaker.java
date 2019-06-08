@@ -2,6 +2,7 @@ package InstanceMaker;
 
 import Cards.*;
 import Data.Account;
+import Data.Save;
 import Effects.CellEffects.FireCell;
 import Effects.CellEffects.HolyCell;
 import Effects.CellEffects.Poison;
@@ -17,15 +18,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static Data.Save.jsonReader;
-import static Data.Save.writeInJson;
+import static Data.Save.*;
 
 public class CardMaker {
-    private static final String address = "duelyst//src//InstanceMaker//";
-    private static final String addressOfHero = address + "Hero.json";
-    private static final String addressOfItem = address + "Item.json";
-    private static final String addressOfMinion = address + "Minion.json";
-    private static final String addressOfSpell = address + "Spell.json";
     private static Spell[] spells;
     private static Minion[] minions;
     private static Hero[] heroes;
@@ -40,35 +35,6 @@ public class CardMaker {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static Object[] loadInstance(InstanceType instanceType) throws IOException {
-        Gson gson = new Gson();
-
-        switch (instanceType) {
-            case HERO:
-                Hero[] heroes;
-                heroes = gson.fromJson(jsonReader(addressOfHero), Hero[].class);
-                addEffectToCard(heroes);
-                return heroes;
-            case ITEM:
-                Item[] items;
-                items = gson.fromJson(jsonReader(addressOfItem), Item[].class);
-                addEffectToItem(items);
-                return items;
-            case MINION:
-                Minion[] minions;
-                minions = gson.fromJson(jsonReader(addressOfMinion), Minion[].class);
-                addEffectToCard(minions);
-                return minions;
-            case SPELL:
-                Spell[] spells;
-                spells = gson.fromJson(jsonReader(addressOfSpell), Spell[].class);
-                addEffectToCard(spells);
-                return spells;
-
-        }
-        return null;
     }
 
 
@@ -205,7 +171,7 @@ public class CardMaker {
     public static <T extends Effect> void saveEffect(T newEffect) throws IOException {
         String[] names = newEffect.getClass().toString().split("\\.");
         String name = names[names.length - 1];
-        String address = CardMaker.address + name + ".json";
+        String address = Save.address + name + ".json";
         T[] loadedEffects = (T[]) loadEffects(address);
         ArrayList<T> effects = new ArrayList<>();
         if (loadedEffects != null) {
@@ -303,39 +269,39 @@ public class CardMaker {
             loadedEffects = null;
             switch (value) {
                 case HOLY:
-                    address = CardMaker.address + "Holy.json";
+                    address = Data.Save.address + "Holy.json";
                     break;
                 case WEAKNESS:
                     continue;
                 case POWER_BUFF:
-                    address = CardMaker.address + "ChangeProperties.json";
+                    address = Data.Save.address + "ChangeProperties.json";
                     break;
                 case STUN:
-                    address = CardMaker.address + "Stun.json";
+                    address = Data.Save.address + "Stun.json";
                     break;
                 case DISARM:
-                    address = CardMaker.address + "Disarm.json";
+                    address = Data.Save.address + "Disarm.json";
                     break;
                 case CLEAR:
-                    address = CardMaker.address + "Clear.json";
+                    address = Data.Save.address + "Clear.json";
                     break;
                 case FIRE_CELL:
-                    address = CardMaker.address + "FireCell.json";
+                    address = Data.Save.address + "FireCell.json";
                     break;
                 case POISON:
-                    address = CardMaker.address + "Poison.json";
+                    address = Data.Save.address + "Poison.json";
                     break;
                 case HOLY_CELL:
-                    address = CardMaker.address + "HolyCell.json";
+                    address = Data.Save.address + "HolyCell.json";
                     break;
                 case ANTI:
-                    address = CardMaker.address + "Anti.json";
+                    address = Data.Save.address + "Anti.json";
                     break;
                 case CHANGE_MANA:
-                    address = CardMaker.address + "ChangeMana.json";
+                    address = Data.Save.address + "ChangeMana.json";
                     break;
                 case SPECIAL_SITUATION_BUFF:
-                    address = CardMaker.address + "SpecialSituationBuff.json";
+                    address = Data.Save.address + "SpecialSituationBuff.json";
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + value);
@@ -347,7 +313,7 @@ public class CardMaker {
         return effects;
     }
 
-    private static void addEffectToCard(Card[] cards) throws IOException {
+    public static void addEffectToCard(Card[] cards) throws IOException {
         ArrayList<Effect> effects = getAllEffect();
         Effect specialSituation;
         for (Card card : cards) {
@@ -370,7 +336,7 @@ public class CardMaker {
 
     }
 
-    private static void addEffectToItem(Item[] items) throws IOException {
+    public static void addEffectToItem(Item[] items) throws IOException {
         ArrayList<Effect> effects = getAllEffect();
         Effect specialSituation;
         for (Item item : items) {
