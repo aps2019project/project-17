@@ -143,8 +143,8 @@ class MainMenu {
         battleTxt.setOnMouseClicked(e -> {
 //            if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle())
 //                CheckValidationDeckAppearance.disPlay();
-//            else
-                StartingBattleAppearance.disPlay();
+//            else StartingBattleAppearance.disPlay();
+            StartingBattleAppearance.disPlay();
         });
     }
 }
