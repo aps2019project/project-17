@@ -66,17 +66,17 @@ public class CollectionAppearance {
             if (i < cards.size()) {
                 try {
                     if (cards.get(i) instanceof Hero)
-                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
+                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("product1.png"))));
                     else if (cards.get(i) instanceof Minion)
-                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
+                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("product2.png"))));
                     else if (cards.get(i) instanceof Spell)
-                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
+                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("product3.png"))));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("item_template.png"))));
+                    cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("product4.png"))));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

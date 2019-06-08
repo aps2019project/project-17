@@ -97,12 +97,12 @@ class ShopAppearance {
             allProducts[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
             try {
                 if (i >= 70)
-                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("item_template.png"))));
+                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product4.png"))));
                 else if (CardMaker.getAllCards()[i] instanceof Hero)
-                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("hero_template.png"))));
+                        allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product1.png"))));
                 else if ((CardMaker.getAllCards()[i] instanceof Minion))
-                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("minion_template.png"))));
-                else allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("spell_template.png"))));
+                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product2.png"))));
+                else allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product3.png"))));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
