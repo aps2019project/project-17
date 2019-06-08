@@ -19,6 +19,12 @@ public class Collection {
         this.decks = new ArrayList<>();
         this.daric = 15000;
         this.mainDeck = null;
+        toDelete();
+        Deck deck = new Deck("deck");
+        decks.add(deck);
+        for (int i = 0; i < 19; i++) {
+            deck.addCard(cards.get(i));
+        }
     }
 
     private Card findCard(String cardNameID) {
@@ -277,9 +283,9 @@ public class Collection {
         }
     }
 
-    public Deck returnDeckFromName(String deckName){
-        for (Deck deck:this.decks) {
-            if(deck.getName().equals(deckName)){
+    public Deck returnDeckFromName(String deckName) {
+        for (Deck deck : this.decks) {
+            if (deck.getName().equals(deckName)) {
                 return deck;
             }
         }

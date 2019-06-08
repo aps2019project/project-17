@@ -53,6 +53,7 @@ public class Main extends Application {
     private static Rectangle backGroundFill = new Rectangle(WIDTH_OF_WINDOW / 2.5, HEIGHT_OF_WINDOW / 2.25);
     private static Rectangle outBox = new Rectangle(WIDTH_OF_WINDOW / 7.2, HEIGHT_OF_WINDOW / 16.68);
 
+
     static {
         try {
             Image helpIcon = new Image(new FileInputStream("info.png"));
@@ -152,13 +153,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Account account = new Account("ali","123");
-        try {
-            System.out.println(Save.save(account));
-        } catch (IllegalAccessException | InstantiationException | IOException e) {
-            e.printStackTrace();
-        }
-//        GameController.main();
         launch(args);
     }
 

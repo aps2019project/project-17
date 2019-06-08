@@ -180,9 +180,7 @@ public class Player {
         this.hand = new Hand();
         if (mainDeck.getItem() != null)
             collectAbleItems.add(this.mainDeck.getItem());
-        if (this instanceof AI)
-            setHand();
-        else setHandPoisonLake();
+        setHand();
         return true;
     }
 
@@ -201,26 +199,6 @@ public class Player {
 
     public void setSpecialSituation(SpecialSituation specialSituation) {
         this.specialSituation = specialSituation;
-    }
-
-    private void setHandPoisonLake() {
-        Random random = new Random();
-        for (int i = 0; i < copyMainDeck.getCards().size(); i++) {
-            if (copyMainDeck.getCards().get(i).getId().equals("8")) {
-                this.hand.addCard(copyMainDeck.getCards().get(i));
-                copyMainDeck.getCards().remove(i);
-                break;
-            }
-        }
-        for (int i = 0; i < 4; i++) {
-            int n = random.nextInt() % this.copyMainDeck.getCards().size();
-            while (n < 0) {
-                n = random.nextInt() % this.copyMainDeck.getCards().size();
-            }
-            this.hand.addCard(copyMainDeck.getCards().get(n));
-            this.copyMainDeck.getCards().remove(n);
-        }
-        setNextCard();
     }
 
     public void addEffect(Effect effect) {
