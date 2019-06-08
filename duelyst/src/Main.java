@@ -1,9 +1,14 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
+import Cards.Minion;
 import Data.Account;
+import Data.Player;
 import Data.Save;
+import Effects.enums.AttackType;
+import Effects.enums.MinionType;
 import InstanceMaker.CardMaker;
 import controller.GameController;
+import controller.InstanceType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -153,7 +158,7 @@ public class Main extends Application {
         } catch (IllegalAccessException | InstantiationException | IOException e) {
             e.printStackTrace();
         }
-        GameController.main();
+//        GameController.main();
         launch(args);
     }
 
