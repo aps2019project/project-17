@@ -139,5 +139,10 @@ class MainMenu {
         exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
 
         collectionTxt.setOnMouseClicked(e -> new CollectionAppearance());
+
+        battleTxt.setOnMouseClicked(e -> {
+            if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle())
+                CheckValidationDeckAppearance.disPlay();
+        });
     }
 }
