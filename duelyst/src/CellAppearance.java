@@ -48,4 +48,6 @@ public class CellAppearance {
         cellRectangle.setOnMouseEntered(event -> light());
         cellRectangle.setOnMouseExited(event -> dark());
     }
+
+
 }
