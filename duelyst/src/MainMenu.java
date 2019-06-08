@@ -1,5 +1,6 @@
 import Appearance.ColorAppearance;
 import Data.Account;
+import InstanceMaker.CardMaker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
@@ -34,6 +35,8 @@ class MainMenu {
         setFont();
         setMouse();
         display();
+        Account.getLoginUser().getCollection().setMainDeck(Account.getLoginUser().getCollection().getDecks().get(0).getName());
+        Account.getLoginUser().getCollection().getMainDeck().setHero(CardMaker.getHeroes()[5]);
     }
 
     private void setHelp() {

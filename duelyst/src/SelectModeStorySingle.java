@@ -81,6 +81,7 @@ public class SelectModeStorySingle {
             System.out.println("You have entered the Battle,Fight!");
             BattleView.setItems();
             closeWindow();
+            new BattleAppearance();
         });
         holdFlag.setOnMouseClicked(e -> {
             GameController.setAiPlayer(HF);
@@ -88,6 +89,7 @@ public class SelectModeStorySingle {
             System.out.println("You have entered the Battle,Fight!");
             BattleView.setItems();
             closeWindow();
+            new BattleAppearance();
         });
         captureFlag.setOnMouseClicked(e -> {
             GameController.setAiPlayer(CF);

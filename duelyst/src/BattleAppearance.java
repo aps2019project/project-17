@@ -1,9 +1,18 @@
 
 
+import Appearance.FontAppearance;
+import Data.AI;
+import Data.Account;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,13 +21,21 @@ public class BattleAppearance {
     private Group root = new Group();
     private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private CellAppearance[][] board = new CellAppearance[5][9];
+    private Text[] textsOfBattle = new Text[]{new Text("End Turn"), new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName())};
+    private Rectangle[] manaIconImage = new Rectangle[9];
+
 
     public BattleAppearance() {
         setBackGround();
-        disPlay();
         initializeCells();
         addCells();
         locateNodes();
+        setFontsAndColor();
+        setEndTurnButton();
+        setImagesOfPlayers();
+        setManaIcons();
+        setUserNames();
+        disPlay();
         handleEvents();
     }
 
@@ -33,6 +50,67 @@ public class BattleAppearance {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setFontsAndColor() {
+        textsOfBattle[0].setFont(FontAppearance.FONT_BUTTON);
+        textsOfBattle[0].setFill(Color.WHITE);
+    }
+
+    private void setUserNames() {
+        textsOfBattle[1].setFont(FontAppearance.FONT_BUTTON);
+        textsOfBattle[2].setFont(FontAppearance.FONT_BUTTON);
+        textsOfBattle[1].setLayoutX(185);
+        textsOfBattle[1].setLayoutY(85);
+        textsOfBattle[2].setLayoutX(1120);
+        textsOfBattle[2].setLayoutY(85);
+        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2]);
+    }
+
+    private void setEndTurnButton() {
+        Rectangle rectangle = new Rectangle(190, 75);
+        try {
+            rectangle.setFill(new ImagePattern(new Image(new FileInputStream("end_turn.png"))));
+            StackPane stackPane0 = new StackPane(rectangle, textsOfBattle[0]);
+            stackPane0.setLayoutX(Main.WIDTH_OF_WINDOW * 8 / 10);
+            stackPane0.setLayoutY(Main.HEIGHT_OF_WINDOW * 8.5 / 10);
+            stackPane0.setOpacity(0.75);
+            root.getChildren().addAll(stackPane0);
+            stackPane0.setOnMouseEntered(event -> stackPane0.setOpacity(1));
+            stackPane0.setOnMouseExited(event -> stackPane0.setOpacity(0.75));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setImagesOfPlayers() {
+        Rectangle rectangle1 = new Rectangle(160, 175);
+        Rectangle rectangle2 = new Rectangle(160, 175);
+        try {
+            rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("player1.png"))));
+            rectangle2.setFill(new ImagePattern(new Image(new FileInputStream("player2.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        rectangle1.setLayoutX(Main.WIDTH_OF_WINDOW / 40);
+        rectangle1.setLayoutY(Main.HEIGHT_OF_WINDOW / 200);
+        rectangle2.setLayoutX(Main.WIDTH_OF_WINDOW * 8.5 / 10);
+        rectangle2.setLayoutY(Main.HEIGHT_OF_WINDOW / 200);
+        root.getChildren().addAll(rectangle1, rectangle2);
+    }
+
+    private void setManaIcons() {
+        for (int i = 0; i < manaIconImage.length; i++) {
+            try {
+                manaIconImage[i] = new Rectangle(30, 30);
+                manaIconImage[i].setFill(new ImagePattern(new Image(new FileInputStream("icon_mana2.png"))));
+                manaIconImage[i].setLayoutY(Main.HEIGHT_OF_WINDOW / 8.5);
+                manaIconImage[i].setLayoutX(Main.WIDTH_OF_WINDOW / 8 + (i * 30));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        root.getChildren().addAll(manaIconImage);
     }
 
     private void disPlay() {
@@ -53,11 +131,11 @@ public class BattleAppearance {
                 if (j == 0) {
                     if (i == 0) {
                         board[i][j].getCellRectangle().setLayoutX(Main.WIDTH_OF_WINDOW / 4.5);
-                        board[i][j].getCellRectangle().setLayoutY(Main.HEIGHT_OF_WINDOW /3.5);
+                        board[i][j].getCellRectangle().setLayoutY(Main.HEIGHT_OF_WINDOW / 3.5);
                         continue;
                     }
                     board[i][j].getCellRectangle().setLayoutX(board[i - 1][j].getCellRectangle().getLayoutX());
-                    board[i][j].getCellRectangle().setLayoutY(board[i - 1][j].getCellRectangle().getLayoutY() + Main.HEIGHT_OF_WINDOW /11);
+                    board[i][j].getCellRectangle().setLayoutY(board[i - 1][j].getCellRectangle().getLayoutY() + Main.HEIGHT_OF_WINDOW / 11);
                     continue;
                 }
                 board[i][j].getCellRectangle().setLayoutX(board[i][j - 1].getCellRectangle().getLayoutX() + Main.WIDTH_OF_WINDOW / 17);
@@ -75,7 +153,7 @@ public class BattleAppearance {
         }
     }
 
-    private void handleEvents(){
+    private void handleEvents() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 board[i][j].handleEvents();

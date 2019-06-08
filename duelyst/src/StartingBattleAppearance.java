@@ -34,7 +34,7 @@ public class StartingBattleAppearance {
             StackPane stackPane2 = new StackPane(rectangle1, multiPlayer);
             HBox hBox = new HBox(stackPane1, stackPane2);
             hBox.setSpacing(100);
-            root.setSpacing(65);
+            root.setSpacing(30);
             hBox.setAlignment(Pos.CENTER);
             root.setAlignment(Pos.CENTER);
             root.getChildren().addAll(modeChoose, hBox);
@@ -46,7 +46,7 @@ public class StartingBattleAppearance {
     static {
         firstWindow.initModality(Modality.APPLICATION_MODAL);
         firstWindow.setMinWidth(Main.WIDTH_OF_WINDOW / 2.5);
-        firstWindow.setMinHeight(Main.HEIGHT_OF_WINDOW / 2.5);
+        firstWindow.setMinHeight(Main.HEIGHT_OF_WINDOW / 5);
         singlePlayer.setFont(FontAppearance.FONT_BUTTON);
         multiPlayer.setFont(FontAppearance.FONT_BUTTON);
         modeChoose.setFont(FontAppearance.FONT_BUTTON);
@@ -62,13 +62,20 @@ public class StartingBattleAppearance {
 
     static {
         singlePlayer.setOnMouseClicked(e -> {
-            EnterSinglePlayerGame.disPlay();
-            firstWindow.close();
+            action();
         });
         rectangle.setOnMouseClicked(e -> {
-            EnterSinglePlayerGame.disPlay();
-            firstWindow.close();
+            action();
         });
+    }
+
+    private static void action() {
+        EnterSinglePlayerGame.disPlay();
+        closeWindow();
+    }
+
+    private static void closeWindow() {
+        firstWindow.close();
     }
 
     public static void disPlay() {

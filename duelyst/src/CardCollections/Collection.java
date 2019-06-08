@@ -22,9 +22,10 @@ public class Collection {
         toDelete();
         Deck deck = new Deck("deck");
         decks.add(deck);
-        for (int i = 0; i < 19; i++) {
+        for (int i = 0; i < 20; i++) {
             deck.addCard(cards.get(i));
         }
+        this.mainDeck = deck;
     }
 
     private Card findCard(String cardNameID) {
@@ -273,7 +274,7 @@ public class Collection {
     }
 
     private void toDelete() {
-        for (int i = 0; i < 48; i++) {
+        for (int i = 0; i < 70; i++) {
             cards.add(CardMaker.getAllCards()[i]);
         }
         for (int i = 0; i < 5; i++) {

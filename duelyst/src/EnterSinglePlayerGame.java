@@ -73,6 +73,6 @@ public class EnterSinglePlayerGame {
     }
 
     public static void disPlay() {
-        firstWindow.showAndWait();
+        firstWindow.show();
     }
 }
