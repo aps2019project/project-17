@@ -13,7 +13,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.BattleView;
-import view.MenuType;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
