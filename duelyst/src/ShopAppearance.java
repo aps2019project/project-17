@@ -99,7 +99,7 @@ class ShopAppearance {
                 if (i >= 70)
                     allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product4.png"))));
                 else if (CardMaker.getAllCards()[i] instanceof Hero)
-                        allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product1.png"))));
+                    allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product1.png"))));
                 else if ((CardMaker.getAllCards()[i] instanceof Minion))
                     allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product2.png"))));
                 else allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product3.png"))));
@@ -409,10 +409,10 @@ class ShopAppearance {
                 shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight / 11);
 
                 if (shownData[i][j].getApView() != null) {
-                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4.3);
+                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4.15);
                     shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight / 1.52);
 
-                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth / 2.1);
+                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth / 1.97);
                     shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
                 }
             }
