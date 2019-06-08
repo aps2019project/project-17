@@ -152,13 +152,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Account account = new Account("ali","123");
-        try {
-            System.out.println(Save.save(account));
-        } catch (IllegalAccessException | InstantiationException | IOException e) {
-            e.printStackTrace();
-        }
-//        GameController.main();
         launch(args);
     }
 
