@@ -153,7 +153,7 @@ public class Main extends Application {
         } catch (IllegalAccessException | InstantiationException | IOException e) {
             e.printStackTrace();
         }
-//        GameController.main();
+        GameController.main();
         launch(args);
     }
 
