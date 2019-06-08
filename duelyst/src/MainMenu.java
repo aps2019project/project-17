@@ -141,9 +141,10 @@ class MainMenu {
         collectionTxt.setOnMouseClicked(e -> new CollectionAppearance());
 
         battleTxt.setOnMouseClicked(e -> {
-            if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle())
-                CheckValidationDeckAppearance.disPlay();
-            else StartingBattleAppearance.disPlay();
+//            if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle())
+//                CheckValidationDeckAppearance.disPlay();
+//            else StartingBattleAppearance.disPlay();
+            StartingBattleAppearance.disPlay();
         });
     }
 }

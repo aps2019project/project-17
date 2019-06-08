@@ -117,7 +117,8 @@ public class CardsDataAppearance {
     }
 
     public void addAll(Group group) {
-        group.getChildren().addAll(nameView, mpView, priceView);
+        if (nameView != null)
+            group.getChildren().addAll(nameView, mpView, priceView);
         if (apView != null)
             group.getChildren().add(apView);
         if (hpView != null)
@@ -134,15 +135,15 @@ public class CardsDataAppearance {
 
     public void removeAll(Group group) {
         group.getChildren().removeAll(nameView, mpView, priceView);
-        if (apView != null){
+        if (apView != null) {
             group.getChildren().removeAll(apView, hpView);
         }
-        if (typeView != null){
+        if (typeView != null) {
             group.getChildren().removeAll(typeView, idView, inCollectionView);
         }
     }
 
-    public void removeAll(Group group, int a){
+    public void removeAll(Group group, int a) {
         group.getChildren().removeAll(vBoxSearch);
     }
 }
