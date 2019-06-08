@@ -1,4 +1,7 @@
 import Appearance.FontAppearance;
+import Data.Account;
+import GameGround.SinglePlayerModes;
+import controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -9,9 +12,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import view.BattleView;
+import view.MenuType;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import static Data.MODE.*;
 
 public class SelectModeStorySingle {
     private static Stage firstWindow = new Stage();
@@ -68,11 +75,35 @@ public class SelectModeStorySingle {
         }
     }
 
-    public static void disPlay() {
-
-        firstWindow.showAndWait();
+    static {
+        GameController.initializeAIStory();
         killHero.setOnMouseClicked(e -> {
-            // TODO: single player type!
+            GameController.setAiPlayer(KH);
+            GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+            System.out.println("You have entered the Battle,Fight!");
+            BattleView.setItems();
+            closeWindow();
         });
+        holdFlag.setOnMouseClicked(e -> {
+            GameController.setAiPlayer(HF);
+            GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+            System.out.println("You have entered the Battle,Fight!");
+            BattleView.setItems();
+            closeWindow();
+        });
+        captureFlag.setOnMouseClicked(e -> {
+            GameController.setAiPlayer(CF);
+            GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
+            System.out.println("You have entered the Battle,Fight!");
+            BattleView.setItems();
+        });
+    }
+
+    public static void disPlay() {
+        firstWindow.showAndWait();
+    }
+
+    private static void closeWindow() {
+        firstWindow.close();
     }
 }

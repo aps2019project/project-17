@@ -73,6 +73,5 @@ public class StartingBattleAppearance {
 
     public static void disPlay() {
         firstWindow.showAndWait();
-
     }
 }

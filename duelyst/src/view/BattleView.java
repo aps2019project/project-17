@@ -13,7 +13,7 @@ import Effects.enums.AttackType;
 import java.util.ArrayList;
 import java.util.Random;
 
-class BattleView extends View {
+public class BattleView extends View {
 
     static void showBattleMenu() {
         System.out.println("Please Select the type you want to play (1/2):");
@@ -134,7 +134,7 @@ class BattleView extends View {
         System.out.println("insert " + player.getHand().getCards().get(n).getName());
     }
 
-    static void setItems() {
+    public static void setItems() {
         System.out.println(Battle.getCurrentBattle().setItems());
     }
 }
