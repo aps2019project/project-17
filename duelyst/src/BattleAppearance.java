@@ -1,9 +1,11 @@
 
 
+import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.AI;
 import Data.Account;
 import GameGround.Battle;
+import GameGround.Cell;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,6 +24,7 @@ public class BattleAppearance {
     private Group root;
     private Scene shopScene;
     private CellAppearance[][] board;
+    private Rectangle[][] boardBackGround;
     private Text[] textsOfBattle;
     private Rectangle[] manaIconImage;
     private Rectangle endTurnButton;
@@ -32,6 +35,7 @@ public class BattleAppearance {
         currentBattleAppearance = this;
         init();
         setBackGround();
+        initBoardBG();
         initHand();
         initializeCells();
         addCells();
@@ -49,8 +53,41 @@ public class BattleAppearance {
         this.root = new Group();
         this.shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
         this.board = new CellAppearance[5][9];
+        this.boardBackGround = new Rectangle[5][9];
         this.textsOfBattle = new Text[]{new Text("End Turn"), new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName())};
         this.manaIconImage = new Rectangle[9];
+    }
+
+    private void initBoardBG() {
+        for (int i = 0; i < boardBackGround.length; i++) {
+            for (int j = 0; j < boardBackGround[i].length; j++) {
+                boardBackGround[i][j] = new Rectangle(Main.WIDTH_OF_WINDOW / 19, Main.HEIGHT_OF_WINDOW / 10);
+                boardBackGround[i][j].setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
+                boardBackGround[i][j].setOpacity(0.3);
+                if (j == 0) {
+                    if (i == 0) {
+                        boardBackGround[i][j].setLayoutX(Main.WIDTH_OF_WINDOW / 4.2);
+                        boardBackGround[i][j].setLayoutY(Main.HEIGHT_OF_WINDOW / 4);
+                    } else {
+                        boardBackGround[i][j].setLayoutX(boardBackGround[i - 1][j].getLayoutX());
+                        boardBackGround[i][j].setLayoutY(boardBackGround[i - 1][j].getLayoutY() + Main.HEIGHT_OF_WINDOW / 9.2);
+                    }
+                } else {
+                    boardBackGround[i][j].setLayoutX(boardBackGround[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW / 18);
+                    boardBackGround[i][j].setLayoutY(boardBackGround[i][j - 1].getLayoutY());
+                }
+            }
+            root.getChildren().addAll(boardBackGround[i]);
+        }
+    }
+
+    private void initPlaceOfHeroes() {
+        int x = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getXCoordinate();
+        int y = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getYCoordinate();
+        int x1 = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getXCoordinate();
+        int y1 = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getYCoordinate();
+        Cell cellHeroOne = Battle.getCurrentBattle().getCellFromBoard(x, y);
+        Cell cellHeroTwo = Battle.getCurrentBattle().getCellFromBoard(x1, y1);
     }
 
     private void setBackGround() {
@@ -145,18 +182,8 @@ public class BattleAppearance {
     private void locateNodes() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (j == 0) {
-                    if (i == 0) {
-                        board[i][j].getCellRectangle().setLayoutX(Main.WIDTH_OF_WINDOW / 4.2);
-                        board[i][j].getCellRectangle().setLayoutY(Main.HEIGHT_OF_WINDOW / 4);
-                        continue;
-                    }
-                    board[i][j].getCellRectangle().setLayoutX(board[i - 1][j].getCellRectangle().getLayoutX());
-                    board[i][j].getCellRectangle().setLayoutY(board[i - 1][j].getCellRectangle().getLayoutY() + Main.HEIGHT_OF_WINDOW / 9.2);
-                    continue;
-                }
-                board[i][j].getCellRectangle().setLayoutX(board[i][j - 1].getCellRectangle().getLayoutX() + Main.WIDTH_OF_WINDOW / 18);
-                board[i][j].getCellRectangle().setLayoutY(board[i][j - 1].getCellRectangle().getLayoutY());
+                board[i][j].getCellRectangle().setLayoutX(boardBackGround[i][j].getLayoutX());
+                board[i][j].getCellRectangle().setLayoutY(boardBackGround[i][j].getLayoutY());
             }
         }
     }

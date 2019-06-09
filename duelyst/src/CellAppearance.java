@@ -2,7 +2,12 @@ import Appearance.ColorAppearance;
 import GameGround.Battle;
 import GameGround.Cell;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class CellAppearance {
 
@@ -14,7 +19,6 @@ public class CellAppearance {
         cellRectangle.setArcWidth(10);
         cellRectangle.setArcHeight(10);
         this.cell = cell;
-        dark();
         fill();
     }
 
@@ -24,19 +28,7 @@ public class CellAppearance {
 
     private void fill() {
         cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
-        cellRectangle.setFill(ColorAppearance.COLOR_CELL);
-    }
-
-    public void light() {
-        changeLight(0.7);
-    }
-
-    public void insertCard() {
-        changeLight(0.9);
-    }
-
-    public void dark() {
-        changeLight(0.3);
+        cellRectangle.setOpacity(0.01);
     }
 
     public void add(Group group) {// TODO: 6/8/2019
@@ -49,15 +41,17 @@ public class CellAppearance {
 
     public void handleEvents() {
         cellRectangle.setOnMouseClicked(event -> {
-            insertCard();
             if (BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard() != null) {
-                cellRectangle.setFill(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCardIcon().getFill());
+                try {
+                    cellRectangle.setFill(new ImagePattern(new Image(new FileInputStream("test.png"))));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(Battle.getCurrentBattle().insertingCardFromHand(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard().getName(), cell.getRow() + 1, cell.getCol() + 1));
                 BattleAppearance.getCurrentBattleAppearance().getHandAppearance().reLoad();
+                cellRectangle.setOpacity(1);
             }
         });
-        cellRectangle.setOnMouseExited(event -> dark());
-        cellRectangle.setOnMouseEntered(event -> light());
     }
 
 

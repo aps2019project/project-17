@@ -688,4 +688,8 @@ public class Battle {
     public Player getPlayerOne() {
         return playerOne;
     }
+
+    public Player getPlayerTwo() {
+        return playerTwo;
+    }
 }
