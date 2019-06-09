@@ -1,14 +1,8 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
-import Cards.Minion;
+import Appearance.MinionAppearance;
 import Data.Account;
-import Data.Player;
-import Data.Save;
-import Effects.enums.AttackType;
-import Effects.enums.MinionType;
-import InstanceMaker.CardMaker;
 import controller.GameController;
-import controller.InstanceType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,7 +22,6 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class Main extends Application {
 
@@ -154,6 +147,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 //        GameController.main();
+        MinionAppearance minionAppearance = new MinionAppearance(null,"decepticleprime",root);
         launch(args);
     }
 

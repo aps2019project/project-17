@@ -244,8 +244,6 @@ public class CollectionAppearance {
         double cardHeight = shownCards[0][0].getHeight();
         for (int i = 0; i < shownData.length; i++) {
             for (int j = 0; j < shownData[i].length; j++) {
-                if (shownCards[i][j] == null)
-                    continue;
                 shownData[i][j].addAll(root);
                 shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * cardHeight / 5);
                 shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * cardWidth / 10);

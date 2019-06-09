@@ -51,8 +51,10 @@ public class GameController {
 
     public static ArrayList<Account> getAccounts() {
         try {
-            if (Save.loadInstance(InstanceType.ACCOUNT) != null)
+            if (Save.loadInstance(InstanceType.ACCOUNT) != null) {
+                accounts.clear();
                 accounts.addAll(Arrays.asList((Account[]) Objects.requireNonNull(Save.loadInstance(InstanceType.ACCOUNT))));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
