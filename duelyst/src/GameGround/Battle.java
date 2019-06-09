@@ -236,12 +236,12 @@ public class Battle {
             return "ok";
 
         } else if (card instanceof Spell) {
-
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
 //            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
+            this.whoseTurn().lessMana(((Spell) card).getManaPoint());
             return "spell successfully inserted";
         }
         check();

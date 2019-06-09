@@ -39,13 +39,19 @@ public class CellAppearance {
         cellRectangle.setOnMouseClicked(event -> {
             if (BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard() != null) {
                 try {
-                    cellRectangle.setFill(new ImagePattern(new Image(new FileInputStream("test.png"))));
+                    String result = Battle.getCurrentBattle().insertingCardFromHand(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard().getName(), cell.getRow() + 1, cell.getCol() + 1);
+                    System.out.println(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard().getName());
+                    System.out.println(result);
+                    if (result.contains("successfully")) {
+                        cellRectangle.setFill(new ImagePattern(new Image(new FileInputStream("test.png"))));
+                        BattleAppearance.getCurrentBattleAppearance().getHandAppearance().insert();
+                        cellRectangle.setOpacity(1);
+                    }
+                    else ErrorOnBattle.display(result);
+                    BattleAppearance.getCurrentBattleAppearance().setManaIconImageLights();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                System.out.println(Battle.getCurrentBattle().insertingCardFromHand(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard().getName(), cell.getRow() + 1, cell.getCol() + 1));
-                BattleAppearance.getCurrentBattleAppearance().getHandAppearance().insert();
-                cellRectangle.setOpacity(1);
             }
         });
     }
