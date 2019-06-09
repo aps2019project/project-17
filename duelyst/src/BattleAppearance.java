@@ -4,7 +4,6 @@ import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Appearance.MinionAppearance;
 import Data.AI;
-import Data.Account;
 import GameGround.Battle;
 import GameGround.BattleHoldingFlag;
 import GameGround.BattleKillHero;
@@ -17,7 +16,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -56,6 +54,13 @@ public class BattleAppearance {
         setFlag();
         disPlay();
         handleEvents();
+        MinionAppearance minionAppearance = new MinionAppearance(null, "decepticleprime", root);
+        minionAppearance.setLocation(500,500);
+//        minionAppearance.breathing();
+        minionAppearance.move(100,100,300,300);
+//        minionAppearance.attack();
+//        minionAppearance.death();
+//        minionAppearance.idle();
     }
 
     private void init() {

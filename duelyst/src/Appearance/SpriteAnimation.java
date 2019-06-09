@@ -8,7 +8,6 @@ import javafx.util.Duration;
 
 public class SpriteAnimation extends Transition {
     private final ImageView imageView;
-    private final int count;
     private final int columns;
     private final int offsetX;
     private final int offsetY;
@@ -22,11 +21,10 @@ public class SpriteAnimation extends Transition {
     public SpriteAnimation(
             ImageView imageView,
             Duration duration,
-            int count, int columns,
+            int columns,
             int offsetX, int offsetY,
             int width, int height, int startIndex, int endIndex, int total) {
         this.imageView = imageView;
-        this.count = count;
         this.columns = columns;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
@@ -42,8 +40,8 @@ public class SpriteAnimation extends Transition {
     @Override
     protected void interpolate(double k) {
         double len = this.endIndex - this.startIndex;
-        k = ((double) startIndex) / total + k * len / total;
-        final int index = Math.min((int) Math.floor(k * count), count - 1);
+        k = ((double) startIndex) / total + k * len / (double)total;
+        final int index = Math.min((int) Math.floor(k * total), total - 1);
         if (index != lastIndex) {
             final int x = (index % columns) * width + offsetX;
             final int y = (index / columns) * height + offsetY;
