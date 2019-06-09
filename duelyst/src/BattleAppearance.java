@@ -4,6 +4,7 @@ import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Appearance.MinionAppearance;
 import Data.AI;
+import Data.Account;
 import GameGround.Battle;
 import GameGround.BattleHoldingFlag;
 import GameGround.BattleKillHero;
