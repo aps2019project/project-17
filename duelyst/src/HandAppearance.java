@@ -71,7 +71,7 @@ public class HandAppearance {
 
     private void locateIcons() {
         for (int i = 0; i < handIcons.length; i++) {
-            double x = 400 + (150 * i);
+            double x = Main.WIDTH_OF_WINDOW / 3.6 + (Main.WIDTH_OF_WINDOW / 9.6 * i);
             double y = Main.HEIGHT_OF_WINDOW * 7.9 / 10;
             handIcons[i].setLayoutX(x);
             handIcons[i].setLayoutY(y);
@@ -80,7 +80,7 @@ public class HandAppearance {
 
     private void locateData() {
         for (int i = 0; i < manaOfPlayers.length; i++) {
-            double x = handIcons[i].getLayoutX() + 56;
+            double x = handIcons[i].getLayoutX() + Main.WIDTH_OF_WINDOW / 25.71;
             double y = Main.HEIGHT_OF_WINDOW * 9.2 / 10;
             manaOfPlayers[i].setLayoutX(x);
             manaOfPlayers[i].setLayoutY(y);
