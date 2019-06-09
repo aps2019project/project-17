@@ -39,6 +39,7 @@ public class Save {
             FileWriter fileWriter = new FileWriter(address);
             gson.toJson(data, fileWriter);
             fileWriter.flush();
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,16 +83,17 @@ public class Save {
         bufferedWriter.write(data);
         bufferedWriter.flush();
         bufferedWriter.close();
-
     }
 
     public static String jsonReader(String fileAddress) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileAddress));
+        FileReader fileReader = new FileReader(fileAddress);
+        BufferedReader reader = new BufferedReader(fileReader);
         String line;
         StringBuilder jsonString = new StringBuilder();
         while ((line = reader.readLine()) != null) {
             jsonString.append(line);
         }
+        fileReader.close();
         return jsonString.toString();
     }
 

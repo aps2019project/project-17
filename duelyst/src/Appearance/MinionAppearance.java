@@ -47,6 +47,7 @@ public class MinionAppearance {
             int c;
             while ((c = fileReader.read()) != -1)
                 data.append((char) c);
+            fileReader.close();
             Pattern pattern = Pattern.compile("<string>\\{(?<n>\\d{3}),(?<m>\\d{3})}</string>");
             Matcher matcher = pattern.matcher(data.toString());
             if (matcher.find()) {
