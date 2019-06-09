@@ -55,6 +55,7 @@ public class HandAppearance {
                     selectedCardIcon = handIcons[value];
                     selectedCardIcon.setOpacity(1);
                     System.out.println(selectedCard.getName());
+                    System.out.println(((Spell) selectedCard).getManaPoint());
                 });
             }
         }

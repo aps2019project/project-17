@@ -2,6 +2,7 @@
 
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
+import Appearance.MinionAppearance;
 import Data.AI;
 import Data.Account;
 import GameGround.Battle;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -38,6 +40,7 @@ public class BattleAppearance {
         initBoardBG();
         initHand();
         initializeCells();
+        initPlaceOfHeroes();
         addCells();
         locateNodes();
         setFontsAndColor();
@@ -169,6 +172,7 @@ public class BattleAppearance {
 
     private void disPlay() {
         Main.getWindow().setScene(shopScene);
+        setManaIconImageLights();
     }
 
     private void initializeCells() {
@@ -210,6 +214,19 @@ public class BattleAppearance {
 
     public static BattleAppearance getCurrentBattleAppearance() {
         return currentBattleAppearance;
+    }
+
+    public void setManaIconImageLights() {
+        int mana = Account.getLoginUser().getPlayer().getMana();
+        for (int i = 0; i < manaIconImage.length; i++) {
+            if (i < mana) {
+                manaIconImage[i].setOpacity(1);
+            } else manaIconImage[i].setOpacity(0.5);
+        }
+    }
+
+    public Group getRoot() {
+        return root;
     }
 }
 
