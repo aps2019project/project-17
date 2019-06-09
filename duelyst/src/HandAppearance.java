@@ -95,7 +95,7 @@ public class HandAppearance {
         return this.selectedCardIcon;
     }
 
-    public void reLoad() {
+    public void insert() {
         this.root.getChildren().removeAll(handIcons);
         this.root.getChildren().removeAll(manaOfPlayers);
         this.selectedCard = null;

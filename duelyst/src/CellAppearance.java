@@ -22,10 +22,6 @@ public class CellAppearance {
         fill();
     }
 
-    private void changeLight(double value) {
-        cellRectangle.setOpacity(value);
-    }
-
     private void fill() {
         cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
         cellRectangle.setOpacity(0.01);
@@ -48,7 +44,7 @@ public class CellAppearance {
                     e.printStackTrace();
                 }
                 System.out.println(Battle.getCurrentBattle().insertingCardFromHand(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard().getName(), cell.getRow() + 1, cell.getCol() + 1));
-                BattleAppearance.getCurrentBattleAppearance().getHandAppearance().reLoad();
+                BattleAppearance.getCurrentBattleAppearance().getHandAppearance().insert();
                 cellRectangle.setOpacity(1);
             }
         });
