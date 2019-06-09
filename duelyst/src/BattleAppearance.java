@@ -76,10 +76,10 @@ public class BattleAppearance {
     private void setUserNames() {
         textsOfBattle[1].setFont(FontAppearance.FONT_BUTTON);
         textsOfBattle[2].setFont(FontAppearance.FONT_BUTTON);
-        textsOfBattle[1].setLayoutX(185);
-        textsOfBattle[1].setLayoutY(85);
-        textsOfBattle[2].setLayoutX(1120);
-        textsOfBattle[2].setLayoutY(85);
+        textsOfBattle[1].setLayoutX(Main.WIDTH_OF_WINDOW / 7.78);
+        textsOfBattle[1].setLayoutY(Main.HEIGHT_OF_WINDOW / 9.86);
+        textsOfBattle[2].setLayoutX(Main.WIDTH_OF_WINDOW / 1.286);
+        textsOfBattle[2].setLayoutY(Main.HEIGHT_OF_WINDOW / 9.86);
         root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2]);
     }
 

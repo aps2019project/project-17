@@ -4,7 +4,6 @@ import Cards.Card;
 import Cards.Minion;
 import Cards.Spell;
 import Data.Account;
-import GameGround.Battle;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -22,11 +21,13 @@ public class HandAppearance {
     private Hand hand;
     private Group root;
     private Card selectedCard;
+    private Rectangle selectedCardIcon;
 
     public HandAppearance(Group root) {
         this.root = root;
         this.hand = Account.getLoginUser().getPlayer().getHand();
         this.selectedCard = null;
+        this.selectedCardIcon = null;
         setHandIcons();
         addIconsToBattle();
         locateIcons();
@@ -47,6 +48,7 @@ public class HandAppearance {
                     manaOfPlayers[i].setText(Integer.toString(((Spell) hand.getCards().get(i)).getManaPoint()));
                 }
                 manaOfPlayers[i].setFont(FontAppearance.FONT_CREATE_DECK);
+                handIcons[i].setOpacity(0.75);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -55,11 +57,15 @@ public class HandAppearance {
 
     private void setEventHandling() {
         for (int i = 0; i < handIcons.length; i++) {
-            final  int value = i;
+            final int value = i;
             handIcons[i].setOnMouseClicked(e -> {
+                if (selectedCard != null)
+                    selectedCardIcon.setOpacity(0.75);
+
                 selectedCard = hand.getCards().get(value);
-                Battle.getCurrentBattle().selectCardOrItem(hand.getCards().get(value).getId());
-                System.out.println(Battle.getCurrentBattle().getSelectedCard().getName());
+                selectedCardIcon = handIcons[value];
+                selectedCardIcon.setOpacity(1);
+                System.out.println(selectedCard.getName());
             });
         }
     }
