@@ -92,4 +92,12 @@ public class HandAppearance {
             manaOfPlayers[i].setLayoutY(y);
         }
     }
+
+    public Card getSelectedCard() {
+        return this.selectedCard;
+    }
+
+    public Rectangle getSelectedCardIcon() {
+        return this.selectedCardIcon;
+    }
 }

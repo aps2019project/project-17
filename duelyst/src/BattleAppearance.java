@@ -3,6 +3,7 @@
 import Appearance.FontAppearance;
 import Data.AI;
 import Data.Account;
+import GameGround.Battle;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -25,9 +26,10 @@ public class BattleAppearance {
     private Rectangle[] manaIconImage;
     private Rectangle endTurnButton;
     private HandAppearance handAppearance;
-
+    private static BattleAppearance currentBattleAppearance;
 
     public BattleAppearance() {
+        currentBattleAppearance = this;
         init();
         setBackGround();
         initHand();
@@ -136,7 +138,8 @@ public class BattleAppearance {
     private void initializeCells() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                board[i][j] = new CellAppearance();
+                board[i][j] = new CellAppearance(Battle.getCurrentBattle().getBoard().getCells()[i][j]);
+                System.out.println("i  :  " + i + "  " + " j  :  " + j);
             }
         }
     }
@@ -170,11 +173,19 @@ public class BattleAppearance {
     }
 
     private void handleEvents() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                board[i][j].handleEvents();
+        for (CellAppearance[] cellAppearances : board) {
+            for (CellAppearance cellAppearance : cellAppearances) {
+                cellAppearance.handleEvents();
             }
         }
+    }
+
+    public HandAppearance getHandAppearance() {
+        return handAppearance;
+    }
+
+    public static BattleAppearance getCurrentBattleAppearance() {
+        return currentBattleAppearance;
     }
 }
 

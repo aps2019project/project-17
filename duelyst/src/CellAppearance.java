@@ -1,4 +1,6 @@
 import Appearance.ColorAppearance;
+import GameGround.Battle;
+import GameGround.Cell;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -6,11 +8,13 @@ import javafx.scene.shape.Rectangle;
 public class CellAppearance {
 
     private Rectangle cellRectangle;
+    private Cell cell;
 
-    public CellAppearance() {
+    public CellAppearance(Cell cell) {
         cellRectangle = new Rectangle(Main.WIDTH_OF_WINDOW / 22, Main.HEIGHT_OF_WINDOW / 12);
         cellRectangle.setArcWidth(20);
         cellRectangle.setArcHeight(20);
+        this.cell = cell;
         dark();
         fill();
     }
@@ -29,6 +33,11 @@ public class CellAppearance {
 //        cellRectangle.setFill(ColorAppearance.COLOR_CELL_CLICKED);
     }
 
+    public void insertCard() {
+        changeLight(0.9);
+        cellRectangle.setFill(ColorAppearance.COLOR_CELL_CLICKED);
+    }
+
     public void dark() {
         changeLight(0.3);
 //        cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
@@ -44,7 +53,12 @@ public class CellAppearance {
     }
 
     public void handleEvents() {
-        cellRectangle.setOnMouseClicked(event -> light());
+        cellRectangle.setOnMouseClicked(event -> {
+            insertCard();
+            if (BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard() != null) {
+                cellRectangle.setFill(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCardIcon().getFill());
+            }
+        });
         cellRectangle.setOnMouseExited(event -> dark());
         cellRectangle.setOnMouseEntered(event -> light());
     }
