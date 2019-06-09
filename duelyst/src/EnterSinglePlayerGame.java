@@ -48,6 +48,7 @@ public class EnterSinglePlayerGame {
         customMode.setFont(FontAppearance.FONT_BUTTON);
         storyMode.setFont(FontAppearance.FONT_BUTTON);
         modeChoose.setFont(FontAppearance.FONT_BUTTON);
+        modeChoose.setFill(Color.WHITE);
         customMode.setFill(Color.WHITE);
         storyMode.setFill(Color.WHITE);
         firstWindow.setScene(scene);

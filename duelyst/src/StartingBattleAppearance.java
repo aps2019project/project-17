@@ -52,6 +52,7 @@ public class StartingBattleAppearance {
         modeChoose.setFont(FontAppearance.FONT_BUTTON);
         singlePlayer.setFill(Color.WHITE);
         multiPlayer.setFill(Color.WHITE);
+         modeChoose.setFill(Color.WHITE);
         firstWindow.setScene(scene);
     }
 

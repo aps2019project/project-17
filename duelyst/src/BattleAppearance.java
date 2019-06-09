@@ -18,15 +18,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BattleAppearance {
-    private Group root = new Group();
-    private Scene shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
-    private CellAppearance[][] board = new CellAppearance[5][9];
-    private Text[] textsOfBattle = new Text[]{new Text("End Turn"), new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName())};
-    private Rectangle[] manaIconImage = new Rectangle[9];
+    private Group root;
+    private Scene shopScene;
+    private CellAppearance[][] board;
+    private Text[] textsOfBattle;
+    private Rectangle[] manaIconImage;
+    private Rectangle endTurnButton;
+    private HandAppearance handAppearance;
 
 
     public BattleAppearance() {
+        init();
         setBackGround();
+        initHand();
         initializeCells();
         addCells();
         locateNodes();
@@ -37,6 +41,14 @@ public class BattleAppearance {
         setUserNames();
         disPlay();
         handleEvents();
+    }
+
+    private void init() {
+        this.root = new Group();
+        this.shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
+        this.board = new CellAppearance[5][9];
+        this.textsOfBattle = new Text[]{new Text("End Turn"), new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName())};
+        this.manaIconImage = new Rectangle[9];
     }
 
     private void setBackGround() {
@@ -50,6 +62,10 @@ public class BattleAppearance {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initHand() {
+        this.handAppearance = new HandAppearance(this.root);
     }
 
     private void setFontsAndColor() {
@@ -68,13 +84,13 @@ public class BattleAppearance {
     }
 
     private void setEndTurnButton() {
-        Rectangle rectangle = new Rectangle(190, 75);
+        endTurnButton = new Rectangle(190, 75);
         try {
-            rectangle.setFill(new ImagePattern(new Image(new FileInputStream("end_turn.png"))));
-            StackPane stackPane0 = new StackPane(rectangle, textsOfBattle[0]);
+            endTurnButton.setFill(new ImagePattern(new Image(new FileInputStream("end_turn.png"))));
+            StackPane stackPane0 = new StackPane(endTurnButton, textsOfBattle[0]);
             stackPane0.setLayoutX(Main.WIDTH_OF_WINDOW * 8 / 10);
             stackPane0.setLayoutY(Main.HEIGHT_OF_WINDOW * 8.5 / 10);
-            stackPane0.setOpacity(0.75);
+//            stackPane0.setOpacity(0.75);
             root.getChildren().addAll(stackPane0);
             stackPane0.setOnMouseEntered(event -> stackPane0.setOpacity(1));
             stackPane0.setOnMouseExited(event -> stackPane0.setOpacity(0.75));

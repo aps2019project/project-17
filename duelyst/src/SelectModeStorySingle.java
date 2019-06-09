@@ -25,7 +25,6 @@ public class SelectModeStorySingle {
     private static Text killHero = new Text("Kill  Hero  Of  Opponent");
     private static Text captureFlag = new Text("Capture  Flag  Of  Ground");
     private static Text holdFlag = new Text("Hold  Flag  Of  Ground");
-    private static Text modeChoose = new Text("select which type of Single Play you want to play");
     private static VBox root = new VBox();
     private static Scene scene = new Scene(root);
 
@@ -55,12 +54,12 @@ public class SelectModeStorySingle {
         killHero.setFont(FontAppearance.FONT_BUTTON);
         captureFlag.setFont(FontAppearance.FONT_BUTTON);
         holdFlag.setFont(FontAppearance.FONT_BUTTON);
-        modeChoose.setFont(FontAppearance.FONT_BUTTON);
         killHero.setFill(Color.WHITE);
         captureFlag.setFill(Color.WHITE);
         holdFlag.setFill(Color.WHITE);
         firstWindow.setScene(scene);
         title.setFont(FontAppearance.FONT_BUTTON);
+        title.setFill(Color.WHITE);
     }
 
     static {

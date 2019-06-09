@@ -256,7 +256,7 @@ public class CollectionAppearance {
 
                 if (shownData[i][j].getApView() != null) {
                     shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight / 1.55);
-                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4.5);
+                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4);
                     shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth / 2.1);
                     shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
                 }
