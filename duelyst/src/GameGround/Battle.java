@@ -239,7 +239,7 @@ public class Battle {
 
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
-            ((Spell) card).action(x, y);
+//            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
             return "spell successfully inserted";

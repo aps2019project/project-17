@@ -92,7 +92,6 @@ public class BattleAppearance {
             StackPane stackPane0 = new StackPane(endTurnButton, textsOfBattle[0]);
             stackPane0.setLayoutX(Main.WIDTH_OF_WINDOW * 8 / 10);
             stackPane0.setLayoutY(Main.HEIGHT_OF_WINDOW * 8.5 / 10);
-//            stackPane0.setOpacity(0.75);
             root.getChildren().addAll(stackPane0);
             stackPane0.setOnMouseEntered(event -> stackPane0.setOpacity(1));
             stackPane0.setOnMouseExited(event -> stackPane0.setOpacity(0.75));
@@ -139,7 +138,6 @@ public class BattleAppearance {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 board[i][j] = new CellAppearance(Battle.getCurrentBattle().getBoard().getCells()[i][j]);
-                System.out.println("i  :  " + i + "  " + " j  :  " + j);
             }
         }
     }
@@ -149,19 +147,18 @@ public class BattleAppearance {
             for (int j = 0; j < board[i].length; j++) {
                 if (j == 0) {
                     if (i == 0) {
-                        board[i][j].getCellRectangle().setLayoutX(Main.WIDTH_OF_WINDOW / 4.5);
-                        board[i][j].getCellRectangle().setLayoutY(Main.HEIGHT_OF_WINDOW / 3.5);
+                        board[i][j].getCellRectangle().setLayoutX(Main.WIDTH_OF_WINDOW / 4.2);
+                        board[i][j].getCellRectangle().setLayoutY(Main.HEIGHT_OF_WINDOW / 4);
                         continue;
                     }
                     board[i][j].getCellRectangle().setLayoutX(board[i - 1][j].getCellRectangle().getLayoutX());
-                    board[i][j].getCellRectangle().setLayoutY(board[i - 1][j].getCellRectangle().getLayoutY() + Main.HEIGHT_OF_WINDOW / 11);
+                    board[i][j].getCellRectangle().setLayoutY(board[i - 1][j].getCellRectangle().getLayoutY() + Main.HEIGHT_OF_WINDOW / 9.2);
                     continue;
                 }
-                board[i][j].getCellRectangle().setLayoutX(board[i][j - 1].getCellRectangle().getLayoutX() + Main.WIDTH_OF_WINDOW / 17);
+                board[i][j].getCellRectangle().setLayoutX(board[i][j - 1].getCellRectangle().getLayoutX() + Main.WIDTH_OF_WINDOW / 18);
                 board[i][j].getCellRectangle().setLayoutY(board[i][j - 1].getCellRectangle().getLayoutY());
             }
         }
-
     }
 
     private void addCells() {

@@ -21,7 +21,7 @@ public class ChangeProperties extends Effect {
     @Override
     public void effect(Object... targets) {
         for (Object target : targets) {
-            Minion minion = (Minion) target;
+             Minion minion = (Minion) target;
             minion.changeAttackPower(changePowerValue);
             minion.changeHealth(changeHealthValue);
             super.addToImpacts(minion);
