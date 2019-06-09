@@ -84,7 +84,7 @@ public class BattleAppearance {
     }
 
     private void setEndTurnButton() {
-        endTurnButton = new Rectangle(190, 75);
+        endTurnButton = new Rectangle(Main.WIDTH_OF_WINDOW / 7.58, Main.HEIGHT_OF_WINDOW / 11.12);
         try {
             endTurnButton.setFill(new ImagePattern(new Image(new FileInputStream("end_turn.png"))));
             StackPane stackPane0 = new StackPane(endTurnButton, textsOfBattle[0]);
@@ -100,8 +100,8 @@ public class BattleAppearance {
     }
 
     private void setImagesOfPlayers() {
-        Rectangle rectangle1 = new Rectangle(160, 175);
-        Rectangle rectangle2 = new Rectangle(160, 175);
+        Rectangle rectangle1 = new Rectangle(Main.WIDTH_OF_WINDOW / 9, Main.HEIGHT_OF_WINDOW / 4.77);
+        Rectangle rectangle2 = new Rectangle(Main.WIDTH_OF_WINDOW / 9, Main.HEIGHT_OF_WINDOW / 4.77);
         try {
             rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("player1.png"))));
             rectangle2.setFill(new ImagePattern(new Image(new FileInputStream("player2.png"))));
@@ -118,10 +118,10 @@ public class BattleAppearance {
     private void setManaIcons() {
         for (int i = 0; i < manaIconImage.length; i++) {
             try {
-                manaIconImage[i] = new Rectangle(30, 30);
+                manaIconImage[i] = new Rectangle(Main.WIDTH_OF_WINDOW / 48, Main.HEIGHT_OF_WINDOW / 27.8);
                 manaIconImage[i].setFill(new ImagePattern(new Image(new FileInputStream("icon_mana2.png"))));
                 manaIconImage[i].setLayoutY(Main.HEIGHT_OF_WINDOW / 8.5);
-                manaIconImage[i].setLayoutX(Main.WIDTH_OF_WINDOW / 8 + (i * 30));
+                manaIconImage[i].setLayoutX(Main.WIDTH_OF_WINDOW / 8 + (i * Main.WIDTH_OF_WINDOW / 48));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

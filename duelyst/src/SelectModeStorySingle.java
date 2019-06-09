@@ -95,6 +95,8 @@ public class SelectModeStorySingle {
             GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
             System.out.println("You have entered the Battle,Fight!");
             BattleView.setItems();
+            new BattleAppearance();
+            closeWindow();
         });
     }
 
