@@ -29,8 +29,8 @@ public class Player {
     }
 
     public Player(String userName, Deck deck) {
-        this.mana = 1;
-        this.previousMana = 1;
+        this.mana = 2;
+        this.previousMana = 2;
         this.collectAbleItems = new ArrayList<>();
         this.graveYard = new ArrayList<>();
         this.hand = new Hand();

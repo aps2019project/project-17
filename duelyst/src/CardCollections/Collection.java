@@ -22,7 +22,7 @@ public class Collection {
         toDelete();
         Deck deck = new Deck("deck");
         decks.add(deck);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 10; i < 30; i++) {
             deck.addCard(cards.get(i));
         }
         this.mainDeck = deck;

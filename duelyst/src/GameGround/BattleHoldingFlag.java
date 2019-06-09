@@ -187,4 +187,8 @@ public class BattleHoldingFlag extends Battle {
         }
         super.endingTurn();
     }
+
+    public Cell getCellOfFlag() {
+        return cellOfFlag;
+    }
 }

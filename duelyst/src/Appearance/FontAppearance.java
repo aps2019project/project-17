@@ -15,4 +15,5 @@ public class FontAppearance {
     public static final Font FONT_SEARCH_SHOP = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 96);
     public static final Font FONT_NOT_FOUND = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 120);
     public static final Font FONT_CREATE_DECK = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 74);
+    public static final Font FONT_INFORMATION_CARDS_BATTLE = Font.font("Phosphate", 15);
 }

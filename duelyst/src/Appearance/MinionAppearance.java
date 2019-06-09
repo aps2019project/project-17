@@ -79,7 +79,7 @@ public class MinionAppearance {
         pathTransition.play();
     }
 
-    public void brething() {
+    public void breathing() {
         Animation animation = new SpriteAnimation(imageView, Duration.millis(2000), breathingCount, 12, 0, 0, width, height, breathingStartIndex, breathingStartIndex + breathingCount, totalCount);
         root.getChildren().add(imageView);
         animation.play();

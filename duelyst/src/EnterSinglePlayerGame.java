@@ -67,9 +67,9 @@ public class EnterSinglePlayerGame {
 
     static {
         storyMode.setOnMouseClicked(e -> {
+            firstWindow.close();
             GameController.initializeAIStory();
             SelectModeStorySingle.disPlay();
-            firstWindow.close();
         });
     }
 

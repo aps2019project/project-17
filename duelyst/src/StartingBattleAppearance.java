@@ -62,17 +62,13 @@ public class StartingBattleAppearance {
     }
 
     static {
-        singlePlayer.setOnMouseClicked(e -> {
-            action();
-        });
-        rectangle.setOnMouseClicked(e -> {
-            action();
-        });
+        singlePlayer.setOnMouseClicked(e -> action());
+        rectangle.setOnMouseClicked(e -> action());
     }
 
     private static void action() {
-        EnterSinglePlayerGame.disPlay();
         closeWindow();
+        EnterSinglePlayerGame.disPlay();
     }
 
     private static void closeWindow() {
