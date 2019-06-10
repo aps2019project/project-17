@@ -53,7 +53,7 @@ public class Cell {
         this.card = card;
     }
 
-    boolean hasFlag() {
+    public boolean hasFlag() {
         return hasFlag;
     }
 

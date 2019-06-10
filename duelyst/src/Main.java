@@ -49,7 +49,7 @@ public class Main extends Application {
 
     static {
         try {
-            Image helpIcon = new Image(new FileInputStream("info.png"));
+            Image helpIcon = new Image(new FileInputStream("help_icon_main_menu.png"));
             help = new ImageView(helpIcon);
             help.setFitHeight(50);
             help.setFitWidth(50);
@@ -72,7 +72,7 @@ public class Main extends Application {
 
     static {
         try {
-            Image image = new Image(new FileInputStream("bg.jpg"));
+            Image image = new Image(new FileInputStream("primary_background.jpg"));
             imageOfBackGround = new ImageView(image);
             imageOfBackGround.fitWidthProperty().bind(sceneFirstMenu.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(sceneFirstMenu.heightProperty());
@@ -129,7 +129,7 @@ public class Main extends Application {
 
     static {
         try {
-            sceneFirstMenu.setCursor(new ImageCursor(new Image(new FileInputStream("sword1.png"))));
+            sceneFirstMenu.setCursor(new ImageCursor(new Image(new FileInputStream("mouse_icon.png"))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

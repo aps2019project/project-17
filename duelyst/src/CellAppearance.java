@@ -15,8 +15,6 @@ public class CellAppearance {
 
     private Rectangle cellRectangle;
     private Cell cell;
-    private double valueExit = 0.6;
-    private double valueEnter = 0.1;
 
     public CellAppearance(Cell cell) {
         cellRectangle = new Rectangle(Main.WIDTH_OF_WINDOW / 19, Main.HEIGHT_OF_WINDOW / 10);
@@ -29,12 +27,23 @@ public class CellAppearance {
 
     private void fill() {
         cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
-        cellRectangle.setOpacity(valueEnter);
+        cellRectangle.setOpacity(0.2);
+//        cellRectangle.setVisible(false);
+        if (cell.getCard() != null || cell.hasFlag())
+            cellRectangle.setVisible(true);
     }
 
     private void eventHandle() {
-        cellRectangle.setOnMouseEntered(e -> cellRectangle.setOpacity(valueExit));
-        cellRectangle.setOnMouseExited(e -> cellRectangle.setOpacity(valueEnter));
+//        cellRectangle.setOnMouseEntered(e -> {
+//            if (cell.getCard() == null || !cell.hasFlag())
+//                cellRectangle.setOpacity(valueExit);
+//        });
+//        cellRectangle.setOnMouseExited(e -> {
+//            if (cell.getCard() == null || !cell.hasFlag())
+//                cellRectangle.setOpacity(valueEnter);
+//        });
+//        if (cell.getCard() != null || cell.hasFlag())
+//            cellRectangle.setOpacity(1);
     }
 
     public void add(Group group) {// TODO: 6/8/2019
@@ -55,9 +64,6 @@ public class CellAppearance {
                     if (result.contains("successfully")) {
                         cellRectangle.setFill(new ImagePattern(new Image(new FileInputStream("test.png"))));
                         BattleAppearance.getCurrentBattleAppearance().getHandAppearance().insert();
-                        valueExit = 1;
-                        valueEnter = 1;
-                        cellRectangle.setOpacity(valueExit);
                     } else ErrorOnBattle.display(result);
                     BattleAppearance.getCurrentBattleAppearance().setManaIconImageLights();
                     BattleAppearance.getCurrentBattleAppearance().getHandAppearance().setSelectedCard(null);

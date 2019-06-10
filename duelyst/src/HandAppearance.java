@@ -30,16 +30,20 @@ public class HandAppearance {
     private Card selectedCard;
 
     public HandAppearance(Group root) {
-        this.root = root;
-        this.hand = Account.getLoginUser().getPlayer().getHand();
-        this.selectedCard = null;
-        this.selectedCardIcon = null;
+        primaryInitialize(root);
         setHandIcons();
         addIconsToBattle();
         locateIcons();
         locateData();
         setEventHandling();
         addInformationOfCards();
+    }
+
+    private void primaryInitialize(Group root) {
+        this.root = root;
+        this.hand = Account.getLoginUser().getPlayer().getHand();
+        this.selectedCard = null;
+        this.selectedCardIcon = null;
     }
 
     private void setHandIcons() {
@@ -54,12 +58,12 @@ public class HandAppearance {
         for (int i = 0; i < handIcons.length; i++) {
             handIcons[i] = new Rectangle(handIconsTemplate[i].getWidth(), handIconsTemplate[i].getHeight());
             manaOfPlayers[i] = new Text("0");
-            handIconsTemplate[i].setOpacity(1);
+            handIconsTemplate[i].setOpacity(0.5);
             initializeHandIcons(i);
         }
-        for (int i = 0; i < informationOfCards.length; i++) {
+        for (int i = 0; i < informationOfCards.length; i++)
             informationOfCards[i] = new Rectangle(Main.WIDTH_OF_WINDOW / 13, Main.HEIGHT_OF_WINDOW / 7);
-        }
+
     }
 
     private void setEventHandling() {
@@ -68,7 +72,7 @@ public class HandAppearance {
             if (handIcons[i] != null) {
                 handIcons[i].setOnMouseClicked(e -> {
                     if (selectedCard != null)
-                        selectedCardIcon.setOpacity(0.75);
+                        selectedCardIcon.setOpacity(0.5);
                     selectedCard = hand.getCards().get(value);
                     selectedCardIcon = handIcons[value];
                     selectedCardIcon.setOpacity(1);
@@ -182,6 +186,10 @@ public class HandAppearance {
         add();
     }
 
+    public void endTurn() {
+
+    }
+
     private void add() {
         for (int i = 0; i < handIcons.length; i++) {
             if (handIcons[i] != null)
@@ -203,7 +211,7 @@ public class HandAppearance {
             }
             handIcons[i].setOpacity(1);
             manaOfPlayers[i].setFont(FontAppearance.FONT_CREATE_DECK);
-            handIcons[i].setOpacity(0.75);
+            handIcons[i].setOpacity(0.5);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -26,10 +26,8 @@ class MainMenu {
     private Text exitTxt = new Text("Exit");
     private Scene sceneMainMenu;
     private ImageView imageViewBG;
-    private ImageView help;
 
     MainMenu() {
-        setHelp();
         setBackGround();
         locate();
         setFont();
@@ -37,17 +35,6 @@ class MainMenu {
         display();
         Account.getLoginUser().getCollection().setMainDeck(Account.getLoginUser().getCollection().getDecks().get(0).getName());
         Account.getLoginUser().getCollection().getMainDeck().setHero(CardMaker.getHeroes()[5]);
-    }
-
-    private void setHelp() {
-        try {
-            Image helpIcon = new Image(new FileInputStream("info.png"));
-            help = new ImageView(helpIcon);
-            help.setFitHeight(50);
-            help.setFitWidth(50);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     private void setBackGround() {
@@ -73,7 +60,6 @@ class MainMenu {
         VBox.setMargin(logoutText, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(logoutText, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(exitTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.54));
-        VBox.setMargin(help, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 3));
     }
 
     private void setFont() {
@@ -92,7 +78,7 @@ class MainMenu {
 
     private void setMouse() {
         try {
-            sceneMainMenu.setCursor(new ImageCursor(new Image(new FileInputStream("sword1.png"))));
+            sceneMainMenu.setCursor(new ImageCursor(new Image(new FileInputStream("mouse_icon.png"))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
