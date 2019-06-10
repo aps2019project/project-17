@@ -27,23 +27,20 @@ public class CellAppearance {
 
     private void fill() {
         cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
-        cellRectangle.setOpacity(0.2);
-//        cellRectangle.setVisible(false);
-        if (cell.getCard() != null || cell.hasFlag())
-            cellRectangle.setVisible(true);
+        setLightCell();
     }
 
     private void eventHandle() {
-//        cellRectangle.setOnMouseEntered(e -> {
-//            if (cell.getCard() == null || !cell.hasFlag())
-//                cellRectangle.setOpacity(valueExit);
-//        });
-//        cellRectangle.setOnMouseExited(e -> {
-//            if (cell.getCard() == null || !cell.hasFlag())
-//                cellRectangle.setOpacity(valueEnter);
-//        });
-//        if (cell.getCard() != null || cell.hasFlag())
-//            cellRectangle.setOpacity(1);
+        cellRectangle.setOnMouseEntered(e -> {
+            if (cell.getCard() != null || cell.hasFlag())
+                return;
+            cellRectangle.setOpacity(0.75);
+        });
+        cellRectangle.setOnMouseExited(e -> {
+            if (cell.getCard() != null || cell.hasFlag())
+                return;
+            cellRectangle.setOpacity(0.2);
+        });
     }
 
     public void add(Group group) {// TODO: 6/8/2019
@@ -64,6 +61,7 @@ public class CellAppearance {
                     if (result.contains("successfully")) {
                         cellRectangle.setFill(new ImagePattern(new Image(new FileInputStream("test.png"))));
                         BattleAppearance.getCurrentBattleAppearance().getHandAppearance().insert();
+                        setLightCell();
                     } else ErrorOnBattle.display(result);
                     BattleAppearance.getCurrentBattleAppearance().setManaIconImageLights();
                     BattleAppearance.getCurrentBattleAppearance().getHandAppearance().setSelectedCard(null);
@@ -75,5 +73,9 @@ public class CellAppearance {
         });
     }
 
-
+    private void setLightCell() {
+        if (cell.hasFlag() || cell.getCard() != null)
+            cellRectangle.setOpacity(1);
+        else cellRectangle.setOpacity(0.2);
+    }
 }
