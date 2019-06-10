@@ -22,15 +22,22 @@ import static Data.MODE.*;
 public class CustomDeckWindow {
 
     private static Deck selectedDeck;
-    private static Stage firstWindow = new Stage();
-    private static Text showDecks = new Text("Show My Decks");
-    private static Text enterBattle = new Text("Enter Battle");
-    private static TextField numOfFlags = new TextField();
-    private static VBox root = new VBox();
-    private static Scene scene = new Scene(root);
+    private  Stage firstWindow = new Stage();
+    private  Text showDecks = new Text("Show My Decks");
+    private  Text enterBattle = new Text("Enter Battle");
+    private  TextField numOfFlags=new TextField();
+    private  VBox root = new VBox();
+    private  Scene scene = new Scene(root);
 
+    public CustomDeckWindow() {
+        setBoxes();
+        setView();
+        setBackGround();
+        handleEvents();
+        disPlay();
+    }
 
-    static {
+    public void setBoxes(){
         try {
             Rectangle rectangle = new Rectangle(300, 60);
             Rectangle rectangle1 = new Rectangle(300, 60);
@@ -46,7 +53,7 @@ public class CustomDeckWindow {
         }
     }
 
-    static {
+    public void setView(){
         firstWindow.initModality(Modality.APPLICATION_MODAL);
         firstWindow.setMinWidth(Main.WIDTH_OF_WINDOW / 2.5);
         firstWindow.setMinHeight(Main.HEIGHT_OF_WINDOW / 2.5);
@@ -58,7 +65,7 @@ public class CustomDeckWindow {
 
     }
 
-    static {
+    public void setBackGround(){
         try {
             Image image = new Image(new FileInputStream("play.jpg"));
             BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -69,7 +76,7 @@ public class CustomDeckWindow {
         }
     }
 
-    static {
+    public void handleEvents(){
         showDecks.setOnMouseClicked(e -> {
             new CustomDeckTable();
         });
@@ -81,11 +88,11 @@ public class CustomDeckWindow {
 
     }
 
-    public static void disPlay() {
-        firstWindow.showAndWait();
+    public void disPlay() {
+        firstWindow.show();
     }
 
-    private static void closeWindow() {
+    private  void closeWindow() {
         firstWindow.close();
     }
 
