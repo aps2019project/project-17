@@ -76,7 +76,10 @@ public class EnterSinglePlayerGame {
     }
 
     static {
-        customMode.setOnMouseClicked(event -> SelectModeCustomSingle.disPlay());
+        customMode.setOnMouseClicked(event -> {
+            firstWindow.close();
+            SelectModeCustomSingle.disPlay();
+        });
     }
 
     public static void disPlay() {
