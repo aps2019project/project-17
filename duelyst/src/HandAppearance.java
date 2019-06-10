@@ -57,7 +57,7 @@ public class HandAppearance {
             }
         }
         for (int i = 0; i < handIcons.length; i++) {
-            handIcons[i] = new Rectangle(handIconsTemplate[i].getWidth(), handIconsTemplate[i].getHeight());
+            handIcons[i] = new Rectangle(handIconsTemplate[i].getWidth() * 1.3, handIconsTemplate[i].getHeight() * 1.3);
             manaOfPlayers[i] = new Text("0");
             handIconsTemplate[i].setOpacity(0.5);
             initializeHandIcons(i);
@@ -144,7 +144,7 @@ public class HandAppearance {
                 double x = Main.WIDTH_OF_WINDOW / 3.6 + (Main.WIDTH_OF_WINDOW / 9.6 * i);
                 double y = Main.HEIGHT_OF_WINDOW * 7.9 / 10;
                 handIcons[i].setLayoutX(x);
-                handIcons[i].setLayoutY(y);
+                handIcons[i].setLayoutY(0.95* y);
                 handIconsTemplate[i].setLayoutX(x);
                 handIconsTemplate[i].setLayoutY(y * 1.015);
                 setInformationOfCards(i, informationOfCards[i]);
