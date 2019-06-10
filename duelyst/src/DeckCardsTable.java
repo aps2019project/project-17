@@ -1,10 +1,16 @@
-import Appearance.ColorAppearance;
 import CardCollections.Deck;
+import Cards.Card;
 import Data.Account;
-import javafx.scene.Group;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -21,7 +27,9 @@ public class DeckCardsTable {
     private static Text showDeckText=new Text("");
     private static ImageView cardsImage;
 
-
+    public DeckCardsTable(String deckName) {
+        display(deckName);
+    }
 
     static {
         popOp.setTitle("DECK");
@@ -38,39 +46,37 @@ public class DeckCardsTable {
         cardsImage.setOpacity(0.5);
     }
 
-    public static void display(String deckName){
-        Group root = new Group();
-        Scene scene = new Scene(root);
-        scene.setFill(Color.WHITE);
-        Deck deck= Account.getLoginUser().getCollection().findDeck(deckName);
-        String result="";
-        if(deck.getHero()!=null){
-            result=result.concat("Hero:\n"+deck.getHero().getName()+"\n");
-        }
-        if(deck.getItem()!=null){
-            result=result.concat("Item:\n"+deck.getItem().getName()+"\n");
-        }
-        if(deck.getCards()!=null){
-            result=result.concat("Cards:\n");
-            for (int i = 0; i <deck.getCards().size() ; i++) {
-                result=result.concat(deck.getCards().get(i).getName());
-                if(i%5==0){
-                    result=result.concat("\n");
-                }else if(i!=deck.getCards().size()-1){
-                    result=result.concat(" / ");
-                }
-            }
-        }
-        showDeckText.setText(result);
-        showDeckText.setLayoutX(15);
-        showDeckText.setLayoutY(15);
-        cardsImage.setLayoutX(3*popOp.getWidth()/4);
-        cardsImage.setLayoutX(0);
-        root.getChildren().addAll(showDeckText,cardsImage);
-        popOp.setScene(scene);
-        popOp.showAndWait();
+    public void display(String deckName){
+        TableView tableView = new TableView();
+
+        TableColumn<Card,String> column1 = new TableColumn<>("Spells/Minions");
+        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        column1.setMinWidth(300);
+
+        tableView.getColumns().add(column1);
+
+        tableView.setItems(getAllCards(deckName));
+
+        // Create a new RowFactory to handle actions
+        tableView.setRowFactory(tv -> {
+
+            // Define our new TableRow
+            TableRow<Deck> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                DeckOperator.display(row.getItem().getName());
+            });
+            return row;
+        });
+
+        Stage window = new Stage();
+        window.setTitle("AllCards");
+        window.setScene(new Scene(new VBox(tableView), 300, 300));
+        window.show();
     }
 
-
+    private ObservableList<Card> getAllCards(String deckName) {
+        Deck deck= Account.getLoginUser().getCollection().findDeck(deckName);
+        return FXCollections.observableArrayList(deck.getCards());
+    }
 
 }

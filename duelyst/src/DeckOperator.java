@@ -127,7 +127,7 @@ public class DeckOperator {
             cardId.setText("");
         });
 
-        showDeck.setOnMouseClicked(event -> DeckCardsTable.display(deckName));
+        showDeck.setOnMouseClicked(event -> new DeckCardsTable(deckName));
 
         searchInDeck.setOnMouseClicked(event -> {
             String name = cardName.getText().toLowerCase();
