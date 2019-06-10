@@ -286,9 +286,9 @@ public class BattleAppearance {
     public void setManaIconImageLights() {
         int mana = Account.getLoginUser().getPlayer().getMana();
         for (int i = 0; i < manaIconImage.length; i++) {
-            if (i < mana) {
+            if (i < mana)
                 manaIconImage[i].setOpacity(1);
-            } else manaIconImage[i].setOpacity(0.3);
+            else manaIconImage[i].setOpacity(0.3);
         }
     }
 
