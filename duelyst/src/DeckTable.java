@@ -22,9 +22,14 @@ public class DeckTable {
 
         TableColumn<Deck,String> column1 = new TableColumn<>("DeckName");
         column1.setCellValueFactory(new PropertyValueFactory<>("name"));
-        column1.setMinWidth(300);
+        column1.setMinWidth(150);
+
+        TableColumn<Deck,String> column2 = new TableColumn<>("Validate");
+        column2.setCellValueFactory(new PropertyValueFactory<>("isValid"));
+        column2.setMinWidth(150);
 
         tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
 
         tableView.setItems(getAllDecks());
 
@@ -50,6 +55,9 @@ public class DeckTable {
      * @return all decks of logged in user
      */
     private ObservableList<Deck> getAllDecks() {
+        for (int i = 0; i <Account.getLoginUser().getCollection().getDecks().size() ; i++) {
+            Account.getLoginUser().getCollection().getDecks().get(i).setIsValid();
+        }
         return FXCollections.observableArrayList(Account.getLoginUser().getCollection().getDecks());
 
     }

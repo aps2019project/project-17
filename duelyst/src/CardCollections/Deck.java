@@ -13,6 +13,7 @@ public class Deck {
     private ArrayList<Card> cards;
     private Item item;
     private Hero hero;
+    private String isValid;
 
 
 
@@ -29,6 +30,19 @@ public class Deck {
         initializeSecondAIHF();
         initializeFirstAIKH();
         initializeThirdAICF();
+    }
+
+    public void setIsValid() {
+        if(this.isDeckValidate()){
+            this.isValid="VALID";
+        }else {
+            this.isValid="INVALID";
+        }
+    }
+
+
+    public String getIsValid() {
+        return isValid;
     }
 
     private static void initializeFirstAIKH() {
