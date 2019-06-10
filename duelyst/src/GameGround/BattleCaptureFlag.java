@@ -74,35 +74,16 @@ public class BattleCaptureFlag extends Battle {
 
     private void setFlagsInBoard() {
         Random r = new Random();
-        for (int i = 0; i < this.numberOfFlags / 2; i++) {
+        for (int i = 0; i < this.numberOfFlags; i++) {
             int x = r.nextInt(5) + 1;
             int y = r.nextInt(5) + 1;
-            while (x < 0 || y < 0) {
+            while (x < 0 || y < 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].hasFlag()) {
                 x = r.nextInt() % 5 + 1;
                 y = r.nextInt() % 5 + 1;
             }
             Cell cell = this.board.getCells()[x - 1][y - 1];
             cell.setFlag(true);
-        }
-        for (int i = 0; i < this.numberOfFlags - this.numberOfFlags / 2; i++) {
-            int x = r.nextInt(5);
-            int y = r.nextInt(5);
-            while (x <= 0 || y <= 0) {
-                x = r.nextInt() % 5 + 1;
-                y = r.nextInt() % 5 + 1;
-            }
-            Cell cell = this.board.getCells()[x - 1][3 + y - 1];
-
-            while ((x == 3 && y == 9) || cell.hasFlag()) {
-                x = r.nextInt(6);
-                y = r.nextInt(10);
-                while (x <= 0 || y <= 0) {
-                    x = new Random().nextInt(6);
-                    y = new Random().nextInt(10);
-                }
-                cell = this.board.getCells()[x - 1][y - 1];
-            }
-            cell.setFlag(true);
+            System.out.println(" x : " + x + " y : " + y);
         }
     }
 

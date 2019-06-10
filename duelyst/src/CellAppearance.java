@@ -17,7 +17,7 @@ public class CellAppearance {
     private Cell cell;
 
     public CellAppearance(Cell cell) {
-        cellRectangle = new Rectangle(Main.WIDTH_OF_WINDOW / 19, Main.HEIGHT_OF_WINDOW / 10);
+        cellRectangle = new Rectangle(Main.WIDTH_OF_WINDOW / 17, Main.HEIGHT_OF_WINDOW / 10);
         cellRectangle.setArcWidth(10);
         cellRectangle.setArcHeight(10);
         this.cell = cell;
