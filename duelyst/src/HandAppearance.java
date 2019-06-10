@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 
 public class HandAppearance {
@@ -90,48 +91,51 @@ public class HandAppearance {
 
     private void addInformationOfCards() {
         for (int i = 0; i < informationOfCards.length; i++) {
-            if (handIcons[i] != null) {
-                final int value = i;
-                Text text0 = new Text(hand.getCards().get(i).getName());
-                Text text1 = new Text("");
-                if (hand.getCards().get(i) instanceof Spell)
-                    text1.setText("Spell");
-                else text1.setText("Minion");
-                text0.setFill(Color.WHITE);
-                text1.setFill(Color.WHITE);
-                text0.setFont(FontAppearance.FONT_INFORMATION_CARDS_BATTLE);
-                text1.setFont(FontAppearance.FONT_INFORMATION_CARDS_BATTLE);
-                VBox vBox = new VBox(text0, text1);
-                vBox.setAlignment(Pos.CENTER);
-                StackPane stackPane = new StackPane(informationOfCards[i], vBox);
-                try {
-                    informationOfCards[i].setFill(new ImagePattern(new Image(new FileInputStream("info_card.png"))));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                stackPane.setLayoutX(handIcons[i].getLayoutX());
-                stackPane.setLayoutY(handIcons[i].getLayoutY() * 8 / 10);
-                root.getChildren().add(stackPane);
-                stackPane.setVisible(false);
-                informationOfCards[i].setVisible(false);
-                handIcons[i].setOnMouseEntered(e -> {
-                    stackPane.setVisible(true);
-                    informationOfCards[value].setVisible(true);
-                });
-                handIcons[i].setOnMouseExited(e -> {
-                    stackPane.setVisible(false);
-                    informationOfCards[value].setVisible(false);
-                });
-                handIconsTemplate[i].setOnMouseEntered(e -> {
-                    stackPane.setVisible(true);
-                    informationOfCards[value].setVisible(true);
-                });
-                handIconsTemplate[i].setOnMouseExited(e -> {
-                    stackPane.setVisible(false);
-                    informationOfCards[value].setVisible(true);
-                });
-            }
+            if (handIcons[i] != null)
+                setInformationOfCards(i, informationOfCards[i]);
+
         }
+    }
+
+    private void setInformationOfCards(int i, Rectangle informationOfCard) {
+        Text text0 = new Text(hand.getCards().get(i).getName());
+        Text text1 = new Text("");
+        if (hand.getCards().get(i) instanceof Spell)
+            text1.setText("Spell");
+        else text1.setText("Minion");
+        text0.setFill(Color.WHITE);
+        text1.setFill(Color.WHITE);
+        text0.setFont(FontAppearance.FONT_INFORMATION_CARDS_BATTLE);
+        text1.setFont(FontAppearance.FONT_INFORMATION_CARDS_BATTLE);
+        VBox vBox = new VBox(text0, text1);
+        vBox.setAlignment(Pos.CENTER);
+        StackPane stackPane = new StackPane(informationOfCards[i], vBox);
+        try {
+            informationOfCards[i].setFill(new ImagePattern(new Image(new FileInputStream("info_card.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        stackPane.setLayoutX(handIcons[i].getLayoutX());
+        stackPane.setLayoutY(handIcons[i].getLayoutY() * 8 / 10);
+        root.getChildren().add(stackPane);
+        stackPane.setVisible(false);
+        informationOfCards[i].setVisible(false);
+        handIcons[i].setOnMouseEntered(e -> {
+            stackPane.setVisible(true);
+            informationOfCard.setVisible(true);
+        });
+        handIcons[i].setOnMouseExited(e -> {
+            stackPane.setVisible(false);
+            informationOfCard.setVisible(false);
+        });
+        handIconsTemplate[i].setOnMouseEntered(e -> {
+            stackPane.setVisible(true);
+            informationOfCard.setVisible(true);
+        });
+        handIconsTemplate[i].setOnMouseExited(e -> {
+            stackPane.setVisible(false);
+            informationOfCard.setVisible(true);
+        });
     }
 
     private void locateIcons() {
@@ -143,6 +147,7 @@ public class HandAppearance {
                 handIcons[i].setLayoutY(y);
                 handIconsTemplate[i].setLayoutX(x);
                 handIconsTemplate[i].setLayoutY(y * 1.015);
+                setInformationOfCards(i, informationOfCards[i]);
             }
         }
     }
@@ -203,10 +208,10 @@ public class HandAppearance {
     public void initializeHandIcons(int i) {
         try {
             if (hand.getCards().get(i) instanceof Minion) {
-                handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("photo3.png"))));
+                handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(10)).concat(".gif"))))));
                 manaOfPlayers[i].setText(Integer.toString(((Minion) hand.getCards().get(i)).getManaPoint()));
             } else if (hand.getCards().get(i) instanceof Spell) {
-                handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("photo1.png"))));
+                handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(10)).concat(".gif"))))));
                 manaOfPlayers[i].setText(Integer.toString(((Spell) hand.getCards().get(i)).getManaPoint()));
             }
             handIcons[i].setOpacity(1);
