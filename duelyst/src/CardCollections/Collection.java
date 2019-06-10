@@ -10,6 +10,7 @@ public class Collection {
     private ArrayList<Card> cards;
     private ArrayList<Item> items;
     private ArrayList<Deck> decks;
+    private ArrayList<Deck> validDecks;
     private Deck mainDeck;
     private int daric;
 
@@ -291,5 +292,14 @@ public class Collection {
             }
         }
         return null;
+    }
+
+    public ArrayList<Deck> getValidDecks() {
+        this.validDecks = new ArrayList<>();
+        for (Deck deck : decks) {
+            if (isDeckValidate(deck.getName()).equals("deck is validate"))
+                this.validDecks.add(deck);
+        }
+        return validDecks;
     }
 }
