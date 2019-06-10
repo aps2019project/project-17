@@ -35,9 +35,7 @@ public class CustomDeckWindow {
     private Scene scene = new Scene(root);
 
     public CustomDeckWindow(String mode) {
-        if (mode.equals("cf")) {
-            root.getChildren().add(numOfFlags);
-        }
+        this.mode = mode;
         setBoxes();
         setView();
         setBackGround();
@@ -55,9 +53,19 @@ public class CustomDeckWindow {
             StackPane stackPane2 = new StackPane(rectangle1, enterBattle);
             numOfFlags.setLayoutX(rectangle.getLayoutX());
             numOfFlags.setLayoutY(rectangle.getLayoutX());
-            numOfFlags.setMinWidth(firstWindow.getWidth() / 2);
+            numOfFlags.setMaxWidth(Main.WIDTH_OF_WINDOW / 8);
+            Text title = new Text("enter number of flag:");
+            title.setFont(FontAppearance.FONT_BUTTON);
+            title.setFill(Color.WHITE);
             root.setSpacing(50);
             root.setAlignment(Pos.CENTER);
+            if (mode.equals("cf")) {
+                VBox vBox = new VBox(title, numOfFlags);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.setSpacing(Main.WIDTH_OF_WINDOW / 60);
+                root.getChildren().addAll(vBox);
+            }
+
             root.getChildren().addAll(stackPane1, stackPane2);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -88,9 +96,7 @@ public class CustomDeckWindow {
     }
 
     public void handleEvents(String mode) {
-        showDecks.setOnMouseClicked(e -> {
-            new CustomDeckTable();
-        });
+        showDecks.setOnMouseClicked(e -> new CustomDeckTable());
         enterBattle.setOnMouseClicked(e -> {
             closeWindow();
             switch (mode) {
@@ -103,7 +109,7 @@ public class CustomDeckWindow {
                     GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     break;
                 case "cf":
-                    int num=Integer.parseInt(numOfFlags.getText());
+                    int num = Integer.parseInt(numOfFlags.getText());
                     GameController.createNewAIInstance("AI MODE CF", selectedDeck);
                     GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), num, SinglePlayerModes.CUSTOM);
                     break;
