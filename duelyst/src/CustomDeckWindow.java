@@ -34,6 +34,9 @@ public class CustomDeckWindow {
     private  Scene scene = new Scene(root);
 
     public CustomDeckWindow(String mode) {
+        if(mode.equals("cf")){
+            
+        }
         setBoxes();
         setView();
         setBackGround();

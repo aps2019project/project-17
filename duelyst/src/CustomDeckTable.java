@@ -23,6 +23,11 @@ public class CustomDeckTable {
 
 
         TableView tableView = new TableView();
+        VBox vbox = new VBox(tableView);
+        Stage window = new Stage();
+        window.setTitle("AllDecks");
+        window.setScene(new Scene(vbox, 300, 300));
+        window.show();
 
         TableColumn<Deck, String> column1 = new TableColumn<>("DeckName");
         column1.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -64,15 +69,12 @@ public class CustomDeckTable {
             TableRow<Deck> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 CustomDeckWindow.setSelectedDeck(row.getItem());
+                window.close();
             });
             return row;
         });
 
-        VBox vbox = new VBox(tableView);
-        Stage window = new Stage();
-        window.setTitle("AllDecks");
-        window.setScene(new Scene(vbox, 300, 300));
-        window.show();
+
 
     }
 
