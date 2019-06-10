@@ -21,9 +21,10 @@ import java.util.Random;
 
 public class HandAppearance {
 
-    private final Rectangle[] handIconsTemplate = new Rectangle[5];
+    private final Rectangle[] handIconsTemplate = new Rectangle[6];
     private Rectangle[] handIcons = new Rectangle[5];
-    private Rectangle[] informationOfCards = new Rectangle[5];
+    private Rectangle[] informationOfCards = new Rectangle[6];
+    private Rectangle nextCard;
     private Rectangle selectedCardIcon;
     private Text[] manaOfPlayers = new Text[handIcons.length];
     private Hand hand;
@@ -62,6 +63,7 @@ public class HandAppearance {
             handIconsTemplate[i].setOpacity(0.5);
             initializeHandIcons(i);
         }
+        nextCard = new Rectangle(handIconsTemplate[0].getWidth() * 1.3, handIconsTemplate[0].getHeight() * 1.3);
         for (int i = 0; i < informationOfCards.length; i++)
             informationOfCards[i] = new Rectangle(Main.WIDTH_OF_WINDOW / 13, Main.HEIGHT_OF_WINDOW / 7);
 
@@ -86,21 +88,22 @@ public class HandAppearance {
         root.getChildren().addAll(handIconsTemplate);
         root.getChildren().addAll(handIcons);
         root.getChildren().addAll(manaOfPlayers);
-
+        root.getChildren().add(nextCard);
     }
 
     private void addInformationOfCards() {
         for (int i = 0; i < informationOfCards.length; i++) {
-            if (handIcons[i] != null)
-                setInformationOfCards(i, informationOfCards[i]);
-
+            if (i < 5) {
+                if (handIcons[i] != null)
+                    setInformationOfCards(i, informationOfCards[i], hand.getCards().get(i));
+            }
         }
     }
 
-    private void setInformationOfCards(int i, Rectangle informationOfCard) {
-        Text text0 = new Text(hand.getCards().get(i).getName());
+    private void setInformationOfCards(int i, Rectangle informationOfCard, Card card) {
+        Text text0 = new Text(card.getName());
         Text text1 = new Text("");
-        if (hand.getCards().get(i) instanceof Spell)
+        if (card instanceof Spell)
             text1.setText("Spell");
         else text1.setText("Minion");
         text0.setFill(Color.WHITE);
@@ -144,11 +147,21 @@ public class HandAppearance {
                 double x = Main.WIDTH_OF_WINDOW / 3.6 + (Main.WIDTH_OF_WINDOW / 9.6 * i);
                 double y = Main.HEIGHT_OF_WINDOW * 7.9 / 10;
                 handIcons[i].setLayoutX(x);
-                handIcons[i].setLayoutY(0.95* y);
+                handIcons[i].setLayoutY(0.95 * y);
                 handIconsTemplate[i].setLayoutX(x);
                 handIconsTemplate[i].setLayoutY(y * 1.015);
-                setInformationOfCards(i, informationOfCards[i]);
+                setInformationOfCards(i, informationOfCards[i], hand.getCards().get(i));
             }
+        }
+        handIconsTemplate[5].setLayoutY(Main.HEIGHT_OF_WINDOW / 4);
+        handIconsTemplate[5].setLayoutX(Main.WIDTH_OF_WINDOW / 9);
+        try {
+            nextCard.setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(10)).concat(".gif"))))));
+            nextCard.setLayoutX(Main.HEIGHT_OF_WINDOW / 5);
+            nextCard.setLayoutY(Main.WIDTH_OF_WINDOW / 9);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
