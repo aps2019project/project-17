@@ -5,6 +5,7 @@ import CardCollections.Deck;
 import Data.Account;
 import GameGround.SinglePlayerModes;
 import controller.GameController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -26,16 +27,16 @@ public class CustomDeckWindow {
 
     private static Deck selectedDeck;
     private String mode;
-    private  Stage firstWindow = new Stage();
-    private  Text showDecks = new Text("Show My Decks");
-    private  Text enterBattle = new Text("Enter Battle");
-    private  TextField numOfFlags=new TextField();
-    private  VBox root = new VBox();
-    private  Scene scene = new Scene(root);
+    private Stage firstWindow = new Stage();
+    private Text showDecks = new Text("Show My Decks");
+    private Text enterBattle = new Text("Enter Battle");
+    private TextField numOfFlags = new TextField();
+    private VBox root = new VBox();
+    private Scene scene = new Scene(root);
 
     public CustomDeckWindow(String mode) {
-        if(mode.equals("cf")){
-            
+        if (mode.equals("cf")) {
+            root.getChildren().add(numOfFlags);
         }
         setBoxes();
         setView();
@@ -44,7 +45,7 @@ public class CustomDeckWindow {
         disPlay();
     }
 
-    public void setBoxes(){
+    public void setBoxes() {
         try {
             Rectangle rectangle = new Rectangle(300, 60);
             Rectangle rectangle1 = new Rectangle(300, 60);
@@ -52,7 +53,10 @@ public class CustomDeckWindow {
             rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             StackPane stackPane1 = new StackPane(rectangle, showDecks);
             StackPane stackPane2 = new StackPane(rectangle1, enterBattle);
-            root.setSpacing(25);
+            numOfFlags.setLayoutX(rectangle.getLayoutX());
+            numOfFlags.setLayoutY(rectangle.getLayoutX());
+            numOfFlags.setMinWidth(firstWindow.getWidth() / 2);
+            root.setSpacing(50);
             root.setAlignment(Pos.CENTER);
             root.getChildren().addAll(stackPane1, stackPane2);
         } catch (FileNotFoundException e) {
@@ -60,7 +64,7 @@ public class CustomDeckWindow {
         }
     }
 
-    public void setView(){
+    public void setView() {
         firstWindow.initModality(Modality.APPLICATION_MODAL);
         firstWindow.setMinWidth(Main.WIDTH_OF_WINDOW / 2.5);
         firstWindow.setMinHeight(Main.HEIGHT_OF_WINDOW / 2.5);
@@ -72,7 +76,7 @@ public class CustomDeckWindow {
 
     }
 
-    public void setBackGround(){
+    public void setBackGround() {
         try {
             Image image = new Image(new FileInputStream("play.jpg"));
             BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -83,22 +87,25 @@ public class CustomDeckWindow {
         }
     }
 
-    public void handleEvents(String mode){
+    public void handleEvents(String mode) {
         showDecks.setOnMouseClicked(e -> {
             new CustomDeckTable();
         });
         enterBattle.setOnMouseClicked(e -> {
             closeWindow();
-            switch (mode){
+            switch (mode) {
                 case "kh":
                     GameController.createNewAIInstance("AI MODE KH", selectedDeck);
                     GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     break;
                 case "hf":
-                    GameController.createNewAIInstance("AI MODE HF",selectedDeck);
+                    GameController.createNewAIInstance("AI MODE HF", selectedDeck);
                     GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     break;
                 case "cf":
+                    int num=Integer.parseInt(numOfFlags.getText());
+                    GameController.createNewAIInstance("AI MODE CF", selectedDeck);
+                    GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), num, SinglePlayerModes.CUSTOM);
                     break;
             }
             closeWindow();
@@ -111,7 +118,7 @@ public class CustomDeckWindow {
         firstWindow.show();
     }
 
-    private  void closeWindow() {
+    private void closeWindow() {
         firstWindow.close();
     }
 
