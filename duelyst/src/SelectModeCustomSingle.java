@@ -75,17 +75,17 @@ public class SelectModeCustomSingle {
         static {
             killHero.setOnMouseClicked(e -> {
                 closeWindow();
-                new CustomDeckWindow();
+                new CustomDeckWindow("kh");
                 //new BattleAppearance();
             });
             holdFlag.setOnMouseClicked(e -> {
                 closeWindow();
-                new CustomDeckWindow();
+                new CustomDeckWindow("hf");
                // new BattleAppearance();
             });
             captureFlag.setOnMouseClicked(e -> {
                 closeWindow();
-                new CustomDeckWindow();
+                new CustomDeckWindow("cf");
                // new BattleAppearance();
             });
         }

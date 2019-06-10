@@ -2,6 +2,9 @@
 
 import Appearance.FontAppearance;
 import CardCollections.Deck;
+import Data.Account;
+import GameGround.SinglePlayerModes;
+import controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -22,6 +25,7 @@ import static Data.MODE.*;
 public class CustomDeckWindow {
 
     private static Deck selectedDeck;
+    private String mode;
     private  Stage firstWindow = new Stage();
     private  Text showDecks = new Text("Show My Decks");
     private  Text enterBattle = new Text("Enter Battle");
@@ -29,11 +33,11 @@ public class CustomDeckWindow {
     private  VBox root = new VBox();
     private  Scene scene = new Scene(root);
 
-    public CustomDeckWindow() {
+    public CustomDeckWindow(String mode) {
         setBoxes();
         setView();
         setBackGround();
-        handleEvents();
+        handleEvents(mode);
         disPlay();
     }
 
@@ -76,13 +80,25 @@ public class CustomDeckWindow {
         }
     }
 
-    public void handleEvents(){
+    public void handleEvents(String mode){
         showDecks.setOnMouseClicked(e -> {
             new CustomDeckTable();
         });
         enterBattle.setOnMouseClicked(e -> {
             closeWindow();
-
+            switch (mode){
+                case "kh":
+                    GameController.createNewAIInstance("AI MODE KH", selectedDeck);
+                    GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                    break;
+                case "hf":
+                    GameController.createNewAIInstance("AI MODE HF",selectedDeck);
+                    GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                    break;
+                case "cf":
+                    break;
+            }
+            closeWindow();
             new BattleAppearance();
         });
 
