@@ -3,10 +3,7 @@ import Appearance.FontAppearance;
 import Appearance.MinionAppearance;
 import Data.AI;
 import Data.Account;
-import GameGround.Battle;
-import GameGround.BattleHoldingFlag;
-import GameGround.BattleKillHero;
-import GameGround.Cell;
+import GameGround.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -103,19 +100,19 @@ public class BattleAppearance {
     private void initBoardBG() {
         for (int i = 0; i < boardBackGround.length; i++) {
             for (int j = 0; j < boardBackGround[i].length; j++) {
-                boardBackGround[i][j] = new Rectangle(Main.WIDTH_OF_WINDOW / 19, Main.HEIGHT_OF_WINDOW / 10);
+                boardBackGround[i][j] = new Rectangle(Main.WIDTH_OF_WINDOW / 17, Main.HEIGHT_OF_WINDOW / 10);
                 boardBackGround[i][j].setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
                 boardBackGround[i][j].setOpacity(0.2);
                 if (j == 0) {
                     if (i == 0) {
-                        boardBackGround[i][j].setLayoutX(Main.WIDTH_OF_WINDOW / 4.2);
+                        boardBackGround[i][j].setLayoutX(Main.WIDTH_OF_WINDOW / 4.6);
                         boardBackGround[i][j].setLayoutY(Main.HEIGHT_OF_WINDOW / 4);
                     } else {
                         boardBackGround[i][j].setLayoutX(boardBackGround[i - 1][j].getLayoutX());
                         boardBackGround[i][j].setLayoutY(boardBackGround[i - 1][j].getLayoutY() + Main.HEIGHT_OF_WINDOW / 9.2);
                     }
                 } else {
-                    boardBackGround[i][j].setLayoutX(boardBackGround[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW / 18);
+                    boardBackGround[i][j].setLayoutX(boardBackGround[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW / 16.75);
                     boardBackGround[i][j].setLayoutY(boardBackGround[i][j - 1].getLayoutY());
                 }
             }
@@ -237,9 +234,23 @@ public class BattleAppearance {
         if (Battle.getCurrentBattle() instanceof BattleHoldingFlag) {
             Cell cell = ((BattleHoldingFlag) Battle.getCurrentBattle()).getCellOfFlag();
             try {
-                board[cell.getRow()][cell.getCol()].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("flag.png"))));
+                board[cell.getRow()][cell.getCol()].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("flag.gif"))));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+        }
+        else if (Battle.getCurrentBattle() instanceof BattleCaptureFlag) {
+            Board board = Battle.getCurrentBattle().getBoard();
+            for (int i = 0; i < board.getCells().length; i++) {
+                for (int j = 0; j < board.getCells()[i].length; j++) {
+                    if (board.getCells()[i][j].hasFlag()){
+                        try {
+                            this.board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("flag.gif"))));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         }
     }
