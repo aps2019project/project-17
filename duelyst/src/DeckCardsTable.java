@@ -55,18 +55,8 @@ public class DeckCardsTable {
 
         tableView.getColumns().add(column1);
 
+
         tableView.setItems(getAllCards(deckName));
-
-        // Create a new RowFactory to handle actions
-        tableView.setRowFactory(tv -> {
-
-            // Define our new TableRow
-            TableRow<Deck> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                DeckOperator.display(row.getItem().getName());
-            });
-            return row;
-        });
 
         Stage window = new Stage();
         window.setTitle("AllCards");
