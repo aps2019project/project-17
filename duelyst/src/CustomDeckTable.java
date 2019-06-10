@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+
+
 public class CustomDeckTable {
 
     public CustomDeckTable() {
@@ -85,7 +87,7 @@ public class CustomDeckTable {
         for (int i = 0; i < Account.getLoginUser().getCollection().getDecks().size(); i++) {
             Account.getLoginUser().getCollection().getDecks().get(i).setIsValid();
         }
-        return FXCollections.observableArrayList(Account.getLoginUser().getCollection().getDecks());
+        return FXCollections.observableArrayList(Account.getLoginUser().getCollection().getValidDecks());
 
     }
 }
