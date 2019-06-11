@@ -189,18 +189,20 @@ public class BattleAppearance {
         for (int i = 0; i < Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().size(); i++) {
             Card card = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
             if (card instanceof Minion) {
-                minionAppearanceFirstPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
+                MinionAppearance appearance = new MinionAppearance((Minion) card, card.getName(), root);
+                appearance.breathing();
+//                minionAppearanceFirstPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
             } else if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i) instanceof Spell) {
                 Spell spell = (Spell) Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
             }
         }
-        for (int i = 0; i < Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().size(); i++) {
-            Card card = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().get(i);
-            if (card instanceof Minion)
-                minionAppearanceSecondPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
-            else if (card instanceof Spell) {
-            }
-        }
+//        for (int i = 0; i < Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().size(); i++) {
+//            Card card = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().get(i);
+//            if (card instanceof Minion)
+//                minionAppearanceSecondPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
+//            else if (card instanceof Spell) {
+//            }
+//        }
     }
 
     private void setEndTurnButton() {

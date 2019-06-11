@@ -44,7 +44,6 @@ public class CustomSpellWindow {
         setBackGround();
         setNodesView();
         setBuildButton();
-        addNodes();
         locateNodes();
         handleEvents();
         disPlay();
@@ -98,20 +97,16 @@ public class CustomSpellWindow {
         }
     }
 
-    private void addNodes() {
-
-    }
-
     private void locateNodes() {
-       VBox vBox0 = new VBox(nameTxt, name);
-       vBox0.setAlignment(Pos.CENTER);
-       vBox0.setSpacing(Main.HEIGHT_OF_WINDOW / 50);
+        VBox vBox0 = new VBox(nameTxt, name);
         VBox vBox1 = new VBox(idTxt, id);
+        VBox vBox2 = new VBox(priceTxt, price);
+        vBox0.setAlignment(Pos.CENTER);
+        vBox0.setSpacing(Main.HEIGHT_OF_WINDOW / 51);
         vBox1.setAlignment(Pos.CENTER);
         vBox1.setSpacing(Main.HEIGHT_OF_WINDOW / 50);
-        VBox vBox2 = new VBox(priceTxt, price);
         vBox2.setAlignment(Pos.CENTER);
-        vBox2.setSpacing(Main.HEIGHT_OF_WINDOW / 50);
+        vBox2.setSpacing(Main.HEIGHT_OF_WINDOW / 51);
         HBox hBox = new HBox(vBox0, vBox1, vBox2);
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(Main.WIDTH_OF_WINDOW / 6);
@@ -126,10 +121,10 @@ public class CustomSpellWindow {
         VBox vBox4 = new VBox(descTxt, desc);
         vBox4.setAlignment(Pos.CENTER);
         vBox4.setSpacing(Main.HEIGHT_OF_WINDOW / 50);
-        HBox hBox1 = new HBox(vBox3,vBox4);
+        HBox hBox1 = new HBox(vBox3, vBox4);
         hBox1.setAlignment(Pos.CENTER);
         hBox1.setSpacing(Main.WIDTH_OF_WINDOW / 6);
-        hBox1.setLayoutY(2*Main.HEIGHT_OF_WINDOW / 3);
+        hBox1.setLayoutY(2 * Main.HEIGHT_OF_WINDOW / 3);
         hBox1.setLayoutX(Main.WIDTH_OF_WINDOW / 3.5);
         root.getChildren().add(hBox1);
 
@@ -144,19 +139,19 @@ public class CustomSpellWindow {
     }
 
     private void action() {
-        if(checkValid()){
-        String nameInput=name.getText();
-        String idInput=id.getText();
-        String descInput=desc.getText();
-        try {
-            int priceInput=Integer.parseInt(price.getText());
-            int manaPointInput=Integer.parseInt(manaPoint.getText());
-            GameController.saveSpell(new Spell(nameInput, idInput, priceInput,manaPointInput ,descInput));
-        } catch (Exception e) {
-            ErrorOnBattle.display("Please input valid fields!");
-        }
-        new MainMenu();}
-        else {
+        if (checkValid()) {
+            String nameInput = name.getText();
+            String idInput = id.getText();
+            String descInput = desc.getText();
+            try {
+                int priceInput = Integer.parseInt(price.getText());
+                int manaPointInput = Integer.parseInt(manaPoint.getText());
+                GameController.saveSpell(new Spell(nameInput, idInput, priceInput, manaPointInput, descInput));
+            } catch (Exception e) {
+                ErrorOnBattle.display("Please input valid fields!");
+            }
+            new MainMenu();
+        } else {
             ErrorOnBattle.display("Please Fill all fields!");
         }
     }
