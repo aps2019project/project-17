@@ -33,7 +33,7 @@ public class CellAppearance {
         cellRectangle.setOnMouseEntered(e -> {
             if (BattleAppearance.getCurrentBattleAppearance().getSelectedCell() != null)
                 return;
-            if (cell.getCard() != null || cell.hasFlag())
+            if (cell.getCard() != null || cell.hasFlag() || cell.getItem() != null)
                 return;
             cellRectangle.setOpacity(0.75);
         });
@@ -41,7 +41,7 @@ public class CellAppearance {
             if (BattleAppearance.getCurrentBattleAppearance().getSelectedCell() != null) {
                 return;
             }
-            if (cell.getCard() != null || cell.hasFlag())
+            if (cell.getCard() != null || cell.hasFlag() || cell.getItem() != null)
                 return;
             cellRectangle.setOpacity(0.2);
         });

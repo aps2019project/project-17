@@ -22,7 +22,7 @@ public class BattleHoldingFlag extends Battle {
         Random r = new Random();
         int x = r.nextInt(5);
         int y = r.nextInt(9);
-        while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9)) {
+        while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].getItem() != null) {
             x = r.nextInt(5);
             y = r.nextInt(9);
         }
@@ -118,6 +118,7 @@ public class BattleHoldingFlag extends Battle {
             if (cellDestination.hasFlag()) {
                 ((Minion) card).setHasFlag(true);
                 cellDestination.setFlag(false);
+                whoseTurn().removeCardFromHand(card);
                 whoHasFlag = whoseTurn();
                 timeHoldingFlag = 0;
                 return "card successfully inserted and capture the flag";
@@ -125,6 +126,7 @@ public class BattleHoldingFlag extends Battle {
             return "card successfully inserted";
         }
         super.check();
+        whoseTurn().removeCardFromHand(card);
         return "card successfully inserted";
     }
 
