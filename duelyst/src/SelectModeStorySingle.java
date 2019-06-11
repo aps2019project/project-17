@@ -79,7 +79,6 @@ public class SelectModeStorySingle {
             GameController.setAiPlayer(KH);
             GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
             System.out.println("You have entered the Battle,Fight!");
-            BattleView.setItems();
             new BattleAppearance();
         });
         holdFlag.setOnMouseClicked(e -> {
@@ -87,7 +86,6 @@ public class SelectModeStorySingle {
             GameController.setAiPlayer(HF);
             GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
             System.out.println("You have entered the Battle,Fight!");
-            BattleView.setItems();
             new BattleAppearance();
         });
         captureFlag.setOnMouseClicked(e -> {
@@ -95,7 +93,6 @@ public class SelectModeStorySingle {
             GameController.setAiPlayer(CF);
             GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
             System.out.println("You have entered the Battle,Fight!");
-            BattleView.setItems();
             new BattleAppearance();
         });
     }

@@ -1,9 +1,11 @@
 import Appearance.FontAppearance;
+import Appearance.MinionAppearance;
 import CardCollections.Hand;
 import Cards.Card;
 import Cards.Minion;
 import Cards.Spell;
 import Data.Account;
+import GameGround.Battle;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -43,7 +45,7 @@ public class HandAppearance {
 
     private void primaryInitialize(Group root) {
         this.root = root;
-        this.hand = Account.getLoginUser().getPlayer().getHand();
+        this.hand = Battle.getCurrentBattle().getPlayerOne().getHand();
         this.selectedCard = null;
         this.selectedCardIcon = null;
     }
@@ -74,6 +76,12 @@ public class HandAppearance {
             final int value = i;
             if (handIcons[i] != null) {
                 handIcons[i].setOnMouseClicked(e -> {
+                    if (handIcons[value] == selectedCardIcon) {
+                        this.selectedCardIcon.setOpacity(0.5);
+                        this.selectedCardIcon = null;
+                        this.selectedCard = null;
+                        return;
+                    }
                     if (selectedCard != null)
                         selectedCardIcon.setOpacity(0.5);
                     selectedCard = hand.getCards().get(value);
@@ -219,20 +227,25 @@ public class HandAppearance {
     }
 
     public void initializeHandIcons(int i) {
-        try {
-            if (hand.getCards().get(i) instanceof Minion) {
-                handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(10)).concat(".gif"))))));
-                manaOfPlayers[i].setText(Integer.toString(((Minion) hand.getCards().get(i)).getManaPoint()));
-            } else if (hand.getCards().get(i) instanceof Spell) {
-                handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(10)).concat(".gif"))))));
-                manaOfPlayers[i].setText(Integer.toString(((Spell) hand.getCards().get(i)).getManaPoint()));
-            }
-            handIcons[i].setOpacity(1);
-            manaOfPlayers[i].setFont(FontAppearance.FONT_CREATE_DECK);
-            handIcons[i].setOpacity(0.5);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (hand.getCards().get(i) instanceof Minion) {
+
+            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceFirstPlayer(hand.getCards().get(i).getName()).add();
+            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceFirstPlayer(hand.getCards().get(i).getName()).setLocation(handIcons[i].getLayoutX(), handIcons[i].getLayoutY());
+            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceFirstPlayer(hand.getCards().get(i).getName()).breathing();
+//          handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(10)).concat(".gif"))))));
+            manaOfPlayers[i].setText(Integer.toString(((Minion) hand.getCards().get(i)).getManaPoint()));
+        } else if (hand.getCards().get(i) instanceof Spell) {
+//                handIcons[i].setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(10)).concat(".gif"))))));
+            manaOfPlayers[i].setText(Integer.toString(((Spell) hand.getCards().get(i)).getManaPoint()));
         }
+        handIcons[i].setOpacity(1);
+        manaOfPlayers[i].setFont(FontAppearance.FONT_CREATE_DECK);
+        handIcons[i].setOpacity(0.5);
+//        try {
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void setSelectedCard(Card selectedCard) {

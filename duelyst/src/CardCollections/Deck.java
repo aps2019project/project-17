@@ -148,7 +148,7 @@ public class Deck {
     }
 
     public boolean isDeckValidate() {
-        return cards.size() == 20 && getHero() != null;
+        return cards.size() >= 19 && getHero() != null;
     }
 
     public static Deck getDeckKillHero() {

@@ -2,9 +2,11 @@ import Appearance.FontAppearance;
 import Data.Account;
 import GameGround.SinglePlayerModes;
 import controller.GameController;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -23,7 +25,6 @@ public class CustomCardPreview {
     private static Text title = new Text("Select Type Of Card You Want To Build");
     private static Text hero = new Text("HERO");
     private static Text minion = new Text("MINION");
-    private static Text item = new Text("ITEM");
     private static Text spell = new Text("SPELL");
     private static Text buff = new Text("BUFF");
     private static VBox root = new VBox();
@@ -33,22 +34,39 @@ public class CustomCardPreview {
         try {
             Rectangle rectangle = new Rectangle(300, 60);
             Rectangle rectangle1 = new Rectangle(300, 60);
-            Rectangle rectangle2 = new Rectangle(300, 60);
             Rectangle rectangle3 = new Rectangle(300, 60);
             Rectangle rectangle4 = new Rectangle(300, 60);
             rectangle.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
-            rectangle2.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             rectangle3.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             rectangle4.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             StackPane stackPane1 = new StackPane(rectangle, hero);
             StackPane stackPane2 = new StackPane(rectangle1, minion);
-            StackPane stackPane3 = new StackPane(rectangle2, item);
             StackPane stackPane4 = new StackPane(rectangle3, spell);
             StackPane stackPane5 = new StackPane(rectangle4, buff);
+
+            rectangle.setOnMouseClicked(event -> {
+                new CustomHeroWindow("hero");
+                closeWindow();
+            });
+            rectangle1.setOnMouseClicked(event -> {
+                new CustomHeroWindow("hero");
+                closeWindow();
+            });
+            rectangle3.setOnMouseClicked(event -> {
+                new CustomSpellWindow();
+                closeWindow();
+            });
+            // TODO: 6/11/2019 will be completed
+            rectangle4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                }
+            });
             root.setSpacing(25);
             root.setAlignment(Pos.CENTER);
-            root.getChildren().addAll(title, stackPane1, stackPane2, stackPane4,stackPane3,stackPane5);
+            root.getChildren().addAll(title, stackPane1, stackPane2, stackPane4, stackPane5);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -57,12 +75,10 @@ public class CustomCardPreview {
     static {
         hero.setFont(FontAppearance.FONT_BUTTON);
         minion.setFont(FontAppearance.FONT_BUTTON);
-        item.setFont(FontAppearance.FONT_BUTTON);
         spell.setFont(FontAppearance.FONT_BUTTON);
         buff.setFont(FontAppearance.FONT_BUTTON);
         hero.setFill(Color.WHITE);
         minion.setFill(Color.WHITE);
-        item.setFill(Color.WHITE);
         spell.setFill(Color.WHITE);
         buff.setFill(Color.WHITE);
         title.setFont(FontAppearance.FONT_BUTTON);
@@ -85,16 +101,16 @@ public class CustomCardPreview {
 
     static {
         hero.setOnMouseClicked(e -> {
-
+            new CustomHeroWindow("hero");
+            closeWindow();
         });
         minion.setOnMouseClicked(e -> {
-
-        });
-        item.setOnMouseClicked(e -> {
-
+            new CustomHeroWindow("minion");
+            closeWindow();
         });
         spell.setOnMouseClicked(e -> {
-
+            closeWindow();
+            new CustomSpellWindow();
         });
 
         buff.setOnMouseClicked(e -> {

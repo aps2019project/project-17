@@ -4,6 +4,7 @@ import CardCollections.Deck;
 import CardCollections.Hand;
 import Cards.Card;
 import Cards.Item;
+import Cards.Minion;
 import Effects.Effect;
 import Effects.enums.SpecialSituation;
 
@@ -53,7 +54,7 @@ public class Player {
 
     public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
-            if (hand.getCards().get(i).getName().equals(cardName))
+            if (hand.getCards().get(i).getName().toLowerCase().trim().equals(cardName))
                 return hand.getCards().get(i);
         }
         return null;
@@ -89,13 +90,15 @@ public class Player {
     }
 
     private void setCopyMainDeck() {
+        mainDeck.getHero().setCanMove(true);
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
+            if (mainDeck.getCards().get(i) instanceof Minion){
+                ((Minion) mainDeck.getCards().get(i)).setCanMove(true);
+            }
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
-
         copyMainDeck.setHero(mainDeck.getHero());
     }
-
 
     public Hand getHand() {
         return hand;
@@ -176,11 +179,18 @@ public class Player {
     public boolean isPlayerReadyForBattle() {
         if (mainDeck == null || !mainDeck.isDeckValidate())
             return false;
+        if (!(this instanceof AI))
+            System.out.println("clicked");
         setCopyMainDeck();
         this.hand = new Hand();
-        if (mainDeck.getItem() != null)
+        if (mainDeck.getItem() != null) {
+            if (!(this instanceof AI))
+                System.out.println("collectable ------> " + mainDeck.getItem().getName());
             collectAbleItems.add(this.mainDeck.getItem());
+        }
         setHand();
+        this.mana = 2;
+        this.previousMana = 2;
         return true;
     }
 
@@ -226,4 +236,5 @@ public class Player {
     public SpecialSituation getSpecialSituation() {
         return specialSituation;
     }
+
 }

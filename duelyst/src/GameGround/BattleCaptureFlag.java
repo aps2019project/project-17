@@ -77,7 +77,7 @@ public class BattleCaptureFlag extends Battle {
         for (int i = 0; i < this.numberOfFlags; i++) {
             int x = r.nextInt(5) + 1;
             int y = r.nextInt(5) + 1;
-            while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].hasFlag()) {
+            while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].hasFlag() || this.board.getCells()[x - 1][y - 1].getItem() != null) {
                 x = r.nextInt() % 5 + 1;
                 y = r.nextInt() % 5 + 1;
             }
@@ -112,10 +112,10 @@ public class BattleCaptureFlag extends Battle {
             return returning;
 
         Cell cellTarget = getCellFromBoard(x, y);
-        Card card = whoseTurn().getCardFromHand(cardName);
+        Card card = whoseTurn().getCardFromHand(cardName.trim().toLowerCase());
 
         if (card instanceof Minion) {
-
+            System.out.println("instance minion");
             this.selectedCard = card;
             if (cellTarget.hasFlag()) {
 
@@ -123,13 +123,15 @@ public class BattleCaptureFlag extends Battle {
                 ((Minion) card).setHasFlag(true);
                 whoseTurn().changeNumberOfHoldingFlags(1);
                 minionsHaveFlag.add((Minion) card);
-
+                whoseTurn().removeCardFromHand(card);
                 return "card successfully inserted and captured the flag too";
             }
-            return "card successfully inserted";
+            whoseTurn().removeCardFromHand(card);
+            return "minion successfully inserted";
         }
         super.check();
-        return "card successfully inserted";
+        whoseTurn().removeCardFromHand(card);
+        return "spell successfully inserted";
     }
 
     @Override

@@ -161,7 +161,25 @@ public class MinionAppearance {
         animation.play();
     }
 
-    public void setLocation(int x, int y) {
+    public void setLocation(double x, double y) {
         imageView.relocate(x, y);
+//        imageView.setLayoutX(x);
+//        imageView.setLayoutY(y);
+    }
+
+    public Minion getMinion() {
+        return minion;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void add() {
+        root.getChildren().add(imageView);
+    }
+
+    public void remove() {
+        root.getChildren().remove(imageView);
     }
 }
