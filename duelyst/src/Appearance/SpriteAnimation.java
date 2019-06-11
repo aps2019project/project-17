@@ -6,47 +6,31 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.util.HashMap;
+
 public class SpriteAnimation extends Transition {
     private final ImageView imageView;
-    private final int columns;
-    private final int offsetX;
-    private final int offsetY;
     private final int width;
     private final int height;
-    private final int endIndex;
-    private final int startIndex;
-    private final int total;
-    private int lastIndex;
+    private HashMap<Integer, MinionAppearance.Position> map;
 
     public SpriteAnimation(
             ImageView imageView,
             Duration duration,
-            int columns,
-            int offsetX, int offsetY,
-            int width, int height, int startIndex, int endIndex, int total) {
+            int width, int height, HashMap<Integer, MinionAppearance.Position> map) {
         this.imageView = imageView;
-        this.columns = columns;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
         this.width = width;
         this.height = height;
-        this.endIndex = endIndex;
-        this.startIndex = startIndex;
-        this.total = total;
+        this.map = map;
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
     }
 
     @Override
     protected void interpolate(double k) {
-        double len = this.endIndex - this.startIndex;
-        k = ((double) startIndex) / total + k * len / (double)total;
-        final int index = Math.min((int) Math.floor(k * total), total - 1);
-        if (index != lastIndex) {
-            final int x = (index % columns) * width + offsetX;
-            final int y = (index / columns) * height + offsetY;
-            imageView.setViewport(new Rectangle2D(x, y, width, height));
-            lastIndex = index;
-        }
+        final int index = (int) Math.floor(k * (map.size() - 1));
+        final int x = map.get(index).x;
+        final int y = map.get(index).y;
+        imageView.setViewport(new Rectangle2D(x, y, width, height));
     }
 }
