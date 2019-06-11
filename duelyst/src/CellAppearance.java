@@ -97,17 +97,16 @@ public class CellAppearance {
 
         for (int i = x; i <= x + 2; i++) {
             for (int j = y; j <= y + 2; j++) {
-                if ((i == x - 1 && j == y - 1))
+                if ((i == x + 1 && j == y + 1))
                     continue;
                 if (i < 0 || i > 4 || j < 0 || j > 8)
                     continue;
-                BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setOpacity(value);
-                if (Battle.getCurrentBattle().getBoard().getCells()[i][j].getCard() == null || !Battle.getCurrentBattle().getBoard().getCells()[i][j].hasFlag())
-                    BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setFill(color);
-                else {
-                    BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
+                if (Battle.getCurrentBattle().getBoard().getCells()[i][j].getCard() != null || Battle.getCurrentBattle().getBoard().getCells()[i][j].hasFlag()) {
                     BattleAppearance.getCurrentBattleAppearance().getBoardBackGround()[i][j].setFill(color);
+                    continue;
                 }
+                BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setFill(color);
+                BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setOpacity(value);
             }
         }
     }
