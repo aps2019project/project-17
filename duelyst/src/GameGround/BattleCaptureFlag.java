@@ -112,10 +112,10 @@ public class BattleCaptureFlag extends Battle {
             return returning;
 
         Cell cellTarget = getCellFromBoard(x, y);
-        Card card = whoseTurn().getCardFromHand(cardName);
+        Card card = whoseTurn().getCardFromHand(cardName.trim().toLowerCase());
 
         if (card instanceof Minion) {
-
+            System.out.println("instance minion");
             this.selectedCard = card;
             if (cellTarget.hasFlag()) {
 
@@ -123,13 +123,15 @@ public class BattleCaptureFlag extends Battle {
                 ((Minion) card).setHasFlag(true);
                 whoseTurn().changeNumberOfHoldingFlags(1);
                 minionsHaveFlag.add((Minion) card);
-
+                whoseTurn().removeCardFromHand(card);
                 return "card successfully inserted and captured the flag too";
             }
-            return "card successfully inserted";
+            whoseTurn().removeCardFromHand(card);
+            return "minion successfully inserted";
         }
         super.check();
-        return "card successfully inserted";
+        whoseTurn().removeCardFromHand(card);
+        return "spell successfully inserted";
     }
 
     @Override

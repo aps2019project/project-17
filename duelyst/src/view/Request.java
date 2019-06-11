@@ -515,10 +515,10 @@ public class Request {
                     menuType = MenuType.SHOP_MENU;
                     break;
                 case "battle":
-                    if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()) {
-                        System.out.println("selected deck is invalid");
-                        return true;
-                    }
+//                    if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle()) {
+//                        System.out.println("selected deck is invalid");
+//                        return true;
+//                    }
                     menuType = MenuType.BATTLE_MENU;
                     BattleView.showBattleMenu();
                     checkSyntaxOfEnteringBattle();
@@ -682,12 +682,12 @@ public class Request {
                     return true;
                 }
 
-                if (!accountOfPlayerTwo.getPlayer().isPlayerReadyForBattle()) {
-                    System.out.println("selected deck for second player is invalid,Try again");
-                    menuType = MenuType.MAIN_MENU;
-                    MainMenuView.showMainMenu();
-                    return true;
-                }
+//                if (!accountOfPlayerTwo.getPlayer().isPlayerReadyForBattle()) {
+//                    System.out.println("selected deck for second player is invalid,Try again");
+//                    menuType = MenuType.MAIN_MENU;
+//                    MainMenuView.showMainMenu();
+//                    return true;
+//                }
                 String mode = matcher.group("mode");
                 switch (mode) {
                     case "kh":

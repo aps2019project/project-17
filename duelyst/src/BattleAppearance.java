@@ -164,12 +164,9 @@ public class BattleAppearance {
     }
 
     private void initPlaceOfItems() {
-        System.out.println("ITEMS".concat("\n"));
         for (int i = 0; i < Battle.getCurrentBattle().getBoard().getCells().length; i++) {
             for (int j = 0; j < Battle.getCurrentBattle().getBoard().getCells()[i].length; j++) {
                 if (Battle.getCurrentBattle().getBoard().getCells()[i][j].getItem() != null) {
-                    System.out.println("i : " + (i + 1) + " j : " + (j + 1));
-                    System.out.println(Battle.getCurrentBattle().getBoard().getCells()[i][j].getItem().getName());
                     try {
                         board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("item.gif"))));
                         board[i][j].getCellRectangle().setOpacity(1);
@@ -298,12 +295,10 @@ public class BattleAppearance {
                 e.printStackTrace();
             }
         } else if (Battle.getCurrentBattle() instanceof BattleCaptureFlag) {
-            System.out.println("\n\nFLAGS".concat("\n"));
             Board board = Battle.getCurrentBattle().getBoard();
             for (int i = 0; i < board.getCells().length; i++) {
                 for (int j = 0; j < board.getCells()[i].length; j++) {
                     if (board.getCells()[i][j].hasFlag()) {
-                        System.out.println("i : " + (i + 1) + " j : " + (j + 1));
                         try {
                             this.board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("flag.gif"))));
                         } catch (FileNotFoundException e) {

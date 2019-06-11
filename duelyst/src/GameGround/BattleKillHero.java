@@ -1,5 +1,6 @@
 package GameGround;
 
+import Cards.Card;
 import Data.AI;
 import Data.GameData;
 import Data.Player;
@@ -66,8 +67,12 @@ public class BattleKillHero extends Battle {
     @Override
     public String insertingCardFromHand(String cardName, int x, int y) {
         String toReturnFromSuper = super.insertingCardFromHand(cardName, x, y);
-        if (!toReturnFromSuper.equals("ok"))
+        Card card = whoseTurn().getCardFromHand(cardName);
+        if (!toReturnFromSuper.equals("ok")) {
+            whoseTurn().removeCardFromHand(card);
             return toReturnFromSuper;
+        }
+        whoseTurn().removeCardFromHand(card);
         super.check();
         return "card successfully inserted";
     }

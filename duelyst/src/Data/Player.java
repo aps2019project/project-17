@@ -53,7 +53,7 @@ public class Player {
 
     public Card getCardFromHand(String cardName) {
         for (int i = 0; i < hand.getCards().size(); i++) {
-            if (hand.getCards().get(i).getName().equals(cardName))
+            if (hand.getCards().get(i).getName().toLowerCase().trim().equals(cardName))
                 return hand.getCards().get(i);
         }
         return null;
@@ -176,10 +176,13 @@ public class Player {
     public boolean isPlayerReadyForBattle() {
         if (mainDeck == null || !mainDeck.isDeckValidate())
             return false;
+        if (!(this instanceof AI))
+            System.out.println("clicked");
         setCopyMainDeck();
         this.hand = new Hand();
         if (mainDeck.getItem() != null) {
-            System.out.println("collectable -> " + mainDeck.getItem().getName());
+            if (!(this instanceof AI))
+                System.out.println("collectable ------> " + mainDeck.getItem().getName());
             collectAbleItems.add(this.mainDeck.getItem());
         }
         setHand();
@@ -230,4 +233,5 @@ public class Player {
     public SpecialSituation getSpecialSituation() {
         return specialSituation;
     }
+
 }

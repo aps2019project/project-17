@@ -118,6 +118,7 @@ public class BattleHoldingFlag extends Battle {
             if (cellDestination.hasFlag()) {
                 ((Minion) card).setHasFlag(true);
                 cellDestination.setFlag(false);
+                whoseTurn().removeCardFromHand(card);
                 whoHasFlag = whoseTurn();
                 timeHoldingFlag = 0;
                 return "card successfully inserted and capture the flag";
@@ -125,6 +126,7 @@ public class BattleHoldingFlag extends Battle {
             return "card successfully inserted";
         }
         super.check();
+        whoseTurn().removeCardFromHand(card);
         return "card successfully inserted";
     }
 

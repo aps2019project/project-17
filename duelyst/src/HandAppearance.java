@@ -4,6 +4,7 @@ import Cards.Card;
 import Cards.Minion;
 import Cards.Spell;
 import Data.Account;
+import GameGround.Battle;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -43,7 +44,7 @@ public class HandAppearance {
 
     private void primaryInitialize(Group root) {
         this.root = root;
-        this.hand = Account.getLoginUser().getPlayer().getHand();
+        this.hand = Battle.getCurrentBattle().getPlayerOne().getHand();
         this.selectedCard = null;
         this.selectedCardIcon = null;
     }

@@ -157,7 +157,7 @@ public class Battle {
         if (!minion.CanMove())
             return "this card cant move";
         cellDestination.setCard(minion);
-//        minion.setCanMove(false);
+        minion.setCanMove(false);
         cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
@@ -216,7 +216,6 @@ public class Battle {
                 ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
             card.setUserName(whoseTurn().getUserName());
             whoseTurn().lessMana(((Minion) card).getManaPoint());
-            whoseTurn().removeCardFromHand(card);
             cell.setCard(card);
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
                 ((Minion) card).useSpecialPower(x, y);
