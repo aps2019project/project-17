@@ -49,9 +49,7 @@ public class Battle {
     public String setItems() {
         StringBuilder toReturn = new StringBuilder();
         ArrayList<Item> items = CardMaker.getCollectAbleItems();
-        int n = new Random().nextInt() % items.size() / 3;
-        while (n <= 0)
-            n = new Random().nextInt() % items.size() / 3;
+        int n = 3;
 
         for (int i = 0; i < n; i++) {
             int select = new Random().nextInt() % items.size();
@@ -59,7 +57,7 @@ public class Battle {
                 select = new Random().nextInt() % items.size();
             int x = new Random().nextInt() % 5 + 1;
             int y = new Random().nextInt() % 5 + 1;
-            while (x <= 0 || y <= 0 || (x == 3 && y == 9) || (x == 3 && y == 1) || getCellFromBoard(x, y).getItem() != null) {
+            while (x <= 0 || y <= 0 || (x == 3 && y == 9) || (x == 3 && y == 1) || getCellFromBoard(x, y).getItem() != null || getCellFromBoard(x, y).hasFlag()) {
                 x = new Random().nextInt() % 5 + 1;
                 y = new Random().nextInt() % 5 + 1;
             }
@@ -73,18 +71,10 @@ public class Battle {
     private void setHeroesInTheirPosition() {
         playerOne.getMainDeck().getHero().setUserName(playerOne.getUserName());
         playerTwo.getMainDeck().getHero().setUserName(playerTwo.getUserName());
-        int random = new Random().nextInt();
-        if (random % 2 == 0) {
-            playerOne.getMainDeck().getHero().setCoordinate(3, 1);
-            playerTwo.getMainDeck().getHero().setCoordinate(3, 9);
-            this.board.getCells()[2][0].setCard(this.playerOne.getMainDeck().getHero());
-            this.board.getCells()[2][8].setCard(this.playerTwo.getMainDeck().getHero());
-            return;
-        }
-        playerOne.getMainDeck().getHero().setCoordinate(3, 9);
-        playerTwo.getMainDeck().getHero().setCoordinate(3, 1);
-        this.board.getCells()[2][0].setCard(this.playerTwo.getMainDeck().getHero());
-        this.board.getCells()[2][8].setCard(this.playerOne.getMainDeck().getHero());
+        playerOne.getMainDeck().getHero().setCoordinate(3, 1);
+        playerTwo.getMainDeck().getHero().setCoordinate(3, 9);
+        this.board.getCells()[2][0].setCard(this.playerOne.getMainDeck().getHero());
+        this.board.getCells()[2][8].setCard(this.playerTwo.getMainDeck().getHero());
     }
 
     public StringBuilder showGameInfo() {

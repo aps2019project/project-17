@@ -77,7 +77,7 @@ public class BattleCaptureFlag extends Battle {
         for (int i = 0; i < this.numberOfFlags; i++) {
             int x = r.nextInt(5) + 1;
             int y = r.nextInt(5) + 1;
-            while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].hasFlag()) {
+            while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].hasFlag() || this.board.getCells()[x - 1][y - 1].getItem() != null) {
                 x = r.nextInt() % 5 + 1;
                 y = r.nextInt() % 5 + 1;
             }

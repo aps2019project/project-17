@@ -1,6 +1,5 @@
 package Data;
 
-import Appearance.MinionAppearance;
 import CardCollections.Deck;
 import CardCollections.Hand;
 import Cards.Card;
@@ -179,9 +178,13 @@ public class Player {
             return false;
         setCopyMainDeck();
         this.hand = new Hand();
-        if (mainDeck.getItem() != null)
+        if (mainDeck.getItem() != null) {
+            System.out.println("collectable -> " + mainDeck.getItem().getName());
             collectAbleItems.add(this.mainDeck.getItem());
+        }
         setHand();
+        this.mana = 2;
+        this.previousMana = 2;
         return true;
     }
 

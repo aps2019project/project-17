@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BattleAppearance {
     private Group root;
@@ -89,6 +90,7 @@ public class BattleAppearance {
         initHand();
         initializeCells();
         initPlaceOfHeroes();
+        initPlaceOfItems();
 //        initPlayersAppearance();
     }
 
@@ -145,11 +147,31 @@ public class BattleAppearance {
     private void initPlaceOfHeroes() {
         int x = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getXCoordinate();
         int y = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getYCoordinate();
+        int x1 = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getXCoordinate();
+        int y1 = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getYCoordinate();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (i == x - 1 && j == y - 1) {
+                if ((i == x - 1 && j == y - 1) || (i == x1 - 1 && j == y1 - 1)) {
                     try {
-                        board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("test.png"))));
+                        board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("gifs/gif".concat(Integer.toString(new Random().nextInt(20)).concat(".gif"))))));
+                        board[i][j].getCellRectangle().setOpacity(1);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    private void initPlaceOfItems() {
+        System.out.println("ITEMS".concat("\n"));
+        for (int i = 0; i < Battle.getCurrentBattle().getBoard().getCells().length; i++) {
+            for (int j = 0; j < Battle.getCurrentBattle().getBoard().getCells()[i].length; j++) {
+                if (Battle.getCurrentBattle().getBoard().getCells()[i][j].getItem() != null) {
+                    System.out.println("i : " + (i + 1) + " j : " + (j + 1));
+                    System.out.println(Battle.getCurrentBattle().getBoard().getCells()[i][j].getItem().getName());
+                    try {
+                        board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("item.gif"))));
                         board[i][j].getCellRectangle().setOpacity(1);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -276,10 +298,12 @@ public class BattleAppearance {
                 e.printStackTrace();
             }
         } else if (Battle.getCurrentBattle() instanceof BattleCaptureFlag) {
+            System.out.println("\n\nFLAGS".concat("\n"));
             Board board = Battle.getCurrentBattle().getBoard();
             for (int i = 0; i < board.getCells().length; i++) {
                 for (int j = 0; j < board.getCells()[i].length; j++) {
                     if (board.getCells()[i][j].hasFlag()) {
+                        System.out.println("i : " + (i + 1) + " j : " + (j + 1));
                         try {
                             this.board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("flag.gif"))));
                         } catch (FileNotFoundException e) {
@@ -314,6 +338,7 @@ public class BattleAppearance {
         }
         textsOfBattle[0].setOnMouseClicked(e -> {
             currentBattleAppearance = null;
+            Battle.getCurrentBattle().endingGame();
             new MainMenu();
         });
         endTurnButton.setOnMouseClicked(e -> {

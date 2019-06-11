@@ -592,21 +592,18 @@ public class Request {
                                 GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                                 menuType = MenuType.BATTLE_MENU;
                                 System.out.println("You have entered the Battle,Fight!");
-                                BattleView.setItems();
                                 return;
                             case "2":
                                 GameController.setAiPlayer(HF);
                                 GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
                                 menuType = MenuType.BATTLE_MENU;
                                 System.out.println("You have entered the Battle,Fight!");
-                                BattleView.setItems();
                                 return;
                             case "3":
                                 GameController.setAiPlayer(CF);
                                 GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
                                 menuType = MenuType.BATTLE_MENU;
                                 System.out.println("You have entered the Battle,Fight!");
-                                BattleView.setItems();
                                 return;
                             default:
                                 System.out.println("Please choose only one of above modes!(Enter the number)");
