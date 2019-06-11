@@ -38,7 +38,7 @@ public class MinionAppearance {
 
     public MinionAppearance(Minion minion, String nameInFile, Group root) {
         this.minion = minion;
-        String address = "selected//" + nameInFile;
+        String address = "selected/" + nameInFile;
         this.root = root;
         try {
             Image image = new Image(new FileInputStream(address + ".png"));
@@ -144,8 +144,10 @@ public class MinionAppearance {
         animation.play();
     }
 
-    public void setLocation(int x, int y) {
+    public void setLocation(double x, double y) {
         imageView.relocate(x, y);
+//        imageView.setLayoutX(x);
+//        imageView.setLayoutY(y);
     }
 
     public Minion getMinion() {

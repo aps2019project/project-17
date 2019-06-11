@@ -88,11 +88,11 @@ public class BattleAppearance {
 
     private void secondaryInitializes() {
         initBoardBG();
-        initHand();
         initializeCells();
         initPlaceOfHeroes();
         initPlaceOfItems();
         initPlayersAppearance();
+        initHand();
     }
 
     private void addCells() {
@@ -189,9 +189,7 @@ public class BattleAppearance {
         for (int i = 0; i < Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().size(); i++) {
             Card card = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
             if (card instanceof Minion) {
-                MinionAppearance appearance = new MinionAppearance((Minion) card, card.getName(), root);
-                appearance.breathing();
-//                minionAppearanceFirstPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
+                minionAppearanceFirstPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
             } else if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i) instanceof Spell) {
                 Spell spell = (Spell) Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
             }
