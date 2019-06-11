@@ -30,11 +30,11 @@ public class SelectModeCustomSingle {
         static {
             try {
                 Rectangle rectangle = new Rectangle(300, 60);
-                Rectangle rectangle1 = new Rectangle(300, 60);
                 Rectangle rectangle2 = new Rectangle(300, 60);
+                Rectangle rectangle1 = new Rectangle(300, 60);
                 rectangle.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
-                rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
                 rectangle2.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
+                rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
                 StackPane stackPane1 = new StackPane(rectangle, killHero);
                 StackPane stackPane2 = new StackPane(rectangle1, captureFlag);
                 StackPane stackPane3 = new StackPane(rectangle2, holdFlag);

@@ -27,6 +27,7 @@ public class BattleAppearance {
     private Rectangle[] manaIconImage;
     private Rectangle endTurnButton;
     private HandAppearance handAppearance;
+    private Cell selectedCell;
     private static BattleAppearance currentBattleAppearance;
 
     public BattleAppearance() {
@@ -60,12 +61,13 @@ public class BattleAppearance {
         this.textsOfBattle = new Text[]{new Text("End Turn"), new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName()), new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())), new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint())))};
         this.manaIconImage = new Rectangle[9];
+        this.selectedCell = null;
     }
 
     private void setBackGround() {
         Image image;
         try {
-            image = new Image(new FileInputStream("board1.png"));
+            image = new Image(new FileInputStream("board5.png"));
             ImageView imageOfBackGround = new ImageView(image);
             imageOfBackGround.fitWidthProperty().bind(shopScene.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(shopScene.heightProperty());
@@ -215,8 +217,11 @@ public class BattleAppearance {
     }
 
     private void setAppearanceOfTexts() {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) {
             textsOfBattle[i].setFont(FontAppearance.FONT_BUTTON);
+            if (i == 1 || i == 2)
+                textsOfBattle[i].setFill(Color.WHITE);
+        }
         textsOfBattle[0].setFill(Color.WHITE);
         textsOfBattle[1].setLayoutX(Main.WIDTH_OF_WINDOW / 7.78);
         textsOfBattle[1].setLayoutY(Main.HEIGHT_OF_WINDOW / 9.86);
@@ -238,12 +243,11 @@ public class BattleAppearance {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-        else if (Battle.getCurrentBattle() instanceof BattleCaptureFlag) {
+        } else if (Battle.getCurrentBattle() instanceof BattleCaptureFlag) {
             Board board = Battle.getCurrentBattle().getBoard();
             for (int i = 0; i < board.getCells().length; i++) {
                 for (int j = 0; j < board.getCells()[i].length; j++) {
-                    if (board.getCells()[i][j].hasFlag()){
+                    if (board.getCells()[i][j].hasFlag()) {
                         try {
                             this.board[i][j].getCellRectangle().setFill(new ImagePattern(new Image(new FileInputStream("flag.gif"))));
                         } catch (FileNotFoundException e) {
@@ -305,6 +309,18 @@ public class BattleAppearance {
 
     public Group getRoot() {
         return root;
+    }
+
+    public Cell getSelectedCell() {
+        return selectedCell;
+    }
+
+    public void setSelectedCell(Cell selectedCell) {
+        this.selectedCell = selectedCell;
+    }
+
+    public CellAppearance[][] getBoard() {
+        return board;
     }
 }
 

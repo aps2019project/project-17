@@ -1,10 +1,9 @@
 import Appearance.ColorAppearance;
-import Appearance.MinionAppearance;
 import GameGround.Battle;
 import GameGround.Cell;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -32,11 +31,16 @@ public class CellAppearance {
 
     private void eventHandle() {
         cellRectangle.setOnMouseEntered(e -> {
+            if (BattleAppearance.getCurrentBattleAppearance().getSelectedCell() != null)
+                return;
             if (cell.getCard() != null || cell.hasFlag())
                 return;
             cellRectangle.setOpacity(0.75);
         });
         cellRectangle.setOnMouseExited(e -> {
+            if (BattleAppearance.getCurrentBattleAppearance().getSelectedCell() != null) {
+                return;
+            }
             if (cell.getCard() != null || cell.hasFlag())
                 return;
             cellRectangle.setOpacity(0.2);
@@ -69,6 +73,14 @@ public class CellAppearance {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+            } else {
+                if (BattleAppearance.getCurrentBattleAppearance().getSelectedCell() != null) {
+                    changeTargetsLight(BattleAppearance.getCurrentBattleAppearance().getSelectedCell(), 0.2, ColorAppearance.COLOR_RECTANGLE_BOARD);
+                    BattleAppearance.getCurrentBattleAppearance().setSelectedCell(null);
+                } else {
+                    BattleAppearance.getCurrentBattleAppearance().setSelectedCell(this.cell);
+                    changeTargetsLight(BattleAppearance.getCurrentBattleAppearance().getSelectedCell(), 0.75, ColorAppearance.COLOR_CELL_CLICKED);
+                }
             }
         });
     }
@@ -77,5 +89,21 @@ public class CellAppearance {
         if (cell.hasFlag() || cell.getCard() != null)
             cellRectangle.setOpacity(1);
         else cellRectangle.setOpacity(0.2);
+    }
+
+    private void changeTargetsLight(Cell cell, double value, Color color) {
+        int x = cell.getRow() - 1;
+        int y = cell.getCol() - 1;
+
+        for (int i = x; i <= x + 2; i++) {
+            for (int j = y; j <= y + 2; j++) {
+                if ((i == x - 1 && j == y - 1))
+                    continue;
+                if (i < 0 || i > 4 || j < 0 || j > 8)
+                    continue;
+                BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setOpacity(value);
+                BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setFill(color);
+            }
+        }
     }
 }
