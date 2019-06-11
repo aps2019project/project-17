@@ -48,7 +48,7 @@ class MainMenu {
             imageViewBG.fitWidthProperty().bind(sceneMainMenu.widthProperty());
             imageViewBG.fitHeightProperty().bind(sceneMainMenu.heightProperty());
             root.getChildren().add(imageViewBG);
-            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt, logoutText, customCardTxt,exitTxt);
+            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt,customCardTxt, logoutText,exitTxt);
             root.setAlignment(Pos.BASELINE_LEFT);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
