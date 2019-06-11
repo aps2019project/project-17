@@ -38,7 +38,7 @@ public class MinionAppearance {
 
     public MinionAppearance(Minion minion, String nameInFile, Group root) {
         this.minion = minion;
-        String address = "boss_" + nameInFile;
+        String address = "selected//" + nameInFile;
         this.root = root;
         try {
             Image image = new Image(new FileInputStream(address + ".png"));
