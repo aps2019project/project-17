@@ -4,6 +4,7 @@ import CardCollections.Deck;
 import CardCollections.Hand;
 import Cards.Card;
 import Cards.Item;
+import Cards.Minion;
 import Effects.Effect;
 import Effects.enums.SpecialSituation;
 
@@ -89,13 +90,15 @@ public class Player {
     }
 
     private void setCopyMainDeck() {
+        mainDeck.getHero().setCanMove(true);
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
+            if (mainDeck.getCards().get(i) instanceof Minion){
+                ((Minion) mainDeck.getCards().get(i)).setCanMove(true);
+            }
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
-
         copyMainDeck.setHero(mainDeck.getHero());
     }
-
 
     public Hand getHand() {
         return hand;

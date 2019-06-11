@@ -61,7 +61,7 @@ public class BattleKillHero extends Battle {
         if (!toReturnFormSuper.equals("ok"))
             return toReturnFormSuper;
         super.check();
-        return this.selectedCard.getId() + " moved to " + x + " - " + y;
+        return this.selectedCard.getId() + " successfully moved to " + x + " - " + y;
     }
 
     @Override

@@ -24,10 +24,10 @@ public class Minion extends Card {
     private int distanceCanMove;
     private int maxRangeToInput;
     private int holyBuffState;
-    private boolean canMove;
-    private boolean canCounterAttack;
-    boolean isStun;
-    private boolean canAttack;
+    private boolean canMove = true;
+    private boolean canCounterAttack = true;
+    boolean isStun = false;
+    private boolean canAttack = true;
     private MinionType minionType;
     private boolean hasFlag;
     private int numberOfAttack;
@@ -43,6 +43,10 @@ public class Minion extends Card {
         this.hasFlag = false;
         this.minionType = minionType;
         this.attackType = attackType;
+        this.canAttack = true;
+        this.canMove = true;
+        this.canCounterAttack = true;
+        this.isStun = false;
     }
 
     public void init() {
@@ -244,7 +248,7 @@ public class Minion extends Card {
         return attackRange;
     }
 
-    public boolean CanMove() {
+    public boolean isCanMove() {
         return canMove;
     }
 

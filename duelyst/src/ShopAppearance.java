@@ -5,6 +5,7 @@ import Cards.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
 import controller.GameController;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;

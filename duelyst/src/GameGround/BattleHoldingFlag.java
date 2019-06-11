@@ -99,10 +99,10 @@ public class BattleHoldingFlag extends Battle {
             whoHasFlag = whoseTurn();
             timeHoldingFlag = 0;
             cellDestination.setFlag(false);
-            return selectedCard.getId() + " moved to " + x + " - " + y + " and capture the flag";
+            return selectedCard.getId() + " successfully moved to " + x + " - " + y + " and captured the flag";
         }
         super.check();
-        return selectedCard.getId() + " moved to " + x + " - " + y;
+        return selectedCard.getId() + " successfully moved to " + x + " - " + y;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class BattleHoldingFlag extends Battle {
                 whoseTurn().removeCardFromHand(card);
                 whoHasFlag = whoseTurn();
                 timeHoldingFlag = 0;
-                return "card successfully inserted and capture the flag";
+                return "card successfully inserted and captured the flag";
             }
             return "card successfully inserted";
         }
