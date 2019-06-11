@@ -1,6 +1,10 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Appearance.MinionAppearance;
+import Cards.Card;
+import Cards.Hero;
+import Cards.Minion;
+import Cards.Spell;
 import Data.AI;
 import Data.Account;
 import GameGround.*;
@@ -16,6 +20,7 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class BattleAppearance {
     private Group root;
@@ -28,6 +33,8 @@ public class BattleAppearance {
     private Rectangle endTurnButton;
     private HandAppearance handAppearance;
     private Cell selectedCell;
+    private ArrayList<MinionAppearance> minionAppearanceFirstPlayer = new ArrayList<>();
+    private ArrayList<MinionAppearance> minionAppearanceSecondPlayer = new ArrayList<>();
     private static BattleAppearance currentBattleAppearance;
 
     public BattleAppearance() {
@@ -82,6 +89,7 @@ public class BattleAppearance {
         initHand();
         initializeCells();
         initPlaceOfHeroes();
+//        initPlayersAppearance();
     }
 
     private void addCells() {
@@ -147,6 +155,30 @@ public class BattleAppearance {
                         e.printStackTrace();
                     }
                 }
+            }
+        }
+    }
+
+    private void initPlayersAppearance() {
+        Hero heroFirst = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero();
+        Hero heroSecond = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero();
+        MinionAppearance a = new MinionAppearance(heroFirst, heroFirst.getName(), root);
+        MinionAppearance b = new MinionAppearance(heroSecond, heroSecond.getName(), root);
+        minionAppearanceFirstPlayer.add(a);
+        minionAppearanceSecondPlayer.add(b);
+        for (int i = 0; i < Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().size(); i++) {
+            Card card = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
+            if (card instanceof Minion) {
+                minionAppearanceFirstPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
+            } else if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i) instanceof Spell) {
+                Spell spell = (Spell) Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
+            }
+        }
+        for (int i = 0; i < Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().size(); i++) {
+            Card card = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().get(i);
+            if (card instanceof Minion)
+                minionAppearanceSecondPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
+            else if (card instanceof Spell) {
             }
         }
     }
@@ -321,6 +353,10 @@ public class BattleAppearance {
 
     public CellAppearance[][] getBoard() {
         return board;
+    }
+
+    public Rectangle[][] getBoardBackGround() {
+        return boardBackGround;
     }
 }
 

@@ -102,7 +102,12 @@ public class CellAppearance {
                 if (i < 0 || i > 4 || j < 0 || j > 8)
                     continue;
                 BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setOpacity(value);
-                BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setFill(color);
+                if (Battle.getCurrentBattle().getBoard().getCells()[i][j].getCard() == null || !Battle.getCurrentBattle().getBoard().getCells()[i][j].hasFlag())
+                    BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setFill(color);
+                else {
+                    BattleAppearance.getCurrentBattleAppearance().getBoard()[i][j].cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
+                    BattleAppearance.getCurrentBattleAppearance().getBoardBackGround()[i][j].setFill(color);
+                }
             }
         }
     }

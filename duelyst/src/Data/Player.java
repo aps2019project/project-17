@@ -1,5 +1,6 @@
 package Data;
 
+import Appearance.MinionAppearance;
 import CardCollections.Deck;
 import CardCollections.Hand;
 import Cards.Card;
