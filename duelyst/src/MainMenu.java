@@ -1,6 +1,7 @@
 import Appearance.ColorAppearance;
 import Data.Account;
 import InstanceMaker.CardMaker;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -22,6 +24,7 @@ class MainMenu {
     private Text battleTxt = new Text("Battle");
     private Text shopTxt = new Text("Shop");
     private Text collectionTxt = new Text("Collection");
+    private Text customCardTxt = new Text("Custom Card");
     private Text logoutText = new Text("Logout");
     private Text exitTxt = new Text("Exit");
     private Scene sceneMainMenu;
@@ -45,7 +48,7 @@ class MainMenu {
             imageViewBG.fitWidthProperty().bind(sceneMainMenu.widthProperty());
             imageViewBG.fitHeightProperty().bind(sceneMainMenu.heightProperty());
             root.getChildren().add(imageViewBG);
-            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt, logoutText, exitTxt);
+            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt, logoutText, customCardTxt,exitTxt);
             root.setAlignment(Pos.BASELINE_LEFT);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -58,7 +61,7 @@ class MainMenu {
         VBox.setMargin(shopTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(collectionTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(logoutText, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
-        VBox.setMargin(logoutText, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
+        VBox.setMargin(customCardTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(exitTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.54));
     }
 
@@ -69,11 +72,13 @@ class MainMenu {
         collectionTxt.setFont(font);
         logoutText.setFont(font);
         exitTxt.setFont(font);
+        customCardTxt.setFont(font);
         battleTxt.setFill(Color.WHITE);
         shopTxt.setFill(Color.WHITE);
         collectionTxt.setFill(Color.WHITE);
         logoutText.setFill(Color.WHITE);
         exitTxt.setFill(Color.WHITE);
+        customCardTxt.setFill(Color.WHITE);
     }
 
     private void setMouse() {
@@ -105,6 +110,9 @@ class MainMenu {
 
         exitTxt.setOnMouseEntered(e -> exitTxt.setFill(ColorAppearance.CURRENT_MENU_BUTTON));
         exitTxt.setOnMouseExited(e -> exitTxt.setFill(Color.WHITE));
+
+        customCardTxt.setOnMouseEntered(e -> customCardTxt.setFill(ColorAppearance.CURRENT_MENU_BUTTON));
+        customCardTxt.setOnMouseExited(e -> customCardTxt.setFill(Color.WHITE));
     }
 
     private void handleEvents() {
@@ -126,6 +134,8 @@ class MainMenu {
         shopTxt.setOnMouseClicked(e -> new ShopAppearance());
 
         exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
+
+        customCardTxt.setOnMouseClicked(e -> CustomCardPreview.disPlay());
 
         collectionTxt.setOnMouseClicked(e -> new CollectionAppearance());
 
