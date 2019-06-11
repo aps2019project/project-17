@@ -10,6 +10,5 @@ public class ColorAppearance {
     public static final Color COLOR_TITLES_OF_SHOP = new Color(178 / 255f, 46 / 255f, 90 / 255f, 1);
     public static final Color COLOR_OUTBOX_SEARCH_SHOP = new Color(206 / 255f, 103 / 255f, 1, 1);
     public static final Color COLOR_RECTANGLE_BOARD = new Color(117 / 255f, 46 / 255f, 214 / 255f, 1);
-    public static final Color COLOR_CELL_CLICKED = new Color(214 / 255f, 46 / 255f, 102 / 255f, 1);
-
+    public static final Color COLOR_CELL_CLICKED = new Color(255 / 255f, 210 / 255f, 98 / 255f, 0.6);
 }

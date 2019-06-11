@@ -93,4 +93,13 @@ public class Cell {
         if (effect != null && getCard() != null)
             effect.action(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Cell){
+            Cell cell = (Cell) obj;
+            return this.col == cell.col && this.row == cell.row;
+        }
+        return false;
+    }
 }
