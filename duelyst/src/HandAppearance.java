@@ -75,6 +75,12 @@ public class HandAppearance {
             final int value = i;
             if (handIcons[i] != null) {
                 handIcons[i].setOnMouseClicked(e -> {
+                    if (handIcons[value] == selectedCardIcon) {
+                        this.selectedCardIcon.setOpacity(0.5);
+                        this.selectedCardIcon = null;
+                        this.selectedCard = null;
+                        return;
+                    }
                     if (selectedCard != null)
                         selectedCardIcon.setOpacity(0.5);
                     selectedCard = hand.getCards().get(value);

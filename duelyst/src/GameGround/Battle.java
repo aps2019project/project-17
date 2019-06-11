@@ -154,11 +154,12 @@ public class Battle {
 
         if (cellDestination.getCard() != null || Cell.distance(cellFirst, cellDestination) > minion.getDistanceCanMove())
             return "invalid target";
-        if (!minion.CanMove())
+        if (!minion.isCanMove())
             return "this card cant move";
         cellDestination.setCard(minion);
         minion.setCanMove(false);
-        cellFirst.exitCell();
+        // TODO: 2019-06-11
+//        cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
         if (cellDestination.getItem() != null) {
@@ -680,5 +681,9 @@ public class Battle {
 
     public Player getPlayerTwo() {
         return playerTwo;
+    }
+
+    public void setSelectedCardNull() {
+        this.selectedCard = null;
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -25,7 +26,7 @@ import java.util.Random;
 
 public class BattleAppearance {
     private Group root;
-    private Scene shopScene;
+    private Scene battleScene;
     private CellAppearance[][] board;
     private Rectangle[][] boardBackGround;
     private Rectangle[] shapeOfHealthHero = new Rectangle[2];
@@ -63,7 +64,7 @@ public class BattleAppearance {
 
     private void primaryInitializes() {
         this.root = new Group();
-        this.shopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
+        this.battleScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
         this.board = new CellAppearance[5][9];
         this.boardBackGround = new Rectangle[5][9];
         this.textsOfBattle = new Text[]{new Text("End Turn"), new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName()), new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
@@ -77,8 +78,8 @@ public class BattleAppearance {
         try {
             image = new Image(new FileInputStream("board5.png"));
             ImageView imageOfBackGround = new ImageView(image);
-            imageOfBackGround.fitWidthProperty().bind(shopScene.widthProperty());
-            imageOfBackGround.fitHeightProperty().bind(shopScene.heightProperty());
+            imageOfBackGround.fitWidthProperty().bind(battleScene.widthProperty());
+            imageOfBackGround.fitHeightProperty().bind(battleScene.heightProperty());
             root.getChildren().add(imageOfBackGround);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -91,7 +92,7 @@ public class BattleAppearance {
         initializeCells();
         initPlaceOfHeroes();
         initPlaceOfItems();
-//        initPlayersAppearance();
+        initPlayersAppearance();
     }
 
     private void addCells() {
@@ -314,7 +315,7 @@ public class BattleAppearance {
 
 
     private void disPlay() {
-        Main.getWindow().setScene(shopScene);
+        Main.getWindow().setScene(battleScene);
         setManaIconImageLights();
     }
 
@@ -379,6 +380,14 @@ public class BattleAppearance {
 
     public Rectangle[][] getBoardBackGround() {
         return boardBackGround;
+    }
+
+    public MinionAppearance getMinionAppearanceFirstPlayer(String candName) {
+        for (MinionAppearance minionAppearance : minionAppearanceFirstPlayer) {
+            if (minionAppearance.getMinion().getName().trim().toLowerCase().equals(candName.toLowerCase().trim()))
+                return minionAppearance;
+        }
+        return null;
     }
 }
 

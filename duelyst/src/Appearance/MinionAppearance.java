@@ -99,7 +99,6 @@ public class MinionAppearance {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        root.getChildren().add(imageView);
     }
 
     public void move(int startX, int startY, int endX, int endY) {
@@ -147,5 +146,21 @@ public class MinionAppearance {
 
     public void setLocation(int x, int y) {
         imageView.relocate(x, y);
+    }
+
+    public Minion getMinion() {
+        return minion;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void add() {
+        root.getChildren().add(imageView);
+    }
+
+    public void remove() {
+        root.getChildren().remove(imageView);
     }
 }
