@@ -137,29 +137,28 @@ public class CustomSpellWindow {
 
     private void handleEvents() {
         buildTxt.setOnMouseClicked(event -> {
-            if(checkValid()){
-            String nameInput=name.getText();
-            String idInput=id.getText();
-            String descInput=desc.getText();
-            try {
-                int priceInput=Integer.parseInt(price.getText());
-                int manaPointInput=Integer.parseInt(manaPoint.getText());
-                GameController.saveSpell(new Spell(nameInput, idInput, priceInput,manaPointInput ,descInput));
-            } catch (Exception e) {
-                ErrorOnBattle.display("Please input valid fields!");
-            }
-            new MainMenu();}
-            else {
-                ErrorOnBattle.display("Please Fill all fields!");
-            }
+            action();
         });
 
-        buildButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        buildButton.setOnMouseClicked(event -> action());
+    }
 
-            }
-        });
+    private void action() {
+        if(checkValid()){
+        String nameInput=name.getText();
+        String idInput=id.getText();
+        String descInput=desc.getText();
+        try {
+            int priceInput=Integer.parseInt(price.getText());
+            int manaPointInput=Integer.parseInt(manaPoint.getText());
+            GameController.saveSpell(new Spell(nameInput, idInput, priceInput,manaPointInput ,descInput));
+        } catch (Exception e) {
+            ErrorOnBattle.display("Please input valid fields!");
+        }
+        new MainMenu();}
+        else {
+            ErrorOnBattle.display("Please Fill all fields!");
+        }
     }
 
     private void disPlay() {
