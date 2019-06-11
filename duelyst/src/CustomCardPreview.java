@@ -2,9 +2,11 @@ import Appearance.FontAppearance;
 import Data.Account;
 import GameGround.SinglePlayerModes;
 import controller.GameController;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -46,6 +48,37 @@ public class CustomCardPreview {
             StackPane stackPane3 = new StackPane(rectangle2, item);
             StackPane stackPane4 = new StackPane(rectangle3, spell);
             StackPane stackPane5 = new StackPane(rectangle4, buff);
+            // TODO: 6/11/2019 will be completed
+            rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                }
+            });
+            rectangle1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                }
+            });
+            rectangle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                }
+            });
+            rectangle3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    new CustomSpellWindow();
+                }
+            });
+            rectangle4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                }
+            });
             root.setSpacing(25);
             root.setAlignment(Pos.CENTER);
             root.getChildren().addAll(title, stackPane1, stackPane2, stackPane4,stackPane3,stackPane5);
@@ -94,7 +127,8 @@ public class CustomCardPreview {
 
         });
         spell.setOnMouseClicked(e -> {
-
+            closeWindow();
+            new CustomSpellWindow();
         });
 
         buff.setOnMouseClicked(e -> {
