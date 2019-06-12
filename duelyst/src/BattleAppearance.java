@@ -36,6 +36,7 @@ public class BattleAppearance {
     private Rectangle endTurnButton;
     private Rectangle graveYardButton;
     private HandAppearance handAppearance;
+    private ItemAppearance itemAppearance;
     private Cell selectedCell;
     private ArrayList<MinionAppearance> minionAppearanceFirstPlayer = new ArrayList<>();
     private ArrayList<MinionAppearance> minionAppearanceSecondPlayer = new ArrayList<>();
@@ -99,6 +100,7 @@ public class BattleAppearance {
         initPlaceOfItems();
         initPlayersAppearance();
         initHand();
+        initItemList();
     }
 
     private void addCells() {
@@ -142,6 +144,10 @@ public class BattleAppearance {
 
     private void initHand() {
         this.handAppearance = new HandAppearance(this.root);
+    }
+
+    private void initItemList(){
+        this.itemAppearance=new ItemAppearance(this.root);
     }
 
     private void initializeCells() {
