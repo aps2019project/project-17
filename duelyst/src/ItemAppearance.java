@@ -69,7 +69,7 @@ public class ItemAppearance {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        stackPane.setLayoutX(itemBackGrounds[i].getLayoutX() * 8 / 10);
+        stackPane.setLayoutX(itemBackGrounds[i].getLayoutX() *9);
         stackPane.setLayoutY(itemBackGrounds[i].getLayoutY());
         root.getChildren().add(stackPane);
         stackPane.setVisible(false);
@@ -89,7 +89,7 @@ public class ItemAppearance {
         for (int i = 0; i < itemBackGrounds.length; i++) {
             if (itemBackGrounds[i] != null && itemInfo[i] != null && items[i] != null) {
                 double x = Main.WIDTH_OF_WINDOW / 100;
-                double y = Main.HEIGHT_OF_WINDOW / 3;
+                double y = Main.HEIGHT_OF_WINDOW / 2.5;
                 itemBackGrounds[i].setLayoutX(x);
                 itemBackGrounds[i].setLayoutY(y);
                 setInformationOfItems(i, itemInfo[i], items[i]);
