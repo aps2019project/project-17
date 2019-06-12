@@ -1,5 +1,4 @@
 import Appearance.CardsDataAppearance;
-import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Cards.*;
 import Data.Account;

@@ -8,11 +8,12 @@ import Cards.Spell;
 import Data.AI;
 import Data.Account;
 import GameGround.*;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -33,6 +34,7 @@ public class BattleAppearance {
     private Text[] textsOfBattle;
     private Rectangle[] manaIconImage;
     private Rectangle endTurnButton;
+    private Rectangle graveYardButton;
     private HandAppearance handAppearance;
     private Cell selectedCell;
     private ArrayList<MinionAppearance> minionAppearanceFirstPlayer = new ArrayList<>();
@@ -65,8 +67,12 @@ public class BattleAppearance {
         this.battleScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
         this.board = new CellAppearance[5][9];
         this.boardBackGround = new Rectangle[5][9];
-        this.textsOfBattle = new Text[]{new Text("End Turn"), new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName()), new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
-                new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())), new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint())))};
+        this.textsOfBattle = new Text[]{new Text("End Turn"),
+                new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName()),
+                new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
+                new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())),
+                new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()))),
+                new Text("Grave Yard")};
         this.manaIconImage = new Rectangle[9];
         this.selectedCell = null;
     }
@@ -100,6 +106,7 @@ public class BattleAppearance {
     }
 
     private void setStuffs() {
+        setGraveYardButton();
         setEndTurnButton();
         setImagesOfPlayers();
         setShapeOfHealthHero();
@@ -213,6 +220,20 @@ public class BattleAppearance {
             e.printStackTrace();
         }
     }
+
+    private void setGraveYardButton(){
+        graveYardButton=new Rectangle(Main.WIDTH_OF_WINDOW/7.58,Main.HEIGHT_OF_WINDOW/11.12);
+        try{
+            graveYardButton.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
+            StackPane stackPane =new StackPane(graveYardButton,textsOfBattle[5]);
+            stackPane.setLayoutX(Main.WIDTH_OF_WINDOW*8/10);
+            stackPane.setLayoutY(Main.HEIGHT_OF_WINDOW*7.5/10);
+            root.getChildren().addAll(stackPane);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
 
     private void setImagesOfPlayers() {
         Rectangle rectangle1 = new Rectangle(Main.WIDTH_OF_WINDOW / 9, Main.HEIGHT_OF_WINDOW / 4.77);
@@ -338,6 +359,13 @@ public class BattleAppearance {
         endTurnButton.setOnMouseClicked(e -> {
             currentBattleAppearance = null;
             new MainMenu();
+        });
+
+        graveYardButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
         });
     }
 
