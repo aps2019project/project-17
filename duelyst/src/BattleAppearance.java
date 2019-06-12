@@ -52,10 +52,10 @@ public class BattleAppearance {
         disPlay();
         handleEvents();
 
-        MinionAppearance minionAppearance = new MinionAppearance(null, "decepticleprime", root);
-        minionAppearance.setLocation(500, 500);
+//        MinionAppearance minionAppearance = new MinionAppearance(null, "decepticleprime", root);
+//        minionAppearance.setLocation(500, 500);
 //        minionAppearance.move(100, 0);
-        minionAppearance.breathing();
+//        minionAppearance.breathing();
 //        minionAppearance.attack();
 //        minionAppearance.death();
 //        minionAppearance.idle();
