@@ -92,8 +92,10 @@ public class Player {
     private void setCopyMainDeck() {
         mainDeck.getHero().setCanMove(true);
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
-            if (mainDeck.getCards().get(i) instanceof Minion){
+            if (mainDeck.getCards().get(i) instanceof Minion) {
                 ((Minion) mainDeck.getCards().get(i)).setCanMove(true);
+                ((Minion) mainDeck.getCards().get(i)).setCanAttack(true);
+                ((Minion) mainDeck.getCards().get(i)).setCanCounterAttack(true);
             }
             copyMainDeck.addCard(mainDeck.getCards().get(i));
         }
@@ -179,13 +181,9 @@ public class Player {
     public boolean isPlayerReadyForBattle() {
         if (mainDeck == null || !mainDeck.isDeckValidate())
             return false;
-        if (!(this instanceof AI))
-            System.out.println("clicked");
         setCopyMainDeck();
         this.hand = new Hand();
         if (mainDeck.getItem() != null) {
-            if (!(this instanceof AI))
-                System.out.println("collectable ------> " + mainDeck.getItem().getName());
             collectAbleItems.add(this.mainDeck.getItem());
         }
         setHand();

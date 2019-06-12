@@ -295,4 +295,8 @@ public class Minion extends Card {
             specialPower = new ArrayList<>();
         return specialPower;
     }
+
+    public boolean isCanCounterAttack() {
+        return canCounterAttack;
+    }
 }

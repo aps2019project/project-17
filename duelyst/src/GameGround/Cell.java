@@ -102,4 +102,9 @@ public class Cell {
         }
         return false;
     }
+
+    public Effect getEffect() {
+        return effect;
+    }
 }
+

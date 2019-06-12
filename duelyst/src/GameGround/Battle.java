@@ -278,6 +278,9 @@ public class Battle {
         Minion minion = (Minion) returnCardFromBoard(opponentCardId, theOtherPlayer());
 
         if (minion == null)
+            minion = (Minion) returnCardFromBoard(opponentCardId, whoseTurn());
+
+        if (minion == null)
             return "invalid card id";
 
         if (!attacker.getCanAttack())
@@ -299,8 +302,8 @@ public class Battle {
             case HYBRID:
                 break;
         }
-        attacker.attack(minion);
-        minion.counterAttack(attacker);
+//        attacker.attack(minion);
+//        minion.counterAttack(attacker);
         check();
         attacker.setCanAttack(false);
         minion.setCanCounterAttack(false);

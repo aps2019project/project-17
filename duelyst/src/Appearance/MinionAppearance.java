@@ -1,5 +1,7 @@
 package Appearance;
 
+import Cards.Card;
+import Cards.Hero;
 import Cards.Minion;
 import javafx.animation.Animation;
 import javafx.animation.PathTransition;
@@ -24,6 +26,8 @@ public class MinionAppearance {
     private int runCount;
     private int idleCount;
     private int attackCount;
+    private boolean isInHand;
+    private boolean inInBoard;
 
     public class Position {
         public int x;
@@ -111,13 +115,19 @@ public class MinionAppearance {
                 this.width = Integer.parseInt(matcher.group("n"));
                 this.height = Integer.parseInt(matcher.group("m"));
             }
+            this.isInHand = true;
+            this.inInBoard = false;
+            if (minion instanceof Hero){
+                this.isInHand = false;
+                this.inInBoard = true;
+            }
         } catch (
                 IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void move(int deltaX, int deltaY) {
+    public void move(double deltaX, double deltaY) {
         int duration = 100 * runCount;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapRun);
         Path path = new Path(new MoveTo(0, 0), new LineTo(deltaX, deltaY));
@@ -160,8 +170,6 @@ public class MinionAppearance {
 
     public void setLocation(double x, double y) {
         imageView.relocate(x, y);
-//        imageView.setLayoutX(x);
-//        imageView.setLayoutY(y);
     }
 
     public Minion getMinion() {
@@ -172,11 +180,29 @@ public class MinionAppearance {
         return imageView;
     }
 
-    public void add() {
+    public void add(boolean isInHand) {
+        if (root.getChildren().contains(imageView))
+            return;
         root.getChildren().add(imageView);
     }
 
     public void remove() {
         root.getChildren().remove(imageView);
+    }
+
+    public boolean isInHand() {
+        return isInHand;
+    }
+
+    public boolean isInInBoard() {
+        return inInBoard;
+    }
+
+    public void setInHand(boolean inHand) {
+        isInHand = inHand;
+    }
+
+    public void setInInBoard(boolean inInBoard) {
+        this.inInBoard = inInBoard;
     }
 }
