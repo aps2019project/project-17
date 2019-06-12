@@ -45,11 +45,10 @@ public class MinionAppearance {
     private HashMap<Integer, Position> mapBreathing = new HashMap<>();
     private HashMap<Integer, Position> mapDeath = new HashMap<>();
     private HashMap<Integer, Position> mapRun = new HashMap<>();
-    private int columns = 13;
 
     public MinionAppearance(Minion minion, String nameInFile, Group root) {
         this.minion = minion;
-        String address = "boss_" + nameInFile;
+        String address = "selected/" + nameInFile;
         this.root = root;
         try {
             Image image = new Image(new FileInputStream(address + ".png"));
@@ -116,8 +115,6 @@ public class MinionAppearance {
                 IOException e) {
             e.printStackTrace();
         }
-        root.getChildren().add(imageView);
-
     }
 
     public void move(int deltaX, int deltaY) {
