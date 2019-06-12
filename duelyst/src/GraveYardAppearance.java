@@ -80,9 +80,9 @@ public class GraveYardAppearance {
                     name = cards.get((5 * i) + j).getName();
                     price = Integer.toString(cards.get((5 * i) + j).getPrice());
                     if (cards.get((5 * i) + j) instanceof Minion) {
-                        manaPoint = Integer.toString(((Minion) cards.get((5 * i) + j)).getManaPoint());
                         int hp = ((Minion) cards.get(j + (i * 5))).getAttackPoint();
                         int ap = ((Minion) cards.get(j + (i * 5))).getAttackPoint();
+                        manaPoint = Integer.toString(((Minion) cards.get((5 * i) + j)).getManaPoint());
                         shownData[i][j] = new CardsDataAppearance(name, price, manaPoint, Integer.toString(ap), Integer.toString(hp));
                     } else if (cards.get((5 * i) + j) instanceof Spell) {
                         manaPoint = Integer.toString(((Spell) cards.get((5 * i) + j)).getManaPoint());
