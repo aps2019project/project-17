@@ -67,8 +67,10 @@ public class BattleAppearance {
         this.battleScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
         this.board = new CellAppearance[5][9];
         this.boardBackGround = new Rectangle[5][9];
-        this.textsOfBattle = new Text[]{new Text("End Turn"),
-                new Text("Pooya"), new Text(AI.getCurrentAIPlayer().getUserName()),
+        this.textsOfBattle = new Text[]{
+                new Text("End Turn"),
+                new Text("Pooya"),
+                new Text(AI.getCurrentAIPlayer().getUserName()),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())),
                 new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()))),
@@ -106,8 +108,7 @@ public class BattleAppearance {
     }
 
     private void setStuffs() {
-        setGraveYardButton();
-        setEndTurnButton();
+        setEndTurn_GraveYardButton();
         setImagesOfPlayers();
         setShapeOfHealthHero();
         setManaIcons();
@@ -208,28 +209,25 @@ public class BattleAppearance {
 //        }
     }
 
-    private void setEndTurnButton() {
+    private void setEndTurn_GraveYardButton() {
         endTurnButton = new Rectangle(Main.WIDTH_OF_WINDOW / 7.58, Main.HEIGHT_OF_WINDOW / 11.12);
+        graveYardButton = new Rectangle(Main.WIDTH_OF_WINDOW / 7.58, Main.HEIGHT_OF_WINDOW / 11.12);
+        textsOfBattle[6].setFont(FontAppearance.FONT_BUTTON);
+        textsOfBattle[6].setFill(Color.WHITE);
         try {
             endTurnButton.setFill(new ImagePattern(new Image(new FileInputStream("end_turn.png"))));
             StackPane stackPane0 = new StackPane(endTurnButton, textsOfBattle[0]);
             stackPane0.setLayoutX(Main.WIDTH_OF_WINDOW * 8 / 10);
             stackPane0.setLayoutY(Main.HEIGHT_OF_WINDOW * 8.5 / 10);
             root.getChildren().addAll(stackPane0);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setGraveYardButton(){
-        graveYardButton=new Rectangle(Main.WIDTH_OF_WINDOW/7.58,Main.HEIGHT_OF_WINDOW/11.12);
-        try{
             graveYardButton.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
-            StackPane stackPane =new StackPane(graveYardButton,textsOfBattle[5]);
-            stackPane.setLayoutX(Main.WIDTH_OF_WINDOW*8/10);
-            stackPane.setLayoutY(Main.HEIGHT_OF_WINDOW*7.5/10);
+            StackPane stackPane = new StackPane(graveYardButton, textsOfBattle[6]);
+            stackPane.setLayoutX(Main.WIDTH_OF_WINDOW * 8 / 10);
+            stackPane.setLayoutY(Main.HEIGHT_OF_WINDOW * 7.5 / 10);
+            stackPane.setMaxWidth(stackPane0.getMinWidth());
+            stackPane.setMaxHeight(stackPane0.getMinHeight());
             root.getChildren().addAll(stackPane);
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -356,17 +354,14 @@ public class BattleAppearance {
             Battle.getCurrentBattle().endingGame();
             new MainMenu();
         });
+        textsOfBattle[6].setOnMouseClicked(event -> new GraveYardAppearance());
+
         endTurnButton.setOnMouseClicked(e -> {
             currentBattleAppearance = null;
             new MainMenu();
         });
 
-        graveYardButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-            }
-        });
+        graveYardButton.setOnMouseClicked(event -> new GraveYardAppearance());
     }
 
     public HandAppearance getHandAppearance() {

@@ -2,6 +2,7 @@ import Appearance.CardsDataAppearance;
 import Appearance.FontAppearance;
 import Cards.*;
 import Data.Account;
+import InstanceMaker.CardMaker;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -9,7 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,8 +20,9 @@ import java.util.ArrayList;
 
 public class GraveYardAppearance {
 
+    private Stage window = new Stage();
     private Group root = new Group();
-    private Scene collectionScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
+    private Scene graveYardScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
     private Rectangle[] cardsOfUser = new Rectangle[Account.getLoginUser().getPlayer().getGraveYard().size()];
     private Rectangle fillMenu = new javafx.scene.shape.Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
@@ -26,10 +30,13 @@ public class GraveYardAppearance {
     private ImageView rightDirection;
     private ImageView leftDirection;
     private int currentPage = 0;
+    private Text title=new Text("Grave Yard");
     private Text currentPageView = new Text("page : 1");
 
 
     public GraveYardAppearance() {
+        Account.getLoginUser().getPlayer().getGraveYard().add(CardMaker.getAllCards()[0]);
+        setTitleAppearance();
         initializeAllCards();
         initShownCards();
         setBackGround();
@@ -46,6 +53,15 @@ public class GraveYardAppearance {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setTitleAppearance(){
+        title.setFont(Font.font("phosphate",80));
+        title.setFill(Color.WHITE);
+        title.setRotate(-90);
+        title.setLayoutX(-fillMenu.getWidth());
+        title.setLayoutY(fillMenu.getHeight()/2);
+
     }
 
     private void initializeAllCards() {
@@ -97,9 +113,9 @@ public class GraveYardAppearance {
         try {
             image = new Image(new FileInputStream("graveYard.jpg"));
             ImageView imageOfBackGround = new ImageView(image);
-            imageOfBackGround.fitWidthProperty().bind(collectionScene.widthProperty());
-            imageOfBackGround.fitHeightProperty().bind(collectionScene.heightProperty());
-            imageOfBackGround.setOpacity(0.7);
+            imageOfBackGround.fitWidthProperty().bind(graveYardScene.widthProperty());
+            imageOfBackGround.fitHeightProperty().bind(graveYardScene.heightProperty());
+            imageOfBackGround.setOpacity(1);
             fillMenu.setOpacity(0.6);
             root.getChildren().add(imageOfBackGround);
         } catch (FileNotFoundException e) {
@@ -124,7 +140,7 @@ public class GraveYardAppearance {
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView,title);
     }
 
     private void locateNodes() {
@@ -134,9 +150,9 @@ public class GraveYardAppearance {
     }
 
     private void locateDirections() {
-        double y = 18.5 * collectionScene.getHeight() / 40;
-        double x = collectionScene.getWidth() * 28 / 29;
-        leftDirection.setLayoutX(collectionScene.getWidth() * 3.2 / 31);
+        double y = 18.5 * graveYardScene.getHeight() / 40;
+        double x = graveYardScene.getWidth() * 28 / 29;
+        leftDirection.setLayoutX(graveYardScene.getWidth() * 3.2 / 31);
         leftDirection.setLayoutY(y);
         rightDirection.setLayoutX(x);
         rightDirection.setLayoutY(y);
@@ -195,7 +211,8 @@ public class GraveYardAppearance {
     }
 
     private void disPlay() {
-        Main.getWindow().setScene(collectionScene);
+        window.setScene(graveYardScene);
+        window.showAndWait();
         handleEventsKeyBoards();
     }
 
@@ -212,7 +229,7 @@ public class GraveYardAppearance {
             currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
         });
-        collectionScene.setOnKeyPressed(event -> {
+        graveYardScene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case LEFT:
                     currentPage = Math.abs((currentPage + size - 1) % size);
