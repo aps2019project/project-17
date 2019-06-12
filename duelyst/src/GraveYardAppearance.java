@@ -35,7 +35,6 @@ public class GraveYardAppearance {
 
 
     public GraveYardAppearance() {
-        Account.getLoginUser().getPlayer().getGraveYard().add(CardMaker.getAllCards()[0]);
         setTitleAppearance();
         initializeAllCards();
         initShownCards();
