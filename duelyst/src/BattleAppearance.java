@@ -95,11 +95,6 @@ public class BattleAppearance {
         initItemList();
     }
 
-    private void addCells() {
-        for (CellAppearance[] cellAppearances : board)
-            for (CellAppearance cellAppearance : cellAppearances)
-                cellAppearance.add(root);
-    }
 
     private void setStuffs() {
         setEndTurn_GraveYardButton();
@@ -107,7 +102,6 @@ public class BattleAppearance {
         setShapeOfHealthHero();
         setManaIcons();
         setAppearanceOfTexts();
-        setFlag();
     }
 
     private void initBoardBG() {
@@ -180,23 +174,10 @@ public class BattleAppearance {
         }
     }
 
-    private void initHand() {
-        this.handAppearance = new HandAppearance(this.root);
-    }
-
     private void addCells() {
         for (CellAppearance[] cellAppearances : board)
             for (CellAppearance cellAppearance : cellAppearances)
                 cellAppearance.add(root);
-    }
-
-    private void setStuffs() {
-        setEndTurnButton();
-        setImagesOfPlayers();
-        setShapeOfHealthHero();
-        setManaIcons();
-        setAppearanceOfTexts();
-        setAppearanceOfCells();
     }
 
     private void setEndTurn_GraveYardButton() {
