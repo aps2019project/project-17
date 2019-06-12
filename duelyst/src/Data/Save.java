@@ -1,5 +1,6 @@
 package Data;
 
+import CardCollections.Deck;
 import Cards.Hero;
 import Cards.Item;
 import Cards.Minion;
@@ -45,6 +46,27 @@ public class Save {
         }
     }
 
+    public static void exportDeck(Deck deck) {
+        Gson gson = new Gson();
+        try {
+            FileWriter fileWriter = new FileWriter(deck.getName());
+            gson.toJson(deck, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Deck importDeck(String address) {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(jsonReader(address), Deck.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 //    public static String save(Object object) throws IllegalAccessException {
 //        StringBuilder stringBuilder = new StringBuilder("{\n");
 //        Class accountClass = object.getClass();

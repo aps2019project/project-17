@@ -72,7 +72,6 @@ public class MinionAppearance {
             this.deathCount = data.toString().split("death").length - 1;
             this.hitCount = data.toString().split("hit").length - 1;
             String copy = data.toString();
-            int i = 1;
             int attackCounter = 0, runCounter = 0, idleCounter = 0, breathingCounter = 0, deathCounter = 0, hitCounter = 0;
             matcherIndex = patternIndex.matcher(copy);
             matcherPosition = patternPosition.matcher(copy);
