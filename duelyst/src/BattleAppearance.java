@@ -50,16 +50,14 @@ public class BattleAppearance {
         disPlay();
         handleEvents();
 
-        /* animation
-
         MinionAppearance minionAppearance = new MinionAppearance(null, "decepticleprime", root);
         minionAppearance.setLocation(500, 500);
-       minionAppearance.breathing();
-        minionAppearance.move(100, 100, 300, 300);
-        minionAppearance.attack();
-        minionAppearance.death();        minionAppearance.idle();
+//        minionAppearance.move(100, 0);
+        minionAppearance.breathing();
+//        minionAppearance.attack();
+//        minionAppearance.death();
+//        minionAppearance.idle();
 
-         */
     }
 
     private void primaryInitializes() {
@@ -88,11 +86,11 @@ public class BattleAppearance {
 
     private void secondaryInitializes() {
         initBoardBG();
-        initHand();
         initializeCells();
         initPlaceOfHeroes();
         initPlaceOfItems();
         initPlayersAppearance();
+        initHand();
     }
 
     private void addCells() {
@@ -189,9 +187,7 @@ public class BattleAppearance {
         for (int i = 0; i < Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().size(); i++) {
             Card card = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
             if (card instanceof Minion) {
-                MinionAppearance appearance = new MinionAppearance((Minion) card, card.getName(), root);
-                appearance.breathing();
-//                minionAppearanceFirstPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
+                minionAppearanceFirstPlayer.add(new MinionAppearance((Minion) card, card.getName(), root));
             } else if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i) instanceof Spell) {
                 Spell spell = (Spell) Battle.getCurrentBattle().getPlayerOne().getMainDeck().getCards().get(i);
             }
