@@ -1,8 +1,8 @@
 import Appearance.CardsDataAppearance;
-import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Cards.*;
 import Data.Account;
+import InstanceMaker.CardMaker;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -10,7 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,8 +20,9 @@ import java.util.ArrayList;
 
 public class GraveYardAppearance {
 
+    private Stage window = new Stage();
     private Group root = new Group();
-    private Scene collectionScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
+    private Scene graveYardScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
     private Rectangle[] cardsOfUser = new Rectangle[Account.getLoginUser().getPlayer().getGraveYard().size()];
     private Rectangle fillMenu = new javafx.scene.shape.Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
@@ -27,10 +30,12 @@ public class GraveYardAppearance {
     private ImageView rightDirection;
     private ImageView leftDirection;
     private int currentPage = 0;
+    private Text title=new Text("Grave Yard");
     private Text currentPageView = new Text("page : 1");
 
 
     public GraveYardAppearance() {
+        setTitleAppearance();
         initializeAllCards();
         initShownCards();
         setBackGround();
@@ -47,6 +52,15 @@ public class GraveYardAppearance {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setTitleAppearance(){
+        title.setFont(Font.font("phosphate",80));
+        title.setFill(Color.WHITE);
+        title.setRotate(-90);
+        title.setLayoutX(-fillMenu.getWidth());
+        title.setLayoutY(fillMenu.getHeight()/2);
+
     }
 
     private void initializeAllCards() {
@@ -98,9 +112,9 @@ public class GraveYardAppearance {
         try {
             image = new Image(new FileInputStream("graveYard.jpg"));
             ImageView imageOfBackGround = new ImageView(image);
-            imageOfBackGround.fitWidthProperty().bind(collectionScene.widthProperty());
-            imageOfBackGround.fitHeightProperty().bind(collectionScene.heightProperty());
-            imageOfBackGround.setOpacity(0.7);
+            imageOfBackGround.fitWidthProperty().bind(graveYardScene.widthProperty());
+            imageOfBackGround.fitHeightProperty().bind(graveYardScene.heightProperty());
+            imageOfBackGround.setOpacity(1);
             fillMenu.setOpacity(0.6);
             root.getChildren().add(imageOfBackGround);
         } catch (FileNotFoundException e) {
@@ -125,7 +139,7 @@ public class GraveYardAppearance {
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView,title);
     }
 
     private void locateNodes() {
@@ -135,9 +149,9 @@ public class GraveYardAppearance {
     }
 
     private void locateDirections() {
-        double y = 18.5 * collectionScene.getHeight() / 40;
-        double x = collectionScene.getWidth() * 28 / 29;
-        leftDirection.setLayoutX(collectionScene.getWidth() * 3.2 / 31);
+        double y = 18.5 * graveYardScene.getHeight() / 40;
+        double x = graveYardScene.getWidth() * 28 / 29;
+        leftDirection.setLayoutX(graveYardScene.getWidth() * 3.2 / 31);
         leftDirection.setLayoutY(y);
         rightDirection.setLayoutX(x);
         rightDirection.setLayoutY(y);
@@ -177,26 +191,29 @@ public class GraveYardAppearance {
         double cardHeight = shownCards[0][0].getHeight();
         for (int i = 0; i < shownData.length; i++) {
             for (int j = 0; j < shownData[i].length; j++) {
-                shownData[i][j].addAll(root);
-                shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * cardWidth / 10);
-                shownData[i][j].getMpView().setLayoutX((shownCards[i][j].getLayoutX()) + cardWidth / 14.1);
-                shownData[i][j].getPriceView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 2.3);
-                shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * cardHeight / 5);
-                shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + cardHeight / 9.9);
-                shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight / 11);
+                if (shownData[i][j] != null) {
+                    shownData[i][j].addAll(root);
+                    shownData[i][j].getNameView().setLayoutX(shownCards[i][j].getLayoutX() + 1 * cardWidth / 10);
+                    shownData[i][j].getMpView().setLayoutX((shownCards[i][j].getLayoutX()) + cardWidth / 14.1);
+                    shownData[i][j].getPriceView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 2.3);
+                    shownData[i][j].getNameView().setLayoutY(shownCards[i][j].getLayoutY() + 4 * cardHeight / 5);
+                    shownData[i][j].getMpView().setLayoutY((shownCards[i][j].getLayoutY()) + cardHeight / 9.9);
+                    shownData[i][j].getPriceView().setLayoutY(shownCards[i][j].getLayoutY() + 10 * cardHeight / 11);
 
-                if (shownData[i][j].getApView() != null) {
-                    shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4);
-                    shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight / 1.55);
-                    shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth / 2.1);
-                    shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
+                    if (shownData[i][j].getApView() != null) {
+                        shownData[i][j].getApView().setLayoutX(shownCards[i][j].getLayoutX() + cardWidth / 4);
+                        shownData[i][j].getApView().setLayoutY(shownCards[i][j].getLayoutY() + cardHeight / 1.55);
+                        shownData[i][j].getHpView().setLayoutX(shownData[i][j].getApView().getLayoutX() + cardWidth / 2.1);
+                        shownData[i][j].getHpView().setLayoutY(shownData[i][j].getApView().getLayoutY());
+                    }
                 }
             }
         }
     }
 
     private void disPlay() {
-        Main.getWindow().setScene(collectionScene);
+        window.setScene(graveYardScene);
+        window.showAndWait();
         handleEventsKeyBoards();
     }
 
@@ -213,7 +230,7 @@ public class GraveYardAppearance {
             currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
         });
-        collectionScene.setOnKeyPressed(event -> {
+        graveYardScene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case LEFT:
                     currentPage = Math.abs((currentPage + size - 1) % size);

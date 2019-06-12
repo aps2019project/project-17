@@ -7,6 +7,7 @@ import Cards.Item;
 import Cards.Minion;
 import Effects.Effect;
 import Effects.enums.SpecialSituation;
+import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
 import java.util.Random;
