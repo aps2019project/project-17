@@ -242,6 +242,10 @@ public class BattleAppearance {
     }
 
     public void setAppearanceOfCells() {
+        if (Battle.getCurrentBattle() == null) {
+            new MainMenu();
+            return;
+        }
         for (CellAppearance[] cellAppearances : board) {
             for (CellAppearance cellAppearance : cellAppearances) {
                 cellAppearance.setCellAppearance();
