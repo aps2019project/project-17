@@ -62,16 +62,13 @@ public class BattleAppearance {
         this.battleScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
         this.board = new CellAppearance[5][9];
         this.boardBackGround = new Rectangle[5][9];
-        this.textsOfBattle = new Text[]{
-                new Text("End Turn"),
-                new Text("Pooya"),
+        this.textsOfBattle = new Text[]{new Text("End Turn"),
+                new Text(Battle.getCurrentBattle().getPlayerOne().getUserName()),
                 new Text(AI.getCurrentAIPlayer().getUserName()),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())),
-                new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()))),
-                new Text("Grave Yard")};
-        this.textsOfBattle = new Text[]{new Text("End Turn"), new Text(Battle.getCurrentBattle().getPlayerOne().getUserName()), new Text(AI.getCurrentAIPlayer().getUserName()), new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
-                new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())), new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint())))};
+                new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint())))
+                , new Text("Grave Yard")};
         this.manaIconImage = new Rectangle[9];
         this.currentSelectedCell = null;
     }
@@ -137,8 +134,8 @@ public class BattleAppearance {
         this.handAppearance = new HandAppearance(this.root);
     }
 
-    private void initItemList(){
-        this.itemAppearance=new ItemAppearance(this.root);
+    private void initItemList() {
+        this.itemAppearance = new ItemAppearance(this.root);
     }
 
     private void initializeCells() {
@@ -340,7 +337,7 @@ public class BattleAppearance {
     public MinionAppearance getMinionAppearanceOfBattle(String cardName, boolean isHand) {
         for (MinionAppearance minionAppearance : minionAppearanceOfBattle) {
             if (minionAppearance.getMinion().getName().trim().toLowerCase().equals(cardName.toLowerCase().trim()))
-                if(minionAppearance.isInHand() == isHand)
+                if (minionAppearance.isInHand() == isHand)
                     return minionAppearance;
 
         }
