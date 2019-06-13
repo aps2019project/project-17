@@ -73,9 +73,9 @@ public class CellAppearance {
                         System.out.println(result);
                         if (result.contains("successfully")) {
                             MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getSelectedCard().getName(), false);
-                            minionAppearance.move(this.cellRectangle.getLayoutX() - minionAppearance.getImageView().getLayoutX(), this.cellRectangle.getLayoutY() - minionAppearance.getImageView().getLayoutY());
+                            minionAppearance.move(0.975 * this.cellRectangle.getLayoutX() - minionAppearance.getImageView().getLayoutX(), 0.92 * this.cellRectangle.getLayoutY() - minionAppearance.getImageView().getLayoutY());
                         } else ErrorOnBattle.display(result);
-                        BattleAppearance.getCurrentBattleAppearance().setAppearanceOfCells();
+//                        BattleAppearance.getCurrentBattleAppearance().setAppearanceOfCells();
                     } else {
                         // in this case we want to attack!
                         String result = Battle.getCurrentBattle().attack(this.cell.getCard().getId(), false, null);
@@ -144,4 +144,3 @@ public class CellAppearance {
 }
 
 // TODO: 2019-06-11 a function that fill for items and flags!
-

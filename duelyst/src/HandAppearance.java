@@ -215,10 +215,13 @@ public class HandAppearance {
     public void initializeHandIcons(int i) {
         if (hand.getCards().get(i) instanceof Minion) {
             handIcons[i].setVisible(false);
-            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true).add(true);
-            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true).setLocation(handIconsTemplate[i].getLayoutX(), 0.95 * handIconsTemplate[i].getLayoutY());
-            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true).breathing();
-            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true).getImageView().setOpacity(0.5);
+            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
+            if(minionAppearance != null){
+                minionAppearance.add(true);
+                minionAppearance.setLocation(handIconsTemplate[i].getLayoutX(), 0.95 * handIconsTemplate[i].getLayoutY());
+                minionAppearance.breathing();
+                minionAppearance.getImageView().setOpacity(0.5);
+            }
             manaOfPlayers[i].setText(Integer.toString(((Minion) hand.getCards().get(i)).getManaPoint()));
         } else if (hand.getCards().get(i) instanceof Spell) {
             try {
@@ -239,8 +242,12 @@ public class HandAppearance {
         root.getChildren().removeAll(manaOfPlayers);
         root.getChildren().removeAll(nextCard);
         for (int i = 0; i < this.hand.getCards().size(); i++) {
-            if (hand.getCards().get(i) instanceof Minion)
-                BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true).remove();
+            if (hand.getCards().get(i) instanceof Minion){
+                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
+                if (minionAppearance != null)
+                    minionAppearance.remove();
+            }
+
 //            else {
 //                handIcons[i].setFill(null);
 //            }
@@ -253,6 +260,7 @@ public class HandAppearance {
 //                handIcons[i] = null;
             }
         }
+        this.hand = null;
 
 
 //        for (int i = 0; i < handIcons.length; i++) {
