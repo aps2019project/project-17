@@ -137,9 +137,10 @@ public class MinionAppearance {
         timeline.setCycleCount(1);
         KeyValue keyValueX = new KeyValue(imageView.xProperty(), deltaX);
         KeyValue keyValueY = new KeyValue(imageView.yProperty(), deltaY);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), keyValueX, keyValueY);
+        int durationOfRun = (int) (10 * Math.sqrt(deltaX * deltaX + deltaY * deltaY));
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(durationOfRun), keyValueX, keyValueY);
         timeline.getKeyFrames().add(keyFrame);
-        animation.setCycleCount(Animation.INDEFINITE);
+        animation.setCycleCount(durationOfRun / duration);
         animation.setAutoReverse(true);
         animation.play();
         timeline.play();
