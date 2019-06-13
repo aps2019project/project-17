@@ -49,7 +49,7 @@ public class Save {
     public static void exportDeck(Deck deck) {
         Gson gson = new Gson();
         try {
-            FileWriter fileWriter = new FileWriter(deck.getName());
+            FileWriter fileWriter = new FileWriter(deck.getName()+".json");
             gson.toJson(deck, fileWriter);
             fileWriter.flush();
             fileWriter.close();

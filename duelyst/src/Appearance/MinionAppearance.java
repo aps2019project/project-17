@@ -136,7 +136,7 @@ public class MinionAppearance {
     public void move(double deltaX, double deltaY) {
         int duration = 100 * runCount;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapRun);
-        Path path = new Path(new MoveTo(0, 0), new LineTo(deltaX, deltaY));
+        Path path = new Path(new MoveTo(deltaX, deltaY));
         PathTransition pathTransition = new PathTransition(Duration.millis(2000), path, imageView);
         root.getChildren().addAll(path);
         path.setVisible(false);

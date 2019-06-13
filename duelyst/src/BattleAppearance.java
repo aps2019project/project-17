@@ -50,6 +50,11 @@ public class BattleAppearance {
         setStuffs();
         disPlay();
         handleEvents();
+        MinionAppearance minionAppearance = new MinionAppearance(null,"bahman",root);
+        minionAppearance.add(false);
+        minionAppearance.setLocation(100,100);
+        minionAppearance.move(100,100);
+        minionAppearance.move(-100,300);
     }
 
     private void primaryInitializes() {
