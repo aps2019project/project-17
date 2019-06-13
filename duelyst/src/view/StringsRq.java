@@ -6,7 +6,7 @@ class StringsRq {
     static final String CREATE_ACCOUNT = "create account";
     static final String LOGIN = "login";
     static final String SHOW_LEADER_BOARD = "show leaderboard";
-    static final String SAVE = "save";
+    static final String SAVE = "saveAccountِ";
     static final String LOGOUT = "logout";
     static final String HELP = "help";
     static final String SHOW = "show";

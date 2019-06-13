@@ -10,46 +10,71 @@ import controller.InstanceType;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static InstanceMaker.CardMaker.addEffectToCard;
 import static InstanceMaker.CardMaker.addEffectToItem;
 
 public class Save {
-    private final static String accountAddress = "duelyst//src//Data//Account.json";
+    private final static String accountAddress = "duelyst//src//Data//Accounts.txt";
     public static final String address = "duelyst//src//InstanceMaker//";
     public static final String addressOfHero = address + "Hero.json";
     public static final String addressOfItem = address + "Item.json";
     public static final String addressOfMinion = address + "Minion.json";
     public static final String addressOfSpell = address + "Spell.json";
 
-    public static void save(Object object, InstanceType instanceType) throws IOException {
+    public static void saveAccountِ(Account account) {
         Gson gson = new Gson();
-        String address = "";
-        ArrayList<Object> data = new ArrayList<>();
-        switch (instanceType) {
-            case ACCOUNT:
-                Account[] accounts = (Account[]) loadInstance(InstanceType.ACCOUNT);
-                if (accounts != null)
-                    data.addAll(Arrays.asList(accounts));
-                data.add(object);
-                address = accountAddress;
-                break;
-        }
+        String address = "Accounts//" + account.getUserName() + ".json";
         try {
             FileWriter fileWriter = new FileWriter(address);
-            gson.toJson(data, fileWriter);
+            gson.toJson(account, fileWriter);
             fileWriter.flush();
             fileWriter.close();
+            FileWriter accountWriter = new FileWriter(accountAddress, true);
+            accountWriter.append(",");
+            accountWriter.append(account.getUserName());
+            accountWriter.close();
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static ArrayList<Account> loadAccounts() {
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<Account> accounts = new ArrayList<>();
+        try {
+            FileReader fileReader = new FileReader(accountAddress);
+            int c;
+            while ((c = fileReader.read()) != -1) {
+                stringBuilder.append((char) c);
+            }
+            String[] userNames = stringBuilder.toString().split(",");
+            for (String userName : userNames) {
+                if (!userName.equals(""))
+                    accounts.add(loadAccount("Accounts//" + userName + ".json"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return accounts;
+    }
+
+    private static Account loadAccount(String address) {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(jsonReader(address), Account.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void exportDeck(Deck deck) {
         Gson gson = new Gson();
         try {
-            FileWriter fileWriter = new FileWriter(deck.getName()+".json");
+            FileWriter fileWriter = new FileWriter(deck.getName() + ".json");
             gson.toJson(deck, fileWriter);
             fileWriter.flush();
             fileWriter.close();
@@ -66,7 +91,7 @@ public class Save {
             return null;
         }
     }
-//    public static String save(Object object) throws IllegalAccessException {
+//    public static String saveAccountِ(Object object) throws IllegalAccessException {
 //        StringBuilder stringBuilder = new StringBuilder("{\n");
 //        Class accountClass = object.getClass();
 //        Field[] fields = accountClass.getDeclaredFields();
@@ -82,7 +107,7 @@ public class Save {
 //                counter++;
 //            } else if (field.get(object) != null) {
 //                String s = "\"" + field.getName() + "\": ";
-//                s += save(field.get(object));
+//                s += saveAccountِ(field.get(object));
 //                strings.add(s);
 //                counter++;
 //            }
@@ -122,10 +147,6 @@ public class Save {
         Gson gson = new Gson();
 
         switch (instanceType) {
-            case ACCOUNT:
-                Account[] accounts;
-                accounts = gson.fromJson(jsonReader(accountAddress), Account[].class);
-                return accounts;
             case HERO:
                 Hero[] heroes;
                 heroes = gson.fromJson(jsonReader(addressOfHero), Hero[].class);

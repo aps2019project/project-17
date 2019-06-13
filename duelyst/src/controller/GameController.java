@@ -7,15 +7,12 @@ import Cards.Minion;
 import Cards.Spell;
 import Data.*;
 import Effects.Effect;
-import Effects.enums.BuffType;
 import GameGround.*;
 import InstanceMaker.CardMaker;
 import view.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 import static Data.MODE.*;
 
@@ -50,14 +47,9 @@ public class GameController {
      */
 
     public static ArrayList<Account> getAccounts() {
-        try {
-            if (Save.loadInstance(InstanceType.ACCOUNT) != null) {
-                accounts.clear();
-                accounts.addAll(Arrays.asList((Account[]) Objects.requireNonNull(Save.loadInstance(InstanceType.ACCOUNT))));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        accounts.clear();
+        if (Save.loadAccounts() != null)
+            accounts.addAll(Save.loadAccounts());
         return accounts;
     }
 

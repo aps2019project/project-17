@@ -38,15 +38,9 @@ public class Account implements Comparable<Account> {
             if (account.userName.equals(userName))
                 return "UserName Already Exist! Please Try again with another UserName.";
         }
-
         Account account = new Account(userName, passWord);
-
         GameController.getAccounts().add(account);
-        try {
-            Save.save(account, InstanceType.ACCOUNT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Save.saveAccountِ(account);
         return "Account Successfully created";
     }
 
