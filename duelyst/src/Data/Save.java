@@ -49,7 +49,7 @@ public class Save {
     public static void exportDeck(Deck deck) {
         Gson gson = new Gson();
         try {
-            FileWriter fileWriter = new FileWriter(deck.getName());
+            FileWriter fileWriter = new FileWriter(deck.getName()+".json");
             gson.toJson(deck, fileWriter);
             fileWriter.flush();
             fileWriter.close();
@@ -63,9 +63,8 @@ public class Save {
         try {
             return gson.fromJson(jsonReader(address), Deck.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 //    public static String save(Object object) throws IllegalAccessException {
 //        StringBuilder stringBuilder = new StringBuilder("{\n");
