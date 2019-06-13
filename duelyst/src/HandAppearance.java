@@ -117,7 +117,7 @@ public class HandAppearance {
                 e.printStackTrace();
             }
         } else {
-            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getPlayerOne().getNextCard().getName().trim().toLowerCase(), true);
+            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) Battle.getCurrentBattle().getPlayerOne().getNextCard(), true);
             if (minionAppearance != null) {
                 minionAppearance.add(true);
                 minionAppearance.setLocation(handIconsTemplate[hand.getCards().size()].getLayoutX(), 0.98 * handIconsTemplate[hand.getCards().size()].getLayoutY());
@@ -153,35 +153,35 @@ public class HandAppearance {
                     if (selectedCard instanceof Spell)
                         selectedCardIcon.setOpacity(0.5);
                     else if (selectedCard instanceof Minion)
-                        BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).getImageView().setOpacity(0.5);
+                        BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(0.5);
                     selectedCardIcon = handIcons[value];
                     selectedCardIcon.setOpacity(1);
                     selectedCard = hand.getCards().get(value);
                     System.out.println(hand.getCards().get(value).getName() + " selected");
                 });
             } else if (hand.getCards().get(i) instanceof Minion) {
-                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
+                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) hand.getCards().get(i), true);
                 if (minionAppearance == null)
                     return;
                 minionAppearance.getImageView().setOnMouseClicked(e -> {
                     if (selectedCard != null) {
                         if (hand.getCards().get(value) != null && hand.getCards().get(value) == selectedCard) {
-                            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).getImageView().setOpacity(0.5);
+                            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(0.5);
                             selectedCard = null;
                             return;
                         }
                     }
 
                     if (selectedCard != null) {
-                        if (!BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).isInHand())
+                        if (!BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).isInHand())
                             return;
                     }
                     if (selectedCard instanceof Spell)
                         selectedCardIcon.setOpacity(0.5);
                     else if (selectedCard instanceof Minion)
-                        BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).getImageView().setOpacity(0.5);
+                        BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(0.5);
                     selectedCard = minionAppearance.getMinion();
-                    BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).getImageView().setOpacity(1);
+                    BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(1);
                     System.out.println(minionAppearance.getMinion().getName() + " selected");
                 });
             }
@@ -233,7 +233,7 @@ public class HandAppearance {
     public void initializeHandIcons(int i) {
         if (hand.getCards().get(i) instanceof Minion) {
             handIcons[i].setVisible(false);
-            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
+            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) hand.getCards().get(i), true);
             if (minionAppearance != null) {
                 minionAppearance.add(true);
                 minionAppearance.setLocation(handIconsTemplate[i].getLayoutX(), 0.95 * handIconsTemplate[i].getLayoutY());
@@ -261,7 +261,7 @@ public class HandAppearance {
         root.getChildren().removeAll(nextCard);
         for (int i = 0; i < this.hand.getCards().size(); i++) {
             if (hand.getCards().get(i) instanceof Minion) {
-                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
+                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) hand.getCards().get(i), true);
                 if (minionAppearance != null)
                     minionAppearance.remove();
             }
@@ -279,7 +279,7 @@ public class HandAppearance {
             if (this.selectedCard instanceof Spell)
                 selectedCardIcon.setOpacity(0.5);
             else if (this.selectedCard instanceof Minion)
-                BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(this.selectedCard.getName(), true).getImageView().setOpacity(0.5);
+                BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) this.selectedCard, true).getImageView().setOpacity(0.5);
         }
         this.selectedCard = selectedCard;
     }

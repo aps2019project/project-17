@@ -48,7 +48,7 @@ public class CellAppearance {
                             ex.printStackTrace();
                         }
                     } else {
-                        MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard().getName().toLowerCase().trim(), true);
+                        MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard(), true);
                         if (minionAppearance == null)
                             return;
                         minionAppearance.setInHand(false);
@@ -82,7 +82,7 @@ public class CellAppearance {
                         String result = Battle.getCurrentBattle().movingCard(cell.getRow() + 1, cell.getCol() + 1);
                         System.out.println(result);
                         if (result.contains("successfully")) {
-                            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getSelectedCard().getName().toLowerCase().trim(), false);
+                            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) Battle.getCurrentBattle().getSelectedCard(), false);
                             if (minionAppearance != null)
                                 minionAppearance.move(0.975 * this.cellRectangle.getLayoutX() - minionAppearance.getImageView().getLayoutX(), 0.92 * this.cellRectangle.getLayoutY() - minionAppearance.getImageView().getLayoutY());
                         } else ErrorOnBattle.display(result);
@@ -92,10 +92,10 @@ public class CellAppearance {
                         String result = Battle.getCurrentBattle().attack(this.cell.getCard().getId(), false, null);
                         System.out.println(result);
                         if (result.contains("attacked to")) {
-                            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getSelectedCard().getName(), false);
+                            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) Battle.getCurrentBattle().getSelectedCard(), false);
                             if (minionAppearance != null)
                                 minionAppearance.attack();
-                            MinionAppearance defender = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(this.cell.getCard().getName().toLowerCase().trim(), false);
+                            MinionAppearance defender = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) this.cell.getCard(), false);
                             if (defender != null) {
                                 defender.hit();
                                 if (minionAppearance.getMinion().isCanCounterAttack()) {
@@ -140,7 +140,7 @@ public class CellAppearance {
             }
             if (cell.getCard() != null) {
                 Card card = cell.getCard();
-                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(card.getName(), false);
+                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) card, false);
                 if (minionAppearance == null)
                     return;
                 minionAppearance.add(false);

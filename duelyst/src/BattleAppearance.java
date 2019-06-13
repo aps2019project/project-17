@@ -317,9 +317,9 @@ public class BattleAppearance {
         return boardBackGround;
     }
 
-    public MinionAppearance getMinionAppearanceOfBattle(String cardName, boolean isHand) {
+    public MinionAppearance getMinionAppearanceOfBattle(Minion minion, boolean isHand) {
         for (MinionAppearance minionAppearance : minionAppearanceOfBattle) {
-            if (minionAppearance.getMinion().getName().trim().toLowerCase().equals(cardName.toLowerCase().trim()))
+            if (minionAppearance.getMinion() == minion)
                 if(minionAppearance.isInHand() == isHand)
                     return minionAppearance;
 
