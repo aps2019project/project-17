@@ -148,6 +148,8 @@ public class HandAppearance {
                 });
             } else if (hand.getCards().get(i) instanceof Minion) {
                 MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
+                if (minionAppearance == null)
+                    return;
                 minionAppearance.getImageView().setOnMouseClicked(e -> {
                     if (selectedCard != null && selectedCard == hand.getCards().get(value)) {
                         BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).getImageView().setOpacity(0.5);
