@@ -71,6 +71,7 @@ public class ImportExportDeckWindow {
     }
 
     public static void display() {
+        result.setText("");
         VBox root = new VBox();
         Scene scene = new Scene(root);
         root.setAlignment(Pos.CENTER);
@@ -104,7 +105,6 @@ public class ImportExportDeckWindow {
     }
 
     private static void importAction() {
-        result.setText("");
         String address = deckName.getText() + ".json";
         Deck imported = Save.importDeck(address);
         if (imported == null) {
@@ -148,6 +148,11 @@ public class ImportExportDeckWindow {
     private static void exportAction() {
         String name = deckName.getText();
         Deck deck = Account.getLoginUser().getCollection().returnDeckFromName(name);
+        if(deck==null){
+            result.setText("You don't have such a deck with this name");
+            deckName.setText("");
+            return;
+        }
         Save.exportDeck(deck);
         result.setText("Deck exported successfully in file: " + deck.getName() + ".json");
         deckName.setText("");
