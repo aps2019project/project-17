@@ -75,7 +75,7 @@ public class CellAppearance {
                             MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getSelectedCard().getName(), false);
                             minionAppearance.move(0.975 * this.cellRectangle.getLayoutX() - minionAppearance.getImageView().getLayoutX(), 0.92 * this.cellRectangle.getLayoutY() - minionAppearance.getImageView().getLayoutY());
                         } else ErrorOnBattle.display(result);
-                        BattleAppearance.getCurrentBattleAppearance().setAppearanceOfCells();
+//                        BattleAppearance.getCurrentBattleAppearance().setAppearanceOfCells();
                     } else {
                         // in this case we want to attack!
                         String result = Battle.getCurrentBattle().attack(this.cell.getCard().getId(), false, null);
