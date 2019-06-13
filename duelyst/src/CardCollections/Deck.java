@@ -16,7 +16,6 @@ public class Deck {
     private String isValid;
 
 
-
     public Deck(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
@@ -33,10 +32,10 @@ public class Deck {
     }
 
     public void setIsValid() {
-        if(this.isDeckValidate()){
-            this.isValid="VALID";
-        }else {
-            this.isValid="INVALID";
+        if (this.isDeckValidate()) {
+            this.isValid = "VALID";
+        } else {
+            this.isValid = "INVALID";
         }
     }
 
@@ -171,14 +170,26 @@ public class Deck {
         return null;
     }
 
-    public String returnIdFromName(String cardName){
-        Card card=returnCardFromDeck(cardName);
-        if(card==null){
+    public String returnIdFromName(String cardName) {
+        Card card = returnCardFromDeck(cardName);
+        if (card == null) {
             return "This deck doesn't have this card";
         }
         return card.getId();
     }
 
-
+    public static Deck copyDeck(Deck deck) {
+        Deck deckCopy = new Deck(deck.name);
+        deckCopy.hero = Hero.heroCopy(deck.getHero(), deck.getHero().getCoolDown());
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            if (deck.getCards().get(i) instanceof Spell)
+                deckCopy.addCard(Spell.spellCopy((Spell) deck.getCards().get(i)));
+            else if (deck.getCards().get(i) instanceof Minion)
+                deckCopy.getCards().add(Minion.minionCopy((Minion) deck.getCards().get(i)));
+        }
+        if (deck.item != null)
+            deckCopy.setItem(deck.item);
+        return deckCopy;
+    }
 
 }

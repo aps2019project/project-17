@@ -38,4 +38,10 @@ public class Spell extends Card {
         this.manaPoint = manaPoint;
     }
 
+    public static Spell spellCopy(Spell spell) {
+        Spell spellCopy = new Spell(spell.name, spell.id, spell.price, spell.manaPoint, spell.desc);
+        spellCopy.manaPoint = spell.manaPoint;
+        return spellCopy;
+    }
+
 }
