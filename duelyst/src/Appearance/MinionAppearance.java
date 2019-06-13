@@ -1,14 +1,11 @@
 package Appearance;
 
-import Cards.Card;
 import Cards.Hero;
 import Cards.Minion;
-import javafx.animation.Animation;
-import javafx.animation.PathTransition;
+import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -123,7 +120,7 @@ public class MinionAppearance {
             }
             this.isInHand = true;
             this.inInBoard = false;
-            if (minion instanceof Hero){
+            if (minion instanceof Hero) {
                 this.isInHand = false;
                 this.inInBoard = true;
             }
@@ -136,14 +133,16 @@ public class MinionAppearance {
     public void move(double deltaX, double deltaY) {
         int duration = 100 * runCount;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapRun);
-        Path path = new Path(new MoveTo(deltaX, deltaY));
-        PathTransition pathTransition = new PathTransition(Duration.millis((deltaX * deltaX) + (deltaY * deltaY)), path, imageView);
-        root.getChildren().addAll(path);
-        path.setVisible(false);
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        KeyValue keyValueX = new KeyValue(imageView.xProperty(), deltaX);
+        KeyValue keyValueY = new KeyValue(imageView.yProperty(), deltaY);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), keyValueX, keyValueY);
+        timeline.getKeyFrames().add(keyFrame);
         animation.setCycleCount(Animation.INDEFINITE);
         animation.setAutoReverse(true);
         animation.play();
-        pathTransition.play();
+        timeline.play();
     }
 
     public void breathing() {
