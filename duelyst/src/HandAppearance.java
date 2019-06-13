@@ -75,20 +75,6 @@ public class HandAppearance {
     }
 
     private void addIHandAppearanceToBattleAppearance() {
-//        for (int i = 0; i < handIcons.length; i++) {
-//            if (handIcons[i] != null)
-//                root.getChildren().add(handIcons[i]);
-//            if (handIconsTemplate[i] != null)
-//                root.getChildren().add(handIconsTemplate[i]);
-//            if (manaOfPlayers[i] != null)
-//                root.getChildren().add(manaOfPlayers[i]);
-//        }
-//        for (Rectangle rectangle : handIconsTemplate) {
-//            if (rectangle != null) {
-//                if (!root.getChildren().contains(rectangle))
-//                    root.getChildren().add(rectangle);
-//            }
-//        }
         root.getChildren().addAll(handIconsTemplate);
         root.getChildren().addAll(handIcons);
         root.getChildren().addAll(manaOfPlayers);
@@ -130,10 +116,9 @@ public class HandAppearance {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getPlayerOne().getNextCard().getName().trim().toLowerCase(), true);
-            if(minionAppearance != null){
+            if (minionAppearance != null) {
                 minionAppearance.add(true);
                 minionAppearance.setLocation(handIconsTemplate[hand.getCards().size()].getLayoutX(), 0.98 * handIconsTemplate[hand.getCards().size()].getLayoutY());
                 minionAppearance.breathing();
@@ -179,10 +164,12 @@ public class HandAppearance {
                 if (minionAppearance == null)
                     return;
                 minionAppearance.getImageView().setOnMouseClicked(e -> {
-                    if (selectedCard != null && selectedCard == hand.getCards().get(value)) {
-                        BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).getImageView().setOpacity(0.5);
-                        selectedCard = null;
-                        return;
+                    if (selectedCard != null) {
+                        if (hand.getCards().get(value) != null && hand.getCards().get(value) == selectedCard) {
+                            BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).getImageView().setOpacity(0.5);
+                            selectedCard = null;
+                            return;
+                        }
                     }
 
                     if (selectedCard != null) {
@@ -247,7 +234,7 @@ public class HandAppearance {
         if (hand.getCards().get(i) instanceof Minion) {
             handIcons[i].setVisible(false);
             MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
-            if(minionAppearance != null){
+            if (minionAppearance != null) {
                 minionAppearance.add(true);
                 minionAppearance.setLocation(handIconsTemplate[i].getLayoutX(), 0.95 * handIconsTemplate[i].getLayoutY());
                 minionAppearance.breathing();
@@ -273,42 +260,18 @@ public class HandAppearance {
         root.getChildren().removeAll(manaOfPlayers);
         root.getChildren().removeAll(nextCard);
         for (int i = 0; i < this.hand.getCards().size(); i++) {
-            if (hand.getCards().get(i) instanceof Minion){
+            if (hand.getCards().get(i) instanceof Minion) {
                 MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
                 if (minionAppearance != null)
                     minionAppearance.remove();
             }
-
-//            else {
-//                handIcons[i].setFill(null);
-//            }
-//            handIcons[i] = null;
-//            handIconsTemplate[i] = null;
         }
         for (int i = 0; i < handIcons.length; i++) {
             if (handIcons[i] != null) {
                 handIcons[i].setFill(null);
-//                handIcons[i] = null;
             }
         }
         this.hand = null;
-
-
-//        for (int i = 0; i < handIcons.length; i++) {
-//            handIcons[i].setVisible(false);
-//            handIconsTemplate[i].setVisible(false);
-//            informationOfCards[i].setVisible(false);
-//        }
-//        initHandIconsAndTemplateAndInformationOfCards();
-//        addIHandAppearanceToBattleAppearance();
-//        locateIcons();
-//        locateData();
-//        setEventHandling();
-//        addInformationOfCards();
-    }
-
-    private void setNextCardFill() {
-
     }
 
     public void setSelectedCard(Card selectedCard) {

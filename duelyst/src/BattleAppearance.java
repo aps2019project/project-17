@@ -277,6 +277,7 @@ public class BattleAppearance {
         });
         endTurnButton.setOnMouseClicked(e -> {
             currentBattleAppearance = null;
+            Battle.getCurrentBattle().endingGame();
             new MainMenu();
         });
     }
@@ -321,6 +322,7 @@ public class BattleAppearance {
     }
 
     public void insert() {
+        this.handAppearance = null;
         this.handAppearance = new HandAppearance(root);
     }
 

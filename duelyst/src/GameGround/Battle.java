@@ -288,20 +288,21 @@ public class Battle {
 
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
         Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
-        switch (minion.getMinionType()) {
-            case MELEE:
-                if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
-                    return "opponent minion is unavailable for attack";
-                break;
-            case RANGED:
-                if (Cell.distance(cellDestination, cellFirst) < 2)
-                    return "opponent minion is unavailable for attack";
-                if (Cell.distance(cellDestination, cellFirst) > attacker.getAttackRange())
-                    return "opponent minion is unavailable for attack";
-                break;
-            case HYBRID:
-                break;
-        }
+//        switch (minion.getMinionType()) {
+//            case MELEE:
+//                if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
+//                    return "opponent minion is unavailable for attack";
+//                break;
+//            case RANGED:
+//                if (Cell.distance(cellDestination, cellFirst) < 2)
+//                    return "opponent minion is unavailable for attack";
+//                if (Cell.distance(cellDestination, cellFirst) > attacker.getAttackRange())
+//                    return "opponent minion is unavailable for attack";
+//                break;
+//            case HYBRID:
+//                break;
+//        }
+        // TODO: 2019-06-13
 //        attacker.attack(minion);
 //        minion.counterAttack(attacker);
         check();
@@ -676,6 +677,16 @@ public class Battle {
                 logicEndTurn();
                 break;
         }
+    }
+
+    public boolean setSelectedCard(Cell cell) {
+        Card card = cell.getCard();
+        if (card == null)
+            return false;
+        if (!cardIsMine(card, whoseTurn()))
+            return false;
+        this.selectedCard= card;
+        return true;
     }
 
     public Player getPlayerOne() {

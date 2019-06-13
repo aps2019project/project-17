@@ -92,6 +92,8 @@ public class Player {
 
     private void setCopyMainDeck() {
         mainDeck.getHero().setCanMove(true);
+        mainDeck.getHero().setCanAttack(true);
+        mainDeck.getHero().setCanCounterAttack(true);
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
             if (mainDeck.getCards().get(i) instanceof Minion) {
                 ((Minion) mainDeck.getCards().get(i)).setCanMove(true);
@@ -188,8 +190,8 @@ public class Player {
             collectAbleItems.add(this.mainDeck.getItem());
         }
         setHand();
-        this.mana = 9;
-        this.previousMana = 9;
+        this.mana = 20;
+        this.previousMana = 20;
         return true;
     }
 

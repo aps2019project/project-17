@@ -51,7 +51,7 @@ public class CellAppearance {
                         MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard().getName().toLowerCase().trim(), true);
                         if (minionAppearance == null)
                             return;
-                         minionAppearance.setInHand(false);
+                        minionAppearance.setInHand(false);
                         BattleAppearance.getCurrentBattleAppearance().setAppearanceOfCells();
 
                     }
@@ -67,9 +67,15 @@ public class CellAppearance {
                     if (this.cell.getCard() == null)
                         return;
                     // in this case we select a card!
+                    boolean isSelectDone = Battle.getCurrentBattle().setSelectedCard(this.cell);
+                    if (!isSelectDone) {
+                        ErrorOnBattle.display("you cant select this card");
+                        return;
+                    }
                     BattleAppearance.getCurrentBattleAppearance().setCurrentSelectedCell(this.cell);
                     BattleAppearance.getCurrentBattleAppearance().getBoardBackGround()[cell.getRow()][cell.getCol()].setFill(ColorAppearance.COLOR_CELL_CLICKED);
-                    System.out.println(Battle.getCurrentBattle().selectCardOrItem(cell.getCard().getId()));
+                    System.out.println(this.cell.getCard().getName().concat(" in position ") + (cell.getRow() + 1) + " - " + (cell.getCol() + 1) + " successfully selected");
+
                 } else {
                     if (this.cell.getCard() == null) {
                         // in this case we want to move!
@@ -87,9 +93,14 @@ public class CellAppearance {
                         System.out.println(result);
                         if (result.contains("attacked to")) {
                             MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getSelectedCard().getName(), false);
-                            minionAppearance.attack();
-                            if (((Minion) cell.getCard()).isCanCounterAttack()) {
-                                BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(cell.getCard().getName().toLowerCase().trim(), false).attack();
+                            if (minionAppearance != null)
+                                minionAppearance.attack();
+                            MinionAppearance defender = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(this.cell.getCard().getName().toLowerCase().trim(), false);
+                            if (defender != null) {
+                                defender.hit();
+                                if (minionAppearance.getMinion().isCanCounterAttack()) {
+                                    defender.attack();
+                                }
                             }
                         } else ErrorOnBattle.display(result);
                     }
@@ -101,8 +112,9 @@ public class CellAppearance {
         });
     }
 
-    public void add(Group group) {// TODO: 6/8/2019
-        group.getChildren().addAll(cellRectangle);
+    public void add(Group group) {
+        if (!group.getChildren().contains(cellRectangle))
+            group.getChildren().addAll(cellRectangle);
     }
 
     public Rectangle getCellRectangle() {
