@@ -181,7 +181,12 @@ public class Deck {
     public static Deck copyDeck(Deck deck) {
         Deck deckCopy = new Deck(deck.name);
         deckCopy.hero = Hero.heroCopy(deck.getHero(), deck.getHero().getCoolDown());
-        deckCopy.cards.addAll(deck.cards);
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            if (deck.getCards().get(i) instanceof Spell)
+                deckCopy.addCard(Spell.spellCopy((Spell) deck.getCards().get(i)));
+            else if (deck.getCards().get(i) instanceof Minion)
+                deckCopy.getCards().add(Minion.minionCopy((Minion) deck.getCards().get(i)));
+        }
         if (deck.item != null)
             deckCopy.setItem(deck.item);
         return deckCopy;

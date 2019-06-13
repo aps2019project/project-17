@@ -77,6 +77,12 @@ public class CellAppearance {
                     System.out.println(this.cell.getCard().getName().concat(" in position ") + (cell.getRow() + 1) + " - " + (cell.getCol() + 1) + " successfully selected");
 
                 } else {
+                    if (BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell() == this.cell) {
+                        BattleAppearance.getCurrentBattleAppearance().getBoardBackGround()[BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getRow()][BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getCol()].setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
+                        BattleAppearance.getCurrentBattleAppearance().setCurrentSelectedCell(null);
+                        Battle.getCurrentBattle().selectCardOrItem(null);
+                        return;
+                    }
                     if (this.cell.getCard() == null) {
                         // in this case we want to move!
                         String result = Battle.getCurrentBattle().movingCard(cell.getRow() + 1, cell.getCol() + 1);
@@ -100,6 +106,7 @@ public class CellAppearance {
                                 defender.hit();
                                 if (minionAppearance.getMinion().isCanCounterAttack()) {
                                     defender.attack();
+                                    minionAppearance.hit();
                                 }
                             }
                         } else ErrorOnBattle.display(result);
@@ -160,5 +167,3 @@ public class CellAppearance {
         }
     }
 }
-
-// TODO: 2019-06-11 a function that fill for items and flags!

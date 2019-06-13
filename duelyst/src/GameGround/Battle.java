@@ -228,7 +228,7 @@ public class Battle {
         } else if (card instanceof Spell) {
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
-//            ((Spell) card).action(x, y);
+            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
             this.whoseTurn().lessMana(((Spell) card).getManaPoint());
@@ -288,23 +288,23 @@ public class Battle {
 
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
         Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
-//        switch (minion.getMinionType()) {
-//            case MELEE:
-//                if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
-//                    return "opponent minion is unavailable for attack";
-//                break;
-//            case RANGED:
-//                if (Cell.distance(cellDestination, cellFirst) < 2)
-//                    return "opponent minion is unavailable for attack";
-//                if (Cell.distance(cellDestination, cellFirst) > attacker.getAttackRange())
-//                    return "opponent minion is unavailable for attack";
-//                break;
-//            case HYBRID:
-//                break;
-//        }
-        // TODO: 2019-06-13
-//        attacker.attack(minion);
-//        minion.counterAttack(attacker);
+        switch (minion.getMinionType()) {
+            case MELEE:
+                if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
+                    return "type of attacker is MELEE, so opponent minion is invalid";
+                break;
+            case RANGED:
+                if (Cell.distance(cellDestination, cellFirst) < 2)
+                    return "type of attacker is RANGED, so opponent minion is invalid - ATTACK RANGE: " + attacker.getAttackRange();
+                if (Cell.distance(cellDestination, cellFirst) > attacker.getAttackRange())
+                    return "type of attacker is RANGED, so opponent minion is invalid - ATTACK RANGE: " + attacker.getAttackRange();
+                break;
+            case HYBRID:
+                break;
+        }
+
+        attacker.attack(minion);
+        minion.counterAttack(attacker);
         check();
         attacker.setCanAttack(false);
         minion.setCanCounterAttack(false);

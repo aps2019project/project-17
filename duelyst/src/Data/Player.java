@@ -243,11 +243,7 @@ public class Player {
     }
 
     private void setNewDeck(Deck deck) {
-        if (this instanceof AI)
-            System.out.println("AI MODE");
         Deck newDeck = Deck.copyDeck(deck);
-        System.out.println(deck == newDeck);
-        System.out.println(newDeck.getHero() == deck.getHero());
         setMainDeck(newDeck);
     }
 }

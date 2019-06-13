@@ -299,4 +299,8 @@ public class Minion extends Card {
     public boolean isCanCounterAttack() {
         return canCounterAttack;
     }
+
+    public static Minion minionCopy(Minion minion) {
+        return new Minion(minion.name, minion.id, minion.price, minion.manaPoint, minion.healthPoint, minion.attackPoint, minion.minionType, minion.attackRange, minion.distanceCanMove, minion.maxRangeToInput, minion.attackType, minion.desc);
+    }
 }
