@@ -156,6 +156,7 @@ public class BattleAppearance {
         setShapeOfHealthHero();
         setManaIcons();
         setAppearanceOfTexts();
+        setShapeOfHealthHeroTexts();
         setAppearanceOfCells();
     }
 
@@ -225,9 +226,9 @@ public class BattleAppearance {
     }
 
     private void setAppearanceOfTexts() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             textsOfBattle[i].setFont(FontAppearance.FONT_BUTTON);
-            if (i == 1 || i == 2)
+            if (i == 1 || i == 2 || i == 4 || i == 5)
                 textsOfBattle[i].setFill(Color.WHITE);
         }
         textsOfBattle[0].setFill(Color.WHITE);
@@ -238,7 +239,16 @@ public class BattleAppearance {
         textsOfBattle[3].setFill(ColorAppearance.BACKGROUND_DATA_CARDS);
         textsOfBattle[3].setLayoutX(12 * Main.WIDTH_OF_WINDOW / 14.85);
         textsOfBattle[3].setLayoutY(0.73 * Main.HEIGHT_OF_WINDOW / 5.3);
-        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3]);
+        textsOfBattle[4].setLayoutX(shapeOfHealthHero[0].getLayoutX() * 1.08);
+        textsOfBattle[4].setLayoutY(shapeOfHealthHero[0].getLayoutY() * 1.18);
+        textsOfBattle[5].setLayoutX(shapeOfHealthHero[1].getLayoutX() * 1.008);
+        textsOfBattle[5].setLayoutY(shapeOfHealthHero[1].getLayoutY() * 1.18);
+        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5]);
+    }
+
+    private void setShapeOfHealthHeroTexts() {
+        textsOfBattle[4].setText(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint()));
+        textsOfBattle[5].setText(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()));
     }
 
     public void setAppearanceOfCells() {

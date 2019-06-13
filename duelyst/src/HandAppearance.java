@@ -26,6 +26,7 @@ public class HandAppearance {
     private Rectangle nextCard;
     private Rectangle selectedCardIcon;
     private Text[] manaOfPlayers;
+    private Text manaOfNextCard;
     private Hand hand;
     private Group root;
     private Card selectedCard;
@@ -49,6 +50,7 @@ public class HandAppearance {
         this.informationOfCards = new Rectangle[this.hand.getCards().size() + 1];
         this.handIcons = new Rectangle[this.hand.getCards().size()];
         this.manaOfPlayers = new Text[hand.getCards().size()];
+        this.manaOfNextCard = new Text("0");
     }
 
     private void initHandIconsAndTemplateAndInformationOfCards() {
@@ -67,7 +69,7 @@ public class HandAppearance {
             handIcons[i] = new Rectangle(handIconsTemplate[i].getWidth() / 2, handIconsTemplate[i].getHeight() / 2);
             manaOfPlayers[i] = new Text("0");
         }
-        nextCard = new Rectangle(handIconsTemplate[0].getWidth(), handIconsTemplate[0].getHeight());
+        nextCard = new Rectangle(Main.WIDTH_OF_WINDOW / 26, Main.HEIGHT_OF_WINDOW / 14);
         for (int i = 0; i < informationOfCards.length; i++)
             informationOfCards[i] = new Rectangle(Main.WIDTH_OF_WINDOW / 13, Main.HEIGHT_OF_WINDOW / 7);
     }
@@ -91,9 +93,11 @@ public class HandAppearance {
         root.getChildren().addAll(handIcons);
         root.getChildren().addAll(manaOfPlayers);
         root.getChildren().add(nextCard);
+        root.getChildren().addAll(manaOfNextCard);
     }
 
     private void locateIcons() {
+        nextCard.setVisible(false);
         for (int i = 0; i < hand.getCards().size(); i++) {
             if (handIcons[i] != null) {
                 double x = Main.WIDTH_OF_WINDOW / 3.6 + (Main.WIDTH_OF_WINDOW / 9.6 * i);
@@ -104,14 +108,38 @@ public class HandAppearance {
                 handIconsTemplate[i].setLayoutY(y * 1.015);
                 initializeHandIcons(i);
                 setInformationOfCards(i, informationOfCards[i], hand.getCards().get(i));
+                manaOfNextCard.setFont(FontAppearance.FONT_CREATE_DECK);
+                Card card = Battle.getCurrentBattle().getPlayerOne().getNextCard();
+                if (card instanceof Spell)
+                    manaOfNextCard.setText(Integer.toString(((Spell) card).getManaPoint()));
+                else if (card instanceof Minion)
+                    manaOfNextCard.setText(Integer.toString(((Minion) card).getManaPoint()));
             }
         }
         handIconsTemplate[this.hand.getCards().size()].setLayoutY(Main.HEIGHT_OF_WINDOW / 4);
         handIconsTemplate[this.hand.getCards().size()].setLayoutX(Main.WIDTH_OF_WINDOW / 9);
-        nextCard.setLayoutX(Main.HEIGHT_OF_WINDOW / 5);
-        nextCard.setLayoutY(Main.WIDTH_OF_WINDOW / 9);
-        // TODO: 2019-06-12
-        nextCard.setVisible(false);
+        nextCard.setLayoutX(Main.HEIGHT_OF_WINDOW / 4.7);
+        nextCard.setLayoutY(Main.WIDTH_OF_WINDOW / 6);
+        manaOfNextCard.setLayoutX(handIconsTemplate[this.hand.getCards().size()].getLayoutX() * 1.35);
+        manaOfNextCard.setLayoutY(handIconsTemplate[this.hand.getCards().size()].getLayoutY() * 1.55);
+        if (Battle.getCurrentBattle().getPlayerOne().getNextCard() instanceof Spell) {
+            try {
+                System.out.println("its spell");
+                nextCard.setFill(new ImagePattern(new Image(new FileInputStream("spell.gif"))));
+                nextCard.setVisible(true);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getPlayerOne().getNextCard().getName().trim().toLowerCase(), true);
+            if(minionAppearance != null){
+                minionAppearance.add(true);
+                minionAppearance.setLocation(handIconsTemplate[hand.getCards().size()].getLayoutX(), 0.98 * handIconsTemplate[hand.getCards().size()].getLayoutY());
+                minionAppearance.breathing();
+            }
+        }
+
     }
 
     private void locateData() {
