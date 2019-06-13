@@ -1,14 +1,11 @@
 package Appearance;
 
-import Cards.Card;
 import Cards.Hero;
 import Cards.Minion;
-import javafx.animation.Animation;
-import javafx.animation.PathTransition;
+import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -28,6 +25,7 @@ public class MinionAppearance {
     private int attackCount;
     private boolean isInHand;
     private boolean inInBoard;
+    private int hitCount;
 
     public class Position {
         public int x;
@@ -49,6 +47,7 @@ public class MinionAppearance {
     private HashMap<Integer, Position> mapBreathing = new HashMap<>();
     private HashMap<Integer, Position> mapDeath = new HashMap<>();
     private HashMap<Integer, Position> mapRun = new HashMap<>();
+    private HashMap<Integer, Position> mapHit = new HashMap<>();
 
     public MinionAppearance(Minion minion, String nameInFile, Group root) {
         this.minion = minion;
@@ -60,7 +59,7 @@ public class MinionAppearance {
             FileReader fileReader = new FileReader(address + ".plist");
             StringBuilder data = new StringBuilder();
             int c;
-            Pattern patternIndex = Pattern.compile("(?<name>attack|run|idle|breathing|death)_\\d{3}.png");
+            Pattern patternIndex = Pattern.compile("(?<name>attack|run|idle|breathing|death|hit)_\\d{3}.png");
             Matcher matcherIndex;
             Pattern patternPosition = Pattern.compile("<string>\\{\\{(?<x>\\d+),(?<y>\\d+)},\\{\\d+,\\d+}}</string>");
             Matcher matcherPosition;
@@ -72,9 +71,9 @@ public class MinionAppearance {
             this.runCount = data.toString().split("run").length - 1;
             this.breathingCount = data.toString().split("breathing").length - 1;
             this.deathCount = data.toString().split("death").length - 1;
+            this.hitCount = data.toString().split("hit").length - 1;
             String copy = data.toString();
-            int i = 1;
-            int attackCounter = 0, runCounter = 0, idleCounter = 0, breathingCounter = 0, deathCounter = 0;
+            int attackCounter = 0, runCounter = 0, idleCounter = 0, breathingCounter = 0, deathCounter = 0, hitCounter = 0;
             matcherIndex = patternIndex.matcher(copy);
             matcherPosition = patternPosition.matcher(copy);
             while (matcherIndex.find() && matcherPosition.find()) {
@@ -97,14 +96,18 @@ public class MinionAppearance {
                         mapBreathing.put(breathingCounter, new Position(x, y));
                         breathingCounter++;
                         break;
-                    case " death":
-                        mapDeath.put(deathCount, new Position(x, y));
+                    case "death":
+                        mapDeath.put(deathCounter, new Position(x, y));
                         deathCounter++;
+                        break;
+                    case "hit":
+                        mapHit.put(hitCounter, new Position(x, y));
+                        hitCounter++;
                         break;
                 }
                 copy = copy.replaceFirst("<string>\\{\\{(?<x>\\d+),(?<y>\\d+)},\\{\\d+,\\d+}}</string>", "");
                 copy = copy.replaceFirst("<string>\\{\\{(?<x>\\d+),(?<y>\\d+)},\\{\\d+,\\d+}}</string>", "");
-                copy = copy.replaceFirst("(?<name>attack|run|idle|breathing|death)_\\d{3}.png", "");
+                copy = copy.replaceFirst("(?<name>attack|run|idle|breathing|death|hit)_\\d{3}.png", "");
                 matcherIndex = patternIndex.matcher(copy);
                 matcherPosition = patternPosition.matcher(copy);
             }
@@ -117,7 +120,7 @@ public class MinionAppearance {
             }
             this.isInHand = true;
             this.inInBoard = false;
-            if (minion instanceof Hero){
+            if (minion instanceof Hero) {
                 this.isInHand = false;
                 this.inInBoard = true;
             }
@@ -130,14 +133,16 @@ public class MinionAppearance {
     public void move(double deltaX, double deltaY) {
         int duration = 100 * runCount;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapRun);
-        Path path = new Path(new MoveTo(0, 0), new LineTo(deltaX, deltaY));
-        PathTransition pathTransition = new PathTransition(Duration.millis(2000), path, imageView);
-        root.getChildren().addAll(path);
-        path.setVisible(false);
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        KeyValue keyValueX = new KeyValue(imageView.xProperty(), deltaX);
+        KeyValue keyValueY = new KeyValue(imageView.yProperty(), deltaY);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), keyValueX, keyValueY);
+        timeline.getKeyFrames().add(keyFrame);
         animation.setCycleCount(Animation.INDEFINITE);
         animation.setAutoReverse(true);
         animation.play();
-        pathTransition.play();
+        timeline.play();
     }
 
     public void breathing() {
@@ -164,6 +169,13 @@ public class MinionAppearance {
     public void idle() {
         int duration = idleCount * 100;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapIdle);
+        animation.setCycleCount(1);
+        animation.play();
+    }
+
+    public void hit() {
+        int duration = hitCount * 100;
+        Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapHit);
         animation.setCycleCount(1);
         animation.play();
     }
