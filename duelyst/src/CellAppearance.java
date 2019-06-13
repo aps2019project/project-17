@@ -92,6 +92,7 @@ public class CellAppearance {
                             if (minionAppearance != null)
                                 minionAppearance.move(0.975 * this.cellRectangle.getLayoutX() - minionAppearance.getImageView().getLayoutX(), 0.92 * this.cellRectangle.getLayoutY() - minionAppearance.getImageView().getLayoutY());
                         } else ErrorOnBattle.display(result);
+                        BattleAppearance.getCurrentBattleAppearance().setFlagsItemsAppearance();
 //                        BattleAppearance.getCurrentBattleAppearance().setAppearanceOfCells();
                     } else {
                         // in this case we want to attack!
@@ -114,6 +115,7 @@ public class CellAppearance {
                     BattleAppearance.getCurrentBattleAppearance().getBoardBackGround()[BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getRow()][BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getCol()].setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
                     BattleAppearance.getCurrentBattleAppearance().setCurrentSelectedCell(null);
                     Battle.getCurrentBattle().selectCardOrItem(null);
+                    BattleAppearance.getCurrentBattleAppearance().setFlagsItemsAppearance();
                 }
             }
         });
@@ -130,6 +132,22 @@ public class CellAppearance {
 
 
     public void setCellAppearance() {
+        checkFlagsItems();
+        if (cell.getCard() != null) {
+            Card card = cell.getCard();
+            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) card, false);
+            if (minionAppearance == null)
+                return;
+            minionAppearance.add(false);
+            minionAppearance.setLocation(0.975 * this.cellRectangle.getLayoutX(), 0.92 * this.cellRectangle.getLayoutY());
+            minionAppearance.breathing();
+            minionAppearance.getImageView().setOpacity(1);
+            minionAppearance.setInHand(false);
+            minionAppearance.setInInBoard(true);
+        }
+    }
+
+    public void checkFlagsItems() {
         this.cellRectangle.setOpacity(1);
         boolean check = false;
         try {
@@ -144,18 +162,6 @@ public class CellAppearance {
                 cellRectangle.setFill(Color.ORANGE);
                 cellRectangle.setOpacity(0.8);
                 check = true;
-            }
-            if (cell.getCard() != null) {
-                Card card = cell.getCard();
-                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) card, false);
-                if (minionAppearance == null)
-                    return;
-                minionAppearance.add(false);
-                minionAppearance.setLocation(0.975 * this.cellRectangle.getLayoutX(), 0.92 * this.cellRectangle.getLayoutY());
-                minionAppearance.breathing();
-                minionAppearance.getImageView().setOpacity(1);
-                minionAppearance.setInHand(false);
-                minionAppearance.setInInBoard(true);
             }
 
             if (!check) {

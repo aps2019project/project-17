@@ -228,7 +228,7 @@ public class Battle {
         } else if (card instanceof Spell) {
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
-            ((Spell) card).action(x, y);
+//            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
             this.whoseTurn().lessMana(((Spell) card).getManaPoint());
@@ -304,8 +304,8 @@ public class Battle {
                 break;
         }
 
-        attacker.attack(minion);
-        minion.counterAttack(attacker);
+//        attacker.attack(minion);
+//        minion.counterAttack(attacker);
         check();
         attacker.setCanAttack(false);
         minion.setCanCounterAttack(false);

@@ -47,9 +47,9 @@ public class GameController {
      */
 
     public static ArrayList<Account> getAccounts() {
-        accounts.clear();
-        if (Save.loadAccounts() != null)
-            accounts.addAll(Save.loadAccounts());
+//        accounts.clear();
+//        if (Save.loadAccounts() != null)
+//            accounts.addAll(Save.loadAccounts());
         return accounts;
     }
 

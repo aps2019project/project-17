@@ -303,6 +303,14 @@ public class BattleAppearance {
         }
     }
 
+    public void setFlagsItemsAppearance() {
+        for (CellAppearance[] cellAppearances : board) {
+            for (CellAppearance cellAppearance : cellAppearances) {
+                cellAppearance.checkFlagsItems();
+            }
+        }
+    }
+
 
     private void disPlay() {
         Main.getWindow().setScene(battleScene);
