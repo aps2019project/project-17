@@ -116,6 +116,12 @@ public class BattleAppearance {
         MinionAppearance b = new MinionAppearance(heroSecond, heroSecond.getName(), root);
         minionAppearanceOfBattle.add(a);
         minionAppearanceOfBattle.add(b);
+        a.add(false);
+        a.setLocation(0.975 * board[2][0].getCellRectangle().getLayoutX(), 0.92 * board[2][0].getCellRectangle().getLayoutY());
+        a.breathing();
+        a.getImageView().setOpacity(1);
+        a.setInHand(false);
+        a.setInInBoard(true);
     }
 
     private void locateNodes() {

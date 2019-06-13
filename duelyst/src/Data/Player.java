@@ -3,6 +3,7 @@ package Data;
 import CardCollections.Deck;
 import CardCollections.Hand;
 import Cards.Card;
+import Cards.Hero;
 import Cards.Item;
 import Cards.Minion;
 import Effects.Effect;
@@ -10,6 +11,7 @@ import Effects.enums.SpecialSituation;
 import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Player {
@@ -39,7 +41,9 @@ public class Player {
         this.userName = userName;
         this.holdingFlags = 0;
         this.nextCard = null;
-        setMainDeck(deck);
+        if (deck == Account.getLoginUser().getPlayer().getMainDeck())
+            setNewDeck(deck);
+        else setMainDeck(deck);
     }
 
     public Player(String userName) {
@@ -238,4 +242,12 @@ public class Player {
         return specialSituation;
     }
 
+    private void setNewDeck(Deck deck) {
+        if (this instanceof AI)
+            System.out.println("AI MODE");
+        Deck newDeck = Deck.copyDeck(deck);
+        System.out.println(deck == newDeck);
+        System.out.println(newDeck.getHero() == deck.getHero());
+        setMainDeck(newDeck);
+    }
 }
