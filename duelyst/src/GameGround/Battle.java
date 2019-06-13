@@ -290,7 +290,8 @@ public class Battle {
         Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
         switch (minion.getMinionType()) {
             case MELEE:
-                if (Cell.distance(cellDestination, cellFirst) > (attacker).getAttackRange())
+                System.out.println((attacker).getAttackRange());
+                if (Cell.distance(cellDestination, cellFirst) > 2)
                     return "type of attacker is MELEE, so opponent minion is invalid";
                 break;
             case RANGED:
