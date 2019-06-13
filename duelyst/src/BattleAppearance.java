@@ -125,6 +125,12 @@ public class BattleAppearance {
         MinionAppearance b = new MinionAppearance(heroSecond, heroSecond.getName(), root);
         minionAppearanceOfBattle.add(a);
         minionAppearanceOfBattle.add(b);
+        a.add(false);
+        a.setLocation(0.975 * board[2][0].getCellRectangle().getLayoutX(), 0.92 * board[2][0].getCellRectangle().getLayoutY());
+        a.breathing();
+        a.getImageView().setOpacity(1);
+        a.setInHand(false);
+        a.setInInBoard(true);
     }
 
     private void locateNodes() {
@@ -312,6 +318,7 @@ public class BattleAppearance {
         endTurnButton.setOnMouseClicked(e -> {// TODO: 6/13/2019 items must be handled here
 
             currentBattleAppearance = null;
+            Battle.getCurrentBattle().endingGame();
             new MainMenu();
         });
 
@@ -349,10 +356,10 @@ public class BattleAppearance {
         return boardBackGround;
     }
 
-    public MinionAppearance getMinionAppearanceOfBattle(String cardName, boolean isHand) {
+    public MinionAppearance getMinionAppearanceOfBattle(Minion minion, boolean isHand) {
         for (MinionAppearance minionAppearance : minionAppearanceOfBattle) {
-            if (minionAppearance.getMinion().getName().trim().toLowerCase().equals(cardName.toLowerCase().trim()))
-                if (minionAppearance.isInHand() == isHand)
+            if (minionAppearance.getMinion() == minion)
+                if(minionAppearance.isInHand() == isHand)
                     return minionAppearance;
 
         }
@@ -360,6 +367,7 @@ public class BattleAppearance {
     }
 
     public void insert() {
+        this.handAppearance = null;
         this.handAppearance = new HandAppearance(root);
     }
 

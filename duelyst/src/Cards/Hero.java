@@ -31,4 +31,10 @@ public class Hero extends Minion {
     public int getCoolDown() {
         return coolDown;
     }
+
+    public static Hero heroCopy(Hero hero, int coolDown) {
+        Hero hero1 = new Hero(hero.name, hero.id, hero.price, hero.getManaPoint(), hero.healthPoint ,hero.attackPoint, hero.getMinionType(), hero.getAttackRange(), hero.getDistanceCanMove(), hero.getMaxRangeToInput(), hero.getAttackType(), hero.coolDown, hero.desc);
+        hero1.coolDown = coolDown;
+        return hero1;
+    }
 }

@@ -3,6 +3,7 @@ package Data;
 import CardCollections.Deck;
 import CardCollections.Hand;
 import Cards.Card;
+import Cards.Hero;
 import Cards.Item;
 import Cards.Minion;
 import Effects.Effect;
@@ -10,6 +11,7 @@ import Effects.enums.SpecialSituation;
 import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Player {
@@ -39,7 +41,9 @@ public class Player {
         this.userName = userName;
         this.holdingFlags = 0;
         this.nextCard = null;
-        setMainDeck(deck);
+        if (deck == Account.getLoginUser().getPlayer().getMainDeck())
+            setNewDeck(deck);
+        else setMainDeck(deck);
     }
 
     public Player(String userName) {
@@ -92,6 +96,8 @@ public class Player {
 
     private void setCopyMainDeck() {
         mainDeck.getHero().setCanMove(true);
+        mainDeck.getHero().setCanAttack(true);
+        mainDeck.getHero().setCanCounterAttack(true);
         for (int i = 0; i < mainDeck.getCards().size(); i++) {
             if (mainDeck.getCards().get(i) instanceof Minion) {
                 ((Minion) mainDeck.getCards().get(i)).setCanMove(true);
@@ -188,8 +194,8 @@ public class Player {
             collectAbleItems.add(this.mainDeck.getItem());
         }
         setHand();
-        this.mana = 9;
-        this.previousMana = 9;
+        this.mana = 20;
+        this.previousMana = 20;
         return true;
     }
 
@@ -236,4 +242,8 @@ public class Player {
         return specialSituation;
     }
 
+    private void setNewDeck(Deck deck) {
+        Deck newDeck = Deck.copyDeck(deck);
+        setMainDeck(newDeck);
+    }
 }
