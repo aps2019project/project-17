@@ -123,7 +123,7 @@ public class MinionAppearance {
             }
             this.isInHand = true;
             this.inInBoard = false;
-            if (minion instanceof Hero) {
+            if (minion instanceof Hero){
                 this.isInHand = false;
                 this.inInBoard = true;
             }

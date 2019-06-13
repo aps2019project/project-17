@@ -239,8 +239,12 @@ public class HandAppearance {
         root.getChildren().removeAll(manaOfPlayers);
         root.getChildren().removeAll(nextCard);
         for (int i = 0; i < this.hand.getCards().size(); i++) {
-            if (hand.getCards().get(i) instanceof Minion)
-                BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true).remove();
+            if (hand.getCards().get(i) instanceof Minion){
+                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(hand.getCards().get(i).getName(), true);
+                if (minionAppearance != null)
+                    minionAppearance.remove();
+            }
+
 //            else {
 //                handIcons[i].setFill(null);
 //            }
