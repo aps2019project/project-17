@@ -31,6 +31,7 @@ public class CollectionAppearance {
     private ImageView deleteDeckIcon;
     private ImageView selectDeckIcon;
     private ImageView backIcon;
+    private ImageView importIcon;
     private int currentPage = 0;
     private Text currentPageView = new Text("page : 1");
     private Text myDecks = new Text("MY DECKS");
@@ -43,6 +44,7 @@ public class CollectionAppearance {
             deleteDeckIcon = new ImageView(new Image(new FileInputStream("minus.png")));
             selectDeckIcon = new ImageView(new Image(new FileInputStream("add.png")));
             backIcon = new ImageView(new Image(new FileInputStream("icon.png")));
+            importIcon=new ImageView(new Image(new FileInputStream("import.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -129,6 +131,11 @@ public class CollectionAppearance {
         backIcon.setOnMouseEntered(event -> backIcon.setOpacity(1));
         backIcon.setOnMouseExited(event -> backIcon.setOpacity(0.5));
         backIcon.setOnMouseClicked(event -> new MainMenu());
+
+        //import Icon
+        importIcon.setOnMouseEntered(event -> importIcon.setOpacity(1));
+        importIcon.setOnMouseExited(event -> importIcon.setOpacity(0.5));
+        importIcon.setOnMouseClicked(event->ImportExportDeckWindow.display());
     }
 
     private void setBackGround() {
@@ -174,7 +181,7 @@ public class CollectionAppearance {
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon, myDecks, backIcon);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon, myDecks, backIcon,importIcon);
     }
 
     private void locateNodes() {
@@ -214,6 +221,13 @@ public class CollectionAppearance {
         backIcon.setFitWidth(fillMenu.getWidth() / 3);
         backIcon.setFitHeight(fillMenu.getWidth() / 3);
         backIcon.setOpacity(0.5);
+
+        //import icon
+        importIcon.setLayoutX(fillMenu.getWidth()/3);
+        importIcon.setLayoutY(fillMenu.getHeight()/6);
+        importIcon.setFitWidth(fillMenu.getWidth()/4);
+        importIcon.setFitHeight(fillMenu.getWidth()/4);
+        importIcon.setOpacity(0.5);
     }
 
     private void locateShownCards() {

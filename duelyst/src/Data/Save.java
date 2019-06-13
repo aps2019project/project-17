@@ -63,9 +63,8 @@ public class Save {
         try {
             return gson.fromJson(jsonReader(address), Deck.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 //    public static String save(Object object) throws IllegalAccessException {
 //        StringBuilder stringBuilder = new StringBuilder("{\n");
