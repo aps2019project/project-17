@@ -104,6 +104,7 @@ public class ImportExportDeckWindow {
     }
 
     private static void importAction() {
+        result.setText("");
         String address = deckName.getText() + ".json";
         Deck imported = Save.importDeck(address);
         if (imported == null) {
@@ -133,7 +134,7 @@ public class ImportExportDeckWindow {
                     }
                 }
                 if (flag == 0) {
-                    result.setText("You don't some of this deck's card in your collection");
+                    result.setText("You don't have some of this deck's card in your collection");
                     deckName.setText("");
                     return;
                 }
