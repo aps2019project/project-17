@@ -123,7 +123,7 @@ public class MinionAppearance {
             }
             this.isInHand = true;
             this.inInBoard = false;
-            if (minion instanceof Hero){
+            if (minion instanceof Hero) {
                 this.isInHand = false;
                 this.inInBoard = true;
             }
@@ -137,7 +137,7 @@ public class MinionAppearance {
         int duration = 100 * runCount;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapRun);
         Path path = new Path(new MoveTo(deltaX, deltaY));
-        PathTransition pathTransition = new PathTransition(Duration.millis(2000), path, imageView);
+        PathTransition pathTransition = new PathTransition(Duration.millis((deltaX * deltaX) + (deltaY * deltaY)), path, imageView);
         root.getChildren().addAll(path);
         path.setVisible(false);
         animation.setCycleCount(Animation.INDEFINITE);
