@@ -184,6 +184,7 @@ public class HandAppearance {
                         selectedCard = null;
                         return;
                     }
+
                     if (selectedCard != null) {
                         if (!BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(selectedCard.getName(), true).isInHand())
                             return;
