@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class ItemAppearance {
+class ItemAppearance {
 
     private Item[] items = new Item[6];
     private Rectangle[] itemBackGrounds = new Rectangle[6];
@@ -20,17 +20,19 @@ public class ItemAppearance {
     private Group root;
 
 
-    public ItemAppearance(Group root) {
+    ItemAppearance(Group root,Item[] items) {
 
-        primaryInitialize(root);
+        primaryInitialize(root,items);
         setItemList();
         locateIcons();
         add();
         addInformationOfCards();
     }
 
-    private void primaryInitialize(Group root) {
+    private void primaryInitialize(Group root,Item[] items) {
         this.root = root;
+
+
         this.items[0] = Account.getLoginUser().getPlayer().getMainDeck().getItem();
     }
 
