@@ -52,17 +52,17 @@ public class CardMaker {
             stringBuilder.append("{");
             stringBuilder.append("\"name\": \"").append(minion.getName()).append("\",\n");
             stringBuilder.append("\"id\": \"").append(minion.getId()).append("\",\n");
-            stringBuilder.append("\"price\": \"").append(minion.getPrice()).append("\",\n");
-            stringBuilder.append("\"manaPoint\": \"").append(minion.getManaPoint()).append("\",\n");
-            stringBuilder.append("\"healthPoint\": \"").append(minion.getHealthPoint()).append("\",\n");
-            stringBuilder.append("\"attackPoint\": \"").append(minion.getAttackPoint()).append("\",\n");
+            stringBuilder.append("\"price\": ").append(minion.getPrice()).append(",\n");
+            stringBuilder.append("\"manaPoint\": ").append(minion.getManaPoint()).append(",\n");
+            stringBuilder.append("\"healthPoint\": ").append(minion.getHealthPoint()).append(",\n");
+            stringBuilder.append("\"attackPoint\": ").append(minion.getAttackPoint()).append(",\n");
             stringBuilder.append("\"minionType\": \"").append(minion.getMinionType()).append("\",\n");
             stringBuilder.append("\"attackRange\": \"").append(minion.getAttackRange()).append("\",\n");
-            stringBuilder.append("\"distanceCanMove\": \"").append(minion.getDistanceCanMove()).append("\",\n");
-            stringBuilder.append("\"maxRangeToInput\": \"").append(minion.getMaxRangeToInput()).append("\",\n");
+            stringBuilder.append("\"distanceCanMove\": ").append(minion.getDistanceCanMove()).append(",\n");
+            stringBuilder.append("\"maxRangeToInput\": ").append(minion.getMaxRangeToInput()).append(",\n");
             stringBuilder.append("\"attackType\": \"").append(minion.getAttackType()).append("\",\n");
             if (minion instanceof Hero)
-                stringBuilder.append("\"coolDown\": \"").append(((Hero) minion).getCoolDown()).append("\",\n");
+                stringBuilder.append("\"coolDown\": ").append(((Hero) minion).getCoolDown()).append(",\n");
             stringBuilder.append("\"desc\": \"").append(minion.getDesc()).append("\"\n");
             if (minions.indexOf(minion) != minions.size() - 1)
                 stringBuilder.append("},\n");
@@ -107,8 +107,8 @@ public class CardMaker {
             stringBuilder.append("{");
             stringBuilder.append("\"name\": \"").append(spell.getName()).append("\",\n");
             stringBuilder.append("\"id\": \"").append(spell.getId()).append("\",\n");
-            stringBuilder.append("\"price\": \"").append(spell.getPrice()).append("\",\n");
-            stringBuilder.append("\"manaPoint\": \"").append(spell.getManaPoint()).append("\",\n");
+            stringBuilder.append("\"price\": ").append(spell.getPrice()).append(",\n");
+            stringBuilder.append("\"manaPoint\": ").append(spell.getManaPoint()).append(",\n");
             stringBuilder.append("\"desc\": \"").append(spell.getDesc()).append("\"\n");
             if (spells.indexOf(spell) != spells.size() - 1)
                 stringBuilder.append("},\n");

@@ -22,7 +22,7 @@ public class Save {
     public static final String addressOfMinion = address + "Minion.json";
     public static final String addressOfSpell = address + "Spell.json";
 
-    public static void saveAccountِ(Account account) {
+    public static void saveAccount(Account account) {
         Gson gson = new Gson();
         String address = "Accounts//" + account.getUserName() + ".json";
         try {

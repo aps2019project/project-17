@@ -165,7 +165,8 @@ public class HandAppearance {
                     return;
                 minionAppearance.getImageView().setOnMouseClicked(e -> {
                     if (selectedCard != null) {
-                        if (hand.getCards().get(value) != null && hand.getCards().get(value) == selectedCard) {
+                        if (hand.getCards().get(value) != null) {
+                            if (selectedCard != null && hand.getCards().get(value) == selectedCard)
                             BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(0.5);
                             selectedCard = null;
                             return;
@@ -271,7 +272,7 @@ public class HandAppearance {
                 handIcons[i].setFill(null);
             }
         }
-        this.hand = null;
+//        this.hand = null;
     }
 
     public void setSelectedCard(Card selectedCard) {
