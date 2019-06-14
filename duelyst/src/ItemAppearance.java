@@ -29,11 +29,9 @@ class ItemAppearance {
         addInformationOfCards();
     }
 
-    private void primaryInitialize(Group root,Item[] items) {
+    private void primaryInitialize(Group root,Item[] passedItems) {
         this.root = root;
-
-
-        this.items[0] = Account.getLoginUser().getPlayer().getMainDeck().getItem();
+        System.arraycopy(passedItems, 0, this.items, 0, passedItems.length);
     }
 
     private void setItemList() {
@@ -107,5 +105,14 @@ class ItemAppearance {
             }
         }
         locateIcons();
+    }
+
+    public void delete(Group root){
+        for (int i = 0; i < itemBackGrounds.length; i++) {
+            if (itemBackGrounds[i] != null) {
+                root.getChildren().removeAll(itemBackGrounds[i]);
+                root.getChildren().removeAll(itemInfo[i]);
+            }
+        }
     }
 }

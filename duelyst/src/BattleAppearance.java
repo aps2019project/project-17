@@ -311,15 +311,14 @@ public class BattleAppearance {
 
     private void handleEvents() {
         textsOfBattle[0].setOnMouseClicked(e -> {
-            currentBattleAppearance = null;
-            Battle.getCurrentBattle().endingGame();
-            new MainMenu();
+//            currentBattleAppearance = null;
+//            Battle.getCurrentBattle().endingGame();
+//            new MainMenu();
         });
         endTurnButton.setOnMouseClicked(e -> {// TODO: 6/13/2019 items must be handled here
-
-            currentBattleAppearance = null;
-            Battle.getCurrentBattle().endingGame();
-            new MainMenu();
+//            currentBattleAppearance = null;
+//            Battle.getCurrentBattle().endingGame();
+//            new MainMenu();
         });
 
         textsOfBattle[6].setOnMouseClicked(event -> new GraveYardAppearance());
