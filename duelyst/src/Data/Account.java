@@ -1,11 +1,9 @@
 package Data;
 
 import CardCollections.Collection;
-import CardCollections.*;
+import CardCollections.Deck;
+import CardCollections.Shop;
 import controller.GameController;
-import controller.InstanceType;
-
-import java.io.IOException;
 
 public class Account implements Comparable<Account> {
 
