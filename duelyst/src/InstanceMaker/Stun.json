@@ -1,40 +1,47 @@
-[{"id": "202",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "ALL",
-"targetType": "MINION",
-"targetDetail": "null"
-},
-{"id": "204",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "null"
-},
-{"id": "102",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "null"
-},
-{"id": "136",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "AROUND",
-"targetType": "MINION",
-"targetDetail": "null"
-},
-{"id": "20",
-"startTime": 0,
-"endTime": 2,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "ENEMY"
-}]
+[
+  {
+    "id": "202",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "ALL",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  },
+  {
+    "id": "204",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  },
+  {
+    "id": "102",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "NONE"
+  },
+  {
+    "id": "136",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "AROUND",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  },
+  {
+    "id": "20",
+    "startTime": 0,
+    "endTime": 2,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  }
+]
