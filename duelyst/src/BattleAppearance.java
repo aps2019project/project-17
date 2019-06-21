@@ -167,10 +167,10 @@ public class BattleAppearance {
                 itemsToBePassed[i + 1] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
             }
         } else {
-            for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
-                itemsToBePassed[i] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
-            }
+        for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
+            itemsToBePassed[i] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
         }
+    }
         this.itemAppearance = new ItemAppearance(this.root, itemsToBePassed);
     }
 
@@ -319,11 +319,15 @@ public class BattleAppearance {
 
     private void handleEvents() {
         textsOfBattle[0].setOnMouseClicked(e -> {
+            itemAppearance.delete(root);
+            initItemList();
 //            currentBattleAppearance = null;
 //            Battle.getCurrentBattle().endingGame();
 //            new MainMenu();
         });
         endTurnButton.setOnMouseClicked(e -> {// TODO: 6/13/2019 items must be handled here
+            itemAppearance.delete(root);
+            initItemList();
 //            currentBattleAppearance = null;
 //            Battle.getCurrentBattle().endingGame();
 //            new MainMenu();
@@ -366,7 +370,7 @@ public class BattleAppearance {
     public MinionAppearance getMinionAppearanceOfBattle(Minion minion, boolean isHand) {
         for (MinionAppearance minionAppearance : minionAppearanceOfBattle) {
             if (minionAppearance.getMinion() == minion)
-                if(minionAppearance.isInHand() == isHand)
+                if (minionAppearance.isInHand() == isHand)
                     return minionAppearance;
 
         }
