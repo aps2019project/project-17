@@ -57,39 +57,40 @@ public class AI extends Player {
     }
 
     public void actionTurn() {
-        results = new ArrayList<>();
-        if (Battle.getCurrentBattle() == null)
-            return;
-        StringBuilder toReturn = new StringBuilder();
-        int counters = Math.abs(new Random().nextInt(1) + 1);
-        Battle battle = Battle.getCurrentBattle();
-        for (int i = 0; i < 6; i++) {
-            int r = Math.abs(new Random().nextInt() % 5);
-            switch (r) {
-                default:
-                    if (Battle.getCurrentBattle() == null)
-                        return;
-                case 0:
-                    insertAI(toReturn, battle);
-                    break;
-                case 1:
-                    insertAI(toReturn, battle);
-                    break;
-                case 2:// TODO: 2019-06-14
-//                    attackAI(toReturn, battle);
-                    insertAI(toReturn, battle);
-                    break;
-                case 3:
-//                    specialPowerAI(toReturn, battle);
-                    insertAI(toReturn, battle);
-                    break;
-                case 4:
-//                    useItemAI(toReturn, battle);
-                    insertAI(toReturn, battle);
-                    break;
-            }
-        }
-        System.out.println(toReturn);
+        // TODO: 2019-06-22
+//        results = new ArrayList<>();
+//        if (Battle.getCurrentBattle() == null)
+//            return;
+//        StringBuilder toReturn = new StringBuilder();
+//        int counters = Math.abs(new Random().nextInt(1) + 1);
+//        Battle battle = Battle.getCurrentBattle();
+//        for (int i = 0; i < 6; i++) {
+//            int r = Math.abs(new Random().nextInt() % 5);
+//            switch (r) {
+//                default:
+//                    if (Battle.getCurrentBattle() == null)
+//                        return;
+//                case 0:
+//                    insertAI(toReturn, battle);
+//                    break;
+//                case 1:
+//                    insertAI(toReturn, battle);
+//                    break;
+//                case 2:// TODO: 2019-06-14
+////                    attackAI(toReturn, battle);
+//                    insertAI(toReturn, battle);
+//                    break;
+//                case 3:
+////                    specialPowerAI(toReturn, battle);
+//                    insertAI(toReturn, battle);
+//                    break;
+//                case 4:
+////                    useItemAI(toReturn, battle);
+//                    insertAI(toReturn, battle);
+//                    break;
+//            }
+//        }
+//        System.out.println(toReturn);
     }
 
     private void useItemAI(StringBuilder toReturn, Battle battle) {

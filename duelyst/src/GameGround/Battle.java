@@ -305,12 +305,12 @@ public class Battle {
                 break;
         }
 
-//        attacker.attack(minion);
-//        minion.counterAttack(attacker);
+        attacker.attack(minion);
+        minion.counterAttack(attacker);
         check();
         // TODO: 2019-06-20
-//        attacker.setCanAttack(false);
-//        minion.setCanCounterAttack(false);
+        attacker.setCanAttack(false);
+        minion.setCanCounterAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
