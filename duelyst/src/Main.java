@@ -1,8 +1,6 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
-import Appearance.MinionAppearance;
 import Data.Account;
-import InstanceMaker.CardMaker;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;

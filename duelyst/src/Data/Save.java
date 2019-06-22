@@ -22,7 +22,7 @@ public class Save {
     public static final String addressOfMinion = address + "Minion.json";
     public static final String addressOfSpell = address + "Spell.json";
 
-    public static void saveAccountِ(Account account) {
+    static void saveAccount(Account account) {
         Gson gson = new Gson();
         String address = "Accounts//" + account.getUserName() + ".json";
         try {
@@ -91,38 +91,6 @@ public class Save {
             return null;
         }
     }
-//    public static String saveAccountِ(Object object) throws IllegalAccessException {
-//        StringBuilder stringBuilder = new StringBuilder("{\n");
-//        Class accountClass = object.getClass();
-//        Field[] fields = accountClass.getDeclaredFields();
-//        ArrayList<String> strings = new ArrayList<>();
-//        int counter = 0;
-//        for (Field field : fields) {
-//            field.setAccessible(true);
-//            if (field.get(object) != null && !field.get(object).toString().contains(".")) {
-//                if (field.get(object) instanceof String || field.get(object) instanceof Enum)
-//                    strings.add(counter, "\"" + field.getName() + "\": \"" + field.get(object) + "\"");
-//                else
-//                    strings.add(counter, "\"" + field.getName() + "\": " + field.get(object).toString());
-//                counter++;
-//            } else if (field.get(object) != null) {
-//                String s = "\"" + field.getName() + "\": ";
-//                s += saveAccountِ(field.get(object));
-//                strings.add(s);
-//                counter++;
-//            }
-//        }
-//        for (int i = 0; i < strings.size(); i++) {
-//            stringBuilder.append(strings.get(i));
-//            if (i != strings.size() - 1)
-//                stringBuilder.append(",\n");
-//            else
-//                stringBuilder.append("\n");
-//        }
-//        stringBuilder.append("}");
-//        return stringBuilder.toString();
-//    }
-
 
     public static void writeInJson(String address, String data) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));

@@ -162,16 +162,16 @@ public class BattleAppearance {
 
     private void initItemList() {
         Item[] itemsToBePassed = new Item[6];
-        if (Account.getLoginUser().getMainDeck().getItem() != null) {
-            itemsToBePassed[0] = Account.getLoginUser().getMainDeck().getItem();
-            for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
-                itemsToBePassed[i + 1] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
-            }
-        } else {
-            for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
-                itemsToBePassed[i] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
-            }
-        }
+//        if (Account.getLoginUser().getMainDeck().getItem() != null) {
+//            itemsToBePassed[0] = Account.getLoginUser().getMainDeck().getItem();
+//            for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
+//                itemsToBePassed[i + 1] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
+//            }
+//        } else {
+        for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
+            itemsToBePassed[i] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
+        //}
+    }
         this.itemAppearance = new ItemAppearance(this.root, itemsToBePassed);
     }
 
@@ -326,8 +326,18 @@ public class BattleAppearance {
 //            setAppearanceOfCells();
             handAppearance.insert();
             handAppearance = new HandAppearance(root);
+            itemAppearance.delete(root);
+            initItemList();
+//            currentBattleAppearance = null;
+//            Battle.getCurrentBattle().endingGame();
+//            new MainMenu();
         });
         endTurnButton.setOnMouseClicked(e -> {// TODO: 6/13/2019 items must be handled here
+            itemAppearance.delete(root);
+            initItemList();
+//            currentBattleAppearance = null;
+//            Battle.getCurrentBattle().endingGame();
+//            new MainMenu();
             Battle.getCurrentBattle().endTurn();
             AITurn();
             setManaIconImageLights();

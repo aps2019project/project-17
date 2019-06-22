@@ -5,7 +5,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "holyBuffState": 3,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "121",
 "startTime": 0,
@@ -14,7 +14,7 @@
 "targetRange": "DISTANCE_TWO",
 "targetType": "MINION",
 "holyBuffState": -1,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "126",
 "startTime": 0,
@@ -23,7 +23,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "holyBuffState": 1,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "126",
 "startTime": 0,
@@ -32,7 +32,7 @@
 "targetRange": "AROUND",
 "targetType": "MINION",
 "holyBuffState": 1,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "137",
 "startTime": 0,
@@ -41,7 +41,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "holyBuffState": 12,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "13",
 "startTime": 0,

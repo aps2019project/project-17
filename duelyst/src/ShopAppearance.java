@@ -5,6 +5,7 @@ import Cards.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
 import controller.GameController;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -36,7 +38,7 @@ class ShopAppearance {
     private ImageView rightDirection;
     private ImageView leftDirection;
     private ImageView coinsImage;
-    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS")};
+    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS"),new Text("Custom Cards")};
     private Text search = new Text("Search");
     private Text currentPageView = new Text();
     private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
@@ -341,6 +343,8 @@ class ShopAppearance {
             changeCards();
             changeColor();
         });
+
+        titles[4].setOnMouseClicked(event -> new CustomCardShop(moneyValue));
     }
 
     private void handleEventBack() {

@@ -1,6 +1,10 @@
 import Appearance.CardsDataAppearance;
+import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
-import Cards.*;
+import Cards.Card;
+import Cards.Hero;
+import Cards.Minion;
+import Cards.Spell;
 import Data.Account;
 import InstanceMaker.CardMaker;
 import javafx.scene.Group;
@@ -18,31 +22,36 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class GraveYardAppearance {
+class CustomCardShop {
 
     private Stage window = new Stage();
     private Group root = new Group();
-    private Scene graveYardScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
+    private Scene CustomCardShopScene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
     private Rectangle[][] shownCards = new Rectangle[2][5];
-    private Rectangle[] cardsOfUser = new Rectangle[Account.getLoginUser().getPlayer().getGraveYard().size()];
+    private Rectangle[] allProducts;// TODO: 6/14/2019
+    private ArrayList<Card> customCards = new ArrayList<>();
     private Rectangle fillMenu = new javafx.scene.shape.Rectangle(Main.WIDTH_OF_WINDOW / 10, Main.HEIGHT_OF_WINDOW);
     private CardsDataAppearance[][] shownData = new CardsDataAppearance[2][5];
+    private Rectangle currentSelectedRectangle;
+    private Rectangle[][] outBox = new Rectangle[2][5];
     private ImageView rightDirection;
     private ImageView leftDirection;
     private int currentPage = 0;
-    private Text title=new Text("Grave Yard");
+    private Text title = new Text("CustomCard Shop");
     private Text currentPageView = new Text("page : 1");
 
 
-    public GraveYardAppearance() {
-        setTitleAppearance();
+    CustomCardShop(Text moneyValue) {
+        initialiseCustomCardShow();
         initializeAllCards();
         initShownCards();
+        initializeOutBox();
+        setTitleAppearance();
         setBackGround();
         setDirectionsAction();
         addNodes();
         locateNodes();
-        disPlay();
+        disPlay(moneyValue);
     }
 
     {
@@ -54,41 +63,76 @@ public class GraveYardAppearance {
         }
     }
 
-    private void setTitleAppearance(){
-        title.setFont(Font.font("phosphate",80));
+    private void initialiseCustomCardShow() {
+
+        if (CardMaker.getHeroes().length > 10) {
+            for (int i = 10; i < CardMaker.getHeroes().length; i++) {
+                customCards.add(CardMaker.getHeroes()[i]);
+            }
+        }
+        if (CardMaker.getMinions().length > 40) {
+            for (int i = 40; i < CardMaker.getMinions().length; i++) {
+                customCards.add(CardMaker.getMinions()[i]);
+            }
+        }
+
+        if (CardMaker.getSpells().length > 20) {
+            for (int i = 20; i < CardMaker.getSpells().length; i++) {
+                customCards.add(CardMaker.getSpells()[i]);
+            }
+        }
+        allProducts = new Rectangle[customCards.size()];
+    }
+
+    private void initializeOutBox() {
+        for (int i = 0; i < outBox.length; i++) {
+            for (int j = 0; j < outBox[i].length; j++) {
+                outBox[i][j] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5 - 8, Main.HEIGHT_OF_WINDOW / 2.17 - 5);
+                outBox[i][j].setFill(ColorAppearance.BACKGROUND_DATA_CARDS);
+                outBox[i][j].setVisible(false);
+                outBox[i][j].setOpacity(0.7);
+            }
+        }
+    }
+
+    private void setTitleAppearance() {
+        title.setFont(Font.font("phosphate", 40));
         title.setFill(Color.WHITE);
         title.setRotate(-90);
         title.setLayoutX(-fillMenu.getWidth());
-        title.setLayoutY(fillMenu.getHeight()/2);
+        title.setLayoutY(fillMenu.getHeight() / 2);
 
     }
 
     private void initializeAllCards() {
-        ArrayList<Card> cards = Account.getLoginUser().getPlayer().getGraveYard();
-        for (int i = 0; i < cardsOfUser.length; i++) {
-            cardsOfUser[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
+        ArrayList<Card> cards = customCards;
+        for (int i = 0; i < allProducts.length; i++) {
+            allProducts[i] = new Rectangle((Main.WIDTH_OF_WINDOW - (fillMenu.getWidth()) - 2 * 70) / 5.5, Main.HEIGHT_OF_WINDOW / 2.3);
             if (i < cards.size()) {
                 try {
-                    if (cards.get(i) instanceof Hero)
-                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("product1.png"))));
-                    else if (cards.get(i) instanceof Spell)
-                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("product3.png"))));
-                    else if (cards.get(i) instanceof Minion)
-                        cardsOfUser[i].setFill(new ImagePattern(new Image(new FileInputStream("product2.png"))));
+                    if (cards.get(i) instanceof Spell)
+                        allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product3.png"))));
+                    else if (cards.get(i) instanceof Hero)
+                        allProducts[i].setFill(new ImagePattern(new Image(new FileInputStream("product1.png"))));
+                    else if (cards.get(i) instanceof Minion) {
+                        FileInputStream fileInputStream = new FileInputStream("product2.png");
+                        allProducts[i].setFill(new ImagePattern(new Image(fileInputStream)));
+                    }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                allProducts[i].setOpacity(0.7);
             }
         }
     }
 
     private void initShownCards() {
-        ArrayList<Card> cards = new ArrayList<>(Account.getLoginUser().getPlayer().getGraveYard());
+        ArrayList<Card> cards = new ArrayList<>(customCards);
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
-                if ((5 * i) + j >= cardsOfUser.length)
+                if ((5 * i) + j >= allProducts.length)
                     return;
-                shownCards[i][j] = cardsOfUser[(5 * i) + j];
+                shownCards[i][j] = allProducts[(5 * i) + j];
                 if (((5 * i) + j) < cards.size()) {
                     String name, price, manaPoint;
                     name = cards.get((5 * i) + j).getName();
@@ -110,10 +154,10 @@ public class GraveYardAppearance {
     private void setBackGround() {
         Image image;
         try {
-            image = new Image(new FileInputStream("graveYard.jpg"));
+            image = new Image(new FileInputStream("purpleBackGrouund.jpg"));
             ImageView imageOfBackGround = new ImageView(image);
-            imageOfBackGround.fitWidthProperty().bind(graveYardScene.widthProperty());
-            imageOfBackGround.fitHeightProperty().bind(graveYardScene.heightProperty());
+            imageOfBackGround.fitWidthProperty().bind(CustomCardShopScene.widthProperty());
+            imageOfBackGround.fitHeightProperty().bind(CustomCardShopScene.heightProperty());
             imageOfBackGround.setOpacity(1);
             fillMenu.setOpacity(0.6);
             root.getChildren().add(imageOfBackGround);
@@ -133,13 +177,17 @@ public class GraveYardAppearance {
 
     private void addNodes() {
         root.getChildren().add(fillMenu);
+
+        for (Rectangle[] box : outBox)
+            root.getChildren().addAll(box);
+
         for (Rectangle[] shownCard : shownCards)
             for (Rectangle rectangle : shownCard) {
                 if (rectangle == null)
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView,title);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, title);
     }
 
     private void locateNodes() {
@@ -149,9 +197,9 @@ public class GraveYardAppearance {
     }
 
     private void locateDirections() {
-        double y = 18.5 * graveYardScene.getHeight() / 40;
-        double x = graveYardScene.getWidth() * 28 / 29;
-        leftDirection.setLayoutX(graveYardScene.getWidth() * 3.2 / 31);
+        double y = 18.5 * CustomCardShopScene.getHeight() / 40;
+        double x = CustomCardShopScene.getWidth() * 28 / 29;
+        leftDirection.setLayoutX(CustomCardShopScene.getWidth() * 3.2 / 31);
         leftDirection.setLayoutY(y);
         rightDirection.setLayoutX(x);
         rightDirection.setLayoutY(y);
@@ -170,16 +218,24 @@ public class GraveYardAppearance {
                     continue;
                 if (j == 0) {
                     if (i == 0) {
+
                         shownCards[i][j].setLayoutY(fillMenu.getHeight() / 45);
                         shownCards[i][j].setLayoutX(fillMenu.getWidth() + Main.WIDTH_OF_WINDOW / 45);
+                        outBox[i][j].setLayoutX(shownCards[i][j].getLayoutX());
+                        outBox[i][j].setLayoutY(shownCards[i][j].getLayoutY());
                         continue;
                     }
+
                     shownCards[i][j].setLayoutX(shownCards[i - 1][j].getLayoutX());
                     shownCards[i][j].setLayoutY(shownCards[i - 1][j].getLayoutY() + Main.HEIGHT_OF_WINDOW / 2);
+                    outBox[i][j].setLayoutY(shownCards[i][j].getLayoutY());
+                    outBox[i][j].setLayoutX(shownCards[i][j].getLayoutX());
                     continue;
                 }
                 shownCards[i][j].setLayoutY(shownCards[i][j - 1].getLayoutY());
                 shownCards[i][j].setLayoutX(shownCards[i][j - 1].getLayoutX() + Main.WIDTH_OF_WINDOW / 6);
+                outBox[i][j].setLayoutY(shownCards[i][j].getLayoutY());
+                outBox[i][j].setLayoutX(shownCards[i][j].getLayoutX());
             }
         }
     }
@@ -211,15 +267,16 @@ public class GraveYardAppearance {
         }
     }
 
-    private void disPlay() {
-        window.setScene(graveYardScene);
-        window.showAndWait();
+    private void disPlay(Text moneyValue) {
+        window.setScene(CustomCardShopScene);
+        window.show();
         handleEventsKeyBoards();
+        handleEventsCards(moneyValue);
     }
 
     private void handleEventsKeyBoards() {
-        int sizeVariable = cardsOfUser.length / 10;
-        if (cardsOfUser.length % 10 != 0)
+        int sizeVariable = allProducts.length / 10;
+        if (allProducts.length % 10 != 0)
             sizeVariable++;
         int size = sizeVariable;
         rightDirection.setOnMouseClicked(e -> {
@@ -230,7 +287,7 @@ public class GraveYardAppearance {
             currentPage = Math.abs((currentPage + size - 1) % size);
             changeCards();
         });
-        graveYardScene.setOnKeyPressed(event -> {
+        CustomCardShopScene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case LEFT:
                     currentPage = Math.abs((currentPage + size - 1) % size);
@@ -258,12 +315,12 @@ public class GraveYardAppearance {
             }
         }
 
-        ArrayList<Card> cards = Account.getLoginUser().getPlayer().getGraveYard();// TODO: 6/14/2019  
+        ArrayList<Card> cards = customCards;
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
-                if ((currentPage * 10) + (5 * i) + j >= cardsOfUser.length)
+                if ((currentPage * 10) + (5 * i) + j >= allProducts.length)
                     continue;
-                shownCards[i][j] = cardsOfUser[(currentPage * 10) + (5 * i) + j];
+                shownCards[i][j] = allProducts[(currentPage * 10) + (5 * i) + j];
                 root.getChildren().add(shownCards[i][j]);
                 if ((currentPage * 10) + (5 * i) + j < cards.size()) {
                     if (cards.get((currentPage * 10) + (5 * i) + j) instanceof Minion) {
@@ -277,6 +334,35 @@ public class GraveYardAppearance {
             }
         }
         currentPageView.setText("Page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
+        locateShownCards();
         locateNodes();
+        if (currentSelectedRectangle != null)
+            currentSelectedRectangle.setVisible(false);
+    }
+
+
+    private void handleEventsCards(Text moneyValue) {
+        for (int i = 0; i < allProducts.length; i++) {
+            final Rectangle temp = allProducts[i];
+            final int value = i % 10;
+            allProducts[i].setOnMouseEntered(e -> {
+                temp.setOpacity(1);
+                shownData[value / 5][value % 5].light();
+            });
+            allProducts[i].setOnMouseExited(e -> {
+                temp.setOpacity(0.7);
+                shownData[value / 5][value % 5].dark();
+            });
+            allProducts[i].setOnMouseClicked(e -> {
+                if (currentSelectedRectangle != null)
+                    currentSelectedRectangle.setVisible(false);
+                outBox[value / 5][value % 5].setVisible(true);
+                currentSelectedRectangle = outBox[value / 5][value % 5];
+                CertainlyOfShop.disPlay(shownData[value / 5][value % 5].getNameView().getText().toLowerCase(), shownData[value / 5][value % 5].getPriceView().getText());
+                moneyValue.setText(Integer.toString(Account.getLoginUser().getDaric()));
+            });
+        }
     }
 }
+
+

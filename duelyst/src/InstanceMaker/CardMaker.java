@@ -107,8 +107,8 @@ public class CardMaker {
             stringBuilder.append("{");
             stringBuilder.append("\"name\": \"").append(spell.getName()).append("\",\n");
             stringBuilder.append("\"id\": \"").append(spell.getId()).append("\",\n");
-            stringBuilder.append("\"price\": \"").append(spell.getPrice()).append("\",\n");
-            stringBuilder.append("\"manaPoint\": \"").append(spell.getManaPoint()).append("\",\n");
+            stringBuilder.append("\"price\": ").append(spell.getPrice()).append(",\n");
+            stringBuilder.append("\"manaPoint\": ").append(spell.getManaPoint()).append(",\n");
             stringBuilder.append("\"desc\": \"").append(spell.getDesc()).append("\"\n");
             if (spells.indexOf(spell) != spells.size() - 1)
                 stringBuilder.append("},\n");

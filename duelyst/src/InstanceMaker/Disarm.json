@@ -4,7 +4,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "110",
 "startTime": 0,
@@ -12,7 +12,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "1",
 "startTime": 0,
@@ -20,7 +20,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "9",
 "startTime": 0,
@@ -28,7 +28,7 @@
 "isContinues": false,
 "targetRange": "ONE",
 "targetType": "MINION",
-"targetDetail": "null"
+"targetDetail": "INSIDER"
 },
 {"id": "10",
 "startTime": 0,
@@ -36,7 +36,7 @@
 "isContinues": false,
 "targetRange": "ALL",
 "targetType": "MINION",
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "-303",
 "startTime": 0,

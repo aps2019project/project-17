@@ -1,11 +1,9 @@
 package Data;
 
 import CardCollections.Collection;
-import CardCollections.*;
+import CardCollections.Deck;
+import CardCollections.Shop;
 import controller.GameController;
-import controller.InstanceType;
-
-import java.io.IOException;
 
 public class Account implements Comparable<Account> {
 
@@ -39,8 +37,7 @@ public class Account implements Comparable<Account> {
                 return "UserName Already Exist! Please Try again with another UserName.";
         }
         Account account = new Account(userName, passWord);
-        GameController.getAccounts().add(account);
-        Save.saveAccountِ(account);
+        Save.saveAccount(account);
         return "Account Successfully created";
     }
 

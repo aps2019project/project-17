@@ -5,7 +5,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "specialSituation": "ATTACK",
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "117",
 "startTime": 0,
@@ -14,7 +14,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "specialSituation": "DIE",
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "138",
 "startTime": 0,
@@ -23,7 +23,7 @@
 "targetRange": "SELF",
 "targetType": "MINION",
 "specialSituation": "DIE",
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "303",
 "startTime": 0,

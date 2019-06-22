@@ -7,7 +7,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 4,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "-205",
 "startTime": 0,
@@ -18,7 +18,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "207",
 "startTime": 0,
@@ -29,7 +29,7 @@
 "changeHealthValue": -4,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "105",
 "startTime": 0,
@@ -40,7 +40,7 @@
 "changeHealthValue": -123,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "110",
 "startTime": 0,
@@ -51,7 +51,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "115",
 "startTime": 0,
@@ -62,7 +62,7 @@
 "changeHealthValue": 10,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "-117",
 "startTime": 0,
@@ -73,7 +73,7 @@
 "changeHealthValue": -2,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "118",
 "startTime": 0,
@@ -84,7 +84,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "122",
 "startTime": 1,
@@ -95,7 +95,7 @@
 "changeHealthValue": -4,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "122",
 "startTime": 1,
@@ -106,7 +106,7 @@
 "changeHealthValue": -2,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "123",
 "startTime": 1,
@@ -117,7 +117,7 @@
 "changeHealthValue": -8,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "124",
 "startTime": 1,
@@ -128,7 +128,7 @@
 "changeHealthValue": -6,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "125",
 "startTime": 0,
@@ -150,7 +150,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "125",
 "startTime": 0,
@@ -161,7 +161,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": true,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "125",
 "startTime": 0,
@@ -172,7 +172,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": true,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "126",
 "startTime": 0,
@@ -183,7 +183,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "126",
 "startTime": 0,
@@ -194,7 +194,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "NONE"
 },
 {"id": "127",
 "startTime": 0,
@@ -205,7 +205,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 1,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "INSIDER"
 },
 {"id": "131",
 "startTime": 0,
@@ -216,7 +216,7 @@
 "changeHealthValue": -16,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "-138",
 "startTime": 0,
@@ -227,7 +227,7 @@
 "changeHealthValue": -6,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "3",
 "startTime": 0,
@@ -238,7 +238,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 2,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "INSIDER"
 },
 {"id": "4",
 "startTime": 0,
@@ -249,7 +249,7 @@
 "changeHealthValue": -4,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "5",
 "startTime": 0,
@@ -260,7 +260,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 4,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "INSIDER"
 },
 {"id": "7",
 "startTime": 0,
@@ -271,7 +271,7 @@
 "changeHealthValue": -8,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "null"
+"targetDetail": "ENEMY"
 },
 {"id": "9",
 "startTime": 0,
@@ -282,7 +282,7 @@
 "changeHealthValue": 0,
 "changePowerValue": 4,
 "returnEffect": true,
-"targetDetail": "null"
+"targetDetail": "INSIDER"
 },
 {"id": "11",
 "startTime": 0,
@@ -293,7 +293,7 @@
 "changeHealthValue": -1,
 "changePowerValue": 0,
 "returnEffect": false,
-"targetDetail": "NONE"
+"targetDetail": "ENEMY"
 },
 {"id": "13",
 "startTime": 0,
