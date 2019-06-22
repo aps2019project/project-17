@@ -285,7 +285,7 @@ class BattleRequest {
         if (matcher.matches()) {
             int x = Integer.parseInt(matcher.group("x"));
             int y = Integer.parseInt(matcher.group("y"));
-            String result = GameController.useSpecialPower(x, y, Battle.getCurrentBattle());
+            String result = GameController.useItem(x, y, Battle.getCurrentBattle());
             System.out.println(result);
             return true;
         } else {

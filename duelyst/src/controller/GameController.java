@@ -162,6 +162,10 @@ public class GameController {
     public static String useSpecialPower(int x, int y, Battle battle) {
         return battle.useSpecialPower(x, y);
     }
+    public static String useItem(int x, int y,Battle battle){
+        return battle.useItem(x,y);
+    }
+
 
     public static String selectCardOrItem(String cardItemID, Battle battle) {
         return battle.selectCardOrItem(cardItemID);

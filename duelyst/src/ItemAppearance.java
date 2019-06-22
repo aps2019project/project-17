@@ -1,7 +1,11 @@
 import Appearance.FontAppearance;
 import Cards.Item;
+import GameGround.Battle;
+import controller.GameController;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -111,7 +115,7 @@ class ItemAppearance {
         locateIcons();
     }
 
-    public void delete(Group root) {
+    void delete(Group root) {
         for (int i = 0; i < itemBackGrounds.length; i++) {
             if (itemBackGrounds[i] != null) {
                 root.getChildren().removeAll(itemBackGrounds[i]);
@@ -119,4 +123,19 @@ class ItemAppearance {
             }
         }
     }
+
+    private void eventHandler(){
+        for (int i = 0; i <itemBackGrounds.length ; i++) {
+            if (itemBackGrounds[i] != null && itemInfo[i] != null && items[i] != null){
+                final int j=i;
+               itemBackGrounds[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                   @Override
+                   public void handle(MouseEvent event) {
+                       GameController.selectCardOrItem(items[j].getId(), Battle.getCurrentBattle());
+                   }
+               });
+            }
+        }
+    }
+
 }
