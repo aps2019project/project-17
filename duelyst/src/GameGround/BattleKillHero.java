@@ -66,12 +66,11 @@ public class BattleKillHero extends Battle {
 
     @Override
     public String insertingCardFromHand(String cardName, int x, int y) {
-        String toReturnFromSuper = super.insertingCardFromHand(cardName, x, y);
+        String toReturnFromSuper = super.insertingCardFromHand(cardName.trim().toLowerCase(), x, y);
         Card card = whoseTurn().getCardFromHand(cardName);
-        if (!toReturnFromSuper.equals("ok")) {
-            whoseTurn().removeCardFromHand(card);
+        if (!toReturnFromSuper.equals("ok"))
             return toReturnFromSuper;
-        }
+
         whoseTurn().removeCardFromHand(card);
         super.check();
         return "card successfully inserted";

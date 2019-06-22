@@ -31,7 +31,7 @@ public class Board {
                     continue;
                 if (cell.getCard() == null || cell.getCard().getUserName() == null)
                     continue;
-                if (cell.getCard().getUserName().equals(player.getUserName()))
+                if (cell.getCard().getUserName().equalsIgnoreCase(player.getUserName()))
                     return true;
             }
         }

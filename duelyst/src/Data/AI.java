@@ -4,6 +4,7 @@ import CardCollections.Deck;
 import GameGround.Battle;
 import Cards.Minion;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class AI extends Player {
@@ -11,6 +12,7 @@ public class AI extends Player {
     private static AI AIModeKH;
     private static AI AIModeCF;
     private static AI AIModeHF;
+    private static ArrayList<String> results = new ArrayList<>();
 
     public static void initializeAIStory() {
         AIModeKH = new AI("AI Mode KH", Deck.getDeckKillHero());
@@ -55,31 +57,35 @@ public class AI extends Player {
     }
 
     public void actionTurn() {
+        results = new ArrayList<>();
         if (Battle.getCurrentBattle() == null)
             return;
         StringBuilder toReturn = new StringBuilder();
         int counters = Math.abs(new Random().nextInt(1) + 1);
         Battle battle = Battle.getCurrentBattle();
-        for (int i = 0; i < counters; i++) {
+        for (int i = 0; i < 6; i++) {
             int r = Math.abs(new Random().nextInt() % 5);
             switch (r) {
                 default:
                     if (Battle.getCurrentBattle() == null)
                         return;
                 case 0:
-                    moveAI(toReturn, battle);
+                    insertAI(toReturn, battle);
                     break;
                 case 1:
                     insertAI(toReturn, battle);
                     break;
-                case 2:
-                    attackAI(toReturn, battle);
+                case 2:// TODO: 2019-06-14
+//                    attackAI(toReturn, battle);
+                    insertAI(toReturn, battle);
                     break;
                 case 3:
-                    specialPowerAI(toReturn, battle);
+//                    specialPowerAI(toReturn, battle);
+                    insertAI(toReturn, battle);
                     break;
                 case 4:
-                    useItemAI(toReturn, battle);
+//                    useItemAI(toReturn, battle);
+                    insertAI(toReturn, battle);
                     break;
             }
         }
@@ -96,7 +102,7 @@ public class AI extends Player {
         }
         int x = Math.abs(new Random().nextInt() % 5) + 1;
         int y = Math.abs(new Random().nextInt() % 9) + 1;
-        battle.useItem(x, y);
+//        battle.useItem(x, y);
         toReturn.append("item decided to use ").append(battle.getSelectedItem().getName()).append(" in ").append(x).append(" - ").append(y).append("\n");
     }
 
@@ -105,7 +111,7 @@ public class AI extends Player {
         int y;
         x = Math.abs(new Random().nextInt() % 5) + 1;
         y = Math.abs(new Random().nextInt() % 9) + 1;
-        battle.useSpecialPower(x, y);
+//        battle.useSpecialPower(x, y);
         toReturn.append("AI decided to use special power\n");
     }
 
@@ -141,37 +147,46 @@ public class AI extends Player {
     }
 
     private void insertAI(StringBuilder toReturn, Battle battle) {
-        int randomToChoose = 1;
-        int x = 1;
-        int y = 1;
+        int randomToChoose = 0;
+        int x = 3;
+        int y = 8;
         String s;
         if (battle.getSelectedCard() == null)
             battle.selectCardOrItem(selectCard(toReturn).getId());
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
+            if (currentAIPlayer.getHand().getCards().size() <= 0)
+                break;
+            String name = currentAIPlayer.getHand().getCards().get(randomToChoose).getName();
             s = battle.insertingCardFromHand(currentAIPlayer.getHand().getCards().get(randomToChoose).getName(), x, y);
             if (s.contains("successfully")) {
-                toReturn.append("AI decided to insert ").append(currentAIPlayer.getHand().getCards().get(randomToChoose).getName()).append(" in ").append(x).append(" - ").append(y).append(" and then ".concat(s).concat("\n"));
+                results.add("insert " + name);
+                toReturn.append("AI decided to insert ").append(name).append(" in ").append(x).append(" - ").append(y).append(" and then ".concat(s).concat("\n"));
                 return;
             }
-            randomToChoose = Math.abs(new Random().nextInt() % (currentAIPlayer).getHand().getCards().size());
-            x = (Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2)) % 5 + 1;
-            y = (Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2)) % 9 + 1;
+            randomToChoose = Math.abs(new Random().nextInt((currentAIPlayer).getHand().getCards().size()));
+            while (randomToChoose >= currentAIPlayer.getHand().getCards().size())
+                randomToChoose = Math.abs(new Random().nextInt((currentAIPlayer).getHand().getCards().size()));
+            x = Math.abs((Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt(4))) % 4) + 1;
+            y = Math.abs((Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt(4))) % 8) + 1;
         }
         toReturn.append("AI decided to insert a card but failed!\n");
     }
 
     private void moveAI(StringBuilder toReturn, Battle battle) {
-        int x;
-        int y;
+        int x, x0;
+        int y, y0;
         String s;
         if (battle.getSelectedCard() == null) {
             battle.selectCardOrItem(selectCard(toReturn).getId());
         }
+        x0 = ((Minion) battle.getSelectedCard()).getXCoordinate();
+        y0 = ((Minion) battle.getSelectedCard()).getYCoordinate();
         for (int i = 0; i < 2; i++) {
             y = (Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2)) % 9 + 1;
             x = (Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2)) % 5 + 1;
             s = battle.movingCard(x, y);
             if (s.contains("moved")) {
+                results.add("moved " + Battle.getCurrentBattle().getSelectedCard().getName().concat(" -> ") + x0 + " " + y0 + " " + x + " " + y);
                 toReturn.append("AI decided to move ").append(battle.getSelectedCard().getName()).append(" into ").append(x).append(" - ").append(y).append(" and ".concat(s).concat("\n"));
                 return;
             }
@@ -186,5 +201,9 @@ public class AI extends Player {
             r = Math.abs(random.nextInt() % Battle.getCurrentBattle().minionsOfCurrentPlayer(currentAIPlayer).size());
         stringBuilder.append("AI select card ").append(Battle.getCurrentBattle().minionsOfCurrentPlayer(currentAIPlayer).get(r).getName()).append("\n");
         return Battle.getCurrentBattle().minionsOfCurrentPlayer(currentAIPlayer).get(r);
+    }
+
+    public static ArrayList<String> getResults() {
+        return results;
     }
 }

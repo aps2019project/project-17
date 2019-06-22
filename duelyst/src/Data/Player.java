@@ -2,16 +2,12 @@ package Data;
 
 import CardCollections.Deck;
 import CardCollections.Hand;
-import Cards.Card;
-import Cards.Hero;
-import Cards.Item;
-import Cards.Minion;
+import Cards.*;
 import Effects.Effect;
+import Effects.enums.MinionType;
 import Effects.enums.SpecialSituation;
-import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Player {
@@ -41,9 +37,7 @@ public class Player {
         this.userName = userName;
         this.holdingFlags = 0;
         this.nextCard = null;
-        if (deck == Account.getLoginUser().getPlayer().getMainDeck())
-            setNewDeck(deck);
-        else setMainDeck(deck);
+        setMainDeck(deck);
     }
 
     public Player(String userName) {
@@ -95,6 +89,7 @@ public class Player {
     }
 
     private void setCopyMainDeck() {
+        setDeckReady();
         mainDeck.getHero().setCanMove(true);
         mainDeck.getHero().setCanAttack(true);
         mainDeck.getHero().setCanCounterAttack(true);
@@ -194,8 +189,8 @@ public class Player {
             collectAbleItems.add(this.mainDeck.getItem());
         }
         setHand();
-        this.mana = 20;
-        this.previousMana = 20;
+        this.mana = 50;
+        this.previousMana = 50;
         return true;
     }
 
@@ -203,9 +198,9 @@ public class Player {
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
             int n = random.nextInt() % this.copyMainDeck.getCards().size();
-            while (n < 0) {
+            while (n < 0)
                 n = random.nextInt() % this.copyMainDeck.getCards().size();
-            }
+
             this.hand.addCard(copyMainDeck.getCards().get(n));
             this.copyMainDeck.getCards().remove(n);
         }
@@ -245,5 +240,21 @@ public class Player {
     private void setNewDeck(Deck deck) {
         Deck newDeck = Deck.copyDeck(deck);
         setMainDeck(newDeck);
+    }
+
+    private void setDeckReady() {
+        Deck finalDeck = new Deck(mainDeck.getName());
+        for (int i = 0; i < mainDeck.getCards().size(); i++) {
+            if (mainDeck.getCards().get(i) instanceof Spell)
+                finalDeck.addCard(Spell.spellCopy((Spell) mainDeck.getCards().get(i)));
+            else if (mainDeck.getCards().get(i) instanceof Minion)
+                finalDeck.addCard((Minion.minionCopy((Minion) mainDeck.getCards().get(i))));
+            else if (mainDeck.getCards().get(i) instanceof Hero)
+                finalDeck.addCard(Hero.heroCopy((Hero) mainDeck.getCards().get(i), ((Hero) mainDeck.getCards().get(i)).getCoolDown()));
+        }
+        finalDeck.setHero(Hero.heroCopy(mainDeck.getHero(), mainDeck.getHero().getCoolDown()));
+        if (mainDeck.getItem() != null)
+            finalDeck.setItem(mainDeck.getItem());
+        setMainDeck(finalDeck);
     }
 }

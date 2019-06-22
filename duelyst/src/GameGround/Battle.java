@@ -190,31 +190,28 @@ public class Battle {
         Cell cell = getCellFromBoard(x, y);
 
         if (card == null)
-            return "invalid card name";
+            return "can't  find  your  selected  card  :((((";
+
         if (x > 5 || y > 9)
-            return "invalid target";
+            return "invalid target - out of range";
 
         if (cell == null)
-            return "invalid target ";
-
-        if (cell.getItem() != null) {
-            whoseTurn().addItemToCollectAbleItems(cell.getItem());
-            cell.setItem(null);
-        }
+            return "invalid target  - there is a issue with your selected cell";
 
         if (card instanceof Minion) {
             if (cell.getCard() != null)
-                return "invalid target";
+                return "invalid target - your selected cell already has a card!";
             if (!board.isCoordinateAvailable(this, x, y))
-                return "invalid target";
-
+                return "invalid  target  -  your  selected  cell  is  too  far  !";
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
-                return "You don′t have enough mana";
-
-            this.selectedCard = card;
+                return "You  don′t  have  enough  mana  to  insert  this  card";
             ((Minion) card).setCoordinate(x, y);
-            if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
-                ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
+//            if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
+//                ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
+            if (cell.getItem() != null) {
+                whoseTurn().addItemToCollectAbleItems(cell.getItem());
+                cell.setItem(null);
+            }
             card.setUserName(whoseTurn().getUserName());
             whoseTurn().lessMana(((Minion) card).getManaPoint());
             cell.setCard(card);
@@ -281,24 +278,28 @@ public class Battle {
             minion = (Minion) returnCardFromBoard(opponentCardId, whoseTurn());
 
         if (minion == null)
-            return "invalid card id";
+            return "can't find card";
 
         if (!attacker.getCanAttack())
-            return "this card with " + attacker.getId() + " id can't attack";
+            return "this  card  doesnt  ability  to  attack  at  this  time";
+
+        // TODO: 2019-06-20
+        System.out.println("a card is attack -> ".concat(selectedCard.getName()));
+        System.out.println(minion.getMinionType());
+        System.out.println(minion.getAttackRange() + "\n");
 
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
         Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
-        switch (minion.getMinionType()) {
+        switch (attacker.getMinionType()) {
             case MELEE:
-                System.out.println((attacker).getAttackRange());
-                if (Cell.distance(cellDestination, cellFirst) > 2)
+                if (!permissionForMeeleAttack(cellFirst, cellDestination))
                     return "type of attacker is MELEE, so opponent minion is invalid";
                 break;
             case RANGED:
                 if (Cell.distance(cellDestination, cellFirst) < 2)
-                    return "type of attacker is RANGED, so opponent minion is invalid - ATTACK RANGE: " + attacker.getAttackRange();
+                    return "type of attacker is RANGED, so opponent minion is invalid  ( distance is close )  -  ATTACK RANGE: " + attacker.getAttackRange();
                 if (Cell.distance(cellDestination, cellFirst) > attacker.getAttackRange())
-                    return "type of attacker is RANGED, so opponent minion is invalid - ATTACK RANGE: " + attacker.getAttackRange();
+                    return "type of attacker is RANGED, so opponent minion is invalid  ( distance is far )  -  ATTACK RANGE: " + attacker.getAttackRange();
                 break;
             case HYBRID:
                 break;
@@ -307,8 +308,9 @@ public class Battle {
 //        attacker.attack(minion);
 //        minion.counterAttack(attacker);
         check();
-        attacker.setCanAttack(false);
-        minion.setCanCounterAttack(false);
+        // TODO: 2019-06-20
+//        attacker.setCanAttack(false);
+//        minion.setCanCounterAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
@@ -409,17 +411,17 @@ public class Battle {
             this.playerOne.setPreviousMana(this.playerOne.getMana());
             this.playerTwo.setPreviousMana(this.playerTwo.getMana());
         }
-        for (Minion minion : getAllMinion()) {
-            if (minion.getAttackType().equals(AttackType.PASSIVE))
-                minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
-            minion.passTurn();
-        }
-        for (int i = 0; i < this.board.getCells().length; i++) {
-            for (int j = 0; j < this.board.getCells()[i].length; j++) {
-                getCellFromBoard(i + 1, j + 1).passTurn();
-            }
-        }
-        whoseTurn().passTurn();
+//        for (Minion minion : getAllMinion()) {
+//            if (minion.getAttackType().equals(AttackType.PASSIVE))
+//                minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
+//            minion.passTurn();
+//        }
+//        for (int i = 0; i < this.board.getCells().length; i++) {
+//            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+//                getCellFromBoard(i + 1, j + 1).passTurn();
+//            }
+//        }
+//        whoseTurn().passTurn();
         if (currentBattle != null)
             currentBattle.check();
     }
@@ -686,7 +688,7 @@ public class Battle {
             return false;
         if (!cardIsMine(card, whoseTurn()))
             return false;
-        this.selectedCard= card;
+        this.selectedCard = card;
         return true;
     }
 
@@ -700,5 +702,16 @@ public class Battle {
 
     public void setSelectedCardNull() {
         this.selectedCard = null;
+    }
+
+    private boolean permissionForMeeleAttack(Cell first, Cell destination) {
+        if (Cell.distance(first, destination) > 2)
+            return false;
+        if (Cell.distance(first, destination) <= 1)
+            return true;
+        if (Cell.distance(first, destination) == 2)
+            return (first.getRow() != destination.getRow()) && (first.getCol() != destination.getCol());
+
+        return false;
     }
 }

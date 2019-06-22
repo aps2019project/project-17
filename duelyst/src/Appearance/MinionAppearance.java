@@ -201,7 +201,7 @@ public class MinionAppearance {
     }
 
     public void remove() {
-        root.getChildren().remove(imageView);
+        root.getChildren().removeAll(imageView);
     }
 
     public boolean isInHand() {

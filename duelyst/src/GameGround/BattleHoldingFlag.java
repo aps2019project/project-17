@@ -111,22 +111,24 @@ public class BattleHoldingFlag extends Battle {
         if (!returningFromSuper.equals("ok"))
             return returningFromSuper;
 
-        Card card = whoseTurn().getCardFromHand(cardName);
+        Card card = whoseTurn().getCardFromHand(cardName.toLowerCase().trim());
         Cell cellDestination = getCellFromBoard(x, y);
 
         if (card instanceof Minion) {
+            whoseTurn().removeCardFromHand(card);
             if (cellDestination.hasFlag()) {
                 ((Minion) card).setHasFlag(true);
                 cellDestination.setFlag(false);
-                whoseTurn().removeCardFromHand(card);
                 whoHasFlag = whoseTurn();
                 timeHoldingFlag = 0;
+                super.check();
                 return "card successfully inserted and captured the flag";
             }
+            super.check();
             return "card successfully inserted";
         }
-        super.check();
         whoseTurn().removeCardFromHand(card);
+        super.check();
         return "card successfully inserted";
     }
 

@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BattleAppearance {
     private Group root;
@@ -319,20 +320,97 @@ public class BattleAppearance {
 
     private void handleEvents() {
         textsOfBattle[0].setOnMouseClicked(e -> {
-            currentBattleAppearance = null;
-            Battle.getCurrentBattle().endingGame();
-            new MainMenu();
+            Battle.getCurrentBattle().endTurn();
+            AITurn();
+            setManaIconImageLights();
+//            setAppearanceOfCells();
+            handAppearance.insert();
+            handAppearance = new HandAppearance(root);
         });
         endTurnButton.setOnMouseClicked(e -> {// TODO: 6/13/2019 items must be handled here
-
-            currentBattleAppearance = null;
-            Battle.getCurrentBattle().endingGame();
-            new MainMenu();
+            Battle.getCurrentBattle().endTurn();
+            AITurn();
+            setManaIconImageLights();
+//            setAppearanceOfCells();
+            handAppearance.insert();
+            handAppearance = new HandAppearance(root);
         });
 
         textsOfBattle[6].setOnMouseClicked(event -> new GraveYardAppearance());
 
         graveYardButton.setOnMouseClicked(event -> new GraveYardAppearance());
+    }
+
+    private void AITurn() {
+        if (AI.getResults() == null)
+            return;
+        if (AI.getResults().size() == 0)
+            return;
+        for (int i = 0; i < AI.getResults().size(); i++) {
+            String[] commands = AI.getResults().get(i).split(" ");
+            if (commands[0].equals("moved")) {
+                StringBuilder nameSB = new StringBuilder();
+                int index = 0;
+                System.out.println(Arrays.toString(commands));
+                for (int j = 1; j < commands.length; j++) {
+                    if (!commands[j].equals("->"))
+                        nameSB.append(commands[j].concat(" "));
+                    else {
+                        index = j;
+                        break;
+                    }
+                }
+                String name = nameSB.toString().trim();
+                System.out.println(name);
+                final int x0 = Integer.parseInt(commands[index + 1]);
+                final int y0 = Integer.parseInt(commands[index + 2]);
+                final int x = Integer.parseInt(commands[index + 3]);
+                final int y = Integer.parseInt(commands[index + 4]);
+                System.out.println(x0 + " " + y0 + " " + x + " " + y);
+                Minion minion = null;
+                MinionAppearance minionAppearance;
+                for (int j = 0; j < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); j++) {
+                    if (Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i).getName().equals(name)) {
+                        minion = Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i);
+                        break;
+                    }
+                }
+                if (minion != null) {
+                    minionAppearance = getMinionAppearanceOfBattle(minion, false);
+                    if (minionAppearance != null) {
+                        minionAppearance.setInHand(false);
+                        minionAppearance.setInInBoard(true);
+                        minionAppearance.add(false);
+                        minionAppearance.setLocation(0.975 * board[x0 - 1][y0 - 1].getCellRectangle().getLayoutX(), 0.92 * board[x0 - 1][y0 - 1].getCellRectangle().getLayoutY());
+                        minionAppearance.move(0.975 * board[x - 1][y - 1].getCellRectangle().getLayoutX() - minionAppearance.getImageView().getLayoutX(), 0.92 * board[x - 1][y - 1].getCellRectangle().getLayoutY() - minionAppearance.getImageView().getLayoutY());
+                    }
+                }
+            } else if (commands[0].equals("insert")) {
+                System.out.println("he gonna insert");
+                StringBuilder nameSB = new StringBuilder();
+                for (int j = 1; j < commands.length; j++) {
+                    nameSB.append(commands[j].concat(" "));
+                }
+                String name = nameSB.toString().trim();
+                Minion minion = null;
+                for (int j = 0; j < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); j++) {
+                    if (Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i).getName().equals(name)) {
+                        minion = Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i);
+                        break;
+                    }
+                }
+                if (minion != null) {
+                    MinionAppearance minionAppearance = getMinionAppearanceOfBattle(minion, true);
+                    if (minionAppearance != null) {
+                        minionAppearance.setInHand(false);
+                        minionAppearance.setInInBoard(true);
+                        setAppearanceOfCells();
+                        continue;
+                    }
+                }
+            }
+            setFlagsItemsAppearance();
+        }
     }
 
     public HandAppearance getHandAppearance() {
@@ -367,7 +445,7 @@ public class BattleAppearance {
     public MinionAppearance getMinionAppearanceOfBattle(Minion minion, boolean isHand) {
         for (MinionAppearance minionAppearance : minionAppearanceOfBattle) {
             if (minionAppearance.getMinion() == minion)
-                if(minionAppearance.isInHand() == isHand)
+                if (minionAppearance.isInHand() == isHand)
                     return minionAppearance;
 
         }
@@ -375,7 +453,6 @@ public class BattleAppearance {
     }
 
     public void insert() {
-        this.handAppearance = null;
         this.handAppearance = new HandAppearance(root);
     }
 

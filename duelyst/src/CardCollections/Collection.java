@@ -22,10 +22,19 @@ public class Collection {
         this.mainDeck = null;
         toDelete();
         Deck deck = new Deck("deck");
+        Deck deck1 = new Deck("AI");
         decks.add(deck);
-        for (int i = 10; i < 30; i++) {
+        decks.add(deck1);
+        for (int i = 20; i < 41; i++) {
+            if (cards.get(i).getName().equalsIgnoreCase("oghab"))
+                continue;
+
             deck.addCard(cards.get(i));
         }
+        for (int i = 30; i < 50; i++) {
+            deck1.addCard(cards.get(i));
+        }
+        deck1.setHero((Hero) cards.get(69));
         this.mainDeck = deck;
     }
 
