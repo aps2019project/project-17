@@ -159,7 +159,7 @@ public class Battle {
         cellDestination.setCard(minion);
         minion.setCanMove(false);
         // TODO: 2019-06-11
-//        cellFirst.exitCell();
+        cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
         if (cellDestination.getItem() != null) {
@@ -206,8 +206,8 @@ public class Battle {
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You  don′t  have  enough  mana  to  insert  this  card";
             ((Minion) card).setCoordinate(x, y);
-//            if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
-//                ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
+            if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
+                ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
             if (cell.getItem() != null) {
                 whoseTurn().addItemToCollectAbleItems(cell.getItem());
                 cell.setItem(null);
@@ -225,7 +225,7 @@ public class Battle {
         } else if (card instanceof Spell) {
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
-//            ((Spell) card).action(x, y);
+            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
             this.whoseTurn().lessMana(((Spell) card).getManaPoint());
@@ -411,17 +411,17 @@ public class Battle {
             this.playerOne.setPreviousMana(this.playerOne.getMana());
             this.playerTwo.setPreviousMana(this.playerTwo.getMana());
         }
-//        for (Minion minion : getAllMinion()) {
-//            if (minion.getAttackType().equals(AttackType.PASSIVE))
-//                minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
-//            minion.passTurn();
-//        }
-//        for (int i = 0; i < this.board.getCells().length; i++) {
-//            for (int j = 0; j < this.board.getCells()[i].length; j++) {
-//                getCellFromBoard(i + 1, j + 1).passTurn();
-//            }
-//        }
-//        whoseTurn().passTurn();
+        for (Minion minion : getAllMinion()) {
+            if (minion.getAttackType().equals(AttackType.PASSIVE))
+                minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
+            minion.passTurn();
+        }
+        for (int i = 0; i < this.board.getCells().length; i++) {
+            for (int j = 0; j < this.board.getCells()[i].length; j++) {
+                getCellFromBoard(i + 1, j + 1).passTurn();
+            }
+        }
+        whoseTurn().passTurn();
         if (currentBattle != null)
             currentBattle.check();
     }
