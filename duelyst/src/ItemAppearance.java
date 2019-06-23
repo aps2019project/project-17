@@ -141,8 +141,10 @@ class ItemAppearance {
                         }
                         if (selectedItem != null)
                             if (selectedItem == items[j]) {
+                                itemBackGrounds[j].setOpacity(0.7);
                                 selectedItem = null;
                                 System.out.println("selected Item became null");
+                                return;
                             }
                         itemBackGrounds[j].setOpacity(1);
                         selectedItem = items[j];
