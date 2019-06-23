@@ -1,4 +1,5 @@
 import Appearance.ColorAppearance;
+import Appearance.ExceptionEndGame;
 import Appearance.MinionAppearance;
 import Cards.Card;
 import Cards.Minion;
@@ -35,7 +36,12 @@ public class CellAppearance {
 
             if (BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard() != null) {
                 // in this case we want to insert a card!
-                insertCard();
+                try {
+                    insertCard();
+                } catch (ExceptionEndGame exceptionEndGame) {
+                    ErrorOnBattle.display(Battle.getSituationOfGame());
+                    new MainMenu();
+                }
             } else {
                 if (BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell() == null) {
                     if (this.cell.getCard() == null)
@@ -49,10 +55,20 @@ public class CellAppearance {
                     }
                     if (this.cell.getCard() == null) {
                         // in this case we want to move!
-                        moveCard();
+                        try {
+                            moveCard();
+                        } catch (ExceptionEndGame exceptionEndGame) {
+                            ErrorOnBattle.display(Battle.getSituationOfGame());
+                            new MainMenu();
+                        }
                     } else {
                         // in this case we want to attack!
-                        attackCard();
+                        try {
+                            attackCard();
+                        } catch (ExceptionEndGame exceptionEndGame) {
+                            ErrorOnBattle.display(Battle.getSituationOfGame());
+                            new MainMenu();
+                        }
                     }
                     BattleAppearance.getCurrentBattleAppearance().getBoardBackGround()[BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getRow()][BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getCol()].setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
                     BattleAppearance.getCurrentBattleAppearance().setCurrentSelectedCell(null);
@@ -69,7 +85,7 @@ public class CellAppearance {
         Battle.getCurrentBattle().selectCardOrItem(null);
     }
 
-    private void attackCard() {
+    private void attackCard() throws ExceptionEndGame {
         String result = Battle.getCurrentBattle().attack(this.cell.getCard().getId(), false, null);
         System.out.println(result);
         if (result.contains("attacked to")) {
@@ -87,7 +103,7 @@ public class CellAppearance {
         } else ErrorOnBattle.display(result);
     }
 
-    private void moveCard() {
+    private void moveCard() throws ExceptionEndGame {
         String result = Battle.getCurrentBattle().movingCard(cell.getRow() + 1, cell.getCol() + 1);
         System.out.println(result);
         if (result.contains("successfully")) {
@@ -109,7 +125,7 @@ public class CellAppearance {
         System.out.println(this.cell.getCard().getName().concat(" in position ") + (cell.getRow() + 1) + " - " + (cell.getCol() + 1) + " successfully selected");
     }
 
-    private void insertCard() {
+    private void insertCard() throws ExceptionEndGame {
         Card card = BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard();
         String result = Battle.getCurrentBattle().insertingCardFromHand(card.getName().toLowerCase().trim(), cell.getRow() + 1, cell.getCol() + 1);
         System.out.println(result);

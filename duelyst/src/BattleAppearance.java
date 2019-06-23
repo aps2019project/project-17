@@ -1,4 +1,5 @@
 import Appearance.ColorAppearance;
+import Appearance.ExceptionEndGame;
 import Appearance.FontAppearance;
 import Appearance.MinionAppearance;
 import Cards.*;
@@ -365,7 +366,12 @@ public class BattleAppearance {
 
     private void handleEvents() {
         textsOfBattle[0].setOnMouseClicked(e -> {
-            Battle.getCurrentBattle().endTurn();
+            try {
+                Battle.getCurrentBattle().endTurn();
+            } catch (ExceptionEndGame exceptionEndGame) {
+                ErrorOnBattle.display(Battle.getSituationOfGame());
+                new MainMenu();
+            }
             AITurn();
             setManaIconImageLights();
             setImageOfOpponentNextCard();
@@ -386,7 +392,12 @@ public class BattleAppearance {
 //            currentBattleAppearance = null;
 //            Battle.getCurrentBattle().endingGame();
 //            new MainMenu();
-            Battle.getCurrentBattle().endTurn();
+            try {
+                Battle.getCurrentBattle().endTurn();
+            } catch (ExceptionEndGame exceptionEndGame) {
+                ErrorOnBattle.display(Battle.getSituationOfGame());
+                new MainMenu();
+            }
             AITurn();
             setManaIconImageLights();
             setImageOfOpponentNextCard();

@@ -1,5 +1,6 @@
 package Data;
 
+import Appearance.ExceptionEndGame;
 import CardCollections.Deck;
 import GameGround.Battle;
 import Cards.Minion;
@@ -56,7 +57,7 @@ public class AI extends Player {
         return AIModeHF;
     }
 
-    public void actionTurn() {
+    public void actionTurn() throws ExceptionEndGame {
         // TODO: 2019-06-22
         results = new ArrayList<>();
         if (Battle.getCurrentBattle() == null)
@@ -126,7 +127,7 @@ public class AI extends Player {
         toReturn.append("AI decided to use special power\n");
     }
 
-    private void attackAI(StringBuilder toReturn, Battle battle) {
+    private void attackAI(StringBuilder toReturn, Battle battle) throws ExceptionEndGame {
         Minion minion = selectCard(toReturn);
         battle.setSelectedCard(battle.getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()));
         String s;
@@ -150,7 +151,7 @@ public class AI extends Player {
         toReturn.append("AI decided to attack but failed!\n");
     }
 
-    private void insertAI(StringBuilder toReturn, Battle battle) {
+    private void insertAI(StringBuilder toReturn, Battle battle) throws ExceptionEndGame {
         int randomToChoose = 0;
         int x = 3;
         int y = 8;
@@ -182,7 +183,7 @@ public class AI extends Player {
         toReturn.append("AI decided to insert a card but failed!\n");
     }
 
-    private void moveAI(StringBuilder toReturn, Battle battle) {
+    private void moveAI(StringBuilder toReturn, Battle battle) throws ExceptionEndGame {
         int x, x0;
         int y, y0;
         String s;

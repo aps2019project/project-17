@@ -1,5 +1,6 @@
 package GameGround;
 
+import Appearance.ExceptionEndGame;
 import Cards.Card;
 import Cards.Hero;
 import Cards.Minion;
@@ -87,7 +88,7 @@ public class BattleCaptureFlag extends Battle {
     }
 
     @Override
-    public String movingCard(int x, int y) {
+    public String movingCard(int x, int y) throws ExceptionEndGame {
         String toReturn = super.movingCard(x, y);
         if (!toReturn.equals("ok"))
             return toReturn;
@@ -105,7 +106,7 @@ public class BattleCaptureFlag extends Battle {
     }
 
     @Override
-    public String insertingCardFromHand(String cardName, int x, int y) {
+    public String insertingCardFromHand(String cardName, int x, int y) throws ExceptionEndGame {
         super.check();
         String returning = super.insertingCardFromHand(cardName, x, y);
         if (!returning.equals("ok"))
@@ -180,18 +181,18 @@ public class BattleCaptureFlag extends Battle {
     }
 
     @Override
-    public void endGame() {
-        if (playerOne.getHoldingFlags() >= numberOfFlags / 2) {
+    public void endGame() throws ExceptionEndGame {
+        if (playerOne.getHoldingFlags() > 2) {
             playerOneWon();
             return;
         }
-        if (playerTwo.getHoldingFlags() >= numberOfFlags / 2) {
+        if (playerTwo.getHoldingFlags() > numberOfFlags / 2) {
             playerTwoWon();
         }
     }
 
     @Override
-    public void endTurn() {
+    public void endTurn() throws ExceptionEndGame {
         super.endingTurn();
     }
 }

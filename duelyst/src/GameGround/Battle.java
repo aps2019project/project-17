@@ -1,6 +1,7 @@
 package GameGround;
 
 
+import Appearance.ExceptionEndGame;
 import CardCollections.Hand;
 import Cards.Card;
 import Cards.Item;
@@ -144,7 +145,7 @@ public class Battle {
         return "invalid card\\item id";
     }
 
-    public String movingCard(int x, int y) {
+    public String movingCard(int x, int y) throws ExceptionEndGame {
         if (this.selectedCard == null || this.selectedCard instanceof Spell)
             return "first you have to select a card";
         if (x > 5 || y > 9)
@@ -170,7 +171,7 @@ public class Battle {
         return "ok";
     }
 
-    public String attackCombo(String opponentCardID, String... cardIDs) {
+    public String attackCombo(String opponentCardID, String... cardIDs) throws ExceptionEndGame {
         Minion opponentCard = (Minion) returnCardFromBoard(opponentCardID, theOtherPlayer());
         if (opponentCard == null)
             return "invalid card ID";
@@ -186,7 +187,7 @@ public class Battle {
         return "combo attack successfully done";
     }
 
-    public String insertingCardFromHand(String cardName, int x, int y) {
+    public String insertingCardFromHand(String cardName, int x, int y) throws ExceptionEndGame {
         Card card = whoseTurn().getCardFromHand(cardName);
         Cell cell = getCellFromBoard(x, y);
 
@@ -265,7 +266,7 @@ public class Battle {
         return whoseTurn().getNextCard().getName() + " " + whoseTurn().getNextCard().getDesc();
     }
 
-    public String attack(String opponentCardId, boolean isComboAttack, Minion comboAttacker) {
+    public String attack(String opponentCardId, boolean isComboAttack, Minion comboAttacker) throws ExceptionEndGame {
         Minion attacker;
         if (isComboAttack)
             attacker = comboAttacker;
@@ -309,7 +310,7 @@ public class Battle {
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
-    public String useSpecialPower(int x, int y) {
+    public String useSpecialPower(int x, int y) throws ExceptionEndGame {
         if (whoseTurn().getMainDeck().getHero().getManaPoint() > whoseTurn().getMana())
             return "you don't have enough mana";
 
@@ -319,7 +320,7 @@ public class Battle {
         return "special power successfully used";
     }
 
-    public String useItem(int x, int y) {
+    public String useItem(int x, int y) throws ExceptionEndGame {
         if (selectedItem == null)
             return "at first you should select a item";
         this.selectedItem.action(x, y);
@@ -383,10 +384,10 @@ public class Battle {
         return card.getUserName().equals(player.getUserName());
     }
 
-    public void endTurn() {
+    public void endTurn() throws ExceptionEndGame {
     }
 
-    private void logicEndTurn() {
+    private void logicEndTurn() throws ExceptionEndGame {
         this.turn++;
         this.selectedCard = null;
         this.selectedItem = null;
@@ -638,12 +639,12 @@ public class Battle {
         return false;
     }
 
-    void check() {
+    void check() throws ExceptionEndGame {
         currentBattle.deletedDeadMinions();
         currentBattle.endGame();
     }
 
-    public void endGame() {
+    public void endGame() throws ExceptionEndGame{
     }
 
     public String deletedDeadMinions() {
@@ -658,24 +659,28 @@ public class Battle {
         return board;
     }
 
-    void playerOneWon() {
+    void playerOneWon() throws ExceptionEndGame {
         gameDataPlayerOne.setMatchState(MatchState.WIN);
         if (gameMode.equals(GameMode.MULTI_PLAYER))
             gameDataPlayerTwo.setMatchState(MatchState.LOSE);
         loginOfEnding(playerOne, gameDataPlayerOne, playerTwo, gameDataPlayerTwo);
+        System.out.println("its going to be null");
         currentBattle = null;
+        System.out.println("its become null its OVER");
+        throw new ExceptionEndGame(situationOfGame);
     }
 
-    void playerTwoWon() {
+    void playerTwoWon() throws ExceptionEndGame {
         if (gameMode.equals(GameMode.MULTI_PLAYER))
             gameDataPlayerTwo.setMatchState(MatchState.WIN);
         gameDataPlayerOne.setMatchState(MatchState.LOSE);
         loginOfEnding(playerTwo, gameDataPlayerTwo, playerOne, gameDataPlayerOne);
         currentBattle = null;
+        throw new ExceptionEndGame(situationOfGame);
     }
 
     private void loginOfEnding(Player playerOne, GameData gameDataPlayerOne, Player playerTwo, GameData gameDataPlayerTwo) {
-        for (int i = 0; i < GameController.getAccounts().size(); i++) {
+        for (int i = 0; i < 1; i++) {
             if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
                 GameController.getAccounts().get(i).changeDaric(price);
                 GameController.getAccounts().get(i).incrementNumbOfWins();
@@ -690,7 +695,7 @@ public class Battle {
         situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + currentBattle.price;
     }
 
-    void endingTurn() {
+    void endingTurn() throws ExceptionEndGame {
         switch (gameMode) {
             case SINGLE_PLAYER:
                 logicEndTurn();

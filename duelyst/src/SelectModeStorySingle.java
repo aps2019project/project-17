@@ -1,5 +1,7 @@
+import Appearance.ExceptionEndGame;
 import Appearance.FontAppearance;
 import Data.Account;
+import GameGround.Battle;
 import GameGround.SinglePlayerModes;
 import controller.GameController;
 import javafx.geometry.Pos;
@@ -75,25 +77,48 @@ public class SelectModeStorySingle {
     static {
         killHero.setOnMouseClicked(e -> {
             closeWindow();
-            GameController.setAiPlayer(KH);
-            GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
-            System.out.println("You have entered the Battle,Fight!");
-            new BattleAppearance();
+            startSingleKillHero();
+            startBattleAppearance();
         });
         holdFlag.setOnMouseClicked(e -> {
             closeWindow();
-            GameController.setAiPlayer(HF);
-            GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
-            System.out.println("You have entered the Battle,Fight!");
-            new BattleAppearance();
+            startSingleHoldFlags();
+            startBattleAppearance();
         });
         captureFlag.setOnMouseClicked(e -> {
             closeWindow();
-            GameController.setAiPlayer(CF);
-            GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
-            System.out.println("You have entered the Battle,Fight!");
-            new BattleAppearance();
+            startSingleCaptureFlags();
+            startBattleAppearance();
         });
+    }
+
+    private static void startSingleCaptureFlags() {
+        GameController.setAiPlayer(CF);
+        GameController.createBattleCaptureFlagSingle(Account.getLoginUser().getPlayer(), 7, SinglePlayerModes.STORY);
+        System.out.println("You have entered the Battle,Fight!");
+
+    }
+
+    private static void startSingleHoldFlags() {
+        GameController.setAiPlayer(HF);
+        GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+        System.out.println("You have entered the Battle,Fight!");
+    }
+
+    private static void startSingleKillHero() {
+        GameController.setAiPlayer(KH);
+        GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.STORY);
+        System.out.println("You have entered the Battle,Fight!");
+    }
+
+    private static void startBattleAppearance() {
+        try {
+            new BattleAppearance();
+        } catch (NullPointerException e) {
+            if (Battle.getCurrentBattle() == null)
+                ErrorOnBattle.display(Battle.getSituationOfGame());
+            new MainMenu();
+        }
     }
 
     public static void disPlay() {
