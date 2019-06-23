@@ -495,6 +495,10 @@ public class BattleAppearance {
         return handAppearance;
     }
 
+    public ItemAppearance getItemAppearance(){
+        return itemAppearance;
+    }
+
     public static BattleAppearance getCurrentBattleAppearance() {
         return currentBattleAppearance;
     }
