@@ -303,6 +303,8 @@ public class BattleAppearance {
                 cellAppearance.setCellAppearance();
             }
         }
+        itemAppearance.delete(root);
+        initItemList();
     }
 
     public void setNextCardOpponent() {
@@ -351,6 +353,8 @@ public class BattleAppearance {
                 cellAppearance.checkFlagsItems();
             }
         }
+        itemAppearance.delete(root);
+        initItemList();
     }
 
 
