@@ -118,9 +118,15 @@ class ItemAppearance {
         }
     }
 
-    private void setSelectedItemNull() {
+    public void setSelectedItemNull() {
         if (selectedItem == null) {
             return;
+        }
+        for (Rectangle itemBackGround : itemBackGrounds) {
+            if (itemBackGround.getOpacity() == 1) {
+                itemBackGround.setOpacity(0.7);
+                break;
+            }
         }
         this.selectedItem = null;
         System.out.println("selected item became null");
@@ -130,26 +136,23 @@ class ItemAppearance {
         for (int i = 0; i < itemBackGrounds.length; i++) {
             if (itemBackGrounds[i] != null && itemInfo[i] != null && items[i] != null) {
                 final int j = i;
-                itemBackGrounds[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        GameController.selectCardOrItem(items[j].getId(), Battle.getCurrentBattle());
-                        for (int k = 0; k <itemBackGrounds.length ; k++) {
-                            if(k!=j){
-                                itemBackGrounds[k].setOpacity(0.7);
-                            }
+                itemBackGrounds[i].setOnMouseClicked(event -> {
+                    GameController.selectCardOrItem(items[j].getId(), Battle.getCurrentBattle());
+                    for (int k = 0; k <itemBackGrounds.length ; k++) {
+                        if(k!=j){
+                            itemBackGrounds[k].setOpacity(0.7);
                         }
-                        if (selectedItem != null)
-                            if (selectedItem == items[j]) {
-                                itemBackGrounds[j].setOpacity(0.7);
-                                selectedItem = null;
-                                System.out.println("selected Item became null");
-                                return;
-                            }
-                        itemBackGrounds[j].setOpacity(1);
-                        selectedItem = items[j];
-                        BattleAppearance.getCurrentBattleAppearance().getHandAppearance().setSelectedCardNull();
                     }
+                    if (selectedItem != null)
+                        if (selectedItem == items[j]) {
+                            itemBackGrounds[j].setOpacity(0.7);
+                            selectedItem = null;
+                            System.out.println("selected Item became null");
+                            return;
+                        }
+                    itemBackGrounds[j].setOpacity(1);
+                    selectedItem = items[j];
+                    BattleAppearance.getCurrentBattleAppearance().getHandAppearance().setSelectedCardNull();
                 });
             }
         }

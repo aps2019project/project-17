@@ -157,6 +157,7 @@ public class HandAppearance {
                     selectedCardIcon = handIcons[value];
                     selectedCardIcon.setOpacity(1);
                     selectedCard = hand.getCards().get(value);
+                    BattleAppearance.getCurrentBattleAppearance().getItemAppearance().setSelectedItemNull();
                     System.out.println(hand.getCards().get(value).getName() + " selected");
                 });
             } else if (hand.getCards().get(i) instanceof Minion) {
@@ -185,6 +186,7 @@ public class HandAppearance {
                         BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(0.5);
                     selectedCard = minionAppearance.getMinion();
                     BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(1);
+                    BattleAppearance.getCurrentBattleAppearance().getItemAppearance().setSelectedItemNull();
                     System.out.println(minionAppearance.getMinion().getName() + " selected");
                 });
             }
