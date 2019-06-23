@@ -110,7 +110,6 @@ public class HandAppearance {
         manaOfNextCard.setLayoutY(handIconsTemplate[this.hand.getCards().size()].getLayoutY() * 1.55);
         if (Battle.getCurrentBattle().getPlayerOne().getNextCard() instanceof Spell) {
             try {
-                System.out.println("its spell");
                 nextCard.setFill(new ImagePattern(new Image(new FileInputStream("spell.gif"))));
                 nextCard.setVisible(true);
             } catch (FileNotFoundException e) {

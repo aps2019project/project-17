@@ -10,6 +10,7 @@ import Data.AI;
 import Data.GameData;
 import Data.MatchState;
 import Data.Player;
+import Effects.enums.MinionType;
 import Effects.enums.SpecialSituation;
 import InstanceMaker.CardMaker;
 import controller.GameController;
@@ -158,8 +159,8 @@ public class Battle {
             return "this card cant move";
         cellDestination.setCard(minion);
         minion.setCanMove(false);
-        // TODO: 2019-06-11
-        cellFirst.exitCell();
+        // TODO: 2019-06-22
+//        cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
         if (cellDestination.getItem() != null) {
@@ -201,7 +202,7 @@ public class Battle {
         if (card instanceof Minion) {
             if (cell.getCard() != null)
                 return "invalid target - your selected cell already has a card!";
-            if (!board.isCoordinateAvailable(this, x, y))
+            if (!board.isCoordinateAvailable(this, whoseTurn(), x, y))
                 return "invalid  target  -  your  selected  cell  is  too  far  !";
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You  don′t  have  enough  mana  to  insert  this  card";
@@ -225,7 +226,8 @@ public class Battle {
         } else if (card instanceof Spell) {
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
-            ((Spell) card).action(x, y);
+            // TODO: 2019-06-22
+//            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
             this.whoseTurn().lessMana(((Spell) card).getManaPoint());
@@ -283,11 +285,6 @@ public class Battle {
         if (!attacker.getCanAttack())
             return "this  card  doesnt  ability  to  attack  at  this  time";
 
-        // TODO: 2019-06-20
-        System.out.println("a card is attack -> ".concat(selectedCard.getName()));
-        System.out.println(minion.getMinionType());
-        System.out.println(minion.getAttackRange() + "\n");
-
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
         Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
         switch (attacker.getMinionType()) {
@@ -304,13 +301,11 @@ public class Battle {
             case HYBRID:
                 break;
         }
-
-        attacker.attack(minion);
-        minion.counterAttack(attacker);
+        // TODO: 2019-06-22
+//        attacker.attack(minion);
+//        minion.counterAttack(attacker);
         check();
-        // TODO: 2019-06-20
         attacker.setCanAttack(false);
-        minion.setCanCounterAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
@@ -424,6 +419,9 @@ public class Battle {
         whoseTurn().passTurn();
         if (currentBattle != null)
             currentBattle.check();
+        for (int i = 0; i < getAllMinion().size(); i++) {
+            getAllMinion().get(i).resetMinion();
+        }
     }
 
     public static Battle getCurrentBattle() {
@@ -526,6 +524,30 @@ public class Battle {
             }
         }
         return cells;
+    }
+
+    public Minion targetForAttackAI() {
+        if (selectedCard == null)
+            return null;
+        int x = ((Minion) selectedCard).getXCoordinate() - 1;
+        int y = ((Minion) selectedCard).getYCoordinate() - 1;
+        int shift;
+        if (((Minion) selectedCard).getMinionType().equals(MinionType.MELEE))
+            shift = 1;
+        else
+            shift = ((Minion) selectedCard).getAttackRange() / 2;
+        for (int i = x - shift; i <= x + shift; i++) {
+            for (int j = y - shift; j <= y + shift; j++) {
+                if (i > 4 || j > 8 || i < 0 || j < 0)
+                    continue;
+                Cell cell = getCellFromBoard(i + 1, j + 1);
+                if (cell.getCard() == null)
+                    continue;
+                if (cell.getCard().getUserName().equals(theOtherPlayer().getUserName()))
+                    return (Minion) cell.getCard();
+            }
+        }
+        return null;
     }
 
     protected void setPrice() {

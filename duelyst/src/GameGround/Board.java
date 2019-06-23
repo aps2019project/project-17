@@ -20,11 +20,10 @@ public class Board {
         return cells;
     }
 
-    boolean isCoordinateAvailable(Battle battle, int x, int y) {
-        Player player = battle.whoseTurn();
+    boolean isCoordinateAvailable(Battle battle, Player player, int x, int y) {
         for (int i = x - 2; i <= x; i++) {
             for (int j = y - 2; j <= y; j++) {
-                if (i > 4 || y > 8 || i < 0 || j < 0)
+                if (i > 4 || j > 8 || i < 0 || j < 0)
                     continue;
                 Cell cell = battle.getBoard().getCells()[i][j];
                 if (cell == null)
