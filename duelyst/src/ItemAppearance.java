@@ -134,11 +134,16 @@ class ItemAppearance {
                     @Override
                     public void handle(MouseEvent event) {
                         GameController.selectCardOrItem(items[j].getId(), Battle.getCurrentBattle());
-                        if (selectedItem != null && selectedItem == items[j]) {
-                            selectedItem = null;
-                            itemBackGrounds[j].setOpacity(0.7);
-                            System.out.println("selected Item became null");
+                        for (int k = 0; k <itemBackGrounds.length ; k++) {
+                            if(k!=j){
+                                itemBackGrounds[k].setOpacity(0.7);
+                            }
                         }
+                        if (selectedItem != null)
+                            if (selectedItem == items[j]) {
+                                selectedItem = null;
+                                System.out.println("selected Item became null");
+                            }
                         itemBackGrounds[j].setOpacity(1);
                         selectedItem = items[j];
                         BattleAppearance.getCurrentBattleAppearance().getHandAppearance().setSelectedCardNull();
