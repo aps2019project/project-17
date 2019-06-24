@@ -143,6 +143,8 @@ public class Effect {
     public void addToImpacts(Object object) {
         if (impacts == null)
             impacts = new ArrayList<>();
+        if(impacts.contains(object))
+            return;
         impacts.add(object);
     }
 

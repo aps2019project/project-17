@@ -171,6 +171,8 @@ public class Minion extends Card {
     }
 
     public void addEffect(Effect effect) {
+        if (effects.contains(effect))
+            return;
         effects.add(effect);
     }
 
