@@ -63,8 +63,8 @@ public class AI extends Player {
             return;
         StringBuilder toReturn = new StringBuilder();
         Battle battle = Battle.getCurrentBattle();
-        for (int i = 0; i < 5; i++) {
-            int r = Math.abs(new Random().nextInt() % 11);
+        for (int i = 0; i < 4; i++) {
+            int r = Math.abs(new Random().nextInt(11));
             switch (r) {
                 case 0:
                 case 1:
@@ -85,6 +85,7 @@ public class AI extends Player {
             }
         }
         System.out.println(toReturn);
+        System.out.println("\n\n\nAI TURN DONE\n\n\n");
     }
 
     private void useItemAI(StringBuilder toReturn, Battle battle) {
@@ -158,6 +159,8 @@ public class AI extends Player {
                 return;
             }
             randomToChoose = Math.abs(new Random().nextInt((currentAIPlayer).getHand().getCards().size()));
+            if (currentAIPlayer.getHand().getCards().size() <= 0)
+                return;
             while (randomToChoose >= currentAIPlayer.getHand().getCards().size())
                 randomToChoose = Math.abs(new Random().nextInt((currentAIPlayer).getHand().getCards().size()));
             x = Math.abs((Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt(3))) % 4) + 1;

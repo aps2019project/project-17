@@ -7,6 +7,8 @@ import Effects.enums.TargetDetail;
 import Effects.enums.TargetRange;
 import Effects.enums.TargetType;
 
+import java.util.ArrayList;
+
 public class Holy extends Effect {
     private int holyBuffState;
 
