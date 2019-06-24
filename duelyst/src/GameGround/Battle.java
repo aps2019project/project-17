@@ -303,6 +303,7 @@ public class Battle {
                 break;
         }
         // TODO: 2019-06-22
+
 //        attacker.attack(minion);
 //        minion.counterAttack(attacker);
         check();
