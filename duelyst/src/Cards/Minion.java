@@ -85,6 +85,7 @@ public class Minion extends Card {
         this.canAttack = true;
         this.numberOfAttack = 0;
         effects = new ArrayList<>();
+        antiBuff = BuffType.NONE;
         if (minionType.equals(MinionType.MELEE))
             attackRange = 1;
         makeAttackBuff();

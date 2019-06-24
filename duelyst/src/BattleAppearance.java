@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class BattleAppearance {
     private Group root;
@@ -485,11 +486,20 @@ public class BattleAppearance {
                     continue;
                 MinionAppearance minionAppearanceAttacker = getMinionAppearanceOfBattle(attacker, false);
                 MinionAppearance minionAppearanceDefender = getMinionAppearanceOfBattle(defender, false);
-                minionAppearanceAttacker.attack();
-                minionAppearanceDefender.hit();
-                if (defender.isCanCounterAttack()){
-                    minionAppearanceAttacker.hit();
-                    minionAppearanceDefender.attack();
+                try {
+                    TimeUnit.MILLISECONDS.sleep(minionAppearanceAttacker.attack());
+                    TimeUnit.MILLISECONDS.sleep(minionAppearanceDefender.hit());
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (defender.isCanCounterAttack()) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(minionAppearanceDefender.attack());
+                        TimeUnit.MILLISECONDS.sleep(minionAppearanceAttacker.hit());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             setFlagsItemsAppearance();
@@ -510,7 +520,7 @@ public class BattleAppearance {
         return handAppearance;
     }
 
-    public ItemAppearance getItemAppearance(){
+    public ItemAppearance getItemAppearance() {
         return itemAppearance;
     }
 

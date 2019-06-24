@@ -141,7 +141,7 @@ public class MinionAppearance {
         int durationOfRun = (int) (10 * Math.sqrt(deltaX * deltaX + deltaY * deltaY));
         KeyFrame keyFrame = new KeyFrame(Duration.millis(durationOfRun), keyValueX, keyValueY);
         timeline.getKeyFrames().add(keyFrame);
-        animation.setCycleCount(durationOfRun / duration);
+        animation.setCycleCount(durationOfRun / duration + 1);
         animation.setAutoReverse(true);
         animation.play();
         timeline.play();
@@ -154,11 +154,12 @@ public class MinionAppearance {
         animation.play();
     }
 
-    public void attack() {
+    public synchronized int attack() {
         int duration = attackCount * 100;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapAttack);
         animation.setCycleCount(1);
         animation.play();
+        return duration;
     }
 
     public void death() {
@@ -175,11 +176,12 @@ public class MinionAppearance {
         animation.play();
     }
 
-    public void hit() {
+    public synchronized int hit() {
         int duration = hitCount * 100;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapHit);
         animation.setCycleCount(1);
         animation.play();
+        return duration;
     }
 
     public void setLocation(double x, double y) {

@@ -272,7 +272,8 @@ public class CardMaker {
         ArrayList<Effect> effects = new ArrayList<>();
         Effect[] loadedEffects;
         for (BuffType value : BuffType.values()) {
-            loadedEffects = null;
+            if(value.equals(BuffType.NONE))
+                continue;
             switch (value) {
                 case HOLY:
                     address = Data.Save.address + "Holy.json";

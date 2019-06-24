@@ -1,6 +1,7 @@
 package Effects.enums;
 
 public enum BuffType {
+    NONE,
     HOLY,
     WEAKNESS,
     POWER_BUFF,
