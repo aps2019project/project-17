@@ -167,15 +167,8 @@ public class BattleAppearance {
 
     private void initItemList() {
         Item[] itemsToBePassed = new Item[6];
-//        if (Account.getLoginUser().getMainDeck().getItem() != null) {
-//            itemsToBePassed[0] = Account.getLoginUser().getMainDeck().getItem();
-//            for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
-//                itemsToBePassed[i + 1] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
-//            }
-//        } else {
         for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
             itemsToBePassed[i] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
-            //}
         }
         this.itemAppearance = new ItemAppearance(this.root, itemsToBePassed);
     }
@@ -292,10 +285,11 @@ public class BattleAppearance {
         textsOfBattle[4].setLayoutY(shapeOfHealthHero[0].getLayoutY() * 1.18);
         textsOfBattle[5].setLayoutX(shapeOfHealthHero[1].getLayoutX() * 1.008);
         textsOfBattle[5].setLayoutY(shapeOfHealthHero[1].getLayoutY() * 1.18);
-        textsOfBattle[6].setLayoutX(Main.WIDTH_OF_WINDOW / 20);
-        textsOfBattle[6].setLayoutY(Main.HEIGHT_OF_WINDOW * 10 / 11);
-        textsOfBattle[6].setFont(FontAppearance.FONY_SHOWING_TURN);
-        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5], textsOfBattle[6]);
+        textsOfBattle[7].setLayoutX(Main.WIDTH_OF_WINDOW / 20);
+        textsOfBattle[7].setLayoutY(Main.HEIGHT_OF_WINDOW * 10 / 11);
+        textsOfBattle[7].setFont(FontAppearance.FONY_SHOWING_TURN);
+        textsOfBattle[7].setFill(Color.WHITE);
+        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5],textsOfBattle[7]);
     }
 
     private void setShapeOfHealthHeroTexts() {
@@ -358,7 +352,7 @@ public class BattleAppearance {
     }
 
     private void setTurnText() {
-        textsOfBattle[6].setText("TURN : " + Battle.getCurrentBattle().getTurn());
+        textsOfBattle[7].setText("TURN : " + Battle.getCurrentBattle().getTurn());
     }
 
     public void setFlagsItemsAppearance() {
