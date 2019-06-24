@@ -387,6 +387,7 @@ public class BattleAppearance {
                 new MainMenu();
             }
             AITurn();
+            System.out.println("\n\n\nfinding bugs\n\n\n");
             setManaIconImageLights();
             setImageOfOpponentNextCard();
 //            setAppearanceOfCells();

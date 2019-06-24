@@ -162,8 +162,7 @@ public class Battle {
             return "this card cant move";
         cellDestination.setCard(minion);
         minion.setCanMove(false);
-        // TODO: 2019-06-22
-//        cellFirst.exitCell();
+        cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
         if (cellDestination.getItem() != null) {
