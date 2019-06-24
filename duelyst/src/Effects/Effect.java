@@ -147,6 +147,8 @@ public class Effect {
     }
 
     public ArrayList<Object> getImpacts() {
+        if (impacts == null)
+            impacts = new ArrayList<>();
         return impacts;
     }
 
