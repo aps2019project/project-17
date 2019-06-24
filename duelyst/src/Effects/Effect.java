@@ -1,6 +1,7 @@
 package Effects;
 
 import Cards.Minion;
+import Data.Player;
 import GameGround.Battle;
 import GameGround.Cell;
 import Effects.enums.MinionType;
@@ -9,6 +10,7 @@ import Effects.enums.TargetRange;
 import Effects.enums.TargetType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Effect {
     private String id;
@@ -35,14 +37,14 @@ public class Effect {
     }
 
     public void action(Cell cell) {
-        if (startTime > 0)
+        if (startTime < 0)
             return;
         if (this.targetType == TargetType.PLAYER) {
             if (this.targetDetail.equals(TargetDetail.INSIDER)) {
-                effect(Battle.getCurrentBattle().whoseTurn());
+                effect(new Player[]{Battle.getCurrentBattle().whoseTurn()});
                 impacts.add(Battle.getCurrentBattle().whoseTurn());
             } else {
-                effect(Battle.getCurrentBattle().theOtherPlayer());
+                effect(new Player[]{Battle.getCurrentBattle().theOtherPlayer()});
                 impacts.add(Battle.getCurrentBattle().theOtherPlayer());
             }
             return;
@@ -87,8 +89,7 @@ public class Effect {
                 break;
         }
         if (isCell) {
-            effect(cells);
-            impacts.addAll(cells);
+            effect(cells.toArray());
             return;
         }
         for (Cell targetCell : cells) {
@@ -117,8 +118,9 @@ public class Effect {
                 minion.addEffect(this);
             }
         }
-        effect(minions);
-        impacts.addAll(minions);
+        if (minions.size() != 0) {
+            effect(minions.toArray());
+        }
     }
 
     public void checkForRemove() {
@@ -132,9 +134,11 @@ public class Effect {
         }
     }
 
-    public  void effect(Object... targets){}
+    public void effect(Object[] targets) {
+    }
 
-    public  void remove(){}
+    public void remove() {
+    }
 
     public void addToImpacts(Object object) {
         impacts.add(object);

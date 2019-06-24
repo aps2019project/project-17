@@ -30,8 +30,14 @@ public class CardMaker {
         try {
             spells = (Spell[]) loadInstance(InstanceType.SPELL);
             heroes = (Hero[]) loadInstance(InstanceType.HERO);
+            for (Hero hero : heroes) {
+                hero.init();
+            }
             items = (Item[]) loadInstance(InstanceType.ITEM);
             minions = (Minion[]) loadInstance(InstanceType.MINION);
+            for (Minion minion : minions) {
+                minion.init();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -266,7 +272,8 @@ public class CardMaker {
         ArrayList<Effect> effects = new ArrayList<>();
         Effect[] loadedEffects;
         for (BuffType value : BuffType.values()) {
-            loadedEffects = null;
+            if(value.equals(BuffType.NONE))
+                continue;
             switch (value) {
                 case HOLY:
                     address = Data.Save.address + "Holy.json";

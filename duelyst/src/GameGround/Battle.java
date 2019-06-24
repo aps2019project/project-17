@@ -73,6 +73,8 @@ public class Battle {
     private void setHeroesInTheirPosition() {
         playerOne.getMainDeck().getHero().setUserName(playerOne.getUserName());
         playerTwo.getMainDeck().getHero().setUserName(playerTwo.getUserName());
+        playerOne.getMainDeck().getHero().init();
+        playerTwo.getMainDeck().getHero().init();
         playerOne.getMainDeck().getHero().setCoordinate(3, 1);
         playerTwo.getMainDeck().getHero().setCoordinate(3, 9);
         this.board.getCells()[2][0].setCard(this.playerOne.getMainDeck().getHero());
@@ -215,6 +217,7 @@ public class Battle {
                 cell.setItem(null);
             }
             card.setUserName(whoseTurn().getUserName());
+            ((Minion) card).init();
             whoseTurn().lessMana(((Minion) card).getManaPoint());
             cell.setCard(card);
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))

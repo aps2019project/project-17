@@ -75,8 +75,9 @@ public class Cell {
 
 
     void exitCell() {
-        if (card == null)
+        if (card == null || effect == null)
             return;
+
         effect.remove();
         effect = null;
     }
@@ -96,7 +97,7 @@ public class Cell {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Cell){
+        if (obj instanceof Cell) {
             Cell cell = (Cell) obj;
             return this.col == cell.col && this.row == cell.row;
         }

@@ -12,7 +12,7 @@ public class Stun extends Effect {
     }
 
     @Override
-    public void effect(Object... targets) {
+    public void effect(Object[] targets) {
         for (Object target : targets) {
             Minion minion = (Minion) target;
             minion.setStun(true);

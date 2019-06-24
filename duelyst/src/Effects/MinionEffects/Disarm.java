@@ -14,7 +14,7 @@ public class Disarm extends Effect {
     }
 
     @Override
-    public void effect(Object... targets) {
+    public void effect(Object[] targets) {
         for (Object target : targets) {
             Minion minion = (Minion) target;
             if (!minion.getAntiBuff().equals(BuffType.DISARM))
