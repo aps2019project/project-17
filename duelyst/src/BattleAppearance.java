@@ -277,6 +277,7 @@ public class BattleAppearance {
             if (i == 1 || i == 2 || i == 4 || i == 5)
                 textsOfBattle[i].setFill(Color.WHITE);
         }
+        System.out.println("-> " + textsOfBattle[5].getText());
         textsOfBattle[0].setFill(Color.WHITE);
         textsOfBattle[1].setLayoutX(Main.WIDTH_OF_WINDOW / 7.78);
         textsOfBattle[1].setLayoutY(Main.HEIGHT_OF_WINDOW / 9.86);
@@ -579,4 +580,6 @@ public class BattleAppearance {
     public void setCurrentSelectedCell(Cell currentSelectedCell) {
         this.currentSelectedCell = currentSelectedCell;
     }
+
+
 }

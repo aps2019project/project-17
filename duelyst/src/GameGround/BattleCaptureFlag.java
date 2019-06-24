@@ -182,11 +182,11 @@ public class BattleCaptureFlag extends Battle {
 
     @Override
     public void endGame() throws ExceptionEndGame {
-        if (playerOne.getHoldingFlags() > 2) {
+        if (playerOne.getHoldingFlags() >= ((numberOfFlags / 2) + 1)) {
             playerOneWon();
             return;
         }
-        if (playerTwo.getHoldingFlags() > numberOfFlags / 2) {
+        if (playerTwo.getHoldingFlags() >= ((numberOfFlags / 2) + 1)) {
             playerTwoWon();
         }
     }

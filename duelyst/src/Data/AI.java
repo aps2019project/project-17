@@ -58,46 +58,31 @@ public class AI extends Player {
     }
 
     public void actionTurn() throws ExceptionEndGame {
-        // TODO: 2019-06-22
         results = new ArrayList<>();
         if (Battle.getCurrentBattle() == null)
             return;
         StringBuilder toReturn = new StringBuilder();
         Battle battle = Battle.getCurrentBattle();
-        for (int i = 0; i < 6; i++) {
-            int r = Math.abs(new Random().nextInt() % 3);
+        for (int i = 0; i < 7; i++) {
+            int r = Math.abs(new Random().nextInt() % 11);
             switch (r) {
                 case 0:
+                case 1:
+                case 2:
+                case 3:
                     insertAI(toReturn, battle);
                     break;
-                case 1:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
                     moveAI(toReturn, battle);
-                case 2:
+                    break;
+                case 8:
+                case 9:
+                case 10:
                     attackAI(toReturn, battle);
             }
-//            switch (r) {
-//                default:
-//                    if (Battle.getCurrentBattle() == null)
-//                        return;
-//                case 0:
-//                    insertAI(toReturn, battle);
-//                    break;
-//                case 1:
-//                    insertAI(toReturn, battle);
-//                    break;
-//                case 2:// TODO: 2019-06-14
-////                    attackAI(toReturn, battle);
-//                    insertAI(toReturn, battle);
-//                    break;
-//                case 3:
-////                    specialPowerAI(toReturn, battle);
-//                    insertAI(toReturn, battle);
-//                    break;
-//                case 4:
-////                    useItemAI(toReturn, battle);
-//                    insertAI(toReturn, battle);
-//                    break;
-//            }
         }
         System.out.println(toReturn);
     }
@@ -131,7 +116,7 @@ public class AI extends Player {
         String s;
         for (int i = 0; i < 5; i++) {
             Minion minionTarget = battle.targetForAttackAI();
-            if (minionTarget == null){
+            if (minionTarget == null) {
                 minion = selectCard(toReturn);
                 battle.setSelectedCard(battle.getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()));
                 continue;

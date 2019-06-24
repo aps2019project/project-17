@@ -305,8 +305,13 @@ public class Battle {
             case HYBRID:
                 break;
         }
+        // TODO: 2019-06-24
+        System.out.println("health attacker before attack :" + attacker.getHealthPoint());
+        System.out.println("health defender before attack :" + minion.getHealthPoint());
         attacker.attack(minion);
         minion.counterAttack(attacker);
+        System.out.println("health attacker after attack :" + attacker.getHealthPoint());
+        System.out.println("health defender after attack :" + minion.getHealthPoint());
         check();
         attacker.setCanAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
@@ -401,14 +406,15 @@ public class Battle {
             this.playerOne.setMana(9);
             this.playerTwo.setMana(9);
         } else {
-            if (this.turn % 2 == 0)
+            if (this.turn % 2 == 0) {
                 this.playerTwo.setMana(this.playerTwo.getPreviousMana() + 1);
-            else if (this.turn % 2 == 1)
+                this.playerTwo.setPreviousMana(this.playerTwo.getMana());
+            } else if (this.turn % 2 == 1) {
                 this.playerOne.setMana(this.playerOne.getPreviousMana() + 1);
-
-            this.playerOne.setPreviousMana(this.playerOne.getMana());
-            this.playerTwo.setPreviousMana(this.playerTwo.getMana());
+                this.playerOne.setPreviousMana(this.playerOne.getMana());
+            }
         }
+
         for (Minion minion : getAllMinion()) {
             if (minion.getAttackType().equals(AttackType.PASSIVE))
                 minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
@@ -753,5 +759,9 @@ public class Battle {
 
     public int getTurn() {
         return turn;
+    }
+
+    public void setSelectedItem(Item item) {
+        this.selectedItem = item;
     }
 }

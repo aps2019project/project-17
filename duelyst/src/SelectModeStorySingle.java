@@ -1,4 +1,3 @@
-import Appearance.ExceptionEndGame;
 import Appearance.FontAppearance;
 import Data.Account;
 import GameGround.Battle;

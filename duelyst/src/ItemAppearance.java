@@ -128,6 +128,7 @@ class ItemAppearance {
                 break;
             }
         }
+        GameController.selectItem(null);
         this.selectedItem = null;
         System.out.println("selected item became null");
     }
@@ -137,7 +138,7 @@ class ItemAppearance {
             if (itemBackGrounds[i] != null && itemInfo[i] != null && items[i] != null) {
                 final int j = i;
                 itemBackGrounds[i].setOnMouseClicked(event -> {
-                    GameController.selectCardOrItem(items[j].getId(), Battle.getCurrentBattle());
+                    GameController.selectItem(items[j]);
                     for (int k = 0; k <itemBackGrounds.length ; k++) {
                         if(k!=j){
                             itemBackGrounds[k].setOpacity(0.7);
@@ -158,4 +159,7 @@ class ItemAppearance {
         }
     }
 
+    public Item getSelectedItem() {
+        return selectedItem;
+    }
 }

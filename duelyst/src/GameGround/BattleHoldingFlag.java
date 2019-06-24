@@ -23,7 +23,7 @@ public class BattleHoldingFlag extends Battle {
         Random r = new Random();
         int x = r.nextInt(5);
         int y = r.nextInt(9);
-        while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].getItem() != null) {
+        while (x <= 0 || y <= 0 || (x == 3 && y == 1) || (x == 3 && y == 9) || this.board.getCells()[x - 1][y - 1].getItem() != null || this.board.getCells()[x - 1][y - 1].getCard() != null) {
             x = r.nextInt(5);
             y = r.nextInt(9);
         }

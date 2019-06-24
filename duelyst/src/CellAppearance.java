@@ -42,6 +42,8 @@ public class CellAppearance {
                     ErrorOnBattle.display(Battle.getSituationOfGame());
                     new MainMenu();
                 }
+            } else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem() != null) {
+                usetItem();
             } else {
                 if (BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell() == null) {
                     if (this.cell.getCard() == null)
@@ -77,6 +79,28 @@ public class CellAppearance {
                 }
             }
         });
+    }
+
+    private void usetItem() {
+        int x = this.cell.getRow() + 1;
+        int y = this.cell.getCol() + 1;
+        try {
+            try {
+                this.cellRectangle.setFill(new ImagePattern(new Image(new FileInputStream("spell_action.gif"))));
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+            this.cellRectangle.setOpacity(1);
+            try {
+                Battle.getCurrentBattle().useItem(x, y);
+            } finally {
+                BattleAppearance.getCurrentBattleAppearance().getItemAppearance().setSelectedItemNull();
+                BattleAppearance.getCurrentBattleAppearance().setManaIconImageLights();
+            }
+        } catch (ExceptionEndGame exceptionEndGame) {
+            ErrorOnBattle.display(Battle.getSituationOfGame());
+            new MainMenu();
+        }
     }
 
     private void undoSelectedCard() {

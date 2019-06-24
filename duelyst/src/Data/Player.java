@@ -191,8 +191,8 @@ public class Player {
             collectAbleItems.add(this.mainDeck.getItem());
         }
         setHand();
-        this.mana = 50;
-        this.previousMana = 50;
+        this.mana = 2;
+        this.previousMana = 2;
         return true;
     }
 

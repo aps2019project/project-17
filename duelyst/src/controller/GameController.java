@@ -172,6 +172,10 @@ public class GameController {
         return battle.selectCardOrItem(cardItemID);
     }
 
+    public static void selectItem(Item item) {
+        Battle.getCurrentBattle().setSelectedItem(item);
+    }
+
     public static String showCardInfoFromGraveYard(String cardID, Battle battle) {
         return battle.GraveYard_showInfo(cardID);
     }
