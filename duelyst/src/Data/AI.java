@@ -63,7 +63,7 @@ public class AI extends Player {
             return;
         StringBuilder toReturn = new StringBuilder();
         Battle battle = Battle.getCurrentBattle();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
             int r = Math.abs(new Random().nextInt() % 11);
             switch (r) {
                 case 0:
