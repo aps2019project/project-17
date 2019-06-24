@@ -199,7 +199,7 @@ public class Minion extends Card {
     }
 
     public void useSpecialPower(int x, int y) {
-        if (desc.equals("nothing"))
+        if (desc.equals("nothing") || desc.equals("Combo"))
             return;
         for (Effect effect : specialPower) {
             effect.action(Battle.getCurrentBattle().getCellFromBoard(x, y));
