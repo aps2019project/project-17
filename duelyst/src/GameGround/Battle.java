@@ -532,19 +532,26 @@ public class Battle {
             return null;
         int x = ((Minion) selectedCard).getXCoordinate() - 1;
         int y = ((Minion) selectedCard).getYCoordinate() - 1;
+        int radius;
         int shift;
-        if (((Minion) selectedCard).getMinionType().equals(MinionType.MELEE))
-            shift = 1;
-        else
-            shift = ((Minion) selectedCard).getAttackRange() / 2;
-        for (int i = x - shift; i <= x + shift; i++) {
-            for (int j = y - shift; j <= y + shift; j++) {
+        if (((Minion) selectedCard).getMinionType().equals(MinionType.MELEE)) {
+            radius = 1;
+            shift = 0;
+        } else if (((Minion) selectedCard).getMinionType().equals(MinionType.RANGED)) {
+            radius = ((Minion) selectedCard).getAttackRange() / 2;
+            shift = 2;
+        } else {
+            radius = ((Minion) selectedCard).getAttackRange() / 2;
+            shift = 0;
+        }
+        for (int i = x - radius; i <= x + radius; i++) {
+            for (int j = y - radius; j <= y + radius; j++) {
                 if (i > 4 || j > 8 || i < 0 || j < 0)
                     continue;
                 Cell cell = getCellFromBoard(i + 1, j + 1);
                 if (cell.getCard() == null)
                     continue;
-                if (cell.getCard().getUserName().equals(theOtherPlayer().getUserName()))
+                if (cell.getCard().getUserName().equals(theOtherPlayer().getUserName()) && Cell.distance(cell, getCellFromBoard(x + 1, y = 1)) > shift)
                     return (Minion) cell.getCard();
             }
         }
@@ -644,7 +651,7 @@ public class Battle {
         currentBattle.endGame();
     }
 
-    public void endGame() throws ExceptionEndGame{
+    public void endGame() throws ExceptionEndGame {
     }
 
     public String deletedDeadMinions() {
@@ -740,5 +747,9 @@ public class Battle {
             return (first.getRow() != destination.getRow()) && (first.getCol() != destination.getCol());
 
         return false;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 }

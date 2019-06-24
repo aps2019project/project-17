@@ -68,12 +68,10 @@ public class AI extends Player {
             int r = Math.abs(new Random().nextInt() % 3);
             switch (r) {
                 case 0:
-                    attackAI(toReturn, battle);
-//                    insertAI(toReturn, battle);
+                    insertAI(toReturn, battle);
                     break;
                 case 1:
-                    attackAI(toReturn, battle);
-//                    moveAI(toReturn, battle);
+                    moveAI(toReturn, battle);
                 case 2:
                     attackAI(toReturn, battle);
             }
@@ -139,7 +137,7 @@ public class AI extends Player {
                 continue;
             }
             s = battle.attack(minionTarget.getId(), false, null);
-            System.out.println(s);
+            System.out.println("report: " + s);
             if (s.contains("attacked")) {
                 results.add("attack " + battle.getSelectedCard().getName() + " " + minionTarget.getXCoordinate() + " " + minionTarget.getYCoordinate());
                 toReturn.append("AI decided to attack ").append(minionTarget.getName()).append(" and ".concat(s).concat("\n"));

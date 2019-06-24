@@ -30,5 +30,6 @@ public class FontAppearance {
     public static final Font FONT_NOT_FOUND = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 120);
     public static final Font FONT_CREATE_DECK = Font.font("Phosphate", Screen.getPrimary().getVisualBounds().getWidth() / 74);
     public static final Font FONT_INFORMATION_CARDS_BATTLE = Font.font("Phosphate", 15);
-    public static final Font FONT_INFORMATION_ITEM=Font.font("Phosphate", 10);
+    public static final Font FONT_INFORMATION_ITEM = Font.font("Phosphate", 10);
+    public static final Font FONY_SHOWING_TURN = Font.font("Phosphate", 30);
 }

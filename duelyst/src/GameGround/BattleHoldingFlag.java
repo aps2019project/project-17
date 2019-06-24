@@ -169,7 +169,7 @@ public class BattleHoldingFlag extends Battle {
         if (whoHasFlag == null)
             return;
 
-        if (timeHoldingFlag >= 6) {
+        if (timeHoldingFlag >= 8) {
             if (whoHasFlag.equals(playerOne)) {
                 playerOneWon();
             } else if (whoHasFlag.equals(playerTwo)) {

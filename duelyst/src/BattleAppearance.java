@@ -27,11 +27,11 @@ public class BattleAppearance {
     private CellAppearance[][] board;
     private Rectangle[][] boardBackGround;
     private Rectangle[] shapeOfHealthHero = new Rectangle[2];
-    private Text[] textsOfBattle;
     private Rectangle[] manaIconImage;
     private Rectangle endTurnButton;
     private Rectangle nextCardOpponent;
     private Rectangle graveYardButton;
+    private Text[] textsOfBattle;
     private HandAppearance handAppearance;
     private ItemAppearance itemAppearance;
     private ImageView nextCardOpponentImage;
@@ -59,8 +59,9 @@ public class BattleAppearance {
                 new Text(AI.getCurrentAIPlayer().getUserName()),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())),
-                new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint())))
-                , new Text("Grave Yard")};
+                new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()))),
+                new Text("Grave Yard"),
+                new Text("TURN ")};
         this.manaIconImage = new Rectangle[9];
         this.currentSelectedCell = null;
         this.nextCardOpponentImage = new ImageView();
@@ -191,6 +192,7 @@ public class BattleAppearance {
         setShapeOfHealthHeroTexts();
         setAppearanceOfCells();
         setNextCardOpponent();
+        setTurnText();
     }
 
     private void setEndTurnButton() {
@@ -286,7 +288,10 @@ public class BattleAppearance {
         textsOfBattle[4].setLayoutY(shapeOfHealthHero[0].getLayoutY() * 1.18);
         textsOfBattle[5].setLayoutX(shapeOfHealthHero[1].getLayoutX() * 1.008);
         textsOfBattle[5].setLayoutY(shapeOfHealthHero[1].getLayoutY() * 1.18);
-        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5]);
+        textsOfBattle[6].setLayoutX(Main.WIDTH_OF_WINDOW / 20);
+        textsOfBattle[6].setLayoutY(Main.HEIGHT_OF_WINDOW * 10 / 11);
+        textsOfBattle[6].setFont(FontAppearance.FONY_SHOWING_TURN);
+        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5], textsOfBattle[6]);
     }
 
     private void setShapeOfHealthHeroTexts() {
@@ -348,6 +353,10 @@ public class BattleAppearance {
         }
     }
 
+    private void setTurnText() {
+        textsOfBattle[6].setText("TURN : " + Battle.getCurrentBattle().getTurn());
+    }
+
     public void setFlagsItemsAppearance() {
         for (CellAppearance[] cellAppearances : board) {
             for (CellAppearance cellAppearance : cellAppearances) {
@@ -356,6 +365,7 @@ public class BattleAppearance {
         }
         itemAppearance.delete(root);
         initItemList();
+        setTurnText();
     }
 
 
@@ -487,7 +497,7 @@ public class BattleAppearance {
                 MinionAppearance minionAppearanceDefender = getMinionAppearanceOfBattle(defender, false);
                 minionAppearanceAttacker.attack();
                 minionAppearanceDefender.hit();
-                if (defender.isCanCounterAttack()){
+                if (defender.isCanCounterAttack()) {
                     minionAppearanceAttacker.hit();
                     minionAppearanceDefender.attack();
                 }
@@ -510,7 +520,7 @@ public class BattleAppearance {
         return handAppearance;
     }
 
-    public ItemAppearance getItemAppearance(){
+    public ItemAppearance getItemAppearance() {
         return itemAppearance;
     }
 
