@@ -2,10 +2,7 @@ package Appearance;
 
 import Cards.Hero;
 import Cards.Minion;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,21 +57,20 @@ public class MinionAppearance {
         try {
             Image image = new Image(new FileInputStream(address + ".png"));
             this.imageView = new ImageView(image);
-             fileReader= new FileReader(address + ".plist");
+            fileReader = new FileReader(address + ".plist");
 
         } catch (IOException e) {
             Image image = null;
             try {
-                image = new Image(new FileInputStream( "selected/custom.png"));
+                image = new Image(new FileInputStream("selected/custom.png"));
                 this.imageView = new ImageView(image);
-                fileReader= new FileReader("selected/custom.plist");
+                fileReader = new FileReader("selected/custom.plist");
                 System.out.println("hiiiiiii");
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
 //            e.printStackTrace();
-        }
-        finally {
+        } finally {
             StringBuilder data = new StringBuilder();
             int c = 0;
             Pattern patternIndex = Pattern.compile("(?<name>attack|run|idle|breathing|death|hit)_\\d{3}.png");
@@ -163,7 +160,7 @@ public class MinionAppearance {
         int durationOfRun = (int) (10 * Math.sqrt(deltaX * deltaX + deltaY * deltaY));
         KeyFrame keyFrame = new KeyFrame(Duration.millis(durationOfRun), keyValueX, keyValueY);
         timeline.getKeyFrames().add(keyFrame);
-        animation.setCycleCount(durationOfRun / duration + 1);
+        animation.setCycleCount(durationOfRun / duration);
         animation.setAutoReverse(true);
         animation.play();
         timeline.play();
@@ -189,6 +186,10 @@ public class MinionAppearance {
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapDeath);
         animation.setCycleCount(1);
         animation.play();
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(duration * 3), imageView);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.play();
     }
 
     public void idle() {
@@ -203,6 +204,9 @@ public class MinionAppearance {
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapHit);
         animation.setCycleCount(1);
         animation.play();
+        if (minion.getHealthPoint() <= 0) {
+            death();
+        }
         return duration;
     }
 
