@@ -41,6 +41,7 @@ public class BattleAppearance {
     private static BattleAppearance currentBattleAppearance;
 
     public BattleAppearance() {
+        System.out.println(Account.getLoginUser().getCollection().getMainDeck().getHero().getName());
         currentBattleAppearance = this;
         primaryInitializes();
         setBackGround();
