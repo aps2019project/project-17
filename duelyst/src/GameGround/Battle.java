@@ -305,10 +305,8 @@ public class Battle {
             case HYBRID:
                 break;
         }
-        // TODO: 2019-06-22
-
-//        attacker.attack(minion);
-//        minion.counterAttack(attacker);
+        attacker.attack(minion);
+        minion.counterAttack(attacker);
         check();
         attacker.setCanAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
