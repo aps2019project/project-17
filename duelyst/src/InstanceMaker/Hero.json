@@ -138,18 +138,4 @@
 "attackType": "ON_TURN",
 "coolDown": 0,
 "desc": "nothing"
-},
-{"name": "hero",
-"id": "1500",
-"price": 1000,
-"manaPoint": 100,
-"healthPoint": 100,
-"attackPoint": 100,
-"minionType": "RANGED",
-"attackRange": "100",
-"distanceCanMove": 100,
-"maxRangeToInput": 100,
-"attackType": "ON_ATTACK",
-"coolDown": 23,
-"desc": ""
 }]
