@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 
 class ItemAppearance {
 
+    private Item selectedItem;
     private Item[] items = new Item[6];
     private Rectangle[] itemBackGrounds = new Rectangle[6];
     private Rectangle[] itemInfo = new Rectangle[6];
@@ -29,6 +30,7 @@ class ItemAppearance {
         setItemList();
         locateIcons();
         add();
+        eventHandler();
         //addInformationOfCards();
     }
 
@@ -42,6 +44,7 @@ class ItemAppearance {
             itemBackGrounds[i] = new Rectangle(Main.WIDTH_OF_WINDOW / 15, Main.HEIGHT_OF_WINDOW / 9);
             try {
                 itemBackGrounds[i].setFill(new ImagePattern(new Image(new FileInputStream("itemShow.gif"))));
+                itemBackGrounds[i].setOpacity(0.7);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -51,15 +54,6 @@ class ItemAppearance {
 
     }
 
-
-//    private void addInformationOfCards() {
-//        for (int i = 0; i < itemInfo.length; i++) {
-//            if (i < 5) {
-//                if (itemBackGrounds[i] != null && items[i] != null && itemInfo[i] != null)
-//                    setInformationOfItems(i, items[i]);
-//            }
-//        }
-//    }
 
     private void setInformationOfItems(int i, Item item) {
         //if (item != null) {
@@ -98,7 +92,7 @@ class ItemAppearance {
                     itemBackGrounds[i].setLayoutY(y);
                 } else {
                     itemBackGrounds[i].setLayoutX(x);
-                    itemBackGrounds[i].setLayoutY(y+i*Main.WIDTH_OF_WINDOW / 15);
+                    itemBackGrounds[i].setLayoutY(y + i * Main.WIDTH_OF_WINDOW / 15);
                 }
                 setInformationOfItems(i, items[i]);
             }
@@ -124,16 +118,42 @@ class ItemAppearance {
         }
     }
 
-    private void eventHandler(){
-        for (int i = 0; i <itemBackGrounds.length ; i++) {
-            if (itemBackGrounds[i] != null && itemInfo[i] != null && items[i] != null){
-                final int j=i;
-               itemBackGrounds[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                   @Override
-                   public void handle(MouseEvent event) {
-                       GameController.selectCardOrItem(items[j].getId(), Battle.getCurrentBattle());
-                   }
-               });
+    public void setSelectedItemNull() {
+        if (selectedItem == null) {
+            return;
+        }
+        for (Rectangle itemBackGround : itemBackGrounds) {
+            if (itemBackGround.getOpacity() == 1) {
+                itemBackGround.setOpacity(0.7);
+                break;
+            }
+        }
+        this.selectedItem = null;
+        System.out.println("selected item became null");
+    }
+
+    private void eventHandler() {
+        for (int i = 0; i < itemBackGrounds.length; i++) {
+            if (itemBackGrounds[i] != null && itemInfo[i] != null && items[i] != null) {
+                final int j = i;
+                itemBackGrounds[i].setOnMouseClicked(event -> {
+                    GameController.selectCardOrItem(items[j].getId(), Battle.getCurrentBattle());
+                    for (int k = 0; k <itemBackGrounds.length ; k++) {
+                        if(k!=j){
+                            itemBackGrounds[k].setOpacity(0.7);
+                        }
+                    }
+                    if (selectedItem != null)
+                        if (selectedItem == items[j]) {
+                            itemBackGrounds[j].setOpacity(0.7);
+                            selectedItem = null;
+                            System.out.println("selected Item became null");
+                            return;
+                        }
+                    itemBackGrounds[j].setOpacity(1);
+                    selectedItem = items[j];
+                    BattleAppearance.getCurrentBattleAppearance().getHandAppearance().setSelectedCardNull();
+                });
             }
         }
     }

@@ -1,5 +1,6 @@
 package GameGround;
 
+import Appearance.ExceptionEndGame;
 import Data.*;
 import Effects.enums.AttackType;
 import Cards.Card;
@@ -83,7 +84,7 @@ public class BattleHoldingFlag extends Battle {
     }
 
     @Override
-    public String movingCard(int x, int y) {
+    public String movingCard(int x, int y) throws ExceptionEndGame {
         String returnOFSuper = super.movingCard(x, y);
         if (!returnOFSuper.equals("ok"))
             return returnOFSuper;
@@ -106,7 +107,7 @@ public class BattleHoldingFlag extends Battle {
     }
 
     @Override
-    public String insertingCardFromHand(String cardName, int x, int y) {
+    public String insertingCardFromHand(String cardName, int x, int y) throws ExceptionEndGame {
         String returningFromSuper = super.insertingCardFromHand(cardName, x, y);
         if (!returningFromSuper.equals("ok"))
             return returningFromSuper;
@@ -164,7 +165,7 @@ public class BattleHoldingFlag extends Battle {
     }
 
     @Override
-    public void endGame() {
+    public void endGame() throws ExceptionEndGame {
         if (whoHasFlag == null)
             return;
 
@@ -178,7 +179,7 @@ public class BattleHoldingFlag extends Battle {
     }
 
     @Override
-    public void endTurn() {
+    public void endTurn() throws ExceptionEndGame {
         if (whoHasFlag != null) {
             switch (gameMode) {
                 case SINGLE_PLAYER:

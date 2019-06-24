@@ -1,5 +1,6 @@
 package view;
 
+import Appearance.ExceptionEndGame;
 import GameGround.Battle;
 import controller.GameController;
 
@@ -108,7 +109,7 @@ class BattleRequest {
         return true;
     }
 
-    static boolean checkSyntaxOfMoveTO(String command) {
+    static boolean checkSyntaxOfMoveTO(String command) throws ExceptionEndGame {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             Request.changeMenuType(MenuType.MAIN_MENU);
@@ -129,7 +130,7 @@ class BattleRequest {
         return true;
     }
 
-    static boolean checkSyntaxOfAttack(String command, Scanner scanner) {
+    static boolean checkSyntaxOfAttack(String command, Scanner scanner) throws ExceptionEndGame {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             Request.changeMenuType(MenuType.MAIN_MENU);
@@ -152,7 +153,7 @@ class BattleRequest {
         return true;
     }
 
-    static boolean checkSyntaxOfComboAttack(String command, Scanner scanner) {
+    static boolean checkSyntaxOfComboAttack(String command, Scanner scanner) throws ExceptionEndGame {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             Request.changeMenuType(MenuType.MAIN_MENU);
@@ -177,7 +178,7 @@ class BattleRequest {
         return true;
     }
 
-    static boolean checkSyntaxOfUseSpecialPower(String command) {
+    static boolean checkSyntaxOfUseSpecialPower(String command) throws ExceptionEndGame {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             Request.changeMenuType(MenuType.MAIN_MENU);
@@ -215,7 +216,7 @@ class BattleRequest {
         return true;
     }
 
-    static boolean checkSyntaxOfInsert(String command) {
+    static boolean checkSyntaxOfInsert(String command) throws ExceptionEndGame {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             Request.changeMenuType(MenuType.MAIN_MENU);
@@ -237,7 +238,7 @@ class BattleRequest {
         return true;
     }
 
-    static boolean checkSyntaxOfEndTurn(String command) {
+    static boolean checkSyntaxOfEndTurn(String command) throws ExceptionEndGame {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             Request.changeMenuType(MenuType.MAIN_MENU);
@@ -273,7 +274,7 @@ class BattleRequest {
         return true;
     }
 
-    static boolean checkSyntaxOfUse(String command) {
+    static boolean checkSyntaxOfUse(String command) throws ExceptionEndGame {
         if (comeOutOfTheGame()) {
             System.out.println(Battle.getSituationOfGame());
             Request.changeMenuType(MenuType.MAIN_MENU);

@@ -1,10 +1,8 @@
 import Appearance.ColorAppearance;
+import Appearance.ExceptionEndGame;
 import Appearance.FontAppearance;
 import Appearance.MinionAppearance;
-import Cards.Card;
-import Cards.Hero;
-import Cards.Item;
-import Cards.Minion;
+import Cards.*;
 import Data.AI;
 import Data.Account;
 import GameGround.*;
@@ -32,9 +30,11 @@ public class BattleAppearance {
     private Text[] textsOfBattle;
     private Rectangle[] manaIconImage;
     private Rectangle endTurnButton;
+    private Rectangle nextCardOpponent;
+    private Rectangle graveYardButton;
     private HandAppearance handAppearance;
     private ItemAppearance itemAppearance;
-    private Rectangle graveYardButton;
+    private ImageView nextCardOpponentImage;
     private ArrayList<MinionAppearance> minionAppearanceOfBattle = new ArrayList<>();
     private Cell currentSelectedCell;
     private static BattleAppearance currentBattleAppearance;
@@ -45,8 +45,8 @@ public class BattleAppearance {
         setBackGround();
         secondaryInitializes();
         setStuffs();
-        disPlay();
         handleEvents();
+        disPlay();
     }
 
     private void primaryInitializes() {
@@ -63,6 +63,7 @@ public class BattleAppearance {
                 , new Text("Grave Yard")};
         this.manaIconImage = new Rectangle[9];
         this.currentSelectedCell = null;
+        this.nextCardOpponentImage = new ImageView();
     }
 
     private void setBackGround() {
@@ -170,8 +171,8 @@ public class BattleAppearance {
 //        } else {
         for (int i = 0; i < Account.getLoginUser().getPlayer().getCollectAbleItems().size(); i++) {
             itemsToBePassed[i] = Account.getLoginUser().getPlayer().getCollectAbleItems().get(i);
-        //}
-    }
+            //}
+        }
         this.itemAppearance = new ItemAppearance(this.root, itemsToBePassed);
     }
 
@@ -189,6 +190,7 @@ public class BattleAppearance {
         setAppearanceOfTexts();
         setShapeOfHealthHeroTexts();
         setAppearanceOfCells();
+        setNextCardOpponent();
     }
 
     private void setEndTurnButton() {
@@ -302,6 +304,48 @@ public class BattleAppearance {
                 cellAppearance.setCellAppearance();
             }
         }
+        itemAppearance.delete(root);
+        initItemList();
+    }
+
+    public void setNextCardOpponent() {
+        final Rectangle templateOfNextCardOpponent = new Rectangle(Main.WIDTH_OF_WINDOW / 13, Main.HEIGHT_OF_WINDOW / 7);
+        this.nextCardOpponent = new Rectangle(Main.WIDTH_OF_WINDOW / 26, Main.HEIGHT_OF_WINDOW / 14);
+        try {
+            this.nextCardOpponent.setFill(new ImagePattern(new Image(new FileInputStream("blank_template.png"))));
+            templateOfNextCardOpponent.setFill(new ImagePattern(new Image(new FileInputStream("blank_template.png"))));
+            this.nextCardOpponent.setLayoutX(Main.WIDTH_OF_WINDOW * 9.8 / 11);
+            this.nextCardOpponent.setLayoutY(Main.HEIGHT_OF_WINDOW / 3.5);
+            templateOfNextCardOpponent.setLayoutX(Main.WIDTH_OF_WINDOW * 9.4 / 11);
+            templateOfNextCardOpponent.setLayoutY(Main.HEIGHT_OF_WINDOW / 4);
+            this.root.getChildren().add(templateOfNextCardOpponent);
+            this.root.getChildren().add(this.nextCardOpponent);
+            setImageOfOpponentNextCard();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setImageOfOpponentNextCard() {
+        this.nextCardOpponent.setVisible(false);
+        if (this.nextCardOpponentImage != null)
+            this.root.getChildren().remove(nextCardOpponentImage);
+        if (Battle.getCurrentBattle().getPlayerTwo().getNextCard() instanceof Minion) {
+            System.out.println("minion -> next card of opponent : " + Battle.getCurrentBattle().getPlayerTwo().getNextCard().getName());
+            MinionAppearance minionAppearance = getMinionAppearanceOfBattle((Minion) Battle.getCurrentBattle().getPlayerTwo().getNextCard(), true);
+            minionAppearance.add(true);
+            minionAppearance.setLocation(Main.WIDTH_OF_WINDOW * 9.4 / 11, Main.HEIGHT_OF_WINDOW / 4);
+            this.nextCardOpponentImage = minionAppearance.getImageView();
+            minionAppearance.breathing();
+        } else if (Battle.getCurrentBattle().getPlayerTwo().getNextCard() instanceof Spell) {
+            System.out.println("spell -> next card of opponent : " + Battle.getCurrentBattle().getPlayerTwo().getNextCard().getName());
+            try {
+                this.nextCardOpponent.setVisible(true);
+                this.nextCardOpponent.setFill(new ImagePattern(new Image(new FileInputStream("spell.gif"))));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void setFlagsItemsAppearance() {
@@ -310,6 +354,8 @@ public class BattleAppearance {
                 cellAppearance.checkFlagsItems();
             }
         }
+        itemAppearance.delete(root);
+        initItemList();
     }
 
 
@@ -320,14 +366,22 @@ public class BattleAppearance {
 
     private void handleEvents() {
         textsOfBattle[0].setOnMouseClicked(e -> {
-            Battle.getCurrentBattle().endTurn();
+            try {
+                Battle.getCurrentBattle().endTurn();
+            } catch (ExceptionEndGame exceptionEndGame) {
+                ErrorOnBattle.display(Battle.getSituationOfGame());
+                new MainMenu();
+            }
             AITurn();
             setManaIconImageLights();
+            setImageOfOpponentNextCard();
 //            setAppearanceOfCells();
             handAppearance.insert();
             handAppearance = new HandAppearance(root);
             itemAppearance.delete(root);
             initItemList();
+            if (Battle.getCurrentBattle().whoseTurn().equals(Battle.getCurrentBattle().getPlayerOne()))
+                System.out.println("its your turn ! action");
 //            currentBattleAppearance = null;
 //            Battle.getCurrentBattle().endingGame();
 //            new MainMenu();
@@ -338,12 +392,20 @@ public class BattleAppearance {
 //            currentBattleAppearance = null;
 //            Battle.getCurrentBattle().endingGame();
 //            new MainMenu();
-            Battle.getCurrentBattle().endTurn();
+            try {
+                Battle.getCurrentBattle().endTurn();
+            } catch (ExceptionEndGame exceptionEndGame) {
+                ErrorOnBattle.display(Battle.getSituationOfGame());
+                new MainMenu();
+            }
             AITurn();
             setManaIconImageLights();
+            setImageOfOpponentNextCard();
 //            setAppearanceOfCells();
             handAppearance.insert();
             handAppearance = new HandAppearance(root);
+            if (Battle.getCurrentBattle().whoseTurn().equals(Battle.getCurrentBattle().getPlayerOne()))
+                System.out.println("its your turn ! action");
         });
 
         textsOfBattle[6].setOnMouseClicked(event -> new GraveYardAppearance());
@@ -352,9 +414,7 @@ public class BattleAppearance {
     }
 
     private void AITurn() {
-        if (AI.getResults() == null)
-            return;
-        if (AI.getResults().size() == 0)
+        if (AI.getResults() == null || AI.getResults().size() == 0)
             return;
         for (int i = 0; i < AI.getResults().size(); i++) {
             String[] commands = AI.getResults().get(i).split(" ");
@@ -377,38 +437,31 @@ public class BattleAppearance {
                 final int x = Integer.parseInt(commands[index + 3]);
                 final int y = Integer.parseInt(commands[index + 4]);
                 System.out.println(x0 + " " + y0 + " " + x + " " + y);
-                Minion minion = null;
+                Minion minion;
                 MinionAppearance minionAppearance;
-                for (int j = 0; j < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); j++) {
-                    if (Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i).getName().equals(name)) {
-                        minion = Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i);
-                        break;
-                    }
-                }
+                minion = getMinionOfAiFromName(name, null);
                 if (minion != null) {
                     minionAppearance = getMinionAppearanceOfBattle(minion, false);
                     if (minionAppearance != null) {
                         minionAppearance.setInHand(false);
                         minionAppearance.setInInBoard(true);
                         minionAppearance.add(false);
-                        minionAppearance.setLocation(0.975 * board[x0 - 1][y0 - 1].getCellRectangle().getLayoutX(), 0.92 * board[x0 - 1][y0 - 1].getCellRectangle().getLayoutY());
-                        minionAppearance.move(0.975 * board[x - 1][y - 1].getCellRectangle().getLayoutX() - minionAppearance.getImageView().getLayoutX(), 0.92 * board[x - 1][y - 1].getCellRectangle().getLayoutY() - minionAppearance.getImageView().getLayoutY());
+                        double xSource = board[x0 - 1][y0 - 1].getCellRectangle().getLayoutX();
+                        double ySource = board[x0 - 1][y0 - 1].getCellRectangle().getLayoutY();
+                        double xDestination = board[x - 1][y - 1].getCellRectangle().getLayoutX();
+                        double yDestination = board[x - 1][y - 1].getCellRectangle().getLayoutY();
+                        minionAppearance.setLocation(0.975 * xSource, 0.92 * ySource);
+                        minionAppearance.move(0.975 * xDestination - minionAppearance.getImageView().getLayoutX(), 0.92 * yDestination - minionAppearance.getImageView().getLayoutY());
                     }
                 }
             } else if (commands[0].equals("insert")) {
-                System.out.println("he gonna insert");
                 StringBuilder nameSB = new StringBuilder();
                 for (int j = 1; j < commands.length; j++) {
                     nameSB.append(commands[j].concat(" "));
                 }
                 String name = nameSB.toString().trim();
                 Minion minion = null;
-                for (int j = 0; j < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); j++) {
-                    if (Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i).getName().equals(name)) {
-                        minion = Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i);
-                        break;
-                    }
-                }
+                minion = getMinionOfAiFromName(name, minion);
                 if (minion != null) {
                     MinionAppearance minionAppearance = getMinionAppearanceOfBattle(minion, true);
                     if (minionAppearance != null) {
@@ -418,13 +471,47 @@ public class BattleAppearance {
                         continue;
                     }
                 }
+            } else if (commands[0].equals("attack")) {
+                StringBuilder nameSb = new StringBuilder();
+                for (int j = 1; j < commands.length - 2; j++) {
+                    nameSb.append(commands[j]);
+                }
+                String name = nameSb.toString().trim();
+                int xDefender = Integer.parseInt(commands[commands.length - 2]);
+                int yDefender = Integer.parseInt(commands[commands.length - 1]);
+                Minion attacker = getMinionOfAiFromName(name, null);
+                Minion defender = (Minion) Battle.getCurrentBattle().getCellFromBoard(xDefender, yDefender).getCard();
+                if (attacker == null || defender == null)
+                    continue;
+                MinionAppearance minionAppearanceAttacker = getMinionAppearanceOfBattle(attacker, false);
+                MinionAppearance minionAppearanceDefender = getMinionAppearanceOfBattle(defender, false);
+                minionAppearanceAttacker.attack();
+                minionAppearanceDefender.hit();
+                if (defender.isCanCounterAttack()){
+                    minionAppearanceAttacker.hit();
+                    minionAppearanceDefender.attack();
+                }
             }
             setFlagsItemsAppearance();
         }
     }
 
+    private Minion getMinionOfAiFromName(String name, Minion minion) {
+        for (int j = 0; j < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); j++) {
+            if (Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(j).getName().equals(name)) {
+                minion = Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(j);
+                break;
+            }
+        }
+        return minion;
+    }
+
     public HandAppearance getHandAppearance() {
         return handAppearance;
+    }
+
+    public ItemAppearance getItemAppearance(){
+        return itemAppearance;
     }
 
     public static BattleAppearance getCurrentBattleAppearance() {

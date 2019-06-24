@@ -1,5 +1,6 @@
 package controller;
 
+import Appearance.ExceptionEndGame;
 import CardCollections.*;
 import Cards.Card;
 import Cards.Item;
@@ -26,7 +27,7 @@ public class GameController {
         accounts = new ArrayList<>();
     }
 
-    public static void main() {
+    public static void main() throws ExceptionEndGame {
         boolean isFinish = false;
         do {
             Request.getNewCommand();
@@ -138,19 +139,19 @@ public class GameController {
      * Battle
      */
 
-    public static String movingCard(int x, int y, Battle battle) {
+    public static String movingCard(int x, int y, Battle battle) throws ExceptionEndGame {
         return battle.movingCard(x, y);
     }
 
-    public static String attack(String opponentCardId, Battle battle) {
+    public static String attack(String opponentCardId, Battle battle) throws ExceptionEndGame {
         return battle.attack(opponentCardId, false, null);
     }
 
-    public static String insertCard(String cardName, int x, int y, Battle battle) {
+    public static String insertCard(String cardName, int x, int y, Battle battle) throws ExceptionEndGame {
         return battle.insertingCardFromHand(cardName, x, y);
     }
 
-    public static void endTurn(Battle battle) {
+    public static void endTurn(Battle battle) throws ExceptionEndGame {
         battle.endTurn();
     }
 
@@ -159,10 +160,10 @@ public class GameController {
         return Account.getAccount(userName);
     }
 
-    public static String useSpecialPower(int x, int y, Battle battle) {
+    public static String useSpecialPower(int x, int y, Battle battle) throws ExceptionEndGame {
         return battle.useSpecialPower(x, y);
     }
-    public static String useItem(int x, int y,Battle battle){
+    public static String useItem(int x, int y,Battle battle) throws ExceptionEndGame {
         return battle.useItem(x,y);
     }
 
@@ -179,7 +180,7 @@ public class GameController {
         return battle.GraveYard_showCards();
     }
 
-    public static String attackCombo(String opponentCardID, Battle battle, String... cardIDs) {
+    public static String attackCombo(String opponentCardID, Battle battle, String... cardIDs) throws ExceptionEndGame {
         return battle.attackCombo(opponentCardID, cardIDs);
     }
 

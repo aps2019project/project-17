@@ -1,5 +1,6 @@
 package GameGround;
 
+import Appearance.ExceptionEndGame;
 import Cards.Card;
 import Data.AI;
 import Data.GameData;
@@ -55,7 +56,7 @@ public class BattleKillHero extends Battle {
     }
 
     @Override
-    public String movingCard(int x, int y) {
+    public String movingCard(int x, int y) throws ExceptionEndGame {
 
         String toReturnFormSuper = super.movingCard(x, y);
         if (!toReturnFormSuper.equals("ok"))
@@ -65,7 +66,7 @@ public class BattleKillHero extends Battle {
     }
 
     @Override
-    public String insertingCardFromHand(String cardName, int x, int y) {
+    public String insertingCardFromHand(String cardName, int x, int y) throws ExceptionEndGame {
         String toReturnFromSuper = super.insertingCardFromHand(cardName.trim().toLowerCase(), x, y);
         Card card = whoseTurn().getCardFromHand(cardName);
         if (!toReturnFromSuper.equals("ok"))
@@ -96,7 +97,7 @@ public class BattleKillHero extends Battle {
     }
 
     @Override
-    public void endGame() {
+    public void endGame() throws ExceptionEndGame {
         if (playerOne.getMainDeck().getHero().getHealthPoint() <= 0) {
             playerTwoWon();
             return;
@@ -126,7 +127,7 @@ public class BattleKillHero extends Battle {
     }
 
     @Override
-    public void endTurn() {
+    public void endTurn() throws ExceptionEndGame {
         super.endingTurn();
     }
 }

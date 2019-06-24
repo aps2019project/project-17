@@ -1,5 +1,6 @@
 package view;
 
+import Appearance.ExceptionEndGame;
 import CardCollections.Deck;
 import Data.Account;
 import GameGround.*;
@@ -40,7 +41,7 @@ public class Request {
         error = ErrorType.INVALID_INPUT;
     }
 
-    public static boolean isValid() {
+    public static boolean isValid() throws ExceptionEndGame {
         RequestType requestType = getType();
 
         if (requestType == null)

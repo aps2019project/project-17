@@ -1,5 +1,6 @@
 package Data;
 
+import Appearance.ExceptionEndGame;
 import CardCollections.Deck;
 import GameGround.Battle;
 import Cards.Minion;
@@ -56,16 +57,26 @@ public class AI extends Player {
         return AIModeHF;
     }
 
-    public void actionTurn() {
+    public void actionTurn() throws ExceptionEndGame {
         // TODO: 2019-06-22
-//        results = new ArrayList<>();
-//        if (Battle.getCurrentBattle() == null)
-//            return;
-//        StringBuilder toReturn = new StringBuilder();
-//        int counters = Math.abs(new Random().nextInt(1) + 1);
-//        Battle battle = Battle.getCurrentBattle();
-//        for (int i = 0; i < 6; i++) {
-//            int r = Math.abs(new Random().nextInt() % 5);
+        results = new ArrayList<>();
+        if (Battle.getCurrentBattle() == null)
+            return;
+        StringBuilder toReturn = new StringBuilder();
+        Battle battle = Battle.getCurrentBattle();
+        for (int i = 0; i < 6; i++) {
+            int r = Math.abs(new Random().nextInt() % 3);
+            switch (r) {
+                case 0:
+                    attackAI(toReturn, battle);
+//                    insertAI(toReturn, battle);
+                    break;
+                case 1:
+                    attackAI(toReturn, battle);
+//                    moveAI(toReturn, battle);
+                case 2:
+                    attackAI(toReturn, battle);
+            }
 //            switch (r) {
 //                default:
 //                    if (Battle.getCurrentBattle() == null)
@@ -89,8 +100,8 @@ public class AI extends Player {
 //                    insertAI(toReturn, battle);
 //                    break;
 //            }
-//        }
-//        System.out.println(toReturn);
+        }
+        System.out.println(toReturn);
     }
 
     private void useItemAI(StringBuilder toReturn, Battle battle) {
@@ -116,47 +127,46 @@ public class AI extends Player {
         toReturn.append("AI decided to use special power\n");
     }
 
-    private void attackAI(StringBuilder toReturn, Battle battle) {
-        if (battle.getSelectedCard() == null) {
-            battle.selectCardOrItem(selectCard(toReturn).getId());
-        }
-        int randomToChoose = Math.abs(new Random().nextInt() % battle.minionsOfCurrentPlayer(battle.getPlayerOne()).size());
+    private void attackAI(StringBuilder toReturn, Battle battle) throws ExceptionEndGame {
+        Minion minion = selectCard(toReturn);
+        battle.setSelectedCard(battle.getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()));
         String s;
-        for (int i = 0; i < 2; i++) {
-            s = battle.attack(battle.minionsOfCurrentPlayer(battle.getPlayerOne()).get(randomToChoose).getId(), false, null);
-            if (s.contains("attacked")) {
-                toReturn.append("AI decided to attack").append(battle.minionsOfCurrentPlayer(battle.theOtherPlayer()).get(randomToChoose).getName()).append("and ".concat(s).concat("\n"));
-                return;
-            }
-            randomToChoose = Math.abs(new Random().nextInt() % battle.minionsOfCurrentPlayer(battle.theOtherPlayer()).size());
-        }
-        int x0 = ((Minion) battle.getSelectedCard()).getXCoordinate();
-        int y0 = ((Minion) battle.getSelectedCard()).getYCoordinate();
-        for (int i = 0; i < 2; i++) {
-            int x = (Math.abs(x0 + new Random().nextInt() % 2)) % 5 + 1;
-            int y = (Math.abs(y0 + new Random().nextInt() % 2)) % 9 + 1;
-            if (battle.getCellFromBoard(x, y).getCard() == null || battle.getCellFromBoard(x, y).getCard().getUserName().equals(currentAIPlayer.getUserName()))
+        for (int i = 0; i < 5; i++) {
+            Minion minionTarget = battle.targetForAttackAI();
+            if (minionTarget == null){
+                minion = selectCard(toReturn);
+                battle.setSelectedCard(battle.getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()));
                 continue;
-            Minion minion = (Minion) battle.getCellFromBoard(x, y).getCard();
-            s = battle.attack(minion.getId(), false, null);
+            }
+            s = battle.attack(minionTarget.getId(), false, null);
+            System.out.println(s);
             if (s.contains("attacked")) {
-                toReturn.append("AI decided to attack").append(battle.minionsOfCurrentPlayer(battle.theOtherPlayer()).get(randomToChoose).getName()).append("and ".concat(s).concat("\n"));
+                results.add("attack " + battle.getSelectedCard().getName() + " " + minionTarget.getXCoordinate() + " " + minionTarget.getYCoordinate());
+                toReturn.append("AI decided to attack ").append(minionTarget.getName()).append(" and ".concat(s).concat("\n"));
                 return;
             }
+            minion = selectCard(toReturn);
+            battle.setSelectedCard(battle.getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate()));
         }
         toReturn.append("AI decided to attack but failed!\n");
     }
 
-    private void insertAI(StringBuilder toReturn, Battle battle) {
+    private void insertAI(StringBuilder toReturn, Battle battle) throws ExceptionEndGame {
         int randomToChoose = 0;
         int x = 3;
         int y = 8;
         String s;
-        if (battle.getSelectedCard() == null)
-            battle.selectCardOrItem(selectCard(toReturn).getId());
-        for (int i = 0; i < 4; i++) {
+        if (battle.getSelectedCard() == null) {
+            Minion selectedMinion = selectCard(toReturn);
+            battle.setSelectedCard(Battle.getCurrentBattle().getCellFromBoard(selectedMinion.getXCoordinate(), selectedMinion.getYCoordinate()));
+        }
+        for (int i = 0; i < 5; i++) {
             if (currentAIPlayer.getHand().getCards().size() <= 0)
                 break;
+            Minion selectedMinion = selectCard(toReturn);
+            if (selectedMinion == null)
+                return;
+            battle.setSelectedCard(Battle.getCurrentBattle().getCellFromBoard(selectedMinion.getXCoordinate(), selectedMinion.getYCoordinate()));
             String name = currentAIPlayer.getHand().getCards().get(randomToChoose).getName();
             s = battle.insertingCardFromHand(currentAIPlayer.getHand().getCards().get(randomToChoose).getName(), x, y);
             if (s.contains("successfully")) {
@@ -167,30 +177,31 @@ public class AI extends Player {
             randomToChoose = Math.abs(new Random().nextInt((currentAIPlayer).getHand().getCards().size()));
             while (randomToChoose >= currentAIPlayer.getHand().getCards().size())
                 randomToChoose = Math.abs(new Random().nextInt((currentAIPlayer).getHand().getCards().size()));
-            x = Math.abs((Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt(4))) % 4) + 1;
-            y = Math.abs((Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt(4))) % 8) + 1;
+            x = Math.abs((Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt(3))) % 4) + 1;
+            y = Math.abs((Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt(3))) % 8) + 1;
         }
         toReturn.append("AI decided to insert a card but failed!\n");
     }
 
-    private void moveAI(StringBuilder toReturn, Battle battle) {
+    private void moveAI(StringBuilder toReturn, Battle battle) throws ExceptionEndGame {
         int x, x0;
         int y, y0;
         String s;
-        if (battle.getSelectedCard() == null) {
-            battle.selectCardOrItem(selectCard(toReturn).getId());
-        }
-        x0 = ((Minion) battle.getSelectedCard()).getXCoordinate();
-        y0 = ((Minion) battle.getSelectedCard()).getYCoordinate();
-        for (int i = 0; i < 2; i++) {
-            y = (Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 2)) % 9 + 1;
-            x = (Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 2)) % 5 + 1;
+        Minion selectedMinion = selectCard(toReturn);
+        battle.setSelectedCard(battle.getCellFromBoard(selectedMinion.getXCoordinate(), selectedMinion.getYCoordinate()));
+        for (int i = 0; i < 5; i++) {
+            battle.setSelectedCard(battle.getCellFromBoard(selectedMinion.getXCoordinate(), selectedMinion.getYCoordinate()));
+            x0 = ((Minion) battle.getSelectedCard()).getXCoordinate();
+            y0 = ((Minion) battle.getSelectedCard()).getYCoordinate();
+            y = (Math.abs(((Minion) battle.getSelectedCard()).getYCoordinate() + new Random().nextInt() % 3)) % 8 + 1;
+            x = (Math.abs(((Minion) battle.getSelectedCard()).getXCoordinate() + new Random().nextInt() % 3)) % 4 + 1;
             s = battle.movingCard(x, y);
             if (s.contains("moved")) {
                 results.add("moved " + Battle.getCurrentBattle().getSelectedCard().getName().concat(" -> ") + x0 + " " + y0 + " " + x + " " + y);
                 toReturn.append("AI decided to move ").append(battle.getSelectedCard().getName()).append(" into ").append(x).append(" - ").append(y).append(" and ".concat(s).concat("\n"));
                 return;
             }
+            selectedMinion = selectCard(toReturn);
         }
         toReturn.append("AI decided to move a card but failed!\n");
     }

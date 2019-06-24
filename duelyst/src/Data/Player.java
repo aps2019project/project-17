@@ -129,6 +129,8 @@ public class Player {
     }
 
     private void setNextCard() {
+        if (copyMainDeck.getCards().size() <= 0)
+            setCopyMainDeck();
         int n = new Random().nextInt() % copyMainDeck.getCards().size();
         while (n < 0) {
             n = new Random().nextInt() % copyMainDeck.getCards().size();

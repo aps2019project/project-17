@@ -1,6 +1,7 @@
 package GameGround;
 
 
+import Appearance.ExceptionEndGame;
 import CardCollections.Hand;
 import Cards.Card;
 import Cards.Item;
@@ -10,6 +11,7 @@ import Data.AI;
 import Data.GameData;
 import Data.MatchState;
 import Data.Player;
+import Effects.enums.MinionType;
 import Effects.enums.SpecialSituation;
 import InstanceMaker.CardMaker;
 import controller.GameController;
@@ -145,7 +147,7 @@ public class Battle {
         return "invalid card\\item id";
     }
 
-    public String movingCard(int x, int y) {
+    public String movingCard(int x, int y) throws ExceptionEndGame {
         if (this.selectedCard == null || this.selectedCard instanceof Spell)
             return "first you have to select a card";
         if (x > 5 || y > 9)
@@ -160,8 +162,8 @@ public class Battle {
             return "this card cant move";
         cellDestination.setCard(minion);
         minion.setCanMove(false);
-        // TODO: 2019-06-11
-        cellFirst.exitCell();
+        // TODO: 2019-06-22
+//        cellFirst.exitCell();
         cellFirst.setCard(null);
         minion.setCoordinate(x, y);
         if (cellDestination.getItem() != null) {
@@ -171,7 +173,7 @@ public class Battle {
         return "ok";
     }
 
-    public String attackCombo(String opponentCardID, String... cardIDs) {
+    public String attackCombo(String opponentCardID, String... cardIDs) throws ExceptionEndGame {
         Minion opponentCard = (Minion) returnCardFromBoard(opponentCardID, theOtherPlayer());
         if (opponentCard == null)
             return "invalid card ID";
@@ -187,7 +189,7 @@ public class Battle {
         return "combo attack successfully done";
     }
 
-    public String insertingCardFromHand(String cardName, int x, int y) {
+    public String insertingCardFromHand(String cardName, int x, int y) throws ExceptionEndGame {
         Card card = whoseTurn().getCardFromHand(cardName);
         Cell cell = getCellFromBoard(x, y);
 
@@ -203,7 +205,7 @@ public class Battle {
         if (card instanceof Minion) {
             if (cell.getCard() != null)
                 return "invalid target - your selected cell already has a card!";
-            if (!board.isCoordinateAvailable(this, x, y))
+            if (!board.isCoordinateAvailable(this, whoseTurn(), x, y))
                 return "invalid  target  -  your  selected  cell  is  too  far  !";
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
                 return "You  don′t  have  enough  mana  to  insert  this  card";
@@ -228,7 +230,8 @@ public class Battle {
         } else if (card instanceof Spell) {
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
-            ((Spell) card).action(x, y);
+            // TODO: 2019-06-22
+//            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
             this.whoseTurn().lessMana(((Spell) card).getManaPoint());
@@ -266,7 +269,7 @@ public class Battle {
         return whoseTurn().getNextCard().getName() + " " + whoseTurn().getNextCard().getDesc();
     }
 
-    public String attack(String opponentCardId, boolean isComboAttack, Minion comboAttacker) {
+    public String attack(String opponentCardId, boolean isComboAttack, Minion comboAttacker) throws ExceptionEndGame {
         Minion attacker;
         if (isComboAttack)
             attacker = comboAttacker;
@@ -286,11 +289,6 @@ public class Battle {
         if (!attacker.getCanAttack())
             return "this  card  doesnt  ability  to  attack  at  this  time";
 
-        // TODO: 2019-06-20
-        System.out.println("a card is attack -> ".concat(selectedCard.getName()));
-        System.out.println(minion.getMinionType());
-        System.out.println(minion.getAttackRange() + "\n");
-
         Cell cellDestination = this.board.getCells()[minion.getXCoordinate() - 1][minion.getYCoordinate() - 1];
         Cell cellFirst = this.board.getCells()[attacker.getXCoordinate() - 1][attacker.getYCoordinate() - 1];
         switch (attacker.getMinionType()) {
@@ -307,17 +305,15 @@ public class Battle {
             case HYBRID:
                 break;
         }
-
-        attacker.attack(minion);
-        minion.counterAttack(attacker);
+        // TODO: 2019-06-22
+//        attacker.attack(minion);
+//        minion.counterAttack(attacker);
         check();
-        // TODO: 2019-06-20
         attacker.setCanAttack(false);
-        minion.setCanCounterAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
     }
 
-    public String useSpecialPower(int x, int y) {
+    public String useSpecialPower(int x, int y) throws ExceptionEndGame {
         if (whoseTurn().getMainDeck().getHero().getManaPoint() > whoseTurn().getMana())
             return "you don't have enough mana";
 
@@ -327,7 +323,7 @@ public class Battle {
         return "special power successfully used";
     }
 
-    public String useItem(int x, int y) {
+    public String useItem(int x, int y) throws ExceptionEndGame {
         if (selectedItem == null)
             return "at first you should select a item";
         this.selectedItem.action(x, y);
@@ -391,10 +387,10 @@ public class Battle {
         return card.getUserName().equals(player.getUserName());
     }
 
-    public void endTurn() {
+    public void endTurn() throws ExceptionEndGame {
     }
 
-    private void logicEndTurn() {
+    private void logicEndTurn() throws ExceptionEndGame {
         this.turn++;
         this.selectedCard = null;
         this.selectedItem = null;
@@ -427,6 +423,9 @@ public class Battle {
         whoseTurn().passTurn();
         if (currentBattle != null)
             currentBattle.check();
+        for (int i = 0; i < getAllMinion().size(); i++) {
+            getAllMinion().get(i).resetMinion();
+        }
     }
 
     public static Battle getCurrentBattle() {
@@ -531,6 +530,30 @@ public class Battle {
         return cells;
     }
 
+    public Minion targetForAttackAI() {
+        if (selectedCard == null)
+            return null;
+        int x = ((Minion) selectedCard).getXCoordinate() - 1;
+        int y = ((Minion) selectedCard).getYCoordinate() - 1;
+        int shift;
+        if (((Minion) selectedCard).getMinionType().equals(MinionType.MELEE))
+            shift = 1;
+        else
+            shift = ((Minion) selectedCard).getAttackRange() / 2;
+        for (int i = x - shift; i <= x + shift; i++) {
+            for (int j = y - shift; j <= y + shift; j++) {
+                if (i > 4 || j > 8 || i < 0 || j < 0)
+                    continue;
+                Cell cell = getCellFromBoard(i + 1, j + 1);
+                if (cell.getCard() == null)
+                    continue;
+                if (cell.getCard().getUserName().equals(theOtherPlayer().getUserName()))
+                    return (Minion) cell.getCard();
+            }
+        }
+        return null;
+    }
+
     protected void setPrice() {
     }
 
@@ -619,12 +642,12 @@ public class Battle {
         return false;
     }
 
-    void check() {
+    void check() throws ExceptionEndGame {
         currentBattle.deletedDeadMinions();
         currentBattle.endGame();
     }
 
-    public void endGame() {
+    public void endGame() throws ExceptionEndGame{
     }
 
     public String deletedDeadMinions() {
@@ -639,24 +662,28 @@ public class Battle {
         return board;
     }
 
-    void playerOneWon() {
+    void playerOneWon() throws ExceptionEndGame {
         gameDataPlayerOne.setMatchState(MatchState.WIN);
         if (gameMode.equals(GameMode.MULTI_PLAYER))
             gameDataPlayerTwo.setMatchState(MatchState.LOSE);
         loginOfEnding(playerOne, gameDataPlayerOne, playerTwo, gameDataPlayerTwo);
+        System.out.println("its going to be null");
         currentBattle = null;
+        System.out.println("its become null its OVER");
+        throw new ExceptionEndGame(situationOfGame);
     }
 
-    void playerTwoWon() {
+    void playerTwoWon() throws ExceptionEndGame {
         if (gameMode.equals(GameMode.MULTI_PLAYER))
             gameDataPlayerTwo.setMatchState(MatchState.WIN);
         gameDataPlayerOne.setMatchState(MatchState.LOSE);
         loginOfEnding(playerTwo, gameDataPlayerTwo, playerOne, gameDataPlayerOne);
         currentBattle = null;
+        throw new ExceptionEndGame(situationOfGame);
     }
 
     private void loginOfEnding(Player playerOne, GameData gameDataPlayerOne, Player playerTwo, GameData gameDataPlayerTwo) {
-        for (int i = 0; i < GameController.getAccounts().size(); i++) {
+        for (int i = 0; i < 1; i++) {
             if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
                 GameController.getAccounts().get(i).changeDaric(price);
                 GameController.getAccounts().get(i).incrementNumbOfWins();
@@ -671,7 +698,7 @@ public class Battle {
         situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + currentBattle.price;
     }
 
-    void endingTurn() {
+    void endingTurn() throws ExceptionEndGame {
         switch (gameMode) {
             case SINGLE_PLAYER:
                 logicEndTurn();
