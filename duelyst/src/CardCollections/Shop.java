@@ -1,6 +1,7 @@
 package CardCollections;
 
 import Cards.*;
+import Data.Account;
 import InstanceMaker.CardMaker;
 
 import java.util.ArrayList;
@@ -196,7 +197,7 @@ public class Shop {
     public void update() {
         Card[] totalCards = CardMaker.getAllCards();
         for (Card totalCard : totalCards) {
-            if (!this.cardsInShop.contains(totalCard))
+            if (!this.cardsInShop.contains(totalCard) && !Account.getLoginUser().getCollection().getCards().contains(totalCard))
                 this.cardsInShop.add(totalCard);
         }
     }

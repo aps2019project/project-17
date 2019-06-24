@@ -14,7 +14,6 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Random;
 
 public class CellAppearance {
 
@@ -43,7 +42,7 @@ public class CellAppearance {
                     new MainMenu();
                 }
             } else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem() != null) {
-                usetItem();
+                useItem();
             } else {
                 if (BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell() == null) {
                     if (this.cell.getCard() == null)
@@ -81,7 +80,7 @@ public class CellAppearance {
         });
     }
 
-    private void usetItem() {
+    private void useItem() {
         int x = this.cell.getRow() + 1;
         int y = this.cell.getCol() + 1;
         try {
