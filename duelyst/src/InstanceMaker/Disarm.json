@@ -1,56 +1,65 @@
-[{"id": "203",
-"startTime": 0,
-"endTime": 100,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "NONE"
-},
-{"id": "110",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "ENEMY"
-},
-{"id": "1",
-"startTime": 0,
-"endTime": 100,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "ENEMY"
-},
-{"id": "9",
-"startTime": 0,
-"endTime": 3,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "INSIDER"
-},
-{"id": "10",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "ALL",
-"targetType": "MINION",
-"targetDetail": "ENEMY"
-},
-{"id": "-303",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "ENEMY"
-},
-{"id": "-317",
-"startTime": 0,
-"endTime": 1,
-"isContinues": false,
-"targetRange": "ONE",
-"targetType": "MINION",
-"targetDetail": "ENEMY"
-}]
+[
+  {
+    "id": "203",
+    "startTime": 0,
+    "endTime": 100,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "NONE"
+  },
+  {
+    "id": "110",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  },
+  {
+    "id": "1",
+    "startTime": 0,
+    "endTime": 100,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  },
+  {
+    "id": "9",
+    "startTime": 0,
+    "endTime": 3,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "INSIDER"
+  },
+  {
+    "id": "10",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "ALL",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  },
+  {
+    "id": "-303",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  },
+  {
+    "id": "-317",
+    "startTime": 0,
+    "endTime": 1,
+    "isContinues": false,
+    "targetRange": "ONE",
+    "targetType": "MINION",
+    "targetDetail": "ENEMY"
+  }
+]
