@@ -30,8 +30,14 @@ public class CardMaker {
         try {
             spells = (Spell[]) loadInstance(InstanceType.SPELL);
             heroes = (Hero[]) loadInstance(InstanceType.HERO);
+            for (Hero hero : heroes) {
+                hero.init();
+            }
             items = (Item[]) loadInstance(InstanceType.ITEM);
             minions = (Minion[]) loadInstance(InstanceType.MINION);
+            for (Minion minion : minions) {
+                minion.init();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

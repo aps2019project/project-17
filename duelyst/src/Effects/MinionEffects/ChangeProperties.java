@@ -19,12 +19,14 @@ public class ChangeProperties extends Effect {
     }
 
     @Override
-    public void effect(Object... targets) {
-        for (Object target : targets) {
-             Minion minion = (Minion) target;
-            minion.changeAttackPower(changePowerValue);
-            minion.changeHealth(changeHealthValue);
-            super.addToImpacts(minion);
+    public void effect(Object[] targets) {
+        for (int i = 0; i < targets.length; i++) {
+            if (targets[i] instanceof Minion) {
+                Minion minion = (Minion) targets[i];
+                minion.changeAttackPower(changePowerValue);
+                minion.changeHealth(changeHealthValue);
+                super.addToImpacts(minion);
+            }
         }
     }
 

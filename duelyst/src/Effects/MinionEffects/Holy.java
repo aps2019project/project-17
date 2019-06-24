@@ -16,7 +16,7 @@ public class Holy extends Effect {
     }
 
     @Override
-    public void effect(Object... targets) {
+    public void effect(Object[] targets) {
         for (Object target : targets) {
             Minion minion = (Minion) target;
             if (!minion.getAntiBuff().equals(BuffType.HOLY))

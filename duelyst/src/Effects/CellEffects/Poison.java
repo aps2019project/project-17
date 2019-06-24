@@ -13,7 +13,7 @@ public class Poison extends Effect {
     }
 
     @Override
-    public void effect(Object... targets) {
+    public void effect(Object[] targets) {
         for (Object target : targets) {
             Cell cell = (Cell) target;
             cell.setPoison(true);

@@ -34,8 +34,7 @@ public class Save {
             accountWriter.append(",");
             accountWriter.append(account.getUserName());
             accountWriter.close();
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

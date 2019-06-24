@@ -32,6 +32,33 @@ public class Minion extends Card {
     private boolean hasFlag;
     private int numberOfAttack;
 
+    public Minion(String name, String id, int price, String desc, ArrayList<Effect> specialPower, Effect attack, ArrayList<Effect> effects, SpecialSituation specialSituation, ArrayList<Effect> specialSituationBuff, AttackType attackType, BuffType antiBuff, int attackPoint, int healthPoint, int manaPoint, int attackRange, int xCoordinate, int yCoordinate, int distanceCanMove, int maxRangeToInput, int holyBuffState, boolean canMove, boolean canCounterAttack, boolean isStun, boolean canAttack, MinionType minionType, boolean hasFlag, int numberOfAttack) {
+        super(name, id, price, desc);
+        this.specialPower = specialPower;
+        this.attack = attack;
+        this.effects = effects;
+        this.specialSituation = specialSituation;
+        this.specialSituationBuff = specialSituationBuff;
+        this.attackType = attackType;
+        this.antiBuff = antiBuff;
+        this.attackPoint = attackPoint;
+        this.healthPoint = healthPoint;
+        this.manaPoint = manaPoint;
+        this.attackRange = attackRange;
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        this.distanceCanMove = distanceCanMove;
+        this.maxRangeToInput = maxRangeToInput;
+        this.holyBuffState = holyBuffState;
+        this.canMove = canMove;
+        this.canCounterAttack = canCounterAttack;
+        this.isStun = isStun;
+        this.canAttack = canAttack;
+        this.minionType = minionType;
+        this.hasFlag = hasFlag;
+        this.numberOfAttack = numberOfAttack;
+    }
+
     public Minion(String name, String id, int price, int manaPoint, int healthPoint, int attackPoint, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType, String desc) {
         super(name, id, price, desc);
         this.attackPoint = attackPoint;
@@ -50,9 +77,6 @@ public class Minion extends Card {
     }
 
     public void init() {
-        this.xCoordinate = 0;
-        this.yCoordinate = 0;
-        this.holyBuffState = 0;
         this.canMove = true;
         this.canCounterAttack = true;
         this.distanceCanMove = 2;
@@ -60,6 +84,7 @@ public class Minion extends Card {
         this.isStun = false;
         this.canAttack = true;
         this.numberOfAttack = 0;
+        effects = new ArrayList<>();
         if (minionType.equals(MinionType.MELEE))
             attackRange = 1;
         makeAttackBuff();
@@ -130,10 +155,10 @@ public class Minion extends Card {
         if (!canAttack)
             return;
         increaseNumberOfAttack();
-        this.attack.action(Battle.getCurrentBattle().getCellFromBoard(this.xCoordinate, this.yCoordinate));
+        this.attack.action(Battle.getCurrentBattle().getCellFromBoard(minion.xCoordinate, minion.yCoordinate));
         if (this.attackType.equals(AttackType.ON_ATTACK))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
-        if (specialSituation.equals(SpecialSituation.ATTACK)) {
+        if (specialSituationBuff != null && specialSituation.equals(SpecialSituation.ATTACK)) {
             useSpecialSituationBuff(minion.xCoordinate, minion.yCoordinate);
         }
     }
@@ -279,7 +304,8 @@ public class Minion extends Card {
     public void passTurn() {
         if (attackType.equals(AttackType.PASSIVE))
             useSpecialSituationBuff(xCoordinate, yCoordinate);
-        for (Effect effect : effects) {
+        for (int j = 0; j < effects.size(); j++) {
+            Effect effect = effects.get(j);
             effect.action(Battle.getCurrentBattle().getCellFromBoard(xCoordinate, yCoordinate));
             effect.checkForRemove();
         }
@@ -301,6 +327,6 @@ public class Minion extends Card {
     }
 
     public static Minion minionCopy(Minion minion) {
-        return new Minion(minion.name, minion.id, minion.price, minion.manaPoint, minion.healthPoint, minion.attackPoint, minion.minionType, minion.attackRange, minion.distanceCanMove, minion.maxRangeToInput, minion.attackType, minion.desc);
+        return new Minion(minion.name, minion.id, minion.price, minion.desc, minion.specialPower, minion.attack, minion.effects, minion.specialSituation, minion.specialSituationBuff, minion.attackType, minion.antiBuff, minion.attackPoint, minion.healthPoint, minion.manaPoint, minion.attackRange, minion.xCoordinate, minion.yCoordinate, minion.distanceCanMove, minion.maxRangeToInput, minion.holyBuffState, minion.canMove, minion.canCounterAttack, minion.isStun, minion.canAttack, minion.minionType, minion.hasFlag, minion.numberOfAttack);
     }
 }
