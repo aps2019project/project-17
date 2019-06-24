@@ -37,7 +37,7 @@ class MainMenu {
         setMouse();
         display();
         Account.getLoginUser().getCollection().setMainDeck(Account.getLoginUser().getCollection().getDecks().get(0).getName());
-        Account.getLoginUser().getCollection().getMainDeck().setHero(CardMaker.getHeroes()[5]);
+//        Account.getLoginUser().getCollection().getMainDeck().setHero(CardMaker.getHeroes()[5]);
     }
 
     private void setBackGround() {
