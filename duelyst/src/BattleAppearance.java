@@ -41,7 +41,6 @@ public class BattleAppearance {
     private static BattleAppearance currentBattleAppearance;
 
     public BattleAppearance() {
-        System.out.println(Account.getLoginUser().getCollection().getMainDeck().getHero().getName());
         currentBattleAppearance = this;
         primaryInitializes();
         setBackGround();
@@ -49,7 +48,6 @@ public class BattleAppearance {
         setStuffs();
         handleEvents();
         disPlay();
-        System.out.println("chhheccckkeddd " + Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getName());
     }
 
     private void primaryInitializes() {
@@ -292,7 +290,7 @@ public class BattleAppearance {
         root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5],textsOfBattle[7]);
     }
 
-    private void setShapeOfHealthHeroTexts() {
+    public void setShapeOfHealthHeroTexts() {
         textsOfBattle[4].setText(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint()));
         textsOfBattle[5].setText(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()));
     }

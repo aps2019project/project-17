@@ -45,8 +45,11 @@ public class CellAppearance {
                 useItem();
             } else {
                 if (BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell() == null) {
-                    if (this.cell.getCard() == null)
+                    if (this.cell.getCard() == null){
+                        // TODO: 2019-06-24
+                        System.out.println("hi dude");
                         return;
+                    }
                     // in this case we select a card!
                     selectCard();
                 } else {
@@ -219,6 +222,8 @@ public class CellAppearance {
                 cellRectangle.setOpacity(0.8);
                 check = true;
             }
+
+            BattleAppearance.getCurrentBattleAppearance().setShapeOfHealthHeroTexts();
 
             if (!check) {
                 this.cellRectangle.setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);

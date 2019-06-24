@@ -99,11 +99,13 @@ public class BattleKillHero extends Battle {
     @Override
     public void endGame() throws ExceptionEndGame {
         if (playerOne.getMainDeck().getHero().getHealthPoint() <= 0) {
+            System.out.println("health player one : " + playerOne.getMainDeck().getHero().getHealthPoint() + "  name : " + playerOne.getMainDeck().getHero().getName());
             playerTwoWon();
             return;
         }
         if (playerTwo.getMainDeck().getHero().getHealthPoint() <= 0) {
-            playerTwoWon();
+            System.out.println("health player two : " + playerTwo.getMainDeck().getHero().getHealthPoint() + "  name : " + playerTwo.getMainDeck().getHero().getName());
+            playerOneWon();
             currentBattle = null;
         }
     }

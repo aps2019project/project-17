@@ -355,6 +355,8 @@ public class Battle {
             for (int j = y - 2; j <= y; j++) {
                 if (i == x - 1 && j == y - 1)
                     continue;
+                if (i < 0 || i > 4 || j < 0 || j > 8)
+                    continue;
                 Cell cell = getCellFromBoard(i + 1, j + 1);
                 cells.add(cell);
             }
@@ -678,9 +680,7 @@ public class Battle {
         if (gameMode.equals(GameMode.MULTI_PLAYER))
             gameDataPlayerTwo.setMatchState(MatchState.LOSE);
         loginOfEnding(playerOne, gameDataPlayerOne, playerTwo, gameDataPlayerTwo);
-        System.out.println("its going to be null");
         currentBattle = null;
-        System.out.println("its become null its OVER");
         throw new ExceptionEndGame(situationOfGame);
     }
 
