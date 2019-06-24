@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class MinionAppearance {
     private HashMap<Integer, Position> mapRun = new HashMap<>();
     private HashMap<Integer, Position> mapHit = new HashMap<>();
 
-    public MinionAppearance(Minion minion, String nameInFile, Group root) throws IOException {
+    public MinionAppearance(Minion minion, String nameInFile, Group root) {
         this.minion = minion;
         String address = "selected/" + nameInFile;
         this.root = root;
@@ -61,19 +62,29 @@ public class MinionAppearance {
              fileReader= new FileReader(address + ".plist");
 
         } catch (IOException e) {
-            Image image = new Image(new FileInputStream( "custom.png"));
-            this.imageView = new ImageView(image);
-            fileReader= new FileReader(address + "custom.plist");
+            Image image = null;
+            try {
+                image = new Image(new FileInputStream( "custom.png"));
+                this.imageView = new ImageView(image);
+                fileReader= new FileReader(address + "custom.plist");
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
 //            e.printStackTrace();
         }
         finally {
             StringBuilder data = new StringBuilder();
-            int c;
+            int c = 0;
             Pattern patternIndex = Pattern.compile("(?<name>attack|run|idle|breathing|death|hit)_\\d{3}.png");
             Matcher matcherIndex;
             Pattern patternPosition = Pattern.compile("<string>\\{\\{(?<x>\\d+),(?<y>\\d+)},\\{\\d+,\\d+}}</string>");
             Matcher matcherPosition;
-            while ((c = fileReader.read()) != -1) {
+            while (true) {
+                try {
+                    if ((c = fileReader.read()) == -1) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 data.append((char) c);
             }
             this.attackCount = data.toString().split("attack").length - 1;
@@ -121,7 +132,11 @@ public class MinionAppearance {
                 matcherIndex = patternIndex.matcher(copy);
                 matcherPosition = patternPosition.matcher(copy);
             }
-            fileReader.close();
+            try {
+                fileReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Pattern pattern = Pattern.compile("<string>\\{(?<n>\\d{3}),(?<m>\\d{3})}</string>");
             Matcher matcher = pattern.matcher(data.toString());
             if (matcher.find()) {
