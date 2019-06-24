@@ -44,4 +44,10 @@ public class Spell extends Card {
         return spellCopy;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Spell))
+            return false;
+        return ((Spell) obj).getName().equals(this.getName());
+    }
 }

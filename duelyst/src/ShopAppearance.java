@@ -71,6 +71,7 @@ class ShopAppearance {
         initializeProducts();
         initializeShownCards();
         initializeOutBox();
+        Account.getLoginUser().getShop().update();
         currentPageView.setText("page : ".concat(Integer.toString(Math.abs(currentPage + 1))));
     }
 

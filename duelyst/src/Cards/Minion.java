@@ -330,4 +330,11 @@ public class Minion extends Card {
     public static Minion minionCopy(Minion minion) {
         return new Minion(minion.name, minion.id, minion.price, minion.desc, minion.specialPower, minion.attack, minion.effects, minion.specialSituation, minion.specialSituationBuff, minion.attackType, minion.antiBuff, minion.attackPoint, minion.healthPoint, minion.manaPoint, minion.attackRange, minion.xCoordinate, minion.yCoordinate, minion.distanceCanMove, minion.maxRangeToInput, minion.holyBuffState, minion.canMove, minion.canCounterAttack, minion.isStun, minion.canAttack, minion.minionType, minion.hasFlag, minion.numberOfAttack);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Minion))
+            return false;
+        return ((Minion) obj).getName().equals(this.name);
+    }
 }

@@ -37,4 +37,11 @@ public class Hero extends Minion {
         hero1.coolDown = coolDown;
         return hero1;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Hero))
+            return false;
+        return ((Hero) obj).getName().equals(this.name);
+    }
 }

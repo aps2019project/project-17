@@ -193,4 +193,12 @@ public class Shop {
         return shopSpells;
     }
 
+    public void update() {
+        Card[] totalCards = CardMaker.getAllCards();
+        for (Card totalCard : totalCards) {
+            if (!this.cardsInShop.contains(totalCard))
+                this.cardsInShop.add(totalCard);
+        }
+    }
+
 }
