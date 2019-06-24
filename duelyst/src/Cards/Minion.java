@@ -288,7 +288,7 @@ public class Minion extends Card {
         return attackType;
     }
 
-    private int getNumberOfAttack() {
+    public int getNumberOfAttack() {
         return numberOfAttack;
     }
 
