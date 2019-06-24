@@ -26,6 +26,7 @@ public class Player {
     private SpecialSituation specialSituation = SpecialSituation.NONE;
 
     public Player() {
+
     }
 
     public Player(String userName, Deck deck) {
