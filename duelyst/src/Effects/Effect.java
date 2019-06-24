@@ -197,4 +197,5 @@ public class Effect {
     public TargetDetail getTargetDetail() {
         return targetDetail;
     }
+
 }

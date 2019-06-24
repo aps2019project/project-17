@@ -25,7 +25,8 @@ public class ChangeProperties extends Effect {
                 Minion minion = (Minion) targets[i];
                 minion.changeAttackPower(changePowerValue);
                 minion.changeHealth(changeHealthValue);
-                super.addToImpacts(minion);
+                if (super.getEndTime() != 0)
+                    super.addToImpacts(minion);
             }
         }
     }
@@ -36,8 +37,11 @@ public class ChangeProperties extends Effect {
             return;
         for (Object impact : super.getImpacts()) {
             Minion minion = (Minion) impact;
+            if (changeHealthValue == -123)
+                minion.changeHealth(-minion.getNumberOfAttack() + 5);
+            else
+                minion.changeHealth(-changeHealthValue);
             minion.changeAttackPower(-changePowerValue);
-            minion.changeHealth(-changeHealthValue);
         }
     }
 
