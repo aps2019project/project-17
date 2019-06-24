@@ -50,14 +50,23 @@ public class MinionAppearance {
     private HashMap<Integer, Position> mapRun = new HashMap<>();
     private HashMap<Integer, Position> mapHit = new HashMap<>();
 
-    public MinionAppearance(Minion minion, String nameInFile, Group root) {
+    public MinionAppearance(Minion minion, String nameInFile, Group root) throws IOException {
         this.minion = minion;
         String address = "selected/" + nameInFile;
         this.root = root;
+        FileReader fileReader = null;
         try {
             Image image = new Image(new FileInputStream(address + ".png"));
             this.imageView = new ImageView(image);
-            FileReader fileReader = new FileReader(address + ".plist");
+             fileReader= new FileReader(address + ".plist");
+
+        } catch (IOException e) {
+            Image image = new Image(new FileInputStream( "custom.png"));
+            this.imageView = new ImageView(image);
+            fileReader= new FileReader(address + "custom.plist");
+//            e.printStackTrace();
+        }
+        finally {
             StringBuilder data = new StringBuilder();
             int c;
             Pattern patternIndex = Pattern.compile("(?<name>attack|run|idle|breathing|death|hit)_\\d{3}.png");
@@ -125,9 +134,6 @@ public class MinionAppearance {
                 this.isInHand = false;
                 this.inInBoard = true;
             }
-        } catch (
-                IOException e) {
-            e.printStackTrace();
         }
     }
 
