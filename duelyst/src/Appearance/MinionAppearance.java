@@ -64,9 +64,9 @@ public class MinionAppearance {
         } catch (IOException e) {
             Image image = null;
             try {
-                image = new Image(new FileInputStream( "custom.png"));
+                image = new Image(new FileInputStream( "selected/custom.png"));
                 this.imageView = new ImageView(image);
-                fileReader= new FileReader(address + "custom.plist");
+                fileReader= new FileReader("selected/custom.plist");
                 System.out.println("hiiiiiii");
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
