@@ -27,7 +27,6 @@ public class StartingBattleAppearance {
 
     static {
         try {
-            ;
             rectangle.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             StackPane stackPane1 = new StackPane(rectangle, singlePlayer);

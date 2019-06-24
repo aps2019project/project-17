@@ -38,7 +38,7 @@ class ShopAppearance {
     private ImageView rightDirection;
     private ImageView leftDirection;
     private ImageView coinsImage;
-    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS"),new Text("Custom Cards")};
+    private Text[] titles = {new Text("HEROES"), new Text("MINIONS"), new Text("SPELLS"), new Text("ITEMS"), new Text("Custom Cards")};
     private Text search = new Text("Search");
     private Text currentPageView = new Text();
     private Text moneyValue = new Text(Integer.toString(Account.getLoginUser().getDaric()));
@@ -367,6 +367,10 @@ class ShopAppearance {
     }
 
     private void changeCards() {
+        int spellSize = CardMaker.getSpells().length;
+        int minionSize = CardMaker.getMinions().length;
+        int heroSize = CardMaker.getHeroes().length;
+        System.out.println("spell size -> " + spellSize + " minion size -> " + minionSize + " hero size ->" + heroSize);
         for (int i = 0; i < shownCards.length; i++) {
             root.getChildren().removeAll(shownCards[i]);
             for (int j = 0; j < shownCards[i].length; j++) {
@@ -376,14 +380,17 @@ class ShopAppearance {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 shownCards[i][j] = allProducts[(currentPage * 10) + (5 * i) + j];
-                if ((currentPage * 10) + (5 * i) + j >= 70) {
-                    Item item = CardMaker.getAllItems()[(currentPage * 10) + (5 * i) + j - 70];
+                if ((currentPage * 10) + (5 * i) + j >= heroSize + minionSize + spellSize) {
+                    Item item = CardMaker.getAllItems()[(currentPage * 10) + (5 * i) + j - heroSize - spellSize - minionSize];
                     shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
-                } else if (CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j] instanceof Spell) {
+                } else if (((currentPage * 10) + (5 * i) + j) < 20) {
                     Spell spell = (Spell) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
                     shownData[i][j] = new CardsDataAppearance(spell.getName().toUpperCase(), Integer.toString(spell.getPrice()), Integer.toString(spell.getManaPoint()));
-                } else {
-                    Minion minion = (Minion) CardMaker.getAllCards()[(currentPage * 10) + (5 * i) + j];
+                } else if (((currentPage * 10) + (5 * i) + j) < 60) {
+                    Minion minion = CardMaker.getMinions()[(currentPage * 10) + (5 * i) + j - 20];
+                    shownData[i][j] = new CardsDataAppearance(minion.getName().toUpperCase(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
+                } else if (((currentPage * 10) + (5 * i) + j) < 70) {
+                    Hero minion = CardMaker.getHeroes()[(currentPage * 10) + (5 * i) + j - 60];
                     shownData[i][j] = new CardsDataAppearance(minion.getName().toUpperCase(), Integer.toString(minion.getPrice()), Integer.toString(minion.getManaPoint()), Integer.toString(minion.getAttackPoint()), Integer.toString(minion.getHealthPoint()));
                 }
             }

@@ -34,6 +34,7 @@ public class Collection {
         for (int i = 30; i < 50; i++) {
             deck1.addCard(cards.get(i));
         }
+        deck.setHero((Hero) cards.get(64));
         deck1.setHero((Hero) cards.get(69));
         this.mainDeck = deck;
     }

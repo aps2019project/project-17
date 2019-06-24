@@ -48,6 +48,7 @@ public class BattleAppearance {
         setStuffs();
         handleEvents();
         disPlay();
+        System.out.println("chhheccckkeddd " + Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getName());
     }
 
     private void primaryInitializes() {
