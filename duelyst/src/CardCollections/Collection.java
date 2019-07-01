@@ -18,23 +18,29 @@ public class Collection {
         this.cards = new ArrayList<>();
         this.items = new ArrayList<>();
         this.decks = new ArrayList<>();
-        this.daric = 15000;
+        this.daric = 1500000;
         this.mainDeck = null;
         toDelete();
         Deck deck = new Deck("deck");
         Deck deck1 = new Deck("AI");
         decks.add(deck);
         decks.add(deck1);
-        for (int i = 20; i < 41; i++) {
+
+        for (int i = 0; i < 20; i++)
+            if (cards.get(i).getName().equalsIgnoreCase("total disarm") || cards.get(i).getName().equalsIgnoreCase("fireball") || cards.get(i).getName().equalsIgnoreCase("lighting bolt") || cards.get(i).getName().equalsIgnoreCase("all disarm") || cards.get(i).getName().equalsIgnoreCase("kings guard"))
+                deck.addCard(cards.get(i));
+
+        for (int i = 20; i < 36; i++) {
             if (cards.get(i).getName().equalsIgnoreCase("oghab"))
                 continue;
-
             deck.addCard(cards.get(i));
         }
-        for (int i = 30; i < 50; i++) {
+
+        for (int i = 30; i < 50; i++)
             deck1.addCard(cards.get(i));
-        }
-        deck.setHero((Hero) cards.get(64));
+
+        deck.setHero((Hero) cards.get(66));
+        deck.setItem(CardMaker.getAllItems()[13]);
         deck1.setHero((Hero) cards.get(69));
         this.mainDeck = deck;
     }
@@ -264,7 +270,7 @@ public class Collection {
         return daric;
     }
 
-    void changeDaric(int value) {
+    public void changeDaric(int value) {
         this.daric += value;
     }
 
@@ -285,14 +291,8 @@ public class Collection {
     }
 
     private void toDelete() {
-        for (int i = 0; i < 70; i++) {
+        for (int i = 0; i < 70; i++)
             cards.add(CardMaker.getAllCards()[i]);
-        }
-        for (int i = 0; i < 5; i++) {
-            if (CardMaker.getAllItems()[i].getPrice() != 0) {
-                items.add(CardMaker.getAllItems()[i]);
-            }
-        }
     }
 
     public Deck returnDeckFromName(String deckName) {

@@ -197,8 +197,10 @@ public class Shop {
     public void update() {
         Card[] totalCards = CardMaker.getAllCards();
         for (Card totalCard : totalCards) {
-            if (!this.cardsInShop.contains(totalCard) && !Account.getLoginUser().getCollection().getCards().contains(totalCard))
+            if (!this.cardsInShop.contains(totalCard) && !Account.getLoginUser().getCollection().getCards().contains(totalCard)) {
+                System.out.println("\t\t\t\t" + totalCard.getName().concat(" added"));
                 this.cardsInShop.add(totalCard);
+            }
         }
     }
 

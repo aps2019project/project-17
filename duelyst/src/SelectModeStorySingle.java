@@ -66,8 +66,7 @@ public class SelectModeStorySingle {
         try {
             Image image = new Image(new FileInputStream("play.jpg"));
             BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-            Background background = new Background(bgImage);
-            root.setBackground(background);
+            root.setBackground(new Background(bgImage));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -78,16 +77,20 @@ public class SelectModeStorySingle {
             closeWindow();
             startSingleKillHero();
             startBattleAppearance();
+            new StartGameAppearance();
+
         });
         holdFlag.setOnMouseClicked(e -> {
             closeWindow();
             startSingleHoldFlags();
             startBattleAppearance();
+            new StartGameAppearance();
         });
         captureFlag.setOnMouseClicked(e -> {
             closeWindow();
             startSingleCaptureFlags();
             startBattleAppearance();
+            new StartGameAppearance();
         });
     }
 

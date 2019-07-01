@@ -159,9 +159,10 @@ public class BattleCaptureFlag extends Battle {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < getAllMinion().size(); i++) {
             if (getAllMinion().get(i).getHealthPoint() <= 0) {
-                if (getAllMinion().get(i) instanceof Hero)
-                    continue;
-                whoseTurn().addCardToGraveYard(getAllMinion().get(i));
+                if (whoseTurn().getUserName().equalsIgnoreCase(getAllMinion().get(i).getUserName().trim()))
+                    whoseTurn().addCardToGraveYard(getAllMinion().get(i));
+                else if (theOtherPlayer().getUserName().equalsIgnoreCase(getAllMinion().get(i).getName().trim()))
+                    theOtherPlayer().addCardToGraveYard(getAllMinion().get(i));
                 if (getAllMinion().get(i).isHasFlag()) {
                     if (getAllMinion().get(i).getAttackType().equals(AttackType.ON_DEATH))
                         getAllMinion().get(i).useSpecialPower(getAllMinion().get(i).getXCoordinate(), getAllMinion().get(i).getYCoordinate());

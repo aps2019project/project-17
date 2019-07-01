@@ -1,7 +1,6 @@
 import Appearance.ColorAppearance;
 import Data.Account;
-import InstanceMaker.CardMaker;
-import javafx.event.EventHandler;
+import Data.Save;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
@@ -9,8 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -29,15 +27,36 @@ class MainMenu {
     private Text exitTxt = new Text("Exit");
     private Scene sceneMainMenu;
     private ImageView imageViewBG;
+    private ImageView  save;
+    private VBox saveBox;
 
     MainMenu() {
+        initializeSaveVBox();
         setBackGround();
         locate();
         setFont();
         setMouse();
         display();
         Account.getLoginUser().getCollection().setMainDeck(Account.getLoginUser().getCollection().getDecks().get(0).getName());
-//        Account.getLoginUser().getCollection().getMainDeck().setHero(CardMaker.getHeroes()[5]);
+    }
+
+    private void initializeSaveVBox(){
+        try {
+            Image saveImage=new Image(new FileInputStream("save.png"));
+            save=new ImageView(saveImage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        save.setOpacity(0.9);
+        save.setFitWidth(70);
+        save.setFitHeight(70);
+        Text saveTxt=new Text("Save");
+        saveTxt.setFont(Font.font("Phosphate",10));
+        saveTxt.setFill(Color.WHITE);
+        saveBox=new VBox(save,saveTxt);
+        saveBox.setAlignment(Pos.CENTER);
+        saveBox.setSpacing(Main.HEIGHT_OF_WINDOW / 200);
+        saveBox.setAlignment(Pos.CENTER);
     }
 
     private void setBackGround() {
@@ -48,7 +67,7 @@ class MainMenu {
             imageViewBG.fitWidthProperty().bind(sceneMainMenu.widthProperty());
             imageViewBG.fitHeightProperty().bind(sceneMainMenu.heightProperty());
             root.getChildren().add(imageViewBG);
-            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt,customCardTxt, logoutText,exitTxt);
+            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt,customCardTxt, logoutText,exitTxt,saveBox);
             root.setAlignment(Pos.BASELINE_LEFT);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -63,6 +82,7 @@ class MainMenu {
         VBox.setMargin(logoutText, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(customCardTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(exitTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.54));
+        VBox.setMargin(saveBox,new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 1.1));
     }
 
     private void setFont() {
@@ -113,6 +133,10 @@ class MainMenu {
 
         customCardTxt.setOnMouseEntered(e -> customCardTxt.setFill(ColorAppearance.CURRENT_MENU_BUTTON));
         customCardTxt.setOnMouseExited(e -> customCardTxt.setFill(Color.WHITE));
+
+        save.setOnMouseEntered(e->save.setOpacity(1));
+        save.setOnMouseExited(e->save.setOpacity(0.9));
+        save.setOnMouseClicked(event -> Save.saveAccount(Account.getLoginUser()));
     }
 
     private void handleEvents() {

@@ -142,12 +142,13 @@ public class BattleHoldingFlag extends Battle {
     public String deletedDeadMinions() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < getAllMinion().size(); i++) {
-            if (getAllMinion().get(i) instanceof Hero)
-                continue;
             if (getAllMinion().get(i).getHealthPoint() > 0)
                 continue;
             Minion minion = getAllMinion().get(i);
-            whoseTurn().addCardToGraveYard(minion);
+            if (whoseTurn().getUserName().equals(minion.getUserName()))
+                whoseTurn().addCardToGraveYard(minion);
+            else if (theOtherPlayer().getUserName().equalsIgnoreCase(minion.getName().trim()))
+                theOtherPlayer().addCardToGraveYard(minion);
             if (minion.getAttackType().equals(AttackType.ON_DEATH))
                 minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
             if (minion.isHasFlag()) {
@@ -155,10 +156,10 @@ public class BattleHoldingFlag extends Battle {
                 timeHoldingFlag = 0;
                 cellOfFlag = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
                 cellOfFlag.setFlag(true);
+                minion.setHasFlag(false);
             }
             stringBuilder.append(minion.getName()).append(" died \n");
             Cell cell = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
-            cell.setFlag(true);
             cell.setCard(null);
         }
         return stringBuilder.toString();

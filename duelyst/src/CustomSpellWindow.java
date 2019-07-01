@@ -1,14 +1,12 @@
 import Appearance.FontAppearance;
 import Cards.Spell;
 import controller.GameController;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -19,7 +17,6 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 
 public class CustomSpellWindow {
@@ -147,10 +144,11 @@ public class CustomSpellWindow {
                 int priceInput = Integer.parseInt(price.getText());
                 int manaPointInput = Integer.parseInt(manaPoint.getText());
                 GameController.saveSpell(new Spell(nameInput, idInput, priceInput, manaPointInput, descInput));
+                new CustomBuffWindow(idInput);
             } catch (Exception e) {
                 ErrorOnBattle.display("Please input valid fields!");
             }
-            new MainMenu();
+//            new MainMenu();
         } else {
             ErrorOnBattle.display("Please Fill all fields!");
         }

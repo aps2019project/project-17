@@ -23,7 +23,7 @@ public class Account implements Comparable<Account> {
         this.passWord = passWord;
         this.numOfWins = 0;
         this.numOfLose = 0;
-        this.daric = 15000000;
+        this.daric = 15000;
         this.matchHistory = new MatchHistory();
         this.collection = new Collection();
         this.player = new Player(this.userName);
@@ -37,7 +37,7 @@ public class Account implements Comparable<Account> {
                 return "UserName Already Exist! Please Try again with another UserName.";
         }
         Account account = new Account(userName, passWord);
-        Save.saveAccount(account);
+        GameController.getAccounts().add(account);
         return "Account Successfully created";
     }
 
@@ -132,7 +132,7 @@ public class Account implements Comparable<Account> {
     }
 
     public void changeDaric(int value) {
-        this.daric += value;
+        this.collection.changeDaric(value);
     }
 
     public int getNumOfLose() {

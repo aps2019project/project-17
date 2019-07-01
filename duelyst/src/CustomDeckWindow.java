@@ -102,7 +102,7 @@ public class CustomDeckWindow {
             switch (mode) {
                 case "kh":
                     GameController.createNewAIInstance("AI MODE KH", selectedDeck);
-                    GameController.createBattleHoldingFlagSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
+                    GameController.createBattleKillHeroSingle(Account.getLoginUser().getPlayer(), SinglePlayerModes.CUSTOM);
                     break;
                 case "hf":
                     GameController.createNewAIInstance("AI MODE HF", selectedDeck);
@@ -116,6 +116,7 @@ public class CustomDeckWindow {
             }
             closeWindow();
             new BattleAppearance();
+            new StartGameAppearance();
         });
 
     }

@@ -24,9 +24,9 @@ public class Player {
     private ArrayList<Effect> effects = new ArrayList<>();
     private ArrayList<Effect> specialSituationBuff = new ArrayList<>();
     private SpecialSituation specialSituation = SpecialSituation.NONE;
+    private boolean isKingWisdomActive = false;
 
     public Player() {
-
     }
 
     public Player(String userName, Deck deck) {
@@ -91,18 +91,7 @@ public class Player {
 
     private void setCopyMainDeck() {
         setDeckReady();
-        mainDeck.getHero().setCanMove(true);
-        mainDeck.getHero().setCanAttack(true);
-        mainDeck.getHero().setCanCounterAttack(true);
-        for (int i = 0; i < mainDeck.getCards().size(); i++) {
-            if (mainDeck.getCards().get(i) instanceof Minion) {
-                ((Minion) mainDeck.getCards().get(i)).setCanMove(true);
-                ((Minion) mainDeck.getCards().get(i)).setCanAttack(true);
-                ((Minion) mainDeck.getCards().get(i)).setCanCounterAttack(true);
-            }
-            copyMainDeck.addCard(mainDeck.getCards().get(i));
-        }
-        copyMainDeck.setHero(mainDeck.getHero());
+        logicCopyMainDeck();
     }
 
     public Hand getHand() {
@@ -129,28 +118,58 @@ public class Player {
         this.mana -= change;
     }
 
-    private void setNextCard() {
-        if (copyMainDeck.getCards().size() <= 0)
-            setCopyMainDeck();
+    private boolean setNextCard() {
+        if (copyMainDeck.getCards().size() <= 0) {
+            nextCard = null;
+            return false;
+        }
+
         int n = new Random().nextInt() % copyMainDeck.getCards().size();
         while (n < 0) {
             n = new Random().nextInt() % copyMainDeck.getCards().size();
         }
         this.nextCard = this.copyMainDeck.getCards().get(n);
         this.copyMainDeck.getCards().remove(n);
+        if (copyMainDeck.getCards().size() <= 0) {
+            nextCard = null;
+            return false;
+        }
+        return copyMainDeck.getCards().size() > 0;
     }
 
     public void addCardToHand() {
         if (this.hand.getCards().size() >= 5)
             return;
         while (this.hand.getCards().size() < 5) {
+            if (this.nextCard == null)
+                return;
             hand.addCard(this.nextCard);
             setNextCard();
         }
     }
 
+    private void logicCopyMainDeck() {
+        mainDeck.getHero().setCanMove(true);
+        mainDeck.getHero().setCanAttack(true);
+        mainDeck.getHero().setCanCounterAttack(true);
+        for (int i = 0; i < mainDeck.getCards().size(); i++) {
+            if (mainDeck.getCards().get(i) instanceof Minion) {
+                ((Minion) mainDeck.getCards().get(i)).setCanMove(true);
+                ((Minion) mainDeck.getCards().get(i)).setCanAttack(true);
+                ((Minion) mainDeck.getCards().get(i)).setCanCounterAttack(true);
+            }
+            copyMainDeck.addCard(mainDeck.getCards().get(i));
+        }
+        copyMainDeck.setHero(mainDeck.getHero());
+    }
+
     public void changeMana(int value) {
         this.mana += value;
+    }
+
+    public void changeManaFake(int value) {
+        // TODO: 2019-06-30
+        this.previousMana += 2;
     }
 
     public Card getNextCard() {
@@ -186,6 +205,9 @@ public class Player {
     public boolean isPlayerReadyForBattle() {
         if (mainDeck == null || !mainDeck.isDeckValidate())
             return false;
+        this.graveYard = new ArrayList<>();
+        this.holdingFlags = 0;
+        this.nextCard = null;
         setCopyMainDeck();
         this.hand = new Hand();
         if (mainDeck.getItem() != null) {
@@ -219,6 +241,10 @@ public class Player {
     }
 
     public void passTurn() {
+        if (isKingWisdomActive) {
+            previousMana++;
+            mana++;
+        }
         for (Effect effect : effects) {
             effect.action(null);
             effect.checkForRemove();
@@ -259,5 +285,13 @@ public class Player {
         if (mainDeck.getItem() != null)
             finalDeck.setItem(mainDeck.getItem());
         setMainDeck(finalDeck);
+    }
+
+    public boolean isKingWisdomActive() {
+        return isKingWisdomActive;
+    }
+
+    public void setKingWisdomActive(boolean kingWisdomActive) {
+        isKingWisdomActive = kingWisdomActive;
     }
 }
