@@ -1,3 +1,4 @@
+import Appearance.ExceptionEndGame;
 import Appearance.FontAppearance;
 import Cards.Item;
 import GameGround.Battle;
@@ -128,7 +129,11 @@ class ItemAppearance {
                 break;
             }
         }
-        GameController.selectItem(null);
+        try {
+            GameController.selectItem(null);
+        } catch (ExceptionEndGame exceptionEndGame) {
+            new EndGameAppearance();
+        }
         this.selectedItem = null;
         System.out.println("selected item became null");
     }
@@ -138,7 +143,11 @@ class ItemAppearance {
             if (itemBackGrounds[i] != null && itemInfo[i] != null && items[i] != null) {
                 final int j = i;
                 itemBackGrounds[i].setOnMouseClicked(event -> {
-                    GameController.selectItem(items[j]);
+                    try {
+                        GameController.selectItem(items[j]);
+                    } catch (ExceptionEndGame exceptionEndGame) {
+                        new EndGameAppearance();
+                    }
                     for (int k = 0; k <itemBackGrounds.length ; k++) {
                         if(k!=j){
                             itemBackGrounds[k].setOpacity(0.7);
@@ -154,6 +163,7 @@ class ItemAppearance {
                     itemBackGrounds[j].setOpacity(1);
                     selectedItem = items[j];
                     BattleAppearance.getCurrentBattleAppearance().getHandAppearance().setSelectedCardNull();
+                    BattleAppearance.getCurrentBattleAppearance().getSpecialPowerAppearance().setSelectedFalse();
                 });
             }
         }

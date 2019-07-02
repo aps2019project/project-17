@@ -44,6 +44,8 @@ public class Effect {
                 effect(new Player[]{Battle.getCurrentBattle().whoseTurn()});
                 impacts.add(Battle.getCurrentBattle().whoseTurn());
             } else {
+                if (impacts == null)
+                    impacts = new ArrayList<>();
                 effect(new Player[]{Battle.getCurrentBattle().theOtherPlayer()});
                 impacts.add(Battle.getCurrentBattle().theOtherPlayer());
             }
@@ -59,28 +61,28 @@ public class Effect {
                 cells.add(cell);
                 break;
             case TWO:
-                cells = Battle.getCurrentBattle().getMinionsSquare(cell.getRow(), cell.getCol());
+                cells = Battle.getCurrentBattle().getMinionsSquare(cell.getRow() + 1, cell.getCol() + 1);
                 break;
             case THREE:
-                cells = Battle.getCurrentBattle().getMinionsCube(cell.getRow(), cell.getCol());
+                cells = Battle.getCurrentBattle().getMinionsCube(cell.getRow() + 1, cell.getCol() + 1);
                 break;
             case ALL:
                 cells = Battle.getCurrentBattle().getAllCells();
                 break;
             case ALL_IN_COLUMN:
-                cells = Battle.getCurrentBattle().returnCellsInColumn(cell.getRow(), cell.getCol());
+                cells = Battle.getCurrentBattle().returnCellsInColumn(cell.getRow() + 1, cell.getCol() + 1);
                 break;
             case AROUND:
-                cells = Battle.getCurrentBattle().getCellsAroundCell(cell.getRow(), cell.getCol());
+                cells = Battle.getCurrentBattle().getCellsAroundCell(cell.getRow() + 1, cell.getCol() + 1);
                 break;
             case DISTANCE_TWO:
-                cells = Battle.getCurrentBattle().getCellsWhichDistance(cell.getRow(), cell.getCol());
+                cells = Battle.getCurrentBattle().getCellsWhichDistance(cell.getRow() + 1, cell.getCol() + 1);
                 break;
             case CLOSEST_RANDOM:
-                minions.add(Battle.getCurrentBattle().closestRandomMinion(cell.getRow(), cell.getCol()));
+                minions.add(Battle.getCurrentBattle().closestRandomMinion(cell.getRow() + 1, cell.getCol() + 1));
                 break;
             case RANDOM:
-                minions.add(Battle.getCurrentBattle().returnRandomMinion(cell.getRow(), cell.getCol()));
+                minions.add(Battle.getCurrentBattle().returnRandomMinion(cell.getRow() + 1, cell.getCol() + 1));
                 break;
             case ENEMY_HERO:
                 minions.add(Battle.getCurrentBattle().theOtherPlayer().getMainDeck().getHero());
@@ -131,7 +133,7 @@ public class Effect {
             startTime--;
         if (endTime > 0)
             endTime--;
-        if (endTime == 0) {
+        if (endTime <= 0) {
             remove();
             this.isDisable = true;
         }

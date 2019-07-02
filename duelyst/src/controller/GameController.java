@@ -172,7 +172,9 @@ public class GameController {
         return battle.selectCardOrItem(cardItemID);
     }
 
-    public static void selectItem(Item item) {
+    public static void selectItem(Item item) throws ExceptionEndGame{
+        if (Battle.getCurrentBattle() == null)
+            throw new ExceptionEndGame(Battle.getSituationOfGame());
         Battle.getCurrentBattle().setSelectedItem(item);
     }
 

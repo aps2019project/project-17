@@ -51,21 +51,41 @@ public class Battle {
     public String setItems() {
         StringBuilder toReturn = new StringBuilder();
         ArrayList<Item> items = CardMaker.getCollectAbleItems();
-        int n = 3;
 
-        for (int i = 0; i < n; i++) {
-            int select = new Random().nextInt() % items.size();
-            while (select <= 0)
-                select = new Random().nextInt() % items.size();
-            int x = new Random().nextInt() % 5 + 1;
-            int y = new Random().nextInt() % 5 + 1;
-            while (x <= 0 || y <= 0 || (x == 3 && y == 9) || (x == 3 && y == 1) || getCellFromBoard(x, y).getItem() != null || getCellFromBoard(x, y).hasFlag()) {
-                x = new Random().nextInt() % 5 + 1;
-                y = new Random().nextInt() % 5 + 1;
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase("noosh daroo")) {
+                while (true) {
+                    int x = new Random().nextInt(5);
+                    int y = new Random().nextInt(9);
+                    Cell cell = getCellFromBoard(x + 1, y + 1);
+                    if (x >= 0 && y >= 0 && x < 5 && y < 9 && cell != null && cell.getCard() == null && !cell.hasFlag() && cell.getItem() == null) {
+                        cell.setItem(item);
+                        break;
+                    }
+                }
             }
-            Cell cell = getCellFromBoard(x, y);
-            cell.setItem(items.get(select));
-            toReturn.append(items.get(select).getName()).append(" inserted in ").append(x).append(":").append(y).append("\n");
+            if (item.getName().equalsIgnoreCase("exir")) {
+                while (true) {
+                    int y = new Random().nextInt(9);
+                    int x = new Random().nextInt(5);
+                    Cell cell = getCellFromBoard(x + 1, y + 1);
+                    if (x >= 0 && y >= 0 && x < 5 && y < 9 && cell != null && cell.getCard() == null && cell.getItem() == null && !cell.hasFlag()) {
+                        cell.setItem(item);
+                        break;
+                    }
+                }
+            }
+            if (item.getName().equalsIgnoreCase("majoone mana")) {
+                while (true) {
+                    int x = new Random().nextInt(5);
+                    int y = new Random().nextInt(9);
+                    Cell cell = getCellFromBoard(x + 1, y + 1);
+                    if (x >= 0 && y >= 0 && x < 5 && y < 9 && cell != null && !cell.hasFlag() && cell.getItem() == null && cell.getCard() == null) {
+                        cell.setItem(item);
+                        break;
+                    }
+                }
+            }
         }
         return toReturn.toString();
     }
@@ -207,7 +227,7 @@ public class Battle {
             if (!board.isCoordinateAvailable(this, whoseTurn(), x, y))
                 return "invalid  target  -  your  selected  cell  is  too  far  !";
             if (whoseTurn().getMana() < ((Minion) card).getManaPoint())
-                return "You  don′t  have  enough  mana  to  insert  this  card";
+                return "You  don?t  have  enough  mana  to  insert  this  card";
             ((Minion) card).setCoordinate(x, y);
             if (((Minion) card).getAttackType().equals(AttackType.ON_SPAWN))
                 ((Minion) card).useSpecialPower(((Minion) card).getXCoordinate(), ((Minion) card).getYCoordinate());
@@ -230,7 +250,7 @@ public class Battle {
             if (whoseTurn().getMana() < ((Spell) card).getManaPoint())
                 return "you don't have enough mana";
             // TODO: 2019-06-22
-//            ((Spell) card).action(x, y);
+            ((Spell) card).action(x, y);
             this.whoseTurn().removeCardFromHand(card);
             check();
             this.whoseTurn().lessMana(((Spell) card).getManaPoint());
@@ -305,12 +325,12 @@ public class Battle {
                 break;
         }
         // TODO: 2019-06-24
-        System.out.println("health attacker before attack :" + attacker.getHealthPoint());
-        System.out.println("health defender before attack :" + minion.getHealthPoint());
+        System.out.println(attacker.getName() + " health attacker before attack :" + attacker.getHealthPoint());
+        System.out.println(minion.getName() + " health defender before attack :" + minion.getHealthPoint());
         attacker.attack(minion);
         minion.counterAttack(attacker);
-        System.out.println("health attacker after attack :" + attacker.getHealthPoint());
-        System.out.println("health defender after attack :" + minion.getHealthPoint());
+        System.out.println(attacker.getName() + " health attacker after attack :" + attacker.getHealthPoint());
+        System.out.println(minion.getName() + " health defender after attack :" + minion.getHealthPoint());
         check();
         attacker.setCanAttack(false);
         return attacker.getName() + " attacked to " + minion.getName();
@@ -399,8 +419,8 @@ public class Battle {
         this.turn++;
         this.selectedCard = null;
         this.selectedItem = null;
-        playerTwo.getMainDeck().getHero().resetMinion();
-        playerOne.getMainDeck().getHero().resetMinion();
+        playerTwo.getMainDeck().getHero().resetMinion(turn);
+        playerOne.getMainDeck().getHero().resetMinion(turn);
         playerOne.addCardToHand();
         playerTwo.addCardToHand();
         if (this.turn >= 15) {
@@ -430,7 +450,7 @@ public class Battle {
         if (currentBattle != null)
             currentBattle.check();
         for (int i = 0; i < getAllMinion().size(); i++) {
-            getAllMinion().get(i).resetMinion();
+            getAllMinion().get(i).resetMinion(turn);
         }
     }
 
@@ -459,11 +479,9 @@ public class Battle {
 
     public ArrayList<Cell> returnCellsInColumn(int x, int y) {
         ArrayList<Cell> toReturn = new ArrayList<>();
-        for (int i = 0; i < this.board.getCells().length; i++) {
-            for (int j = 0; j < this.board.getCells()[i].length; j++) {
-                if (i == x - 1 && j != y - 1 && getCellFromBoard(i + 1, j + 1).getCard() != null)
-                    toReturn.add(getCellFromBoard(i, j));
-            }
+        for (int i = 0; i < 9; i++) {
+            if (getCellFromBoard(x, i + 1).getCard() != null)
+                toReturn.add(getCellFromBoard(x, i + 1));
         }
         return toReturn;
     }
@@ -518,6 +536,8 @@ public class Battle {
         ArrayList<Cell> cells = new ArrayList<>();
         for (int i = x - 1; i <= x; i++) {
             for (int j = y - 1; j <= y; j++) {
+                if (i > 4 || j > 8 || i < 0 || j < 0)
+                    continue;
                 cells.add(getCellFromBoard(i + 1, j + 1));
             }
         }
@@ -528,7 +548,7 @@ public class Battle {
         ArrayList<Cell> cells = new ArrayList<>();
         for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
-                if (i > 4 || j > 8)
+                if (i > 4 || j > 8 || i < 0 || j < 0)
                     continue;
                 cells.add(getCellFromBoard(i + 1, j + 1));
             }
@@ -694,7 +714,8 @@ public class Battle {
     }
 
     private void loginOfEnding(Player playerOne, GameData gameDataPlayerOne, Player playerTwo, GameData gameDataPlayerTwo) {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < GameController.getAccounts().size(); i++) {
+            System.out.println(price);
             if (GameController.getAccounts().get(i).getUserName().equals(playerOne.getUserName())) {
                 GameController.getAccounts().get(i).changeDaric(price);
                 GameController.getAccounts().get(i).incrementNumbOfWins();
@@ -762,5 +783,9 @@ public class Battle {
 
     public void setSelectedItem(Item item) {
         this.selectedItem = item;
+    }
+
+    public static void setCurrentBattleNull() {
+        currentBattle = null;
     }
 }

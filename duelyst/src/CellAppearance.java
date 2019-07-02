@@ -2,10 +2,12 @@ import Appearance.ColorAppearance;
 import Appearance.ExceptionEndGame;
 import Appearance.MinionAppearance;
 import Cards.Card;
+import Cards.Hero;
 import Cards.Minion;
 import Cards.Spell;
 import GameGround.Battle;
 import GameGround.Cell;
+import controller.GameController;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -14,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 public class CellAppearance {
 
@@ -38,16 +41,42 @@ public class CellAppearance {
                 try {
                     insertCard();
                 } catch (ExceptionEndGame exceptionEndGame) {
-                    ErrorOnBattle.display(Battle.getSituationOfGame());
-                    new MainMenu();
+                    new EndGameAppearance();
                 }
             } else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem() != null) {
                 useItem();
+            } else if (BattleAppearance.getCurrentBattleAppearance().getSpecialPowerAppearance().isSelected()) {
+                MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero(), false);
+                minionAppearance.specialPower(0.95 * this.cellRectangle.getLayoutX(), 0.92 * cellRectangle.getLayoutY());
+                try {
+                    // TODO: delete it !
+                    if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getName().equalsIgnoreCase("Arash")) {
+                        for (int i = 0; i < 9; i++) {
+                            if (i == Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getYCoordinate() - 1)
+                                continue;
+                            Cell cell = Battle.getCurrentBattle().getCellFromBoard(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getXCoordinate(), i + 1);
+                            if (cell.getCard() != null && cell.getCard() instanceof Hero) {
+                                ((Minion) cell.getCard()).changeHealthPoint(-4);
+                                BattleAppearance.getCurrentBattleAppearance().setShapeOfHealthHeroTexts();
+                            }
+                        }
+                    } else if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getName().equalsIgnoreCase("ezhdehaye haftsar"))
+                        Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().setCanCounterAttack(false);
+                    else if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getName().equalsIgnoreCase("rakhsh"))
+                        Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().setStunFake();
+                    else if (Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getName().equalsIgnoreCase("simorgh")) {
+                        for (int i = 0; i < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); i++)
+                            Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i).setStunFake();
+                    }
+                    BattleAppearance.getCurrentBattleAppearance().deleteExtraMinions();
+                    GameController.useSpecialPower(cell.getRow() + 1, cell.getCol() + 1, Battle.getCurrentBattle());
+                } catch (ExceptionEndGame exceptionEndGame) {
+                    new EndGameAppearance();
+                }
+                BattleAppearance.getCurrentBattleAppearance().getSpecialPowerAppearance().setSelectedFalse();
             } else {
                 if (BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell() == null) {
-                    if (this.cell.getCard() == null){
-                        // TODO: 2019-06-24
-                        System.out.println("hi dude");
+                    if (this.cell.getCard() == null) {
                         return;
                     }
                     // in this case we select a card!
@@ -62,16 +91,14 @@ public class CellAppearance {
                         try {
                             moveCard();
                         } catch (ExceptionEndGame exceptionEndGame) {
-                            ErrorOnBattle.display(Battle.getSituationOfGame());
-                            new MainMenu();
+                            new EndGameAppearance();
                         }
                     } else {
                         // in this case we want to attack!
                         try {
                             attackCard();
                         } catch (ExceptionEndGame exceptionEndGame) {
-                            ErrorOnBattle.display(Battle.getSituationOfGame());
-                            new MainMenu();
+                            new EndGameAppearance();
                         }
                     }
                     BattleAppearance.getCurrentBattleAppearance().getBoardBackGround()[BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getRow()][BattleAppearance.getCurrentBattleAppearance().getCurrentSelectedCell().getCol()].setFill(ColorAppearance.COLOR_RECTANGLE_BOARD);
@@ -81,6 +108,7 @@ public class CellAppearance {
                 }
             }
         });
+        BattleAppearance.getCurrentBattleAppearance().deleteExtraMinions();
     }
 
     private void useItem() {
@@ -94,14 +122,26 @@ public class CellAppearance {
             }
             this.cellRectangle.setOpacity(1);
             try {
-                Battle.getCurrentBattle().useItem(x, y);
+                if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem().getName().equalsIgnoreCase("noosh daroo")) {
+                    int r = new Random().nextInt(Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerOne()).size());
+                    System.out.println("\n\nitem effect at " + Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerOne()).get(r).getName().concat("\n"));
+                    Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerOne()).get(r).changeHealthPoint(6);
+                }
+                else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem().getName().equalsIgnoreCase("majoone mana")) {
+                    Battle.getCurrentBattle().getPlayerOne().changeManaFake(2);
+                }
+                else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem().getName().equalsIgnoreCase("king wisdom")) {
+                    Battle.getCurrentBattle().getPlayerOne().setKingWisdomActive(true);
+                }
+                GameController.useItem(x, y, Battle.getCurrentBattle());
+            } catch (RuntimeException e) {
+                e.printStackTrace();
             } finally {
                 BattleAppearance.getCurrentBattleAppearance().getItemAppearance().setSelectedItemNull();
                 BattleAppearance.getCurrentBattleAppearance().setManaIconImageLights();
             }
         } catch (ExceptionEndGame exceptionEndGame) {
-            ErrorOnBattle.display(Battle.getSituationOfGame());
-            new MainMenu();
+            new EndGameAppearance();
         }
     }
 
@@ -112,16 +152,16 @@ public class CellAppearance {
     }
 
     private void attackCard() throws ExceptionEndGame {
+        MinionAppearance defender = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) this.cell.getCard(), false);
+        MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) Battle.getCurrentBattle().getSelectedCard(), false);
         String result = Battle.getCurrentBattle().attack(this.cell.getCard().getId(), false, null);
         System.out.println(result);
         if (result.contains("attacked to")) {
-            MinionAppearance minionAppearance = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) Battle.getCurrentBattle().getSelectedCard(), false);
             if (minionAppearance != null)
                 minionAppearance.attack();
-            MinionAppearance defender = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) this.cell.getCard(), false);
             if (defender != null) {
                 defender.hit();
-                if (minionAppearance.getMinion().isCanCounterAttack()) {
+                if (defender.getMinion().isCanCounterAttack()) {
                     defender.attack();
                     minionAppearance.hit();
                 }
@@ -159,8 +199,22 @@ public class CellAppearance {
             BattleAppearance.getCurrentBattleAppearance().setAppearanceOfCells();
             if (card instanceof Spell) {
                 try {
+                    // TODO: 2019-06-30
                     this.cellRectangle.setFill(new ImagePattern(new Image(new FileInputStream("spell_action.gif"))));
                     this.cellRectangle.setOpacity(1);
+                    if (card.getName().equalsIgnoreCase("total disarm")) {
+                        if (cell.getCard() != null)
+                            ((Minion) cell.getCard()).setTotalDisarmFake();
+                    } else if (card.getName().trim().equalsIgnoreCase("fireball"))
+                        Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().changeHealth(-4);
+                    else if (card.getName().equalsIgnoreCase("lighting bolt")) {
+                        Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().changeHealth(-8);
+                    } else if (card.getName().equalsIgnoreCase("all disarm")) {
+                        for (int i = 0; i < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); i++)
+                            Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(i).setCanCounterAttack(false);
+                    } else if (card.getName().equalsIgnoreCase("kings guard")) {
+                        Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().changeHealth(-200);
+                    }
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }

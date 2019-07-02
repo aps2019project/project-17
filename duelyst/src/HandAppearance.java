@@ -161,13 +161,18 @@ public class HandAppearance {
                     if (unSelectMinionCard(value)) return;
 
                     if (selectedCard != null) {
-                        if (!BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).isInHand())
-                            return;
+                        MinionAppearance minionAppearance1 = (BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true));
+                        if (minionAppearance1 != null)
+                            if (minionAppearance1.isInHand())
+                                return;
                     }
                     if (selectedCard instanceof Spell)
                         selectedCardIcon.setOpacity(0.5);
-                    else if (selectedCard instanceof Minion)
-                        BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(0.5);
+                    else if (selectedCard instanceof Minion) {
+                        MinionAppearance minionAppearance1 = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true);
+                        if (minionAppearance1 != null)
+                            minionAppearance1.getImageView().setOpacity(0.5);
+                    }
 
                     selectMinionCard(minionAppearance);
                 });
@@ -177,12 +182,19 @@ public class HandAppearance {
 
     private void selectMinionCard(MinionAppearance minionAppearance) {
         selectedCard = minionAppearance.getMinion();
-        BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true).getImageView().setOpacity(1);
+        if (selectedCard != null) {
+            MinionAppearance minionAppearance1 = BattleAppearance.getCurrentBattleAppearance().getMinionAppearanceOfBattle((Minion) selectedCard, true);
+            if (minionAppearance1 != null)
+                minionAppearance1.getImageView().setOpacity(1);
+        }
         BattleAppearance.getCurrentBattleAppearance().getItemAppearance().setSelectedItemNull();
+        BattleAppearance.getCurrentBattleAppearance().getSpecialPowerAppearance().setSelectedFalse();
         System.out.println(minionAppearance.getMinion().getName() + " selected");
     }
 
     private boolean unSelectMinionCard(int value) {
+        if (hand.getCards().size() <= value)
+            return false;
         if (selectedCard != null) {
             if (hand.getCards().get(value) != null) {
                 if (selectedCard != null && hand.getCards().get(value) == selectedCard) {
@@ -201,6 +213,7 @@ public class HandAppearance {
         selectedCardIcon.setOpacity(1);
         selectedCard = hand.getCards().get(value);
         BattleAppearance.getCurrentBattleAppearance().getItemAppearance().setSelectedItemNull();
+        BattleAppearance.getCurrentBattleAppearance().getSpecialPowerAppearance().setSelectedFalse();
         System.out.println(hand.getCards().get(value).getName() + " selected");
     }
 

@@ -16,16 +16,8 @@ public class Hero extends Minion {
     }
 
     @Override
-    public void resetMinion() {
-        if (isStun) {
-            setCanMove(false);
-            setCanAttack(false);
-            setCanCounterAttack(false);
-        } else {
-            setCanMove(true);
-            setCanAttack(true);
-            setCanCounterAttack(true);
-        }
+    public void resetMinion(int turn) {
+        super.resetMinion(turn);
     }
 
     public int getCoolDown() {

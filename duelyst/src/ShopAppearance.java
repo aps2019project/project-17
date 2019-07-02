@@ -284,13 +284,13 @@ class ShopAppearance {
         for (int i = 0; i < allProducts.length; i++) {
             final Rectangle temp = allProducts[i];
             final int value = i % 10;
-            allProducts[i].setOnMouseEntered(e -> {
-                temp.setOpacity(1);
-                shownData[value / 5][value % 5].light();
-            });
             allProducts[i].setOnMouseExited(e -> {
                 temp.setOpacity(0.7);
                 shownData[value / 5][value % 5].dark();
+            });
+            allProducts[i].setOnMouseEntered(e -> {
+                temp.setOpacity(1);
+                shownData[value / 5][value % 5].light();
             });
             allProducts[i].setOnMouseClicked(e -> {
                 if (currentSelectedRectangle != null)
@@ -298,7 +298,7 @@ class ShopAppearance {
                 outBox[value / 5][value % 5].setVisible(true);
                 currentSelectedRectangle = outBox[value / 5][value % 5];
                 CertainlyOfShop.disPlay(shownData[value / 5][value % 5].getNameView().getText().toLowerCase(), shownData[value / 5][value % 5].getPriceView().getText());
-                moneyValue.setText(Integer.toString(Account.getLoginUser().getDaric()));
+                moneyValue.setText(Integer.toString(Account.getLoginUser().getCollection().getDaric()));
             });
         }
     }
@@ -381,7 +381,7 @@ class ShopAppearance {
         for (int i = 0; i < shownCards.length; i++) {
             for (int j = 0; j < shownCards[i].length; j++) {
                 shownCards[i][j] = allProducts[(currentPage * 10) + (5 * i) + j];
-                if ((currentPage * 10) + (5 * i) + j >= heroSize + minionSize + spellSize) {
+                if ((currentPage * 10) + (5 * i) + j >= 70) {
                     Item item = CardMaker.getAllItems()[(currentPage * 10) + (5 * i) + j - heroSize - spellSize - minionSize];
                     shownData[i][j] = new CardsDataAppearance(item.getName().toUpperCase(), Integer.toString(item.getPrice()), "0");
                 } else if (((currentPage * 10) + (5 * i) + j) < 20) {

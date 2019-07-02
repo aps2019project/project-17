@@ -215,6 +215,7 @@ public class CustomBuffWindow {
                     }
                     break;
             }
+            new MainMenu();
         });
         root.getChildren().add(vBox);
         Main.getWindow().setScene(customCardScene);

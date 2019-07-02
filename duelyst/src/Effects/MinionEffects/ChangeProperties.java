@@ -37,6 +37,10 @@ public class ChangeProperties extends Effect {
             if (!returnEffect)
                 continue;
             Minion minion = (Minion) impact;
+            if (!returnEffect) {
+                minion.getEffects().remove(this);
+                continue;
+            }
             if (changeHealthValue == -123)
                 minion.changeHealth(-minion.getNumberOfAttack() + 5);
             else

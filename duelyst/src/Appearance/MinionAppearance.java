@@ -26,6 +26,7 @@ public class MinionAppearance {
     private boolean isInHand;
     private boolean inInBoard;
     private int hitCount;
+    private boolean isDead = false;
 
 
     public class Position {
@@ -61,7 +62,7 @@ public class MinionAppearance {
             fileReader = new FileReader(address + ".plist");
 
         } catch (IOException e) {
-            Image image = null;
+            Image image;
             try {
                 image = new Image(new FileInputStream("selected/custom.png"));
                 this.imageView = new ImageView(image);
@@ -69,7 +70,6 @@ public class MinionAppearance {
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
-//            e.printStackTrace();
         } finally {
             StringBuilder data = new StringBuilder();
             int c = 0;
@@ -171,6 +171,9 @@ public class MinionAppearance {
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapBreathing);
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
+        if (minion.getHealthPoint() <= 0)
+            death();
+
     }
 
     public synchronized int attack() {
@@ -190,6 +193,7 @@ public class MinionAppearance {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.play();
+        isDead = true;
     }
 
     public void specialPower(int xValue, int yValue) {
@@ -310,9 +314,16 @@ public class MinionAppearance {
 
     public void setInHand(boolean inHand) {
         isInHand = inHand;
+        inInBoard = !inHand;
     }
 
     public void setInInBoard(boolean inInBoard) {
         this.inInBoard = inInBoard;
+    }
+    public boolean isDead() {
+        return isDead;
+    }
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }

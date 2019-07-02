@@ -236,13 +236,15 @@ class CustomHeroWindow {
                 if (type.equals("hero")) {
                     int coolDownInput = Integer.parseInt(coolDown.getText());
                     GameController.saveMinion(new Hero(nameInput, idInput, priceInput, manaPointInput, healthPointInput, attackPowerInput, minionTypeT, attackRangeInput, distanceCanMoveInput, maxRangeTInputInput, attackTypeT, coolDownInput, descInput));
+                    new CustomBuffWindow(idInput);
                 } else {
                     GameController.saveMinion(new Minion(nameInput, idInput, priceInput, manaPointInput, healthPointInput, attackPowerInput, minionTypeT, attackRangeInput, distanceCanMoveInput, maxRangeTInputInput, attackTypeT, descInput));
+                    new CustomBuffWindow(idInput);
                 }
             } catch (Exception e) {
                 ErrorOnBattle.display("Please input valid fields!");
             }
-            new MainMenu();
+//            new MainMenu();
         } else {
             ErrorOnBattle.display("Please Fill all fields!");
         }

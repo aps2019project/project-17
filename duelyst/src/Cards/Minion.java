@@ -31,6 +31,9 @@ public class Minion extends Card {
     private MinionType minionType;
     private boolean hasFlag;
     private int numberOfAttack;
+    private boolean stunFake = false;
+    private boolean totalDisarmFake = false;
+    // TODO: 2019-06-30
 
     public Minion(String name, String id, int price, String desc, ArrayList<Effect> specialPower, Effect attack, ArrayList<Effect> effects, SpecialSituation specialSituation, ArrayList<Effect> specialSituationBuff, AttackType attackType, BuffType antiBuff, int attackPoint, int healthPoint, int manaPoint, int attackRange, int xCoordinate, int yCoordinate, int distanceCanMove, int maxRangeToInput, int holyBuffState, boolean canMove, boolean canCounterAttack, boolean isStun, boolean canAttack, MinionType minionType, boolean hasFlag, int numberOfAttack) {
         super(name, id, price, desc);
@@ -110,7 +113,7 @@ public class Minion extends Card {
         }
     }
 
-    public void resetMinion() {
+    public void resetMinion(int turn) {
         if (isStun) {
             canMove = false;
             canAttack = false;
@@ -120,6 +123,10 @@ public class Minion extends Card {
             canAttack = true;
             canCounterAttack = true;
         }
+        if (stunFake)
+            setStunFake(turn);
+        if (totalDisarmFake)
+            canCounterAttack = false;
     }
 
     public boolean isHasFlag() {
@@ -159,9 +166,10 @@ public class Minion extends Card {
         this.attack.action(Battle.getCurrentBattle().getCellFromBoard(minion.xCoordinate, minion.yCoordinate));
         if (this.attackType.equals(AttackType.ON_ATTACK))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
-        if (specialSituationBuff != null && specialSituation.equals(SpecialSituation.ATTACK)) {
+        if (specialSituationBuff != null && specialSituation != null && specialSituation.equals(SpecialSituation.ATTACK)) {
             useSpecialSituationBuff(minion.xCoordinate, minion.yCoordinate);
         }
+        attack.checkForRemove();
     }
 
     public void addSpecialPower(Effect effect) {
@@ -187,6 +195,11 @@ public class Minion extends Card {
     }
 
     private void useSpecialSituationBuff(int x, int y) {
+        if (specialSituationBuff == null) {
+            System.out.println(name + " has not special power :<");
+            return;
+        }
+
         for (Effect effect : specialSituationBuff) {
             effect.action(Battle.getCurrentBattle().getCellFromBoard(x, y));
         }
@@ -198,10 +211,11 @@ public class Minion extends Card {
         this.attack.action(Battle.getCurrentBattle().getCellFromBoard(minion.xCoordinate, minion.yCoordinate));
         if (this.attackType.equals(AttackType.ON_DEFEND))
             useSpecialPower(minion.xCoordinate, minion.yCoordinate);
+        this.attack.checkForRemove();
     }
 
     public void useSpecialPower(int x, int y) {
-        if (desc.equals("nothing") || desc.equals("Combo"))
+        if (desc.equals("nothing") || desc.equals("Combo") || specialPower == null)
             return;
         for (Effect effect : specialPower) {
             effect.action(Battle.getCurrentBattle().getCellFromBoard(x, y));
@@ -214,8 +228,12 @@ public class Minion extends Card {
 
     public void setStun(boolean stun) {
         isStun = stun;
-        this.canMove = false;
-        this.canAttack = false;
+        if (stun) {
+            // TODO: 2019-06-28
+            System.out.println(name + " become stun");
+            this.canMove = false;
+            this.canAttack = false;
+        }
     }
 
     public void activeHolyBuff(int holyBuffState) {
@@ -310,6 +328,7 @@ public class Minion extends Card {
         for (int j = 0; j < effects.size(); j++) {
             Effect effect = effects.get(j);
             effect.action(Battle.getCurrentBattle().getCellFromBoard(xCoordinate, yCoordinate));
+
             effect.checkForRemove();
         }
         for (int i = 0; i < effects.size(); i++) {
@@ -343,4 +362,30 @@ public class Minion extends Card {
     public ArrayList<Effect> getEffects() {
         return effects;
     }
+
+    public void changeHealthPoint(int value) {
+        this.healthPoint += value;
+    }
+
+    public void setStunFake() {
+        this.canMove = false;
+        this.canAttack = false;
+        this.stunFake = true;
+    }
+
+    public void setStunFake(int turn) {
+        if (isStun)
+            return;
+        if (turn % 2 == 0)
+            return;
+        this.canMove = true;
+        this.canAttack = true;
+        stunFake = false;
+    }
+
+    public void setTotalDisarmFake() {
+        this.totalDisarmFake = true;
+        this.canCounterAttack = false;
+    }
+
 }

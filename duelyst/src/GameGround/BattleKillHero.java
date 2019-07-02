@@ -118,9 +118,12 @@ public class BattleKillHero extends Battle {
             if (minion.getHealthPoint() <= 0) {
                 if (minion.getAttackType().equals(AttackType.ON_DEATH))
                     minion.useSpecialPower(minion.getXCoordinate(), minion.getYCoordinate());
-
                 Cell cell = getCellFromBoard(minion.getXCoordinate(), minion.getYCoordinate());
-                whoseTurn().addCardToGraveYard(minion);
+                if (whoseTurn().getUserName().equals(minion.getUserName()))
+                    whoseTurn().addCardToGraveYard(minion);
+                else if (theOtherPlayer().getUserName().equalsIgnoreCase(minion.getName().trim()))
+                    theOtherPlayer().addCardToGraveYard(minion);
+                System.out.println(minion.getName().concat(" died from ").concat(minion.getUserName()));
                 stringBuilder.append(minion.getName()).append(" died \n");
                 cell.setCard(null);
             }

@@ -2,6 +2,7 @@ import Appearance.ColorAppearance;
 import Appearance.ExceptionEndGame;
 import Appearance.FontAppearance;
 import Appearance.MinionAppearance;
+import CardCollections.Deck;
 import Cards.*;
 import Data.AI;
 import Data.Account;
@@ -10,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -20,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class BattleAppearance {
     private Group root;
@@ -38,6 +39,7 @@ public class BattleAppearance {
     private ImageView nextCardOpponentImage;
     private ArrayList<MinionAppearance> minionAppearanceOfBattle = new ArrayList<>();
     private Cell currentSelectedCell;
+    private SpecialPowerAppearance specialPowerAppearance;
     private static BattleAppearance currentBattleAppearance;
 
     public BattleAppearance() {
@@ -88,6 +90,7 @@ public class BattleAppearance {
         locateNodes();
         initPlayersAppearance();
         initHand();
+        initSpecialPowerAppearance();
         initItemList();
         addCells();
     }
@@ -135,6 +138,12 @@ public class BattleAppearance {
         a.getImageView().setOpacity(1);
         a.setInHand(false);
         a.setInInBoard(true);
+        b.add(false);
+        b.setLocation(0.975 * board[2][8].getCellRectangle().getLayoutX(), 0.92 * board[2][8].getCellRectangle().getLayoutY());
+        b.breathing();
+        b.getImageView().setOpacity(1);
+        b.setInInBoard(true);
+        b.setInHand(false);
     }
 
     private void locateNodes() {
@@ -161,6 +170,10 @@ public class BattleAppearance {
 
     private void initHand() {
         this.handAppearance = new HandAppearance(this.root);
+    }
+
+    private void initSpecialPowerAppearance() {
+        this.specialPowerAppearance = new SpecialPowerAppearance(root);
     }
 
     private void initItemList() {
@@ -285,19 +298,25 @@ public class BattleAppearance {
         textsOfBattle[5].setLayoutY(shapeOfHealthHero[1].getLayoutY() * 1.18);
         textsOfBattle[7].setLayoutX(Main.WIDTH_OF_WINDOW / 20);
         textsOfBattle[7].setLayoutY(Main.HEIGHT_OF_WINDOW * 10 / 11);
-        textsOfBattle[7].setFont(FontAppearance.FONY_SHOWING_TURN);
+        textsOfBattle[7].setFont(FontAppearance.FONT_SHOWING_TURN);
         textsOfBattle[7].setFill(Color.WHITE);
-        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5],textsOfBattle[7]);
+        root.getChildren().addAll(textsOfBattle[1], textsOfBattle[2], textsOfBattle[3], textsOfBattle[4], textsOfBattle[5], textsOfBattle[7]);
     }
 
     public void setShapeOfHealthHeroTexts() {
-        textsOfBattle[4].setText(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint()));
-        textsOfBattle[5].setText(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()));
+        int firstHeroHealth = Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint();
+        int secondHeroHealth = Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint();
+        if (firstHeroHealth <= 0)
+            firstHeroHealth = 0;
+        if (secondHeroHealth <= 0)
+            secondHeroHealth = 0;
+        textsOfBattle[4].setText(Integer.toString(firstHeroHealth));
+        textsOfBattle[5].setText(Integer.toString(secondHeroHealth));
     }
 
     public void setAppearanceOfCells() {
         if (Battle.getCurrentBattle() == null) {
-            new MainMenu();
+            new EndGameAppearance();
             return;
         }
         for (CellAppearance[] cellAppearances : board) {
@@ -334,6 +353,8 @@ public class BattleAppearance {
         if (Battle.getCurrentBattle().getPlayerTwo().getNextCard() instanceof Minion) {
             System.out.println("minion -> next card of opponent : " + Battle.getCurrentBattle().getPlayerTwo().getNextCard().getName());
             MinionAppearance minionAppearance = getMinionAppearanceOfBattle((Minion) Battle.getCurrentBattle().getPlayerTwo().getNextCard(), true);
+            if (minionAppearance == null)
+                return;
             minionAppearance.add(true);
             minionAppearance.setLocation(Main.WIDTH_OF_WINDOW * 9.4 / 11, Main.HEIGHT_OF_WINDOW / 4);
             this.nextCardOpponentImage = minionAppearance.getImageView();
@@ -362,62 +383,63 @@ public class BattleAppearance {
         itemAppearance.delete(root);
         initItemList();
         setTurnText();
+        setShapeOfHealthHeroTexts();
     }
 
 
     private void disPlay() {
         Main.getWindow().setScene(battleScene);
         setManaIconImageLights();
+        returnFromGame();
+    }
+
+    private void returnFromGame() {
+        battleScene.setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.ESCAPE)) {
+                Battle.setCurrentBattleNull();
+                currentBattleAppearance = null;
+                new MainMenu();
+            }
+        });
     }
 
     private void handleEvents() {
-        textsOfBattle[0].setOnMouseClicked(e -> {
-            try {
-                Battle.getCurrentBattle().endTurn();
-            } catch (ExceptionEndGame exceptionEndGame) {
-                ErrorOnBattle.display(Battle.getSituationOfGame());
-                new MainMenu();
-            }
-            AITurn();
-            System.out.println("\n\n\nfinding bugs\n\n\n");
-            setManaIconImageLights();
-            setImageOfOpponentNextCard();
-//            setAppearanceOfCells();
-            handAppearance.insert();
-            handAppearance = new HandAppearance(root);
-            itemAppearance.delete(root);
-            initItemList();
-            if (Battle.getCurrentBattle().whoseTurn().equals(Battle.getCurrentBattle().getPlayerOne()))
-                System.out.println("its your turn ! action");
-//            currentBattleAppearance = null;
-//            Battle.getCurrentBattle().endingGame();
-//            new MainMenu();
-        });
-        endTurnButton.setOnMouseClicked(e -> {// TODO: 6/13/2019 items must be handled here
-            itemAppearance.delete(root);
-            initItemList();
-//            currentBattleAppearance = null;
-//            Battle.getCurrentBattle().endingGame();
-//            new MainMenu();
-            try {
-                Battle.getCurrentBattle().endTurn();
-            } catch (ExceptionEndGame exceptionEndGame) {
-                ErrorOnBattle.display(Battle.getSituationOfGame());
-                new MainMenu();
-            }
-            AITurn();
-            setManaIconImageLights();
-            setImageOfOpponentNextCard();
-//            setAppearanceOfCells();
-            handAppearance.insert();
-            handAppearance = new HandAppearance(root);
-            if (Battle.getCurrentBattle().whoseTurn().equals(Battle.getCurrentBattle().getPlayerOne()))
-                System.out.println("its your turn ! action");
-        });
+        textsOfBattle[0].setOnMouseClicked(e -> endTurnLogic());
+        endTurnButton.setOnMouseClicked(e -> endTurnLogic());
 
         textsOfBattle[6].setOnMouseClicked(event -> new GraveYardAppearance());
 
         graveYardButton.setOnMouseClicked(event -> new GraveYardAppearance());
+    }
+
+    private void endTurnLogic() {
+        try {
+            Battle.getCurrentBattle().endTurn();
+        } catch (ExceptionEndGame exceptionEndGame) {
+            new EndGameAppearance();
+        } finally {
+            AITurn();
+            setManaIconImageLights();
+            setImageOfOpponentNextCard();
+            handAppearance.insert();
+            handAppearance = new HandAppearance(root);
+            itemAppearance.delete(root);
+            initItemList();
+            setTurnText();
+            setFlagsItemsAppearance();
+            deleteExtraMinions();
+        }
+    }
+
+    public void deleteExtraMinions() {
+        for (MinionAppearance minionAppearance : minionAppearanceOfBattle) {
+            if (minionAppearance.getMinion().getHealthPoint() <= 0) {
+                if (root.getChildren().contains(minionAppearance.getImageView()) && !minionAppearance.isDead()) {
+                    System.out.println("root contain " + minionAppearance.getMinion().getName());
+                    minionAppearance.death();
+                }
+            }
+        }
     }
 
     private void AITurn() {
@@ -425,92 +447,142 @@ public class BattleAppearance {
             return;
         for (int i = 0; i < AI.getResults().size(); i++) {
             String[] commands = AI.getResults().get(i).split(" ");
-            if (commands[0].equals("moved")) {
-                StringBuilder nameSB = new StringBuilder();
-                int index = 0;
-                System.out.println(Arrays.toString(commands));
-                for (int j = 1; j < commands.length; j++) {
-                    if (!commands[j].equals("->"))
-                        nameSB.append(commands[j].concat(" "));
-                    else {
-                        index = j;
-                        break;
-                    }
+            switch (commands[0]) {
+                case "moved": {
+                    moveAI(commands);
+                    break;
                 }
-                String name = nameSB.toString().trim();
-                System.out.println(name);
-                final int x0 = Integer.parseInt(commands[index + 1]);
-                final int y0 = Integer.parseInt(commands[index + 2]);
-                final int x = Integer.parseInt(commands[index + 3]);
-                final int y = Integer.parseInt(commands[index + 4]);
-                System.out.println(x0 + " " + y0 + " " + x + " " + y);
-                Minion minion;
-                MinionAppearance minionAppearance;
-                minion = getMinionOfAiFromName(name, null);
-                if (minion != null) {
-                    minionAppearance = getMinionAppearanceOfBattle(minion, false);
-                    if (minionAppearance != null) {
-                        minionAppearance.setInHand(false);
-                        minionAppearance.setInInBoard(true);
-                        minionAppearance.add(false);
-                        double xSource = board[x0 - 1][y0 - 1].getCellRectangle().getLayoutX();
-                        double ySource = board[x0 - 1][y0 - 1].getCellRectangle().getLayoutY();
-                        double xDestination = board[x - 1][y - 1].getCellRectangle().getLayoutX();
-                        double yDestination = board[x - 1][y - 1].getCellRectangle().getLayoutY();
-                        minionAppearance.setLocation(0.975 * xSource, 0.92 * ySource);
-                        minionAppearance.move(0.975 * xDestination - minionAppearance.getImageView().getLayoutX(), 0.92 * yDestination - minionAppearance.getImageView().getLayoutY());
-                    }
+                case "insert": {
+                    if (insertAI(commands)) continue;
+                    break;
                 }
-            } else if (commands[0].equals("insert")) {
-                StringBuilder nameSB = new StringBuilder();
-                for (int j = 1; j < commands.length; j++) {
-                    nameSB.append(commands[j].concat(" "));
-                }
-                String name = nameSB.toString().trim();
-                Minion minion = null;
-                minion = getMinionOfAiFromName(name, minion);
-                if (minion != null) {
-                    MinionAppearance minionAppearance = getMinionAppearanceOfBattle(minion, true);
-                    if (minionAppearance != null) {
-                        minionAppearance.setInHand(false);
-                        minionAppearance.setInInBoard(true);
-                        setAppearanceOfCells();
-                        continue;
-                    }
-                }
-            } else if (commands[0].equals("attack")) {
-                StringBuilder nameSb = new StringBuilder();
-                for (int j = 1; j < commands.length - 2; j++) {
-                    nameSb.append(commands[j]);
-                }
-                String name = nameSb.toString().trim();
-                int xDefender = Integer.parseInt(commands[commands.length - 2]);
-                int yDefender = Integer.parseInt(commands[commands.length - 1]);
-                Minion attacker = getMinionOfAiFromName(name, null);
-                Minion defender = (Minion) Battle.getCurrentBattle().getCellFromBoard(xDefender, yDefender).getCard();
-                if (attacker == null || defender == null)
-                    continue;
-                MinionAppearance minionAppearanceAttacker = getMinionAppearanceOfBattle(attacker, false);
-                MinionAppearance minionAppearanceDefender = getMinionAppearanceOfBattle(defender, false);
-                minionAppearanceAttacker.attack();
-                minionAppearanceDefender.hit();
-                if (defender.isCanCounterAttack()) {
-                    minionAppearanceAttacker.hit();
-                    minionAppearanceDefender.attack();
+                case "attack": {
+                    if (attackAI(commands)) continue;
+                    break;
                 }
             }
             setFlagsItemsAppearance();
         }
     }
 
-    private Minion getMinionOfAiFromName(String name, Minion minion) {
-        for (int j = 0; j < Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).size(); j++) {
-            if (Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(j).getName().equals(name)) {
-                minion = Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerTwo()).get(j);
+    private boolean attackAI(String[] commands) {
+        StringBuilder nameSb = new StringBuilder();
+        int indexEnd = 1;
+        for (int j = 1; j < commands.length - 2; j++) {
+            if (commands[j].equalsIgnoreCase("-")) {
+                indexEnd = j;
+                break;
+            }
+            nameSb.append(commands[j].toLowerCase().concat(" "));
+        }
+        System.out.println();
+        String nameAttacker = nameSb.toString().trim();
+        nameSb = new StringBuilder();
+        for (int j = indexEnd + 1; j < commands.length - 2; j++) {
+            if (commands[j].equalsIgnoreCase("-"))
+                break;
+            nameSb.append(commands[j].toLowerCase().concat(" "));
+        }
+        String nameDefender = nameSb.toString().toLowerCase().trim();
+        int xDefender = Integer.parseInt(commands[commands.length - 2]);
+        int yDefender = Integer.parseInt(commands[commands.length - 1]);
+        Minion attacker = getMinionOfAiFromName(nameAttacker, null);
+        Minion defender = getMinionOfCuurentPlayerWithName(nameDefender, xDefender, yDefender);
+        if (attacker == null || defender == null) {
+            return true;
+        }
+        MinionAppearance minionAppearanceAttacker = getMinionAppearanceOfBattle(attacker, false);
+        MinionAppearance minionAppearanceDefender = getMinionAppearanceOfBattle(defender, false);
+        minionAppearanceAttacker.attack();
+        minionAppearanceDefender.hit();
+        if (defender.isCanCounterAttack()) {
+            minionAppearanceAttacker.hit();
+            minionAppearanceDefender.attack();
+        }
+        return false;
+    }
+
+    private boolean insertAI(String[] commands) {
+        StringBuilder nameSB = new StringBuilder();
+        for (int j = 1; j < commands.length; j++) {
+            nameSB.append(commands[j].concat(" "));
+        }
+        String name = nameSB.toString().trim();
+        Minion minion = null;
+        minion = getMinionOfAiFromName(name, minion);
+        if (minion != null) {
+            MinionAppearance minionAppearance = getMinionAppearanceOfBattle(minion, true);
+            if (minionAppearance != null) {
+                minionAppearance.setInHand(false);
+                minionAppearance.setInInBoard(true);
+                setAppearanceOfCells();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void moveAI(String[] commands) {
+        StringBuilder nameSB = new StringBuilder();
+        int index = 0;
+        System.out.println(Arrays.toString(commands));
+        for (int j = 1; j < commands.length; j++) {
+            if (!commands[j].equals("->"))
+                nameSB.append(commands[j].concat(" "));
+            else {
+                index = j;
                 break;
             }
         }
-        return minion;
+        String name = nameSB.toString().trim();
+        System.out.println(name);
+        final int x0 = Integer.parseInt(commands[index + 1]);
+        final int y0 = Integer.parseInt(commands[index + 2]);
+        final int x = Integer.parseInt(commands[index + 3]);
+        final int y = Integer.parseInt(commands[index + 4]);
+        System.out.println(x0 + " " + y0 + " " + x + " " + y);
+        Minion minion;
+        MinionAppearance minionAppearance;
+        minion = getMinionOfAiFromName(name, null);
+        if (minion != null) {
+            minionAppearance = getMinionAppearanceOfBattle(minion, false);
+            if (minionAppearance != null) {
+                minionAppearance.setInHand(false);
+                minionAppearance.setInInBoard(true);
+                minionAppearance.add(false);
+                double xSource = board[x0 - 1][y0 - 1].getCellRectangle().getLayoutX();
+                double ySource = board[x0 - 1][y0 - 1].getCellRectangle().getLayoutY();
+                double xDestination = board[x - 1][y - 1].getCellRectangle().getLayoutX();
+                double yDestination = board[x - 1][y - 1].getCellRectangle().getLayoutY();
+                minionAppearance.setLocation(0.975 * xSource, 0.92 * ySource);
+                minionAppearance.move(0.975 * xDestination - minionAppearance.getImageView().getLayoutX(), 0.92 * yDestination - minionAppearance.getImageView().getLayoutY());
+            }
+        }
+    }
+
+    private Minion getMinionOfAiFromName(String name, Minion minion) {
+        for (int i = 0; i < Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().size(); i++) {
+            if (Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().get(i) instanceof Minion) {
+                if (Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().get(i).getName().equalsIgnoreCase(name.trim()))
+                    return (Minion) Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getCards().get(i);
+            }
+        }
+        if (Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getName().equalsIgnoreCase(name.trim()))
+            return Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero();
+        return null;
+    }
+
+    private Minion getMinionOfCuurentPlayerWithName(String name, int x, int y) {
+        Deck deck = Battle.getCurrentBattle().getPlayerOne().getMainDeck();
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            if (!((deck.getCards().get(i)) instanceof Minion))
+                continue;
+            if (deck.getCards().get(i).getName().equalsIgnoreCase(name.trim()) && ((Minion) deck.getCards().get(i)).getXCoordinate() == x && (((Minion) deck.getCards().get(i)).getYCoordinate()) == y)
+                return (Minion) deck.getCards().get(i);
+        }
+        if (deck.getHero().getName().equalsIgnoreCase(name.trim()))
+            return deck.getHero();
+        return null;
     }
 
     public HandAppearance getHandAppearance() {
@@ -519,6 +591,10 @@ public class BattleAppearance {
 
     public ItemAppearance getItemAppearance() {
         return itemAppearance;
+    }
+
+    public SpecialPowerAppearance getSpecialPowerAppearance() {
+        return specialPowerAppearance;
     }
 
     public static BattleAppearance getCurrentBattleAppearance() {
@@ -553,6 +629,7 @@ public class BattleAppearance {
                     return minionAppearance;
 
         }
+        setShapeOfHealthHeroTexts();
         return null;
     }
 
