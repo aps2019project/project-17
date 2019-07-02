@@ -339,4 +339,8 @@ public class Minion extends Card {
             return false;
         return ((Minion) obj).getName().equals(this.name);
     }
+
+    public ArrayList<Effect> getEffects() {
+        return effects;
+    }
 }

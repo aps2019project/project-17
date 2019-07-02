@@ -9,7 +9,6 @@ import controller.GameController;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import static Data.MODE.*;
 
 public class Request {

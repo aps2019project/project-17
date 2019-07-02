@@ -116,6 +116,9 @@ public class Effect {
                 Minion minion = (Minion) targetCell.getCard();
                 minions.add(minion);
                 minion.addEffect(this);
+                if (impacts == null)
+                    impacts = new ArrayList<>();
+                addToImpacts(minion);
             }
         }
         if (minions.size() != 0) {

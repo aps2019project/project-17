@@ -27,7 +27,8 @@ public class MinionAppearance {
     private boolean inInBoard;
     private int hitCount;
 
-    public class Position {
+
+    public static class Position {
         public int x;
         public int y;
 
@@ -65,7 +66,6 @@ public class MinionAppearance {
                 image = new Image(new FileInputStream("selected/custom.png"));
                 this.imageView = new ImageView(image);
                 fileReader = new FileReader("selected/custom.plist");
-                System.out.println("hiiiiiii");
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
@@ -190,6 +190,74 @@ public class MinionAppearance {
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.play();
+    }
+
+    public static void specialPower(int xValue, int yValue) {
+        StringBuilder data = new StringBuilder();
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader("fx_f1_aurynnexus.plist");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int c = 0;
+        Pattern patternIndex = Pattern.compile("(?<name>aurynnexus)_\\d{3}.png");
+        Matcher matcherIndex;
+        Pattern patternPosition = Pattern.compile("<string>\\{\\{(?<x>\\d+),(?<y>\\d+)},\\{\\d+,\\d+}}</string>");
+        Matcher matcherPosition;
+        while (true) {
+            try {
+                if ((c = fileReader.read()) == -1) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            data.append((char) c);
+        }
+        int count = data.toString().split("aurynnexus").length - 1;
+        int duration = count * 100;
+        int counter = 0;
+        HashMap<Integer, Position> map = new HashMap<>();
+        String copy = data.toString();
+        matcherIndex = patternIndex.matcher(copy);
+        matcherPosition = patternPosition.matcher(copy);
+        while (matcherIndex.find() && matcherPosition.find()) {
+            int x = Integer.parseInt(matcherPosition.group("x"));
+            int y = Integer.parseInt(matcherPosition.group("y"));
+            if ("aurynnexus".equals(matcherIndex.group("name"))) {
+                map.put(counter, new Position(x, y));
+                counter++;
+            }
+            copy = copy.replaceFirst("<string>\\{\\{(?<x>\\d+),(?<y>\\d+)},\\{\\d+,\\d+}}</string>", "");
+            copy = copy.replaceFirst("<string>\\{\\{(?<x>\\d+),(?<y>\\d+)},\\{\\d+,\\d+}}</string>", "");
+            copy = copy.replaceFirst("(?<name>aurynnexus)_\\d{3}.png", "");
+            matcherIndex = patternIndex.matcher(copy);
+            matcherPosition = patternPosition.matcher(copy);
+        }
+        try {
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Pattern pattern = Pattern.compile("<string>\\{(?<n>\\d{3}),(?<m>\\d{3})}</string>");
+        Matcher matcher = pattern.matcher(data.toString());
+        int width = 0, height = 0;
+        if (matcher.find()) {
+            width = Integer.parseInt(matcher.group("n"));
+            height = Integer.parseInt(matcher.group("m"));
+        }
+        try {
+            ImageView imageView = new ImageView(new Image(new FileInputStream("fx_f1_aurynnexus.png")));
+            imageView.relocate(xValue, yValue);
+            Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, map);
+            animation.setCycleCount(1);
+            animation.play();
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(duration * 1.5), imageView);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.play();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void idle() {

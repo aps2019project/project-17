@@ -32,37 +32,34 @@ public class CustomCardPreview {
 
     static {
         try {
-            Rectangle rectangle = new Rectangle(300, 60);
             Rectangle rectangle1 = new Rectangle(300, 60);
+            Rectangle rectangle2 = new Rectangle(300, 60);
             Rectangle rectangle3 = new Rectangle(300, 60);
             Rectangle rectangle4 = new Rectangle(300, 60);
-            rectangle.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             rectangle1.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
+            rectangle2.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             rectangle3.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
             rectangle4.setFill(new ImagePattern(new Image(new FileInputStream("button.png"))));
-            StackPane stackPane1 = new StackPane(rectangle, hero);
-            StackPane stackPane2 = new StackPane(rectangle1, minion);
+            StackPane stackPane1 = new StackPane(rectangle1, hero);
+            StackPane stackPane2 = new StackPane(rectangle2, minion);
             StackPane stackPane4 = new StackPane(rectangle3, spell);
             StackPane stackPane5 = new StackPane(rectangle4, buff);
 
-            rectangle.setOnMouseClicked(event -> {
+            rectangle1.setOnMouseClicked(event -> {
                 new CustomHeroWindow("hero");
                 closeWindow();
             });
-            rectangle1.setOnMouseClicked(event -> {
-                new CustomHeroWindow("hero");
+            rectangle2.setOnMouseClicked(event -> {
+                new CustomHeroWindow("minion");
                 closeWindow();
             });
             rectangle3.setOnMouseClicked(event -> {
                 new CustomSpellWindow();
                 closeWindow();
             });
-            // TODO: 6/11/2019 will be completed
-            rectangle4.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-
-                }
+            rectangle4.setOnMouseClicked(event -> {
+                new CustomBuffWindow("0");
+                closeWindow();
             });
             root.setSpacing(25);
             root.setAlignment(Pos.CENTER);

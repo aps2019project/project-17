@@ -102,7 +102,7 @@ class CustomHeroWindow {
 
     private void setBackGround() {
         try {
-            ImageView imageOfBackGround = new ImageView(new Image(new FileInputStream("purpleBackGrouund.jpg")));
+            ImageView imageOfBackGround = new ImageView(new Image(new FileInputStream("backGround0.jpg")));
             imageOfBackGround.fitWidthProperty().bind(customHeroScene.widthProperty());
             imageOfBackGround.fitHeightProperty().bind(customHeroScene.heightProperty());
             imageOfBackGround.setOpacity(0.8);
