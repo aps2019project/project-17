@@ -28,7 +28,7 @@ public class MinionAppearance {
     private int hitCount;
 
 
-    public static class Position {
+    public class Position {
         public int x;
         public int y;
 
@@ -192,7 +192,7 @@ public class MinionAppearance {
         fadeTransition.play();
     }
 
-    public static void specialPower(int xValue, int yValue) {
+    public void specialPower(int xValue, int yValue) {
         StringBuilder data = new StringBuilder();
         FileReader fileReader = null;
         try {
