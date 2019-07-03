@@ -196,7 +196,7 @@ public class MinionAppearance {
         isDead = true;
     }
 
-    public void specialPower(int xValue, int yValue) {
+    public void specialPower(double xValue, double yValue) {
         StringBuilder data = new StringBuilder();
         FileReader fileReader = null;
         try {

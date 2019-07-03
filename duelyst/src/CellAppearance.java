@@ -126,11 +126,9 @@ public class CellAppearance {
                     int r = new Random().nextInt(Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerOne()).size());
                     System.out.println("\n\nitem effect at " + Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerOne()).get(r).getName().concat("\n"));
                     Battle.getCurrentBattle().minionsOfCurrentPlayer(Battle.getCurrentBattle().getPlayerOne()).get(r).changeHealthPoint(6);
-                }
-                else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem().getName().equalsIgnoreCase("majoone mana")) {
+                } else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem().getName().equalsIgnoreCase("majoone mana")) {
                     Battle.getCurrentBattle().getPlayerOne().changeManaFake(2);
-                }
-                else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem().getName().equalsIgnoreCase("king wisdom")) {
+                } else if (BattleAppearance.getCurrentBattleAppearance().getItemAppearance().getSelectedItem().getName().equalsIgnoreCase("king wisdom")) {
                     Battle.getCurrentBattle().getPlayerOne().setKingWisdomActive(true);
                 }
                 GameController.useItem(x, y, Battle.getCurrentBattle());
