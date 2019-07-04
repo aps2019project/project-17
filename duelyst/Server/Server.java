@@ -5,9 +5,7 @@ import Data.Account;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -35,13 +33,12 @@ public class Server {
                     ReaderWriter readerWriter = new ReaderWriter(socketDetail);
                     socketDetailToReaderWriter.put(socketDetail, readerWriter);
                     System.err.println("socket connected");
-                    System.out.println(socketDetailToReaderWriter);
+                    readerWriter.getReader().run();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-        new Thread(Server::reading).start();
         new Thread(() -> {
             while (true) {
                 process();
@@ -50,28 +47,23 @@ public class Server {
         new Thread(Server::writing).start();
     }
 
-    private static void reading() {
-        while (true) {
-            ArrayList<ReaderWriter> readerWriters = new ArrayList<>(socketDetailToReaderWriter.values());
-            for (int i = 0; i < socketDetailToReaderWriter.size(); i++) {
-                System.out.println(i);
-                ReaderWriter readerWriter = readerWriters.get(i);
-                readerWriter.getReader().read();
-            }
-        }
-    }
 
     private static void process() {
         try {
             if (commands.size() == 0)
                 return;
             Object object = commands.take();
-            String s = (String) object;
+            String s = ((String) ((FakeClient.Message) object).object).trim();
+            System.out.println(s);
             System.err.println("taken " + object);
             Pattern createAccountPattern = Pattern.compile("create account (?<name>\\w+) (?<pass>\\w+)");
             Matcher createAccountMatcher = createAccountPattern.matcher(s);
             if (createAccountMatcher.matches())
                 createAccount(createAccountMatcher.group("name"), createAccountMatcher.group("pass"));
+            String s1 = "done";
+            FakeClient.Message message = new FakeClient.Message(s1);
+            processedCommands.put(message);
+            processToOnProcess.put( message,object);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -82,9 +74,12 @@ public class Server {
             try {
                 Object processedString = processedCommands.take();
                 Object onProcessedString = processToOnProcess.get(processedString);
-                SocketDetail socketDetail = data.get(onProcessedString);
+                SocketDetail socketDetail;
+                if (data.containsKey(processedString))
+                    System.out.println("ok");
+                socketDetail = data.get(onProcessedString);
                 ReaderWriter readerWriter = socketDetailToReaderWriter.get(socketDetail);
-                readerWriter.getWriter().write((String)processedString);
+                readerWriter.getWriter().write(processedString);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

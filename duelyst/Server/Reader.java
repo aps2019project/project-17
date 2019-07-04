@@ -1,16 +1,15 @@
 package duelyst.Server;
 
 import java.io.IOException;
-import java.net.Socket;
 
-public class Reader {
+public class Reader implements Runnable{
     private SocketDetail socketDetail;
 
-    public Reader(Socket socket) {
-        socketDetail = new SocketDetail(socket);
+    public Reader(SocketDetail socketDetail) {
+        this.socketDetail = socketDetail;
     }
 
-    public void read() {
+    private void read() {
         try {
             Object object;
             object = socketDetail.objectInputStream.readObject();
@@ -18,11 +17,14 @@ public class Reader {
                 System.err.println("read " + object);
                 Server.getCommands().put(object);
                 Server.getData().put(object, this.socketDetail);
-                System.out.println("out");
             }
         } catch (InterruptedException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void run() {
+        read();
+    }
 }

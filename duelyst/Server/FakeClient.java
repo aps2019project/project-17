@@ -20,15 +20,13 @@ public class FakeClient {
     public static void main(String[] args) {
         try {
             Socket socket = new Socket("localhost", ConnectionDataBaseDetail.PORT);
-            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-            ObjectOutputStream dataOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            SocketDetail socketDetail = new SocketDetail(socket);
+            ReaderWriter readerWriter = new ReaderWriter(socketDetail);
             String s = "create account a b\n";
             Message message = new Message(s);
-            dataOutputStream.writeObject(message);
-            dataOutputStream.flush();
-            while (true) {
-
-            }
+            readerWriter.getWriter().write(message);
+            readerWriter.getReader().run();
+            while (true){}
         } catch (IOException e) {
             e.printStackTrace();
         }

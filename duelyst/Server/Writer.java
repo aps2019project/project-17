@@ -6,13 +6,13 @@ import java.net.Socket;
 public class Writer {
     private SocketDetail socketDetail;
 
-    public Writer(Socket socket) {
-        this.socketDetail = new SocketDetail(socket);
+    public Writer(SocketDetail socketDetail) {
+        this.socketDetail = socketDetail;
     }
 
-    public void write(String string) {
+    public void write(Object object) {
         try {
-            socketDetail.objectOutputStream.writeObject(string);
+            socketDetail.objectOutputStream.writeObject(object);
             socketDetail.objectOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

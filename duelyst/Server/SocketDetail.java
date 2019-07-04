@@ -11,8 +11,8 @@ public class SocketDetail {
     public SocketDetail(Socket socket) {
         this.socket = socket;
         try {
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }

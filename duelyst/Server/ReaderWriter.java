@@ -6,8 +6,8 @@ public class ReaderWriter {
     private SocketDetail socketDetail;
 
     public ReaderWriter(SocketDetail socketDetail) {
-        this.reader = new Reader(socketDetail.socket);
-        this.writer = new Writer(socketDetail.socket);
+        this.reader = new Reader(socketDetail);
+        this.writer = new Writer(socketDetail);
         this.socketDetail = socketDetail;
     }
 
