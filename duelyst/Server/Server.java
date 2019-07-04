@@ -25,10 +25,17 @@ public class Server {
 
     private static GetRequest getRequest1;
 
+    private static GetRequest getRequest2;
+
     static {
         Map<String, Object> map = new HashMap<>();
-        map.put("name", "data_base");
-        System.out.println(Unirest.post(ConnectionDataBaseDetail.INIT).fields(map).asString().getStatus());
+//        map.put("name", "data_base");
+//        System.out.println(Unirest.post(ConnectionDataBaseDetail.INIT).fields(map).asString().getStatus());
+//        map.clear();\
+//        map.put("value","test");
+        map.put("name","data_base");
+        map.put("key","ali");
+        System.out.println(Unirest.post(ConnectionDataBaseDetail.GET).fields(map).asObject(Object.class).getBody());
     }
 
     public static void main(String[] args) throws IOException {

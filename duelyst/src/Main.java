@@ -1,6 +1,7 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
+import Network.ClientHandler;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import view.Request;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -154,6 +156,7 @@ public class Main extends Application {
         window = primaryStage;
         window.setScene(sceneFirstMenu);
         window.show();
+//        Request.connectToServer();
         handleEvents();
     }
 
@@ -288,10 +291,14 @@ public class Main extends Application {
     private static void signUpLogic() {
         String username = enterUserName.getText();
         String passWord = enterPassWord.getText();
-
-        String result = Account.addUser(username, passWord);
+        Request.getClientHandler().send("create account " + username + " " + passWord);
+        String result = Request.getClientHandler().getCommandFromReader();
+        while (result == null) {
+            result = Request.getClientHandler().getCommandFromReader();
+        }
+        result = result.toLowerCase().trim();
         System.out.println(result);
-        if (result.contains("Account Successfully created")) {
+        if (result.contains("account successfully created")) {
             invalidPassWord.setText("account successfully created");
             invalidPassWord.setFill(Color.GREEN);
             invalidPassWord.setVisible(true);

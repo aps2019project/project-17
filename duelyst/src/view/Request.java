@@ -4,11 +4,16 @@ import Appearance.ExceptionEndGame;
 import CardCollections.Deck;
 import Data.Account;
 import GameGround.*;
+import Network.ClientHandler;
+import Network.SocketDetail;
 import controller.GameController;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import static Data.MODE.*;
 
 public class Request {
@@ -17,6 +22,7 @@ public class Request {
     private static ErrorType error;
     private static MenuType menuType;
     private static String secondPlayerUserName = null;
+    private static ClientHandler clientHandler;
 
     static {
         //we set the default menu in constructor
@@ -26,6 +32,11 @@ public class Request {
 
     public static void getNewCommand() {
         command = scanner.nextLine().toLowerCase().trim();
+    }
+
+    public static void connectToServer() {
+        clientHandler = new ClientHandler();
+        clientHandler.start();
     }
 
     public static ErrorType getError() {
@@ -132,7 +143,7 @@ public class Request {
             case START_MULTI_PLAYER_GAME:
                 return checkSyntaxOfStartMultiPlayer();
             case EXIT:
-                return CommonRequests.checkSyntaxOfExitCommand(command,menuType);
+                return CommonRequests.checkSyntaxOfExitCommand(command, menuType);
             case EXIT_GAME:
                 menuType = null;
         }
@@ -528,7 +539,7 @@ public class Request {
                     return true;
                 case "customcard":
                     System.out.println("entered customCard");
-                    menuType=MenuType.CustomCard;
+                    menuType = MenuType.CustomCard;
                     CustomCardView.showCustomCardMenu();
                     CustomCardRequest.checkSyntaxOfCustomCard(scanner);
                     return true;
@@ -719,4 +730,7 @@ public class Request {
         return true;
     }
 
+    public static ClientHandler getClientHandler() {
+        return clientHandler;
+    }
 }
