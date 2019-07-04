@@ -1,4 +1,3 @@
-package duelyst.Server;
 
 import java.io.IOException;
 import java.net.Socket;

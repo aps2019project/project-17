@@ -1,5 +1,3 @@
-package duelyst.Server;
-
 import java.io.*;
 import java.net.Socket;
 

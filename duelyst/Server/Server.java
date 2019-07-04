@@ -1,5 +1,3 @@
-package duelyst.Server;
-
 import Data.Account;
 import io.joshworks.restclient.http.Unirest;
 import io.joshworks.restclient.request.GetRequest;
