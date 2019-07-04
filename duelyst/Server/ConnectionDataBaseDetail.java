@@ -12,6 +12,7 @@ public class ConnectionDataBaseDetail {
     public static final String INIT;
     public static final String PUT;
     public static final String GET_ALL_KEYS;
+    public static final String GET;
 
     static {
         try {
@@ -32,9 +33,10 @@ public class ConnectionDataBaseDetail {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        BASE_ADDRESS = "http://127.0.0.1:" + PORT + "/";
+        BASE_ADDRESS = "http://127.0.0.1:" + "8080" + "/";
         INIT = BASE_ADDRESS + "init_DB";
         PUT = BASE_ADDRESS + "put";
         GET_ALL_KEYS = BASE_ADDRESS + "get_all_keys";
+        GET = BASE_ADDRESS + "get";
     }
 }

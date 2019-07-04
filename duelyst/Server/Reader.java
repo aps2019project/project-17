@@ -2,7 +2,7 @@ package duelyst.Server;
 
 import java.io.IOException;
 
-public class Reader implements Runnable{
+public class Reader implements Runnable {
     private SocketDetail socketDetail;
 
     public Reader(SocketDetail socketDetail) {
@@ -16,7 +16,7 @@ public class Reader implements Runnable{
             if (object != null && !object.equals("")) {
                 System.err.println("read " + object);
                 Server.getCommands().put(object);
-                Server.getData().put(object, this.socketDetail);
+                Server.getUnProcessedToSocket().put(object, this.socketDetail);
             }
         } catch (InterruptedException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
