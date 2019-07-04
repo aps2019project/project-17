@@ -1,5 +1,3 @@
-package duelyst.Server;
-
 public class ReaderWriter {
     private Reader reader;
     private Writer writer;
