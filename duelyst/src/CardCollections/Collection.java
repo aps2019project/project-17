@@ -4,9 +4,10 @@ import Cards.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Collection {
+public class Collection implements Serializable {
     private ArrayList<Card> cards;
     private ArrayList<Item> items;
     private ArrayList<Deck> decks;

@@ -1,5 +1,9 @@
+import io.joshworks.restclient.http.Unirest;
+
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +14,9 @@ public class ConnectionDataBaseDetail {
     public static final String PUT;
     public static final String GET_ALL_KEYS;
     public static final String GET;
+    public static final String GET_ALL_VALUES;
+    public final static String ACCOUNT_DB = "account_data_base";
+    public final static String DEL;
 
     static {
         try {
@@ -35,5 +42,13 @@ public class ConnectionDataBaseDetail {
         PUT = BASE_ADDRESS + "put";
         GET_ALL_KEYS = BASE_ADDRESS + "get_all_keys";
         GET = BASE_ADDRESS + "get";
+        GET_ALL_VALUES = BASE_ADDRESS + "get_all_values";
+        DEL = BASE_ADDRESS + "del_from_DB";
+    }
+
+    public static void initializeServer() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", ACCOUNT_DB);
+        System.out.println(Unirest.post(ConnectionDataBaseDetail.INIT).fields(map).asString().getStatus());
     }
 }

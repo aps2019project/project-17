@@ -5,7 +5,9 @@ import CardCollections.Deck;
 import CardCollections.Shop;
 import controller.GameController;
 
-public class Account implements Comparable<Account> {
+import java.io.Serializable;
+
+public class Account implements Comparable<Account>, Serializable {
 
     private Player player;
     private Collection collection;
@@ -141,5 +143,9 @@ public class Account implements Comparable<Account> {
 
     public int getNumOfWins() {
         return numOfWins;
+    }
+
+    public String getPassWord() {
+        return passWord;
     }
 }

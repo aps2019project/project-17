@@ -1,7 +1,6 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Data.Account;
-import Network.ClientHandler;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -291,20 +290,20 @@ public class Main extends Application {
     private static void signUpLogic() {
         String username = enterUserName.getText();
         String passWord = enterPassWord.getText();
-        Request.getClientHandler().send("create account " + username + " " + passWord);
-        String result = Request.getClientHandler().getCommandFromReader();
-        while (result == null) {
-            result = Request.getClientHandler().getCommandFromReader();
-        }
-        result = result.toLowerCase().trim();
-        System.out.println(result);
-        if (result.contains("account successfully created")) {
-            invalidPassWord.setText("account successfully created");
-            invalidPassWord.setFill(Color.GREEN);
-            invalidPassWord.setVisible(true);
-            loginMenuOnMouseClicked();
-            return;
-        }
+//        Request.getClientHandler().send("create account " + username + " " + passWord);
+//        String result = Request.getClientHandler().getCommandFromReader();
+//        while (result == null) {
+//            result = Request.getClientHandler().getCommandFromReader();
+//        }
+//        result = result.toLowerCase().trim();
+//        System.out.println(result);
+//        if (result.contains("account successfully created")) {
+//            invalidPassWord.setText("account successfully created");
+//            invalidPassWord.setFill(Color.GREEN);
+//            invalidPassWord.setVisible(true);
+//            loginMenuOnMouseClicked();
+//            return;
+//        }
         invalidPassWord.setVisible(false);
         invalidUserName.setVisible(true);
     }
