@@ -17,9 +17,9 @@ public class Reader implements Runnable {
         try {
             Gson gson = new Gson();
             String data = (String) socketDetail.objectInputStream.readObject();
+            System.err.println("read " + data);
             Message message = gson.fromJson(data, Message.class);
             getCommands().put(message);
-            System.err.println("read " + data);
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }

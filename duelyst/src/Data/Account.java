@@ -4,6 +4,7 @@ import CardCollections.Collection;
 import CardCollections.Deck;
 import CardCollections.Shop;
 import Client.*;
+import com.google.gson.Gson;
 import controller.GameController;
 
 import java.io.Serializable;
@@ -51,7 +52,8 @@ public class Account implements Comparable<Account>, Serializable {
     public static String login(String userName, String passWord) {
         Client.send(new Message("login " + userName + " " + passWord));
         try {
-            Account account = (Account) Client.get();
+            Gson gson = new Gson();
+            Account account = gson.fromJson(Client.get().toString(), Account.class);
             setLoginUser(account);
             return "login successfully done :) Enjoy the game";
         } catch (Exception e) {

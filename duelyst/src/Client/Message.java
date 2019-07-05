@@ -13,8 +13,8 @@ public class Message implements Serializable {
         return data;
     }
 
-//    @Override
-//    public String toString() {
-//        return data;
-//    }
+    @Override
+    public String toString() {
+        return data;
+    }
 }
