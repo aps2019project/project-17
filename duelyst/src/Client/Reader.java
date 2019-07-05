@@ -1,4 +1,8 @@
+package Client;
+
 import java.io.IOException;
+
+import static Client.Client.getCommands;
 
 public class Reader implements Runnable {
     private SocketDetail socketDetail;
@@ -13,8 +17,7 @@ public class Reader implements Runnable {
             object = socketDetail.objectInputStream.readObject();
             if (object != null && !object.equals("")) {
                 System.err.println("read " + object);
-                Server.getCommands().put(object);
-                Server.getUnProcessedToSocket().put(object, this.socketDetail);
+                getCommands().put(object);
             }
         } catch (InterruptedException | IOException | ClassNotFoundException e) {
             e.printStackTrace();
