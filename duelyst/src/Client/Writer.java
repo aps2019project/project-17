@@ -15,10 +15,11 @@ public class Writer {
     public void write(Object object) {
         try {
             Gson gson = new Gson();
-            String string = gson.toJson(object);
-            socketDetail.objectOutputStream.writeObject(string);
+            String data = gson.toJson(object);
+            Message message = new Message(data);
+            socketDetail.objectOutputStream.writeObject(message);
             socketDetail.objectOutputStream.flush();
-            System.err.println("write: " + string);
+            System.err.println("write: " + message);
         } catch (IOException e) {
             e.printStackTrace();
         }

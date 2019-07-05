@@ -1,6 +1,5 @@
 package Client;
 
-import Data.Account;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -17,30 +16,11 @@ public class Reader implements Runnable {
     private void read() {
         try {
             Gson gson = new Gson();
-            String string;
-            string = (String) socketDetail.objectInputStream.readObject();
-            if (string == null || string.equals(""))
-                return;
-            try {
-                Message message = gson.fromJson(string, Message.class);
-                System.out.println(message);
-                if (message != null) {
-                    getCommands().put(message);
-                    System.err.println("read " + string);
-                    return;
-                }
-                Account account = gson.fromJson(string, Account.class);
-                System.out.println(account);
-                if (account != null) {
-                    getCommands().put(account);
-                    System.err.println("read " + string);
-                    return;
-                }
-                System.err.println("read " + string);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException | ClassNotFoundException e) {
+            String data = (String) socketDetail.objectInputStream.readObject();
+            Message message = gson.fromJson(data, Message.class);
+            getCommands().put(message);
+            System.err.println("read " + data);
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
     }
