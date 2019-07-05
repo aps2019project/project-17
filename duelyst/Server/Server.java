@@ -26,7 +26,7 @@ public class Server {
     private static BlockingQueue<Object> processedCommands = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) throws IOException {
-        for (String s : getAllUserName()) {
+        for (String s : getAllUserName(ConnectionDataBaseDetail.ACCOUNT_DB)) {
             System.out.println(s);
         }
         ServerSocket serverSocket = new ServerSocket(ConnectionDataBaseDetail.PORT);
@@ -69,30 +69,21 @@ public class Server {
                 Matcher loginMatcher = loginAccountPattern.matcher(message);
                 if (createMatcher.matches()) {
                     String userName = createMatcher.group("name");
-                    if (getAllUserName().contains(userName))
-                        processedObject = new Message("this user name already exist");
-                    else {
-                        String pass = createMatcher.group("pass");
-                        Account account = new Account(userName, pass);
-                        addUserToDataBase(account);
-                        processedObject = new Message("account successfully created");
-                    }
+                    String pass = createMatcher.group("pass");
+                    processedObject = createAccount(userName, pass);
+
                 } else if (loginMatcher.matches()) {
                     String userName = loginMatcher.group("name");
-                    Account account = getAccount(userName);
-                    if (account == null)
-                        processedObject = new Message("invalid user name");
-                    else {
-                        processedObject = account;
-                    }
+                    String pass = loginMatcher.group("pass");
+                    processedObject = login(userName, pass);
 
                 } else
                     processedObject = new Message("invalid command");
             }
-            System.err.println("processed  " + processedObject);
+            System.err.println("processed:  " + processedObject);
             assert processedObject != null;
-            processedCommands.put(processedObject);
             processedToUnProcess.put(processedObject, unProcessedObject);
+            processedCommands.put(processedObject);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -104,6 +95,8 @@ public class Server {
                 Object processedObject = processedCommands.take();
                 Object unProcessedObject = processedToUnProcess.get(processedObject);
                 SocketDetail socketDetail;
+                if (!unProcessedToSocket.containsKey(unProcessedObject))
+                    continue;
                 socketDetail = unProcessedToSocket.get(unProcessedObject);
                 ReaderWriter readerWriter = socketDetailToReaderWriter.get(socketDetail);
                 readerWriter.getWriter().write(processedObject);
@@ -130,11 +123,8 @@ public class Server {
         return ReaderWriterToAccount;
     }
 
-    private static void createAccount(String name, String pass) {
-        System.out.println("account created with " + name + " - " + pass);
-    }
 
-    private static ArrayList<String> getAllUserName() {
+    private static ArrayList<String> getAllUserName(String db_name) {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
         map.put("name", ConnectionDataBaseDetail.ACCOUNT_DB);
@@ -142,16 +132,15 @@ public class Server {
         return new ArrayList<>(Arrays.asList(gson.fromJson(result, String[].class)));
     }
 
-    private static Account[] getAllAccounts() {
+    private static ArrayList<Account> getAllAccounts(String db_name) {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
         map.put("name", ConnectionDataBaseDetail.ACCOUNT_DB);
         String result = Unirest.post(ConnectionDataBaseDetail.GET_ALL_VALUES).fields(map).asObject(String.class).getBody();
-        System.out.println(result);
-        return gson.fromJson(result, Account[].class);
+        return new ArrayList<>(Arrays.asList(gson.fromJson(result, Account[].class)));
     }
 
-    private static void addUserToDataBase(Account account) {
+    private static void addUserToDataBase(Account account, String db_name) {
         Gson gson = new Gson();
         String userName = account.getUserName();
         String json = gson.toJson(account);
@@ -162,7 +151,7 @@ public class Server {
         System.out.println(Unirest.post(ConnectionDataBaseDetail.PUT).fields(map).asString().getStatus());
     }
 
-    private static Account getAccount(String userName) {
+    private static Account getAccount(String userName, String db_name) {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
         map.put("name", ConnectionDataBaseDetail.ACCOUNT_DB);
@@ -173,10 +162,33 @@ public class Server {
         return gson.fromJson(result, Account.class);
     }
 
-    private static void deleteAccount(String userName) {
+    private static void deleteAccount(String userName, String db_name) {
         Map<String, Object> map = new HashMap<>();
         map.put("name", ConnectionDataBaseDetail.ACCOUNT_DB);
         map.put("key", userName);
         System.out.println(Unirest.post(ConnectionDataBaseDetail.DEL).fields(map).asString().getStatus());
+    }
+
+
+    private static Object createAccount(String userName, String pass) {
+        if (getAllUserName(ConnectionDataBaseDetail.ACCOUNT_DB).contains(userName)) {
+            return new Message("invalid user name");
+        } else {
+            Account account = new Account(userName, pass);
+            addUserToDataBase(account, ConnectionDataBaseDetail.ACCOUNT_DB);
+            return new Message("account successfully created");
+        }
+    }
+
+    private static Object login(String userName, String pass) {
+        Account account = getAccount(userName, ConnectionDataBaseDetail.ACCOUNT_DB);
+        if (getAllUserName(ConnectionDataBaseDetail.LOGGED_IN_DB).contains(userName))
+            return new Message("this user name is already login");
+        else if (account == null)
+            return new Message("invalid user name");
+        else if (!account.getPassWord().equals(pass)) {
+            return new Message("invalid password");
+        } else
+            return account;
     }
 }

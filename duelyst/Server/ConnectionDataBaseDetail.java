@@ -15,8 +15,9 @@ public class ConnectionDataBaseDetail {
     public static final String GET_ALL_KEYS;
     public static final String GET;
     public static final String GET_ALL_VALUES;
-    public final static String ACCOUNT_DB = "account_data_base";
     public final static String DEL;
+    public final static String ACCOUNT_DB = "account_data_base";
+    public final static String LOGGED_IN_DB = "logged_in_data_base";
 
     static {
         try {
@@ -46,9 +47,9 @@ public class ConnectionDataBaseDetail {
         DEL = BASE_ADDRESS + "del_from_DB";
     }
 
-    public static void initializeServer() {
+    public static void initializeServer(String name) {
         Map<String, Object> map = new HashMap<>();
-        map.put("name", ACCOUNT_DB);
+        map.put("name", name);
         System.out.println(Unirest.post(ConnectionDataBaseDetail.INIT).fields(map).asString().getStatus());
     }
 }
