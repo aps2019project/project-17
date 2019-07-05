@@ -129,7 +129,7 @@ public class Shop {
     private Item returnItemFromShop(String itemName) {
         if (Account.getLoginUser().getCollection().findItem(itemName) != null)
             return null;
-        ArrayList<Item> items = (ArrayList<Item>) Arrays.asList(CardMaker.getAllItems());
+        ArrayList<Item> items = new ArrayList<>(Arrays.asList(CardMaker.getAllItems()));
         for (Item item : items)
             if (item.getName().trim().equalsIgnoreCase(itemName))
                 return item;
