@@ -6,6 +6,8 @@ import Cards.Card;
 import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
+import Client.Client;
+import Client.Message;
 import Data.*;
 import Effects.Effect;
 import GameGround.*;
@@ -55,7 +57,11 @@ public class GameController {
     }
 
     public static String createAccount(String userName, String passWord) {
-        return Account.addUser(userName, passWord);
+        Message message = new Message("create account " + userName + " " + passWord);
+        Client.send(message);
+        Object object = Client.get();
+        Message data = (Message) object;
+        return data.getData();
     }
 
     public static String login(String userName, String passWord) {
@@ -163,8 +169,9 @@ public class GameController {
     public static String useSpecialPower(int x, int y, Battle battle) throws ExceptionEndGame {
         return battle.useSpecialPower(x, y);
     }
-    public static String useItem(int x, int y,Battle battle) throws ExceptionEndGame {
-        return battle.useItem(x,y);
+
+    public static String useItem(int x, int y, Battle battle) throws ExceptionEndGame {
+        return battle.useItem(x, y);
     }
 
 
@@ -172,7 +179,7 @@ public class GameController {
         return battle.selectCardOrItem(cardItemID);
     }
 
-    public static void selectItem(Item item) throws ExceptionEndGame{
+    public static void selectItem(Item item) throws ExceptionEndGame {
         if (Battle.getCurrentBattle() == null)
             throw new ExceptionEndGame(Battle.getSituationOfGame());
         Battle.getCurrentBattle().setSelectedItem(item);

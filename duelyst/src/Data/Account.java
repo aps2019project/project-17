@@ -3,6 +3,7 @@ package Data;
 import CardCollections.Collection;
 import CardCollections.Deck;
 import CardCollections.Shop;
+import Client.*;
 import controller.GameController;
 
 import java.io.Serializable;
@@ -32,6 +33,10 @@ public class Account implements Comparable<Account>, Serializable {
         this.shop = new Shop(this.collection);
     }
 
+    public static void setLoginUser(Account loginUser) {
+        Account.loginUser = loginUser;
+    }
+
     public static String addUser(String userName, String passWord) {
 
         for (Account account : GameController.getAccounts()) {
@@ -44,16 +49,15 @@ public class Account implements Comparable<Account>, Serializable {
     }
 
     public static String login(String userName, String passWord) {
-        for (Account account : GameController.getAccounts()) {
-            if (account.userName.equals(userName)) {
-                if (account.passWord.equals(passWord)) {
-                    loginUser = account;
-                    return "login successfully done :) Enjoy the game";
-                }
-                return "your password is wrong!";
-            }
+        Client.send(new Message("login " + userName + " " + passWord));
+        try {
+            Account account = (Account) Client.get();
+            setLoginUser(account);
+            return "login successfully done :) Enjoy the game";
+        } catch (Exception e) {
+            Message message = (Message) Client.get();
+            return message.getData();
         }
-        return "cant find account with this user name";
     }
 
     public static boolean checkForValidUserName(String userName) {

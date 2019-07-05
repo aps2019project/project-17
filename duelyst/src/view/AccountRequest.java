@@ -16,7 +16,7 @@ class AccountRequest {
             String userName = matcher.group("userName");
             String passWord = matcher.group("password");
             if (!GameController.checkForValidUserName(userName)) {
-                System.out.println(GameController.createAccount(userName, passWord));
+//                System.out.println(GameController.createAccount(userName, passWord));
                 return true;
             } else {
                 System.out.println("UserName Already Exist! Please Try again with another UserName.");

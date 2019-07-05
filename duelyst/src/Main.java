@@ -1,5 +1,6 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
+import Client.Client;
 import Data.Account;
 import controller.GameController;
 import javafx.application.Application;
@@ -18,7 +19,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import view.Request;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -147,6 +147,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 //        GameController.main();
+        new Thread(new Client()).start();
         launch(args);
     }
 
@@ -155,13 +156,20 @@ public class Main extends Application {
         window = primaryStage;
         window.setScene(sceneFirstMenu);
         window.show();
-//        Request.connectToServer();
         handleEvents();
     }
 
     private static void handleEvents() {
         handleMouse();
         handleClick();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        Client.closeSocket();
+        System.out.println("CLOSE REQUEST");
+        System.exit(0);
+//        window.close();
     }
 
     private static void handleMouse() {
@@ -290,7 +298,11 @@ public class Main extends Application {
     private static void signUpLogic() {
         String username = enterUserName.getText();
         String passWord = enterPassWord.getText();
-        GameController.createAccount(username, passWord);
+        String result = GameController.createAccount(username, passWord);
+        if (result.contains("account successfully created")) {
+            loginMenuOnMouseClicked();
+            return;
+        }
         invalidPassWord.setVisible(false);
         invalidUserName.setVisible(true);
     }
