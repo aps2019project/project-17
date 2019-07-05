@@ -3,9 +3,10 @@ package Cards;
 import Effects.Effect;
 import GameGround.Battle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Item {
+public class Item implements Serializable {
     private String name;
     private String id;
     private String desc;

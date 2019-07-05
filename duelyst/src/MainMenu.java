@@ -37,7 +37,6 @@ class MainMenu {
         setFont();
         setMouse();
         display();
-        Account.getLoginUser().getCollection().setMainDeck(Account.getLoginUser().getCollection().getDecks().get(0).getName());
     }
 
     private void initializeSaveVBox(){
