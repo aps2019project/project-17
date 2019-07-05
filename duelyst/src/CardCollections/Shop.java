@@ -4,10 +4,11 @@ import Cards.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Shop {
+public class Shop implements Serializable {
 
     private ArrayList<Card> cardsInShop = new ArrayList<>();
     private ArrayList<Item> itemsInShop = new ArrayList<>();

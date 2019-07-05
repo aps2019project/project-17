@@ -12,7 +12,7 @@ public class Reader implements Runnable {
             Object object;
             object = socketDetail.objectInputStream.readObject();
             if (object != null && !object.equals("")) {
-                System.err.println("read " + object);
+                System.err.println("read: " + object);
                 Server.getCommands().put(object);
                 Server.getUnProcessedToSocket().put(object, this.socketDetail);
             }
