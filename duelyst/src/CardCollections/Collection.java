@@ -21,6 +21,9 @@ public class Collection implements Serializable {
         this.decks = new ArrayList<>();
         this.daric = 1500000;
         this.mainDeck = null;
+    }
+
+    public void delete() {
         toDelete();
         Deck deck = new Deck("deck");
         Deck deck1 = new Deck("AI");
@@ -46,7 +49,7 @@ public class Collection implements Serializable {
         this.mainDeck = deck;
     }
 
-    private Card findCard(String cardNameID) {
+    public Card findCard(String cardNameID) {
         for (Card card : cards) {
             if (card.getName().equals(cardNameID))
                 return card;
@@ -57,7 +60,7 @@ public class Collection implements Serializable {
         return null;
     }
 
-    private Item findItem(String itemNameID) {
+    public Item findItem(String itemNameID) {
         for (Item item : items) {
             if (item.getName().equals(itemNameID))
                 return item;

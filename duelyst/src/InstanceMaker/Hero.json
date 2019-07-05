@@ -138,18 +138,4 @@
 "attackType": "ON_TURN",
 "coolDown": 0,
 "desc": "nothing"
-},
-{"name": "sina",
-"id": "1124",
-"price": 10,
-"manaPoint": 1,
-"healthPoint": 10,
-"attackPoint": 10,
-"minionType": "MELEE",
-"attackRange": "2",
-"distanceCanMove": 2,
-"maxRangeToInput": 2,
-"attackType": "NONE",
-"coolDown": 5,
-"desc": ""
 }]

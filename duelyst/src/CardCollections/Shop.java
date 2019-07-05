@@ -10,21 +10,11 @@ import java.util.Arrays;
 
 public class Shop implements Serializable {
 
-    private ArrayList<Card> cardsInShop = new ArrayList<>();
-    private ArrayList<Item> itemsInShop = new ArrayList<>();
     private Collection collection;
 
     public Shop(Collection collection) {
         this.collection = collection;
-        this.initShop();
-    }
-
-    private void initShop() {
         CardMaker.creation();
-        cardsInShop.addAll(Arrays.asList(CardMaker.getSpells()));
-        cardsInShop.addAll(Arrays.asList(CardMaker.getHeroes()));
-        cardsInShop.addAll(Arrays.asList(CardMaker.getMinions()));
-        itemsInShop.addAll(Arrays.asList(CardMaker.getItems()));
     }
 
     public String search(String cardName) {
@@ -83,7 +73,6 @@ public class Shop implements Serializable {
                 return "you don't have enough money to buy this card";
 
             this.collection.addCardToCollection(card);
-            this.cardsInShop.remove(card);
             this.collection.changeDaric(-card.getPrice());
             return "card successfully added";
         }
@@ -96,7 +85,6 @@ public class Shop implements Serializable {
             return "item storage in your collection is full";
 
         this.collection.addItemToCollection(item);
-        this.itemsInShop.remove(item);
         this.collection.changeDaric(-item.getPrice());
         return "item successfully added";
     }
@@ -107,37 +95,45 @@ public class Shop implements Serializable {
 
         if (returnCardFromCollection(cardName) != null) {
             Card card = returnCardFromCollection(cardName);
-
-            cardsInShop.add(card);
             this.collection.changeDaric(card.getPrice());
             this.collection.removeCard(card);
             return "card successfully sell";
         }
 
         Item item = returnItemFromCollection(cardName);
-        itemsInShop.add(item);
         this.collection.changeDaric(item.getPrice());
         this.collection.getItems().remove(item);
         return "item successfully sell";
     }
 
     public ArrayList<Item> getItemsInShop() {
-        return itemsInShop;
+        ArrayList<Item> items = new ArrayList<>();
+        Item[] totalItems = CardMaker.getAllItems();
+        for (Item totalItem : totalItems) {
+            if (returnItemFromCollection(totalItem.getName().trim().toLowerCase()) == null)
+                items.add(totalItem);
+        }
+        return items;
     }
 
     private Card returnCardFromShop(String cardName) {
-        for (Card card : cardsInShop) {
-            if (card.getName().toLowerCase().equals(cardName))
-                return card;
-        }
+        ArrayList<Card> cards = new ArrayList<>(Arrays.asList(CardMaker.getAllCards()));
+        Card card = Account.getLoginUser().getCollection().findCard(cardName.trim());
+        if (card != null)
+            return null;
+        for (Card card1 : cards)
+            if (card1.getName().trim().equalsIgnoreCase(cardName))
+                return card1;
         return null;
     }
 
     private Item returnItemFromShop(String itemName) {
-        for (Item item : itemsInShop) {
-            if (item.getName().toLowerCase().equals(itemName))
+        if (Account.getLoginUser().getCollection().findItem(itemName) != null)
+            return null;
+        ArrayList<Item> items = new ArrayList<>(Arrays.asList(CardMaker.getAllItems()));
+        for (Item item : items)
+            if (item.getName().trim().equalsIgnoreCase(itemName))
                 return item;
-        }
         return null;
     }
 
@@ -165,8 +161,8 @@ public class Shop implements Serializable {
 
     public ArrayList<Hero> getShopHeroes() {
         ArrayList<Hero> shopHeroes = new ArrayList<>();
-        for (Card card : this.cardsInShop) {
-            if (card instanceof Hero) {
+        for (Card card : CardMaker.getHeroes()) {
+            if (card instanceof Hero && returnCardFromCollection(card.getName().trim().toLowerCase()) == null) {
                 shopHeroes.add((Hero) card);
             }
         }
@@ -175,8 +171,8 @@ public class Shop implements Serializable {
 
     public ArrayList<Minion> getShopMinions() {
         ArrayList<Minion> shopMinions = new ArrayList<>();
-        for (Card card : this.cardsInShop) {
-            if (card instanceof Minion) {
+        for (Card card : CardMaker.getMinions()) {
+            if (card instanceof Minion && returnCardFromCollection(card.getName().trim().toLowerCase()) == null) {
                 if (card instanceof Hero)
                     continue;
                 shopMinions.add((Minion) card);
@@ -187,8 +183,8 @@ public class Shop implements Serializable {
 
     public ArrayList<Spell> getShopSpells() {
         ArrayList<Spell> shopSpells = new ArrayList<>();
-        for (Card card : this.cardsInShop) {
-            if (card instanceof Spell) {
+        for (Card card : CardMaker.getSpells()) {
+            if (card instanceof Spell && returnCardFromCollection(card.getName().trim().toLowerCase()) == null) {
                 shopSpells.add((Spell) card);
             }
         }
@@ -196,13 +192,7 @@ public class Shop implements Serializable {
     }
 
     public void update() {
-        Card[] totalCards = CardMaker.getAllCards();
-        for (Card totalCard : totalCards) {
-            if (!this.cardsInShop.contains(totalCard) && !Account.getLoginUser().getCollection().getCards().contains(totalCard)) {
-                System.out.println("\t\t\t\t" + totalCard.getName().concat(" added"));
-                this.cardsInShop.add(totalCard);
-            }
-        }
+        CardMaker.creation();
     }
 
 }
