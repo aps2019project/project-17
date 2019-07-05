@@ -371,7 +371,6 @@ class ShopAppearance {
         int spellSize = CardMaker.getSpells().length;
         int minionSize = CardMaker.getMinions().length;
         int heroSize = CardMaker.getHeroes().length;
-        System.out.println("spell size -> " + spellSize + " minion size -> " + minionSize + " hero size ->" + heroSize);
         for (int i = 0; i < shownCards.length; i++) {
             root.getChildren().removeAll(shownCards[i]);
             for (int j = 0; j < shownCards[i].length; j++) {

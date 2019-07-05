@@ -1,8 +1,9 @@
 package Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-class MatchHistory {
+class MatchHistory implements Serializable {
     private ArrayList<GameData> gameData;
 
     MatchHistory() {

@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 
+import java.io.DataInputStream;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,13 +10,12 @@ import java.util.regex.Pattern;
 class AccountRequest {
 
     static boolean checkSyntaxOfCreateAccountCommand(String command, Scanner scanner) {
-        Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " (?<userName>\\w+)");
+        Pattern patternForCreateAccount = Pattern.compile(StringsRq.CREATE_ACCOUNT + " (?<userName>\\w+)" + " " + "(?<password>\\w+)");
         Matcher matcher = patternForCreateAccount.matcher(command);
         if (matcher.matches()) {
             String userName = matcher.group("userName");
+            String passWord = matcher.group("password");
             if (!GameController.checkForValidUserName(userName)) {
-                System.out.println("Please enter your password:");
-                String passWord = scanner.nextLine();
                 System.out.println(GameController.createAccount(userName, passWord));
                 return true;
             } else {

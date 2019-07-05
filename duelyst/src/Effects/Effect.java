@@ -9,10 +9,11 @@ import Effects.enums.TargetDetail;
 import Effects.enums.TargetRange;
 import Effects.enums.TargetType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Effect {
+public class Effect implements Serializable {
     private String id;
     private int startTime;
     private int endTime;

@@ -4,9 +4,10 @@ import Cards.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Collection {
+public class Collection implements Serializable {
     private ArrayList<Card> cards;
     private ArrayList<Item> items;
     private ArrayList<Deck> decks;
@@ -20,6 +21,9 @@ public class Collection {
         this.decks = new ArrayList<>();
         this.daric = 1500000;
         this.mainDeck = null;
+    }
+
+    public void delete() {
         toDelete();
         Deck deck = new Deck("deck");
         Deck deck1 = new Deck("AI");
@@ -45,7 +49,7 @@ public class Collection {
         this.mainDeck = deck;
     }
 
-    private Card findCard(String cardNameID) {
+    public Card findCard(String cardNameID) {
         for (Card card : cards) {
             if (card.getName().equals(cardNameID))
                 return card;
@@ -56,7 +60,7 @@ public class Collection {
         return null;
     }
 
-    private Item findItem(String itemNameID) {
+    public Item findItem(String itemNameID) {
         for (Item item : items) {
             if (item.getName().equals(itemNameID))
                 return item;

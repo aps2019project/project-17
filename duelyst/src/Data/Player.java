@@ -7,10 +7,11 @@ import Effects.Effect;
 import Effects.enums.MinionType;
 import Effects.enums.SpecialSituation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player {
+public class Player implements Serializable {
     private Deck mainDeck;
     private Deck copyMainDeck;
     private Hand hand;

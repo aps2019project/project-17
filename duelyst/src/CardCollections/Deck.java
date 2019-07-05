@@ -5,9 +5,10 @@ import Cards.*;
 import InstanceMaker.CardMaker;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck implements Serializable {
     private String name;
 
     private ArrayList<Card> cards;
@@ -25,11 +26,11 @@ public class Deck {
     private static Deck deckHoldFlag;
     private static Deck deckCaptureFlag;
 
-    static {
-        initializeSecondAIHF();
-        initializeFirstAIKH();
-        initializeThirdAICF();
-    }
+//    static {
+//        initializeSecondAIHF();
+//        initializeFirstAIKH();
+//        initializeThirdAICF();
+//    }
 
     public void setIsValid() {
         if (this.isDeckValidate()) {
