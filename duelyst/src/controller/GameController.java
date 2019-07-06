@@ -70,7 +70,8 @@ public class GameController {
         Client.send(new Message("login " + userName + " " + passWord));
         try {
             Gson gson = new Gson();
-            Account account = gson.fromJson(Client.get().toString(), Account.class);
+            Message message = gson.fromJson(Client.get().toString(), Message.class);
+            Account account = gson.fromJson(message.toString(), Account.class);
             if (account == null || account.getUserName() == null || !(account.getUserName().trim().equalsIgnoreCase(userName) && account.getPassWord().trim().equalsIgnoreCase(passWord))) {
                 System.err.println("account equal to null");
                 return "invalid";
