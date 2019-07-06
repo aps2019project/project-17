@@ -71,15 +71,15 @@ public class GameController {
         try {
             Gson gson = new Gson();
             Account account = gson.fromJson(Client.get().toString(), Account.class);
-            if (account == null) {
+            if (account == null || account.getUserName() == null || !(account.getUserName().trim().equalsIgnoreCase(userName) && account.getPassWord().trim().equalsIgnoreCase(passWord))) {
                 System.err.println("account equal to null");
                 return "invalid";
             }
             setLoginUser(account);
             return "login successfully done :) Enjoy the game";
         } catch (Exception e) {
-            Object message = Client.get();
-            return "invalid";
+            Message message = (Message) Client.get();
+            return message.toString();
         }
     }
 

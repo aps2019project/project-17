@@ -170,9 +170,7 @@ public class Main extends Application {
 
         Client.send(new Message("disconnect"));
         Client.getReaderWriter().getReader().setConditionFalse();
-        //Client.closeSocket();
-        // System.exit(0);
-//        window.close();
+        System.exit(0);
     }
 
     private static void handleMouse() {
