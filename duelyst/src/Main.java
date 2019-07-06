@@ -167,11 +167,11 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-       // Client.closeSocket();
+
         Client.send(new Message("disconnect"));
-//        Client.getReaderWriter().getReader().setConditionFalse();
-        System.out.println("CLOSE REQUEST");
-       // System.exit(0);
+        Client.getReaderWriter().getReader().setConditionFalse();
+        //Client.closeSocket();
+        // System.exit(0);
 //        window.close();
     }
 
