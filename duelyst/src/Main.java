@@ -19,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import Client.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -166,9 +167,11 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        Client.closeSocket();
+       // Client.closeSocket();
+        Client.send(new Message("disconnect"));
+        Client.getReaderWriter().getReader().setConditionFalse();
         System.out.println("CLOSE REQUEST");
-        System.exit(0);
+       // System.exit(0);
 //        window.close();
     }
 

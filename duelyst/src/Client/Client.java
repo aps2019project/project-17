@@ -85,4 +85,8 @@ public class Client implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public static ReaderWriter getReaderWriter() {
+        return readerWriter;
+    }
 }
