@@ -50,16 +50,7 @@ public class Account implements Comparable<Account>, Serializable {
     }
 
     public static String login(String userName, String passWord) {
-        Client.send(new Message("login " + userName + " " + passWord));
-        try {
-            Gson gson = new Gson();
-            Account account = gson.fromJson(Client.get().toString(), Account.class);
-            setLoginUser(account);
-            return "login successfully done :) Enjoy the game";
-        } catch (Exception e) {
-            Message message = (Message) Client.get();
-            return message.getData();
-        }
+       return "";
     }
 
     public static boolean checkForValidUserName(String userName) {

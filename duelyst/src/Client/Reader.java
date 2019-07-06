@@ -8,7 +8,6 @@ import static Client.Client.getCommands;
 
 public class Reader implements Runnable {
     private SocketDetail socketDetail;
-    private boolean condition=true;
 
     public Reader(SocketDetail socketDetail) {
         this.socketDetail = socketDetail;
@@ -28,13 +27,7 @@ public class Reader implements Runnable {
 
     @Override
     public void run() {
-        while (condition)
+        while (true)
             read();
-
-        System.out.println("falsed");
-    }
-
-    public void setConditionFalse() {
-        this.condition =false;
     }
 }

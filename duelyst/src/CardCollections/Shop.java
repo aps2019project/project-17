@@ -1,8 +1,10 @@
 package CardCollections;
 
 import Cards.*;
+import Client.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -72,9 +74,17 @@ public class Shop implements Serializable {
             if (this.collection.getDaric() < card.getPrice())
                 return "you don't have enough money to buy this card";
 
-            this.collection.addCardToCollection(card);
-            this.collection.changeDaric(-card.getPrice());
-            return "card successfully added";
+            Client.send(new Message("buy card " + cardName.trim().toLowerCase()));
+            Gson gson = new Gson();
+            Message message = gson.fromJson(((Message) Client.get()).getData(), Message.class);
+            if (message.getData().trim().equalsIgnoreCase("no"))
+                return "server didnt allowed you to buy this card";
+            else if (message.getData().trim().equalsIgnoreCase("ok")) {
+                this.collection.addCardToCollection(card);
+                this.collection.changeDaric(-card.getPrice());
+                return "card successfully added";
+            }
+            return "something wrong happen";
         }
 
         Item item = returnItemFromShop(cardName);
@@ -83,10 +93,17 @@ public class Shop implements Serializable {
 
         if (this.collection.getItems().size() == 3)
             return "item storage in your collection is full";
-
-        this.collection.addItemToCollection(item);
-        this.collection.changeDaric(-item.getPrice());
-        return "item successfully added";
+        Client.send(new Message("buy item " + cardName.trim().toLowerCase()));
+        Gson gson = new Gson();
+        Message message = gson.fromJson(((Message) Client.get()).getData(), Message.class);
+        if (message.getData().trim().equalsIgnoreCase("no"))
+            return "server didnt allow you to buy this item";
+        else if (message.getData().trim().equalsIgnoreCase("ok")) {
+            this.collection.addItemToCollection(item);
+            this.collection.changeDaric(-item.getPrice());
+            return "item successfully added";
+        }
+        return "something wrong happen";
     }
 
     public String sell(String cardName) {
@@ -94,6 +111,7 @@ public class Shop implements Serializable {
             return "you dont have this card\\item";
 
         if (returnCardFromCollection(cardName) != null) {
+            Client.send(new Message("sell card " + cardName));
             Card card = returnCardFromCollection(cardName);
             this.collection.changeDaric(card.getPrice());
             this.collection.removeCard(card);
@@ -101,6 +119,7 @@ public class Shop implements Serializable {
         }
 
         Item item = returnItemFromCollection(cardName);
+        Client.send(new Message("sell item " + cardName));
         this.collection.changeDaric(item.getPrice());
         this.collection.getItems().remove(item);
         return "item successfully sell";

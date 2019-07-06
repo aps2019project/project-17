@@ -169,7 +169,7 @@ public class Main extends Application {
     public void stop() throws Exception {
        // Client.closeSocket();
         Client.send(new Message("disconnect"));
-        Client.getReaderWriter().getReader().setConditionFalse();
+//        Client.getReaderWriter().getReader().setConditionFalse();
         System.out.println("CLOSE REQUEST");
        // System.exit(0);
 //        window.close();
@@ -283,9 +283,10 @@ public class Main extends Application {
         String username = enterUserName.getText();
         String passWord = enterPassWord.getText();
 
-        String result = Account.login(username, passWord);
+        String result = GameController.login(username, passWord);
         System.out.println(result);
         if (result.contains("login successfully done")) {
+            Account.setLoginUser(new Account(username, passWord));
             new MainMenu();
             return;
         }

@@ -12,11 +12,13 @@ import Data.*;
 import Effects.Effect;
 import GameGround.*;
 import InstanceMaker.CardMaker;
+import com.google.gson.Gson;
 import view.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static Data.Account.setLoginUser;
 import static Data.MODE.*;
 
 public class GameController {
@@ -65,7 +67,20 @@ public class GameController {
     }
 
     public static String login(String userName, String passWord) {
-        return Account.login(userName, passWord);
+        Client.send(new Message("login " + userName + " " + passWord));
+        try {
+            Gson gson = new Gson();
+            Account account = gson.fromJson(Client.get().toString(), Account.class);
+            if (account == null) {
+                System.err.println("account equal to null");
+                return "invalid";
+            }
+            setLoginUser(account);
+            return "login successfully done :) Enjoy the game";
+        } catch (Exception e) {
+            Object message = Client.get();
+            return "invalid";
+        }
     }
 
     public static boolean checkForValidUserName(String userName) {
