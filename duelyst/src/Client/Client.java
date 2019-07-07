@@ -13,6 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Client implements Runnable {
     private static BlockingQueue<Object> commands = new LinkedBlockingQueue<>();
     private static BlockingQueue<Object> processedCommands = new LinkedBlockingQueue<>();
+    private static BlockingQueue<ChatDetail> chatDetails = new LinkedBlockingQueue<>();
     private static SocketDetail socketDetail;
     private static ReaderWriter readerWriter;
 
@@ -102,5 +103,9 @@ public class Client implements Runnable {
         Message message = gson.fromJson(object.toString(), Message.class);
         Account[] accounts = gson.fromJson(message.toString(), Account[].class);
         return new ArrayList<>(Arrays.asList(accounts));
+    }
+
+    public static BlockingQueue<ChatDetail> getChatDetails() {
+        return chatDetails;
     }
 }

@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import static Client.Client.getChatDetails;
 import static Client.Client.getCommands;
 
 public class Reader implements Runnable {
@@ -21,15 +24,21 @@ public class Reader implements Runnable {
             String data = (String) socketDetail.objectInputStream.readObject();
             System.err.println("read " + data);
             Message message = gson.fromJson(data, Message.class);
+            Pattern patternForChat = Pattern.compile("sender: (?<sender>\\w+) (?<message>\\w+)");
+            Matcher matcherForChat = patternForChat.matcher(message.getData());
+            if (matcherForChat.matches()) {
+                ChatDetail chatDetail = new ChatDetail(matcherForChat.group("message"), matcherForChat.group("sender"));
+                getChatDetails().put(chatDetail);
+                return;
+            }
             getCommands().put(message);
-        }catch (EOFException e) {
+        } catch (EOFException e) {
             try {
                 socketDetail.socket.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
-        catch (IOException | ClassNotFoundException | InterruptedException e) {
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
     }
