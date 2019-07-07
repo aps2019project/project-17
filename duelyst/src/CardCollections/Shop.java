@@ -20,6 +20,7 @@ public class Shop implements Serializable {
     }
 
     public String search(String cardName) {
+        this.collection = Account.getLoginUser().getCollection();
         if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
             return "there is not any card\\item in shop with this name";
 
@@ -65,6 +66,7 @@ public class Shop implements Serializable {
 
 
     public String buy(String cardName) {
+        this.collection = Account.getLoginUser().getCollection();
         if (returnCardFromShop(cardName) == null && returnItemFromShop(cardName) == null)
             return "this card\\item doesnt exist in shop";
 
@@ -82,6 +84,7 @@ public class Shop implements Serializable {
             else if (message.getData().trim().equalsIgnoreCase("ok")) {
                 this.collection.addCardToCollection(card);
                 this.collection.changeDaric(-card.getPrice());
+                System.err.println("ITS OK ...");
                 return "card successfully added";
             }
             return "something wrong happen";
@@ -107,6 +110,7 @@ public class Shop implements Serializable {
     }
 
     public String sell(String cardName) {
+        this.collection = Account.getLoginUser().getCollection();
         if (returnItemFromCollection(cardName) == null && returnCardFromCollection(cardName) == null)
             return "you dont have this card\\item";
 
@@ -126,6 +130,7 @@ public class Shop implements Serializable {
     }
 
     public ArrayList<Item> getItemsInShop() {
+        this.collection = Account.getLoginUser().getCollection();
         ArrayList<Item> items = new ArrayList<>();
         Item[] totalItems = CardMaker.getAllItems();
         for (Item totalItem : totalItems) {
@@ -136,6 +141,7 @@ public class Shop implements Serializable {
     }
 
     private Card returnCardFromShop(String cardName) {
+        this.collection = Account.getLoginUser().getCollection();
         ArrayList<Card> cards = new ArrayList<>(Arrays.asList(CardMaker.getAllCards()));
         Card card = Account.getLoginUser().getCollection().findCard(cardName.trim());
         if (card != null)
@@ -147,6 +153,7 @@ public class Shop implements Serializable {
     }
 
     private Item returnItemFromShop(String itemName) {
+        this.collection = Account.getLoginUser().getCollection();
         if (Account.getLoginUser().getCollection().findItem(itemName) != null)
             return null;
         ArrayList<Item> items = new ArrayList<>(Arrays.asList(CardMaker.getAllItems()));
@@ -157,6 +164,7 @@ public class Shop implements Serializable {
     }
 
     private Card returnCardFromCollection(String cardName) {
+        this.collection = Account.getLoginUser().getCollection();
         for (int i = 0; i < this.collection.getCards().size(); i++) {
             Card card = this.collection.getCards().get(i);
 
@@ -169,6 +177,7 @@ public class Shop implements Serializable {
     }
 
     private Item returnItemFromCollection(String itemName) {
+        this.collection = Account.getLoginUser().getCollection();
         for (int i = 0; i < this.collection.getItems().size(); i++) {
             Item item = this.collection.getItems().get(i);
 
@@ -179,6 +188,7 @@ public class Shop implements Serializable {
     }
 
     public ArrayList<Hero> getShopHeroes() {
+        this.collection = Account.getLoginUser().getCollection();
         ArrayList<Hero> shopHeroes = new ArrayList<>();
         for (Card card : CardMaker.getHeroes()) {
             if (card instanceof Hero && returnCardFromCollection(card.getName().trim().toLowerCase()) == null) {
@@ -201,6 +211,7 @@ public class Shop implements Serializable {
     }
 
     public ArrayList<Spell> getShopSpells() {
+        this.collection = Account.getLoginUser().getCollection();
         ArrayList<Spell> shopSpells = new ArrayList<>();
         for (Card card : CardMaker.getSpells()) {
             if (card instanceof Spell && returnCardFromCollection(card.getName().trim().toLowerCase()) == null) {
@@ -214,4 +225,8 @@ public class Shop implements Serializable {
         CardMaker.creation();
     }
 
+    public Collection getCollection() {
+        this.collection = Account.getLoginUser().getCollection();
+        return collection;
+    }
 }

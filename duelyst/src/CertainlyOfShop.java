@@ -82,6 +82,7 @@ public class CertainlyOfShop {
     }
 
     private static void buy(String cardName, VBox root) {
+        System.out.println("entered the func");
         String result = Account.getLoginUser().getShop().buy(cardName);
         System.out.println(result);
         label.setText(result);

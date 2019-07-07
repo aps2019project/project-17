@@ -3,9 +3,10 @@ package Cards;
 import Effects.Effect;
 import GameGround.Battle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Spell extends Card {
+public class Spell extends Card{
     private int manaPoint;
     private ArrayList<Effect> effects = new ArrayList<>();
 

@@ -284,16 +284,16 @@ public class Main extends Application {
         String result = GameController.login(username, passWord);
         System.out.println(result);
         if (result.contains("login successfully done")) {
-            Account.setLoginUser(new Account(username, passWord));
             new MainMenu();
             return;
         }
-        if (result.contains("your password is wrong")) {
+        if (result.trim().contains("your password is wrong")) {
             invalidPassWord.setText("password is wrong!");
             invalidPassWord.setFill(Color.RED);
             invalidPassWord.setVisible(true);
             return;
         }
+        invalidUserName.setText(result);
         invalidUserName.setVisible(true);
     }
 

@@ -1,4 +1,6 @@
 import Appearance.ColorAppearance;
+import Cards.Minion;
+import Client.*;
 import Data.Account;
 import Data.Save;
 import javafx.geometry.Insets;
@@ -27,7 +29,7 @@ class MainMenu {
     private Text exitTxt = new Text("Exit");
     private Scene sceneMainMenu;
     private ImageView imageViewBG;
-    private ImageView  save;
+    private ImageView save;
     private VBox saveBox;
 
     MainMenu() {
@@ -39,20 +41,20 @@ class MainMenu {
         display();
     }
 
-    private void initializeSaveVBox(){
+    private void initializeSaveVBox() {
         try {
-            Image saveImage=new Image(new FileInputStream("save.png"));
-            save=new ImageView(saveImage);
+            Image saveImage = new Image(new FileInputStream("save.png"));
+            save = new ImageView(saveImage);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         save.setOpacity(0.9);
         save.setFitWidth(70);
         save.setFitHeight(70);
-        Text saveTxt=new Text("Save");
-        saveTxt.setFont(Font.font("Phosphate",10));
+        Text saveTxt = new Text("Save");
+        saveTxt.setFont(Font.font("Phosphate", 10));
         saveTxt.setFill(Color.WHITE);
-        saveBox=new VBox(save,saveTxt);
+        saveBox = new VBox(save, saveTxt);
         saveBox.setAlignment(Pos.CENTER);
         saveBox.setSpacing(Main.HEIGHT_OF_WINDOW / 200);
         saveBox.setAlignment(Pos.CENTER);
@@ -66,7 +68,7 @@ class MainMenu {
             imageViewBG.fitWidthProperty().bind(sceneMainMenu.widthProperty());
             imageViewBG.fitHeightProperty().bind(sceneMainMenu.heightProperty());
             root.getChildren().add(imageViewBG);
-            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt,customCardTxt, logoutText,exitTxt,saveBox);
+            root.getChildren().addAll(battleTxt, shopTxt, collectionTxt, customCardTxt, logoutText, exitTxt, saveBox);
             root.setAlignment(Pos.BASELINE_LEFT);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -81,7 +83,7 @@ class MainMenu {
         VBox.setMargin(logoutText, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(customCardTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.5));
         VBox.setMargin(exitTxt, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 4.54));
-        VBox.setMargin(saveBox,new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 1.1));
+        VBox.setMargin(saveBox, new Insets(Main.HEIGHT_OF_WINDOW / 83.4, 0, Main.HEIGHT_OF_WINDOW / 83.4, Main.WIDTH_OF_WINDOW / 1.1));
     }
 
     private void setFont() {
@@ -133,8 +135,8 @@ class MainMenu {
         customCardTxt.setOnMouseEntered(e -> customCardTxt.setFill(ColorAppearance.CURRENT_MENU_BUTTON));
         customCardTxt.setOnMouseExited(e -> customCardTxt.setFill(Color.WHITE));
 
-        save.setOnMouseEntered(e->save.setOpacity(1));
-        save.setOnMouseExited(e->save.setOpacity(0.9));
+        save.setOnMouseEntered(e -> save.setOpacity(1));
+        save.setOnMouseExited(e -> save.setOpacity(0.9));
         save.setOnMouseClicked(event -> Save.saveAccount(Account.getLoginUser()));
     }
 
@@ -149,12 +151,18 @@ class MainMenu {
         });
 
         logoutText.setOnMouseClicked(e -> {
+            Client.send(new Message("logout"));
             Account.logout();
             Main.emptyFields();
             Main.backToMainMenu();
         });
 
-        shopTxt.setOnMouseClicked(e -> new ShopAppearance());
+        shopTxt.setOnMouseClicked(e -> {
+            new ShopAppearance();
+            for (int i = 0; i < Account.getLoginUser().getShop().getCollection().getCards().size(); i++) {
+                System.out.println(Account.getLoginUser().getShop().getCollection().getCards().get(i).getName());
+            }
+        });
 
         exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
 

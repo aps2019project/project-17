@@ -5,6 +5,7 @@ import Effects.MinionEffects.ChangeProperties;
 import Effects.enums.*;
 import GameGround.Battle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Minion extends Card {

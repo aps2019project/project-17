@@ -316,4 +316,9 @@ public class Collection implements Serializable {
         }
         return validDecks;
     }
+
+    public void updateCollectionFromServer(ArrayList<Card> cards) {
+        this.cards = new ArrayList<>();
+        for (Card card : cards) this.cards.add(CardMaker.getCardByName(card.getName()));
+    }
 }

@@ -3,11 +3,13 @@ package Cards;
 import Effects.enums.AttackType;
 import Effects.enums.MinionType;
 
+import java.io.Serializable;
+
 public class Hero extends Minion {
     private int coolDown;
 
-    public Hero(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType, int coolDown,String desc) {
-        super(name, id, price, manaPoint, healthPoint, attackPower, minionType, attackRange, distanceCanMove, maxRangeToInput, attackType,desc);
+    public Hero(String name, String id, int price, int manaPoint, int healthPoint, int attackPower, MinionType minionType, int attackRange, int distanceCanMove, int maxRangeToInput, AttackType attackType, int coolDown, String desc) {
+        super(name, id, price, manaPoint, healthPoint, attackPower, minionType, attackRange, distanceCanMove, maxRangeToInput, attackType, desc);
         this.coolDown = coolDown;
     }
 
@@ -25,7 +27,7 @@ public class Hero extends Minion {
     }
 
     public static Hero heroCopy(Hero hero, int coolDown) {
-        Hero hero1 = new Hero(hero.name, hero.id, hero.price, hero.getManaPoint(), hero.healthPoint ,hero.attackPoint, hero.getMinionType(), hero.getAttackRange(), hero.getDistanceCanMove(), hero.getMaxRangeToInput(), hero.getAttackType(), hero.coolDown, hero.desc);
+        Hero hero1 = new Hero(hero.name, hero.id, hero.price, hero.getManaPoint(), hero.healthPoint, hero.attackPoint, hero.getMinionType(), hero.getAttackRange(), hero.getDistanceCanMove(), hero.getMaxRangeToInput(), hero.getAttackType(), hero.coolDown, hero.desc);
         hero1.coolDown = coolDown;
         return hero1;
     }

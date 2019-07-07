@@ -373,6 +373,12 @@ public class CardMaker {
         return "-1";
     }
 
-
+    public static Card getCardByName(String name) {
+        for (Card card : getAllCards()) {
+            if (card.getName().trim().equalsIgnoreCase(name))
+                return card;
+        }
+        return null;
+    }
 }
 

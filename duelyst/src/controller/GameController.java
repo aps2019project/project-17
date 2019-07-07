@@ -68,9 +68,10 @@ public class GameController {
 
     public static String login(String userName, String passWord) {
         Client.send(new Message("login " + userName + " " + passWord));
+        Object object = Client.get();
         try {
             Gson gson = new Gson();
-            Message message = gson.fromJson(Client.get().toString(), Message.class);
+            Message message = gson.fromJson(object.toString(), Message.class);
             Account account = gson.fromJson(message.toString(), Account.class);
             if (account == null || account.getUserName() == null || !(account.getUserName().trim().equalsIgnoreCase(userName) && account.getPassWord().trim().equalsIgnoreCase(passWord))) {
                 System.err.println("account equal to null");
@@ -79,7 +80,9 @@ public class GameController {
             setLoginUser(account);
             return "login successfully done :) Enjoy the game";
         } catch (Exception e) {
-            Message message = (Message) Client.get();
+            Gson gson = new Gson();
+            Message message = gson.fromJson(object.toString(), Message.class);
+            System.out.println(message.getData());
             return message.toString();
         }
     }

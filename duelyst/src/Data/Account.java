@@ -36,6 +36,7 @@ public class Account implements Comparable<Account>, Serializable {
 
     public static void setLoginUser(Account loginUser) {
         Account.loginUser = loginUser;
+        loginUser.collection.updateCollectionFromServer(loginUser.getCollection().getCards());
     }
 
     public static String addUser(String userName, String passWord) {
