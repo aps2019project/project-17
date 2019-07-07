@@ -10,7 +10,7 @@ public class ConnectionDetail {
     public static String IP = "localhost";
     static {
         try {
-            FileReader fileReader = new FileReader("C:\\Users\\Kimia\\Desktop\\DeskTop\\Server\\connection.config");
+            FileReader fileReader = new FileReader("connection.config");
             StringBuilder stringBuilder = new StringBuilder();
             int c;
             while ((c = fileReader.read()) != -1)
