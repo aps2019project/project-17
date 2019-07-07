@@ -1,8 +1,10 @@
 package CardCollections;
 
 import Cards.*;
+import Client.*;
 import Data.Account;
 import InstanceMaker.CardMaker;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -83,17 +85,23 @@ public class Collection implements Serializable {
     public String createDeck(String deckName) {
         for (Deck deck1 : decks) {
             if (deck1.getName().equals(deckName)) {
-                return "this deck name already exist! Please try again with another deckName.";
+                return "this deck name already exist! Please try again with another deckName";
             }
         }
-        Deck deck = new Deck(deckName);
-        decks.add(deck);
+        Client.send(new Message("create deck " + deckName.trim()));
+        Gson gson = new Gson();
+        Object object = Client.get();
+        Message message = gson.fromJson(object.toString(), Message.class);
+        Deck deck = gson.fromJson(message.toString(), Deck.class);
+        if (deck.getName().trim().equals(deckName))
+            decks.add(deck);
         return "deck Successfully created";
     }
 
     public String deleteDeck(String deckName) {
         Deck garbageDeck = findDeck(deckName);
         if (garbageDeck != null) {
+            Client.send(new Message("delete deck " + deckName));
             decks.remove(garbageDeck);
             return "Deck Successfully deleted";
         }
