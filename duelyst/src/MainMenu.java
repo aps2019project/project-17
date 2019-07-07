@@ -164,7 +164,10 @@ class MainMenu {
             }
         });
 
-        exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
+//        exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
+
+
+        exitTxt.setOnMouseClicked(e -> new ChatRoom());
 
         customCardTxt.setOnMouseClicked(e -> CustomCardPreview.disPlay());
 
