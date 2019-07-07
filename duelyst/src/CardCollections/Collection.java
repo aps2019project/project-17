@@ -127,6 +127,7 @@ public class Collection implements Serializable {
             }
             if (!deckCardsHasStorage(deckName))
                 return "deck Card storage is full";
+            Client.send(new Message("add to deck " + deckName + " " + card.getName()));
             deck.addCard(card);
             return "card successfully add";
         }
@@ -151,6 +152,7 @@ public class Collection implements Serializable {
             if (card instanceof Hero) {
                 if (card.getName().equals(deck.getHero().getName())) {
                     deck.setHero(null);
+                    Client.send(new Message("remove from deck " + deckName + " " + card.getName()));
                     return "removing this hero from deck successfully done";
                 }
                 return "this deck doesnt have this card";
@@ -158,6 +160,7 @@ public class Collection implements Serializable {
             if (!isCardInDeck(cardID, deckName))
                 return "card does not exist in this deck";
             deck.getCards().remove(card);
+            Client.send(new Message("remove from deck " + deckName + " " + card.getName()));
             return "card successfully removed from deck";
         }
 
