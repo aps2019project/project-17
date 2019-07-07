@@ -1,3 +1,4 @@
+import Client.Client;
 import Data.Account;
 import controller.GameController;
 import javafx.collections.FXCollections;
@@ -31,15 +32,33 @@ class LeaderBoardWindow {
         column3.setCellValueFactory(new PropertyValueFactory<>("numOfLose"));
         column3.setMinWidth(100);
 
+        TableColumn<Account,Integer> column4 = new TableColumn<>("Money");
+        column4.setCellValueFactory(new PropertyValueFactory<>("daric"));
+        column4.setMinWidth(100);
+
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
         tableView.getColumns().add(column3);
+        tableView.getColumns().add(column4);
 
-        tableView.setItems(getAllAccounts());
+//        tableView.setItems(getAllAccounts());
+
+        new Thread(() -> {
+            while (true) {
+                tableView.refresh();
+                tableView.setItems(getAllAccounts());
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
 
         VBox vbox = new VBox(tableView);
 
-        Scene scene = new Scene(vbox, 300, 300);
+        Scene scene = new Scene(vbox, 400, 400);
         Stage window = new Stage();
         window.setTitle("LeaderBoard");
         window.setScene(scene);
@@ -48,7 +67,7 @@ class LeaderBoardWindow {
     }
 
     private ObservableList<Account> getAllAccounts() {
-        return FXCollections.observableArrayList(GameController.getAccounts());
+        return FXCollections.observableArrayList(Client.getAllAccountsFromServer());
 
     }
 }
