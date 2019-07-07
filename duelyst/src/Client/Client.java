@@ -1,7 +1,12 @@
 package Client;
 
+import Data.Account;
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -88,5 +93,14 @@ public class Client implements Runnable {
 
     public static ReaderWriter getReaderWriter() {
         return readerWriter;
+    }
+
+    public static ArrayList<Account> getAllAccountsFromServer() {
+        Client.send(new Message("leader board"));
+        Gson gson = new Gson();
+        Object object = Client.get();
+        Message message = gson.fromJson(object.toString(), Message.class);
+        Account[] accounts = gson.fromJson(message.toString(), Account[].class);
+        return new ArrayList<>(Arrays.asList(accounts));
     }
 }
