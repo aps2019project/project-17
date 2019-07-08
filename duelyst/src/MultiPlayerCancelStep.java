@@ -57,6 +57,7 @@ public class MultiPlayerCancelStep {
             Message message = gson.fromJson(object.toString(), Message.class);
             if (message.getData().equals("ok")) {
                 new MainMenu();
+
             } else {
                 new ShopAppearance();
             }
