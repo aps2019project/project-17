@@ -33,4 +33,5 @@ public class FontAppearance {
     public static final Font FONT_INFORMATION_ITEM = Font.font("Phosphate", 10);
     public static final Font FONT_SHOWING_TURN = Font.font("Phosphate", 30);
     public static final Font FONT_ENDING_GAME = Font.font("Phosphate", 65);
+    public static final Font FONT_MULTIPLAYER = Font.font("Phosphate", 70);
 }
