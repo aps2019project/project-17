@@ -260,6 +260,7 @@ class ShopAppearance {
         handleEventsKeyBoards();
         handleEventsCards();
         handleEventBack();
+
     }
 
     private void handleEventsSearch() {
@@ -315,6 +316,8 @@ class ShopAppearance {
                 changeCards();
             } else if (event.getCode().equals(KeyCode.ESCAPE)) {
                 new MainMenu();
+            } else if (event.getCode().equals(KeyCode.F1)) {
+                new OnlineTable();
             }
         });
     }

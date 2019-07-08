@@ -4,6 +4,7 @@ import Client.Client;
 import Data.Account;
 import controller.GameController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
@@ -12,6 +13,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -163,6 +166,7 @@ public class Main extends Application {
     private static void handleEvents() {
         handleMouse();
         handleClick();
+        handleKeyPressed();
     }
 
     @Override
@@ -171,6 +175,14 @@ public class Main extends Application {
         Client.send(new Message("disconnect"));
         Client.getReaderWriter().getReader().setConditionFalse();
         System.exit(0);
+    }
+
+    private static void handleKeyPressed(){
+        sceneFirstMenu.setOnKeyPressed(event -> {
+            if(event.getCode()== KeyCode.F1){
+                new OnlineTable();
+            }
+        });
     }
 
     private static void handleMouse() {

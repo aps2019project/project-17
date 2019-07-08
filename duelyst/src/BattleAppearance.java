@@ -399,6 +399,8 @@ public class BattleAppearance {
                 Battle.setCurrentBattleNull();
                 currentBattleAppearance = null;
                 new MainMenu();
+            }else if (e.getCode() == KeyCode.F1) {
+                new OnlineTable();
             }
         });
     }
@@ -410,6 +412,8 @@ public class BattleAppearance {
         textsOfBattle[6].setOnMouseClicked(event -> new GraveYardAppearance());
 
         graveYardButton.setOnMouseClicked(event -> new GraveYardAppearance());
+
+
     }
 
     private void endTurnLogic() {

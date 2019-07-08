@@ -39,6 +39,9 @@ class MainMenu {
         setFont();
         setMouse();
         display();
+//        for (Account account : Client.onlineAccounts()) {
+//            System.out.println(account.getUserName());
+//        }
     }
 
     private void initializeSaveVBox() {
@@ -177,6 +180,13 @@ class MainMenu {
             if (!Account.getLoginUser().getPlayer().isPlayerReadyForBattle())
                 CheckValidationDeckAppearance.disPlay();
             else StartingBattleAppearance.disPlay();
+        });
+
+
+        sceneMainMenu.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.F1) {
+                new OnlineTable();
+            }
         });
     }
 }

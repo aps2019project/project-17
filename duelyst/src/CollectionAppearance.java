@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -44,7 +45,7 @@ public class CollectionAppearance {
             deleteDeckIcon = new ImageView(new Image(new FileInputStream("minus.png")));
             selectDeckIcon = new ImageView(new Image(new FileInputStream("add.png")));
             backIcon = new ImageView(new Image(new FileInputStream("icon.png")));
-            importIcon=new ImageView(new Image(new FileInputStream("import.png")));
+            importIcon = new ImageView(new Image(new FileInputStream("import.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -135,7 +136,7 @@ public class CollectionAppearance {
         //import Icon
         importIcon.setOnMouseEntered(event -> importIcon.setOpacity(1));
         importIcon.setOnMouseExited(event -> importIcon.setOpacity(0.5));
-        importIcon.setOnMouseClicked(event->ImportExportDeckWindow.display());
+        importIcon.setOnMouseClicked(event -> ImportExportDeckWindow.display());
     }
 
     private void setBackGround() {
@@ -181,7 +182,7 @@ public class CollectionAppearance {
                     continue;
                 root.getChildren().add(rectangle);
             }
-        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon, myDecks, backIcon,importIcon);
+        root.getChildren().addAll(rightDirection, leftDirection, currentPageView, createDeckIcon, deleteDeckIcon, selectDeckIcon, myDecks, backIcon, importIcon);
     }
 
     private void locateNodes() {
@@ -223,10 +224,10 @@ public class CollectionAppearance {
         backIcon.setOpacity(0.5);
 
         //import icon
-        importIcon.setLayoutX(fillMenu.getWidth()/3);
-        importIcon.setLayoutY(fillMenu.getHeight()/6);
-        importIcon.setFitWidth(fillMenu.getWidth()/4);
-        importIcon.setFitHeight(fillMenu.getWidth()/4);
+        importIcon.setLayoutX(fillMenu.getWidth() / 3);
+        importIcon.setLayoutY(fillMenu.getHeight() / 6);
+        importIcon.setFitWidth(fillMenu.getWidth() / 4);
+        importIcon.setFitHeight(fillMenu.getWidth() / 4);
         importIcon.setOpacity(0.5);
     }
 
@@ -281,6 +282,7 @@ public class CollectionAppearance {
     private void disPlay() {
         Main.getWindow().setScene(collectionScene);
         handleEventsKeyBoards();
+
     }
 
     private void handleEventsKeyBoards() {
@@ -300,6 +302,8 @@ public class CollectionAppearance {
                     break;
                 case ESCAPE:
                     new MainMenu();
+                case F1:
+                    new OnlineTable();
             }
         });
         rightDirection.setOnMouseClicked(e -> {

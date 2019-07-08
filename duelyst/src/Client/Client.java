@@ -108,4 +108,13 @@ public class Client implements Runnable {
     public static BlockingQueue<ChatDetail> getChatDetails() {
         return chatDetails;
     }
+
+    public static ArrayList<Account> onlineAccounts() {
+        send(new Message("online users"));
+        Gson gson = new Gson();
+        Object object = get();
+        Message message = gson.fromJson(object.toString(), Message.class);
+        Account[] accounts = gson.fromJson(message.getData(), Account[].class);
+        return new ArrayList<>(Arrays.asList(accounts));
+    }
 }
