@@ -6,12 +6,15 @@ import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -151,6 +154,13 @@ public class MinionAppearance {
     }
 
     public void move(double deltaX, double deltaY) {
+        try {
+            Media media = new Media(Paths.get("run.m4a").toUri().toString());
+            MediaPlayer player = new MediaPlayer(media);
+            player.play();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         int duration = 100 * runCount;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapRun);
         Timeline timeline = new Timeline();
@@ -177,6 +187,13 @@ public class MinionAppearance {
     }
 
     public synchronized int attack() {
+        try {
+            Media media = new Media(Paths.get("attack.m4a").toUri().toString());
+            MediaPlayer player = new MediaPlayer(media);
+            player.play();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         int duration = attackCount * 100;
         Animation animation = new SpriteAnimation(imageView, Duration.millis(duration), width, height, mapAttack);
         animation.setCycleCount(1);

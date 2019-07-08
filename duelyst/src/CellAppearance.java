@@ -10,12 +10,15 @@ import GameGround.Cell;
 import controller.GameController;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.Random;
 
 public class CellAppearance {
@@ -190,6 +193,13 @@ public class CellAppearance {
     }
 
     private void insertCard() throws ExceptionEndGame {
+        try {
+            Media media = new Media(Paths.get("insert.m4a").toUri().toString());
+            MediaPlayer player = new MediaPlayer(media);
+            player.play();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Card card = BattleAppearance.getCurrentBattleAppearance().getHandAppearance().getSelectedCard();
         String result = Battle.getCurrentBattle().insertingCardFromHand(card.getName().toLowerCase().trim(), cell.getRow() + 1, cell.getCol() + 1);
         System.out.println(result);

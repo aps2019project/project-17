@@ -2,6 +2,7 @@ import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Client.Client;
 import Data.Account;
+import com.sun.media.jfxmedia.effects.AudioSpectrum;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -16,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -23,9 +26,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import Client.*;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -151,6 +159,14 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 //        GameController.main();
+            try {
+                Media media = new Media(Paths.get("music.m4a").toUri().toString());
+                MediaPlayer player = new MediaPlayer(media);
+                player.play();
+                player.setCycleCount(-1);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         new Thread(new Client()).start();
         launch(args);
     }
