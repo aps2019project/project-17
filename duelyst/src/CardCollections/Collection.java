@@ -1,11 +1,15 @@
 package CardCollections;
 
 import Cards.*;
+import Client.*;
 import Data.Account;
+import Effects.MinionEffects.Clear;
 import InstanceMaker.CardMaker;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Collection implements Serializable {
     private ArrayList<Card> cards;
@@ -51,10 +55,10 @@ public class Collection implements Serializable {
 
     public Card findCard(String cardNameID) {
         for (Card card : cards) {
-            if (card.getName().equals(cardNameID))
+            if (card.getName().equals(cardNameID.trim()))
                 return card;
 
-            if (card.getId().equals(cardNameID))
+            if (card.getId().equals(cardNameID.trim()))
                 return card;
         }
         return null;
@@ -83,17 +87,23 @@ public class Collection implements Serializable {
     public String createDeck(String deckName) {
         for (Deck deck1 : decks) {
             if (deck1.getName().equals(deckName)) {
-                return "this deck name already exist! Please try again with another deckName.";
+                return "this deck name already exist! Please try again with another deckName";
             }
         }
-        Deck deck = new Deck(deckName);
-        decks.add(deck);
+        Client.send(new Message("create deck " + deckName.trim()));
+        Gson gson = new Gson();
+        Object object = Client.get();
+        Message message = gson.fromJson(object.toString(), Message.class);
+        Deck deck = gson.fromJson(message.toString(), Deck.class);
+        if (deck.getName().trim().equals(deckName))
+            decks.add(deck);
         return "deck Successfully created";
     }
 
     public String deleteDeck(String deckName) {
         Deck garbageDeck = findDeck(deckName);
         if (garbageDeck != null) {
+            Client.send(new Message("delete deck " + deckName));
             decks.remove(garbageDeck);
             return "Deck Successfully deleted";
         }
@@ -115,16 +125,19 @@ public class Collection implements Serializable {
                 if (deckHasHero(deckName))
                     return "deck already has hero";
                 deck.setHero((Hero) card);
+                Client.send(new Message("add to deck " + deckName + " " + card.getName()));
                 return "hero successfully add";
             }
             if (!deckCardsHasStorage(deckName))
                 return "deck Card storage is full";
+            Client.send(new Message("add to deck " + deckName + " " + card.getName()));
             deck.addCard(card);
             return "card successfully add";
         }
         if (deckHasItem(deckName))
             return "deck already has item";
         deck.setItem(item);
+        Client.send(new Message("add item to deck " + deckName + " " + item.getName().trim()));
         return "item successfully add";
     }
 
@@ -141,7 +154,8 @@ public class Collection implements Serializable {
 
         if (card != null) {
             if (card instanceof Hero) {
-                if (card.getName().equals(deck.getHero().getName())) {
+                if (card.getName().equals(deck.getHero().getName().trim())) {
+                    Client.send(new Message("remove from deck " + deckName + " " + card.getName().trim()));
                     deck.setHero(null);
                     return "removing this hero from deck successfully done";
                 }
@@ -149,12 +163,15 @@ public class Collection implements Serializable {
             }
             if (!isCardInDeck(cardID, deckName))
                 return "card does not exist in this deck";
+            System.out.println(deck.getCards().contains(card));
             deck.getCards().remove(card);
+            Client.send(new Message("remove from deck " + deckName + " " + card.getName()));
             return "card successfully removed from deck";
         }
 
         if (item.getName().equals(deck.getItem().getName())) {
             deck.setItem(null);
+            Client.send(new Message("remove item from deck " + deckName.trim() + " " + item.getName().trim()));
             return "deck item successfully removed";
         }
 
@@ -176,8 +193,9 @@ public class Collection implements Serializable {
     public String setMainDeck(String deckName) {
         if (findDeck(deckName) == null)
             return "cant find deck with this name";
-        this.mainDeck = findDeck(deckName);
-        Account.getLoginUser().getPlayer().setMainDeck(findDeck(deckName));
+        this.mainDeck = findDeck(deckName.trim());
+        Account.getLoginUser().getPlayer().setMainDeck(findDeck(deckName.trim()));
+        Client.send(new Message("set main deck " + deckName.trim()));
         return "main deck successfully choose";
     }
 
@@ -319,6 +337,50 @@ public class Collection implements Serializable {
 
     public void updateCollectionFromServer(ArrayList<Card> cards) {
         this.cards = new ArrayList<>();
-        for (Card card : cards) this.cards.add(CardMaker.getCardByName(card.getName()));
+        for (Card card : cards) this.cards.add(CardMaker.getCardByName(card.getName().trim()));
+    }
+
+    public void updateDecksFromServer(ArrayList<Deck> decks) {
+        if (mainDeck != null) {
+            ArrayList<Hero> heroes = new ArrayList<>();
+            for (int i = 0; i < mainDeck.getCards().size(); i++) {
+                Card card = mainDeck.getCards().get(i);
+                Card card1 = CardMaker.getCardByName(card.getName().trim());
+                if (card1 instanceof Hero) {
+                    heroes.add((Hero) card1);
+                    mainDeck.getCards().remove(i);
+                    i--;
+                }
+            }
+            for (int i = 0; i < mainDeck.getCards().size(); i++) {
+                Card card = CardMaker.getCardByName(mainDeck.getCards().get(i).getName().trim());
+                mainDeck.getCards().remove(i);
+                mainDeck.getCards().add(card);
+            }
+            if (heroes.size() != 0 && heroes.get(0) != null)
+                mainDeck.setHero(heroes.get(0));
+            Account.getLoginUser().getPlayer().setMainDeck(mainDeck);
+        }
+        for (Deck deck : decks) {
+            Deck deck1 = findDeck(deck.getName());
+            ArrayList<Hero> heroes = new ArrayList<>();
+            for (int i = 0; i < deck1.getCards().size(); i++) {
+                Card card = deck1.getCards().get(i);
+                Card card1 = CardMaker.getCardByName(card.getName().trim());
+                if (card1 instanceof Hero) {
+                    heroes.add((Hero) card1);
+                    deck1.getCards().remove(i);
+                    i--;
+                }
+            }
+            for (int i = 0; i < deck1.getCards().size(); i++) {
+                Card card = CardMaker.getCardByName(deck1.getCards().get(i).getName().trim());
+                deck1.getCards().remove(i);
+                deck1.getCards().add(card);
+            }
+            if (heroes.size() != 0 && heroes.get(0) != null)
+                deck1.setHero(heroes.get(0));
+        }
+
     }
 }

@@ -26,11 +26,11 @@ public class Deck implements Serializable {
     private static Deck deckHoldFlag;
     private static Deck deckCaptureFlag;
 
-//    static {
-//        initializeSecondAIHF();
-//        initializeFirstAIKH();
-//        initializeThirdAICF();
-//    }
+    static {
+        initializeSecondAIHF();
+        initializeFirstAIKH();
+        initializeThirdAICF();
+    }
 
     public void setIsValid() {
         if (this.isDeckValidate()) {
@@ -191,6 +191,14 @@ public class Deck implements Serializable {
         if (deck.item != null)
             deckCopy.setItem(deck.item);
         return deckCopy;
+    }
+
+    public ArrayList<Card> getCardsOfDeck() {
+        ArrayList<Card> cards = new ArrayList<>(this.cards);
+//        ArrayList<Card> cards = new ArrayList<>();
+        if (this.hero != null)
+            cards.add(this.hero);
+        return cards;
     }
 
 }

@@ -59,4 +59,14 @@ public class Card implements Serializable {
 
     public void show() {
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            Card card = (Card) obj;
+            return card.getName().trim().equalsIgnoreCase(this.name);
+        }catch (Exception e) {
+            return false;
+        }
+    }
 }
