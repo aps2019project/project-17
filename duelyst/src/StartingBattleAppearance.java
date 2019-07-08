@@ -62,6 +62,10 @@ public class StartingBattleAppearance {
 
     static {
         singlePlayer.setOnMouseClicked(e -> action());
+        multiPlayer.setOnMouseClicked(e -> {
+            closeWindow();
+            new MultiPlayerAppearance();
+        });
         rectangle.setOnMouseClicked(e -> action());
     }
 
