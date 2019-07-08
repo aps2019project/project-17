@@ -304,6 +304,8 @@ public class CollectionAppearance {
                     new MainMenu();
                 case F1:
                     new OnlineTable();
+                case F2:
+                    new OfLineTable();
             }
         });
         rightDirection.setOnMouseClicked(e -> {

@@ -1,4 +1,4 @@
-import Client.*;
+import Client.Client;
 import Data.Account;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,9 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class OnlineTable {
+public class OfLineTable {
 
-    OnlineTable() {
+    public OfLineTable() {
         makeTable();
     }
 
@@ -42,13 +42,13 @@ public class OnlineTable {
 
         Scene scene = new Scene(vbox, 200, 400);
         Stage window = new Stage();
-        window.setTitle("OnlineUsers");
+        window.setTitle("OfLineUsers");
         window.setScene(scene);
-        window.getScene().getStylesheets().add(getClass().getResource("OnlineTable.css").toExternalForm());
+        window.getScene().getStylesheets().add(getClass().getResource("OfLineTable.css").toExternalForm());
         window.showAndWait();
     }
 
     private ObservableList<Account> getAllOnlineUsers() {
-        return FXCollections.observableArrayList(Client.onlineAccounts());
+        return FXCollections.observableArrayList(Client.offlineAccouns());
     }
 }

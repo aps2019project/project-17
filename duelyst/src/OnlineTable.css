@@ -1,0 +1,31 @@
+.root{
+    -fx-background-color: #262626;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: Black;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #15811f;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:even{
+    -fx-background-color: -fx-table-cell-border-color, #2ed63d;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
