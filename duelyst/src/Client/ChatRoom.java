@@ -23,14 +23,13 @@ public class ChatRoom {
     private Stage stage = new Stage();
     private VBox chat = new VBox();
     private Scene chatRoomScene;
-    private static ScrollPane scrollPane = new ScrollPane();
+    private static VBox messagesVBox = new VBox();
     private TextField textField = new TextField();
     private Rectangle sendButton = new Rectangle(100, 20);
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
     private final int HEIGHT_OF_BUTTON = 40;
     private final int WIDTH_OF_BUTTON = 80;
-    private HBox hBox;
 
     public ChatRoom() {
         locateAndAdd();
@@ -42,15 +41,15 @@ public class ChatRoom {
         textField.setMinHeight(HEIGHT_OF_BUTTON);
         sendButton.setWidth(WIDTH_OF_BUTTON);
         sendButton.setHeight(HEIGHT_OF_BUTTON);
-        scrollPane.setMinViewportWidth(WIDTH);
-        scrollPane.setMinViewportHeight(HEIGHT - HEIGHT_OF_BUTTON * 1.5);
+        messagesVBox.setMinWidth(WIDTH);
+        messagesVBox.setMinHeight(HEIGHT - HEIGHT_OF_BUTTON * 1.5);
         try {
             sendButton.setFill(new ImagePattern(new Image(new FileInputStream("send.png"))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        hBox = new HBox(textField, sendButton);
-        chat.getChildren().addAll(scrollPane, hBox);
+        HBox hBox = new HBox(textField, sendButton);
+        chat.getChildren().addAll(messagesVBox, hBox);
         stage.setScene(chatRoomScene);
         chatRoomScene.setOnKeyPressed(event -> {
             Message message = new Message("message " + textField.getText().trim());
@@ -62,24 +61,21 @@ public class ChatRoom {
             textField.clear();
             Client.send(message);
         });
-        Platform.runLater(() -> updateScrollPane());
         stage.showAndWait();
     }
 
     public static void updateScrollPane() {
-        while (true) {
-            try {
-                ChatDetail chatDetail = Client.getChatDetails().take();
-                Label userName = new Label(chatDetail.getSender());
+        Platform.runLater(() -> {
+            for (ChatDetail chatDetail : Client.getChatDetails()) {
+                Label userName = new Label(chatDetail.getSender() + " : ");
                 Text text = new Text(chatDetail.getMessage());
                 text.setFont(FontAppearance.FONT_SHOW_CARD_DATA);
                 userName.setFont(FontAppearance.FONT_SHOW_CARD_DATA);
                 HBox hBox = new HBox(userName, text);
-                scrollPane.setContent(hBox);
-                System.out.println("h13");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                messagesVBox.getChildren().add(hBox);
             }
-        }
+            Client.getChatDetails().clear();
+        });
     }
+
 }
