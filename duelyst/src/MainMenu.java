@@ -1,5 +1,4 @@
 import Appearance.ColorAppearance;
-import Cards.Minion;
 import Client.*;
 import Data.Account;
 import Data.Save;

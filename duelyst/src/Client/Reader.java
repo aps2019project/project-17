@@ -24,7 +24,7 @@ public class Reader implements Runnable {
             String data = (String) socketDetail.objectInputStream.readObject();
             System.err.println("read " + data);
             Message message = gson.fromJson(data, Message.class);
-            Pattern patternForChat = Pattern.compile("sender: (?<sender>\\w+) (?<message>\\w+)");
+            Pattern patternForChat = Pattern.compile("sender: (?<sender>\\w+) message (?<message>\\w+)");
             Matcher matcherForChat = patternForChat.matcher(message.getData());
             if (matcherForChat.matches()) {
                 ChatDetail chatDetail = new ChatDetail(matcherForChat.group("message"), matcherForChat.group("sender"));
