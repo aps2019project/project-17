@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Collection implements Serializable {
     private ArrayList<Card> cards;
@@ -136,6 +137,7 @@ public class Collection implements Serializable {
         if (deckHasItem(deckName))
             return "deck already has item";
         deck.setItem(item);
+        Client.send(new Message("add item to deck " + deckName + " " + item.getName().trim()));
         return "item successfully add";
     }
 
@@ -169,6 +171,7 @@ public class Collection implements Serializable {
 
         if (item.getName().equals(deck.getItem().getName())) {
             deck.setItem(null);
+            Client.send(new Message("remove item from deck " + deckName.trim() + " " + item.getName().trim()));
             return "deck item successfully removed";
         }
 
