@@ -104,6 +104,10 @@ public class Player implements Serializable {
         return mana;
     }
 
+    public void incrementMana(){
+        this.mana+=2;
+    }
+
     public ArrayList<Card> getGraveYard() {
         return this.graveYard;
     }

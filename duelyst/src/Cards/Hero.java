@@ -32,6 +32,14 @@ public class Hero extends Minion {
         return hero1;
     }
 
+    public void incrementHealthPoint(){
+        this.healthPoint+=2;
+    }
+
+    public void decrementHealthPoint(){
+        this.healthPoint-=2;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Hero))

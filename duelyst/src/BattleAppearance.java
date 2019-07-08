@@ -403,6 +403,16 @@ public class BattleAppearance {
                 new OnlineTable();
             } else if (e.getCode() == KeyCode.F2) {
                 new OfLineTable();
+            }else if(e.getCode() == KeyCode.ENTER){//Cheat mode
+                Battle.getCurrentBattle().getPlayerOne().incrementMana();
+                setFlagsItemsAppearance();
+                setManaIconImageLights();
+            }else if(e.getCode() == KeyCode.SPACE){
+                Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().incrementHealthPoint();
+                BattleAppearance.getCurrentBattleAppearance().setShapeOfHealthHeroTexts();
+            }else if(e.getCode() == KeyCode.F3){
+                Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().decrementHealthPoint();
+                BattleAppearance.getCurrentBattleAppearance().setShapeOfHealthHeroTexts();
             }
         });
     }

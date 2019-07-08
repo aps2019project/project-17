@@ -143,6 +143,7 @@ public class Deck implements Serializable {
         return hero;
     }
 
+
     public void setHero(Hero hero) {
         this.hero = hero;
     }
