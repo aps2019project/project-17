@@ -193,4 +193,12 @@ public class Deck implements Serializable {
         return deckCopy;
     }
 
+    public ArrayList<Card> getCardsOfDeck() {
+        ArrayList<Card> cards = new ArrayList<>(this.cards);
+//        ArrayList<Card> cards = new ArrayList<>();
+        if (this.hero != null)
+            cards.add(this.hero);
+        return cards;
+    }
+
 }

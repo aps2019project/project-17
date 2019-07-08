@@ -66,7 +66,7 @@ public class DeckCardsTable {
 
     private ObservableList<Card> getAllCards(String deckName) {
         Deck deck= Account.getLoginUser().getCollection().findDeck(deckName);
-        return FXCollections.observableArrayList(deck.getCards());
+        return FXCollections.observableArrayList(deck.getCardsOfDeck());
     }
 
 }

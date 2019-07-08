@@ -3,6 +3,7 @@ package CardCollections;
 import Cards.*;
 import Client.*;
 import Data.Account;
+import Effects.MinionEffects.Clear;
 import InstanceMaker.CardMaker;
 import com.google.gson.Gson;
 
@@ -53,10 +54,10 @@ public class Collection implements Serializable {
 
     public Card findCard(String cardNameID) {
         for (Card card : cards) {
-            if (card.getName().equals(cardNameID))
+            if (card.getName().equals(cardNameID.trim()))
                 return card;
 
-            if (card.getId().equals(cardNameID))
+            if (card.getId().equals(cardNameID.trim()))
                 return card;
         }
         return null;
@@ -123,6 +124,7 @@ public class Collection implements Serializable {
                 if (deckHasHero(deckName))
                     return "deck already has hero";
                 deck.setHero((Hero) card);
+                Client.send(new Message("add to deck " + deckName + " " + card.getName()));
                 return "hero successfully add";
             }
             if (!deckCardsHasStorage(deckName))
@@ -150,15 +152,16 @@ public class Collection implements Serializable {
 
         if (card != null) {
             if (card instanceof Hero) {
-                if (card.getName().equals(deck.getHero().getName())) {
+                if (card.getName().equals(deck.getHero().getName().trim())) {
+                    Client.send(new Message("remove from deck " + deckName + " " + card.getName().trim()));
                     deck.setHero(null);
-                    Client.send(new Message("remove from deck " + deckName + " " + card.getName()));
                     return "removing this hero from deck successfully done";
                 }
                 return "this deck doesnt have this card";
             }
             if (!isCardInDeck(cardID, deckName))
                 return "card does not exist in this deck";
+            System.out.println(deck.getCards().contains(card));
             deck.getCards().remove(card);
             Client.send(new Message("remove from deck " + deckName + " " + card.getName()));
             return "card successfully removed from deck";
@@ -330,6 +333,30 @@ public class Collection implements Serializable {
 
     public void updateCollectionFromServer(ArrayList<Card> cards) {
         this.cards = new ArrayList<>();
-        for (Card card : cards) this.cards.add(CardMaker.getCardByName(card.getName()));
+        for (Card card : cards) this.cards.add(CardMaker.getCardByName(card.getName().trim()));
+    }
+
+    public void updateDecksFromServer(ArrayList<Deck> decks) {
+        for (Deck deck : decks) {
+            Deck deck1 = findDeck(deck.getName());
+            ArrayList<Hero> heroes = new ArrayList<>();
+            for (int i = 0; i < deck1.getCards().size(); i++) {
+                Card card = deck1.getCards().get(i);
+                Card card1 = CardMaker.getCardByName(card.getName().trim());
+                if (card1 instanceof Hero) {
+                    heroes.add((Hero) card1);
+                    deck1.getCards().remove(i);
+                    i--;
+                }
+            }
+            for (int i = 0; i < deck1.getCards().size(); i++) {
+                Card card = CardMaker.getCardByName(deck1.getCards().get(i).getName().trim());
+                deck1.getCards().remove(i);
+                deck1.getCards().add(card);
+            }
+            if (heroes.size() != 0 && heroes.get(0) != null)
+                deck1.setHero(heroes.get(0));
+        }
+
     }
 }

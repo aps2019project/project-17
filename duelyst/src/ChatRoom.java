@@ -43,9 +43,5 @@ public class ChatRoom {
         VBox.setMargin(chat, new Insets(480, 0, 480,0 ));
         stage.setScene(chatRoomScene);
         stage.showAndWait();
-
-
     }
-
-
 }
