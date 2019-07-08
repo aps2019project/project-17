@@ -1,8 +1,7 @@
+package Client;
+
 import Appearance.FontAppearance;
-import Client.ChatDetail;
-import Client.Client;
-import Client.Message;
-import javafx.beans.Observable;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -24,7 +23,7 @@ public class ChatRoom {
     private Stage stage = new Stage();
     private VBox chat = new VBox();
     private Scene chatRoomScene;
-    private ScrollPane scrollPane = new ScrollPane();
+    private static ScrollPane scrollPane = new ScrollPane();
     private TextField textField = new TextField();
     private Rectangle sendButton = new Rectangle(100, 20);
     private final int WIDTH = 500;
@@ -63,11 +62,11 @@ public class ChatRoom {
             textField.clear();
             Client.send(message);
         });
-        new Thread(this::updateScrollPane);
+        Platform.runLater(() -> updateScrollPane());
         stage.showAndWait();
     }
 
-    private void updateScrollPane() {
+    public static void updateScrollPane() {
         while (true) {
             try {
                 ChatDetail chatDetail = Client.getChatDetails().take();
@@ -77,6 +76,7 @@ public class ChatRoom {
                 userName.setFont(FontAppearance.FONT_SHOW_CARD_DATA);
                 HBox hBox = new HBox(userName, text);
                 scrollPane.setContent(hBox);
+                System.out.println("h13");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
