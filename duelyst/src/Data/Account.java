@@ -3,6 +3,7 @@ package Data;
 import CardCollections.Collection;
 import CardCollections.Deck;
 import CardCollections.Shop;
+import Cards.Card;
 import Client.*;
 import com.google.gson.Gson;
 import controller.GameController;
@@ -36,6 +37,10 @@ public class Account implements Comparable<Account>, Serializable {
 
     public static void setLoginUser(Account loginUser) {
         Account.loginUser = loginUser;
+        System.out.println(loginUser.getCollection().getMainDeck().getName());
+        for (Card card : loginUser.getCollection().getMainDeck().getCards()) {
+            System.out.println(card.getName());
+        }
         loginUser.collection.updateCollectionFromServer(loginUser.getCollection().getCards());
         loginUser.collection.updateDecksFromServer(loginUser.collection.getDecks());
     }

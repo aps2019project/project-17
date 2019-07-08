@@ -193,8 +193,9 @@ public class Collection implements Serializable {
     public String setMainDeck(String deckName) {
         if (findDeck(deckName) == null)
             return "cant find deck with this name";
-        this.mainDeck = findDeck(deckName);
-        Account.getLoginUser().getPlayer().setMainDeck(findDeck(deckName));
+        this.mainDeck = findDeck(deckName.trim());
+        Account.getLoginUser().getPlayer().setMainDeck(findDeck(deckName.trim()));
+        Client.send(new Message("set main deck " + deckName.trim()));
         return "main deck successfully choose";
     }
 
@@ -340,6 +341,26 @@ public class Collection implements Serializable {
     }
 
     public void updateDecksFromServer(ArrayList<Deck> decks) {
+        if (mainDeck != null) {
+            ArrayList<Hero> heroes = new ArrayList<>();
+            for (int i = 0; i < mainDeck.getCards().size(); i++) {
+                Card card = mainDeck.getCards().get(i);
+                Card card1 = CardMaker.getCardByName(card.getName().trim());
+                if (card1 instanceof Hero) {
+                    heroes.add((Hero) card1);
+                    mainDeck.getCards().remove(i);
+                    i--;
+                }
+            }
+            for (int i = 0; i < mainDeck.getCards().size(); i++) {
+                Card card = CardMaker.getCardByName(mainDeck.getCards().get(i).getName().trim());
+                mainDeck.getCards().remove(i);
+                mainDeck.getCards().add(card);
+            }
+            if (heroes.size() != 0 && heroes.get(0) != null)
+                mainDeck.setHero(heroes.get(0));
+            Account.getLoginUser().getPlayer().setMainDeck(mainDeck);
+        }
         for (Deck deck : decks) {
             Deck deck1 = findDeck(deck.getName());
             ArrayList<Hero> heroes = new ArrayList<>();

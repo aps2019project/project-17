@@ -26,11 +26,11 @@ public class Deck implements Serializable {
     private static Deck deckHoldFlag;
     private static Deck deckCaptureFlag;
 
-//    static {
-//        initializeSecondAIHF();
-//        initializeFirstAIKH();
-//        initializeThirdAICF();
-//    }
+    static {
+        initializeSecondAIHF();
+        initializeFirstAIKH();
+        initializeThirdAICF();
+    }
 
     public void setIsValid() {
         if (this.isDeckValidate()) {

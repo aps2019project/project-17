@@ -6,6 +6,7 @@ import Cards.*;
 import Effects.Effect;
 import Effects.enums.MinionType;
 import Effects.enums.SpecialSituation;
+import InstanceMaker.CardMaker;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class Player implements Serializable {
 
     public void setMainDeck(Deck deck) {
         this.mainDeck = deck;
-        this.copyMainDeck = new Deck(this.mainDeck.getName());
+        this.copyMainDeck = new Deck(deck.getName().trim());
     }
 
     private void setCopyMainDeck() {
@@ -204,6 +205,16 @@ public class Player implements Serializable {
     }
 
     public boolean isPlayerReadyForBattle() {
+        if (mainDeck != null) {
+            for (int i = 0; i < mainDeck.getCards().size(); i++) {
+                Card card = CardMaker.getCardByName(mainDeck.getCards().get(i).getName().trim());
+                if (card instanceof Hero) {
+                    mainDeck.setHero((Hero) card);
+                    mainDeck.getCards().remove(i);
+                    break;
+                }
+            }
+        }
         if (mainDeck == null || !mainDeck.isDeckValidate())
             return false;
         this.graveYard = new ArrayList<>();
