@@ -117,4 +117,16 @@ public class Client implements Runnable {
         Account[] accounts = gson.fromJson(message.getData(), Account[].class);
         return new ArrayList<>(Arrays.asList(accounts));
     }
+
+    public static ArrayList<Account> offlineAccouns() {
+        ArrayList<Account> totalAccounts = getAllAccountsFromServer();
+        ArrayList<Account> onlineUsers = onlineAccounts();
+        ArrayList<Account> accounts = new ArrayList<>();
+
+        for (Account totalAccount : totalAccounts) {
+            if (!onlineUsers.contains(totalAccount))
+                accounts.add(totalAccount);
+        }
+        return accounts;
+    }
 }

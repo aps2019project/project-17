@@ -80,7 +80,6 @@ public class GameController {
             setLoginUser(account);
             return "login successfully done :) Enjoy the game";
         } catch (Exception e) {
-            e.printStackTrace();
             Gson gson = new Gson();
             Message message = gson.fromJson(object.toString(), Message.class);
             System.out.println(message.getData());

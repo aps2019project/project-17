@@ -1,5 +1,6 @@
 package Data;
 
+import Appearance.ExceptionEndGame;
 import CardCollections.Collection;
 import CardCollections.Deck;
 import CardCollections.Shop;
@@ -147,5 +148,14 @@ public class Account implements Comparable<Account>, Serializable {
 
     public String getPassWord() {
         return passWord;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            return ((Account) obj).getUserName().trim().equals(this.userName) && ((Account) obj).getPassWord().equals(this.passWord);
+        }catch (Exception e) {
+            return false;
+        }
     }
 }
