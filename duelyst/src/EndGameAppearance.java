@@ -4,12 +4,15 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 
 public class EndGameAppearance {
     private Stage endGameWindow = new Stage();
@@ -18,6 +21,13 @@ public class EndGameAppearance {
     private Scene scene = new Scene(root, Main.WIDTH_OF_WINDOW, Main.HEIGHT_OF_WINDOW);
 
     public EndGameAppearance() {
+        try {
+            Media media = new Media(Paths.get("victory.m4a").toUri().toString());
+            MediaPlayer player = new MediaPlayer(media);
+            player.play();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         setBackground();
         addReport();
         disPlay();
