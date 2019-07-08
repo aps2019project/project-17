@@ -49,7 +49,7 @@ public class MultiPlayerAppearance {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 Client.send(new Message("multi player"));
                 Object object = Client.get();
-                new MainMenu();
+                new MultiPlayerCancelStep();
             }
         });
     }

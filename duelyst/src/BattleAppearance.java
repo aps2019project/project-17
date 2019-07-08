@@ -384,6 +384,7 @@ public class BattleAppearance {
         initItemList();
         setTurnText();
         setShapeOfHealthHeroTexts();
+        setManaIconImageLights();
     }
 
 
