@@ -318,6 +318,8 @@ class ShopAppearance {
                 new MainMenu();
             } else if (event.getCode().equals(KeyCode.F1)) {
                 new OnlineTable();
+            } else if (event.getCode().equals(KeyCode.F2)) {
+                new OfLineTable();
             }
         });
     }

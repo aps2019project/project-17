@@ -399,8 +399,10 @@ public class BattleAppearance {
                 Battle.setCurrentBattleNull();
                 currentBattleAppearance = null;
                 new MainMenu();
-            }else if (e.getCode() == KeyCode.F1) {
+            } else if (e.getCode() == KeyCode.F1) {
                 new OnlineTable();
+            } else if (e.getCode() == KeyCode.F2) {
+                new OfLineTable();
             }
         });
     }

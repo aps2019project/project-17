@@ -185,6 +185,8 @@ class MainMenu {
         sceneMainMenu.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.F1) {
                 new OnlineTable();
+            }else if(event.getCode() == KeyCode.F2){
+                new OfLineTable();
             }
         });
     }
