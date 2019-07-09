@@ -168,8 +168,7 @@ public class Collection implements Serializable {
             Client.send(new Message("remove from deck " + deckName + " " + card.getName()));
             return "card successfully removed from deck";
         }
-
-        if (item.getName().equals(deck.getItem().getName())) {
+        if (item.getName().trim().equals(deck.getItem().getName().trim())) {
             deck.setItem(null);
             Client.send(new Message("remove item from deck " + deckName.trim() + " " + item.getName().trim()));
             return "deck item successfully removed";
