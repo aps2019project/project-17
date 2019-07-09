@@ -1,7 +1,6 @@
 import Appearance.FontAppearance;
 import Client.Client;
 import Client.Message;
-import com.google.gson.Gson;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
