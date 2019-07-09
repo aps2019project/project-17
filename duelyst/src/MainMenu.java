@@ -166,10 +166,11 @@ class MainMenu {
             }
         });
 
-//        exitTxt.setOnMouseClicked(e -> Main.getWindow().close());
-
-
-        exitTxt.setOnMouseClicked(e -> new ChatRoom());
+        exitTxt.setOnMouseClicked(e -> {
+            Client.send(new Message("logout"));
+            Account.logout();
+            Main.getWindow().close();
+        });
 
         customCardTxt.setOnMouseClicked(e -> CustomCardPreview.disPlay());
 
@@ -185,8 +186,10 @@ class MainMenu {
         sceneMainMenu.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.F1) {
                 new OnlineTable();
-            }else if(event.getCode() == KeyCode.F2){
+            } else if (event.getCode() == KeyCode.F2) {
                 new OfLineTable();
+            } else if (event.getCode() == KeyCode.TAB) {
+                new ChatRoom();
             }
         });
     }
