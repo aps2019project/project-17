@@ -60,7 +60,7 @@ public class BattleAppearance {
         this.boardBackGround = new Rectangle[5][9];
         this.textsOfBattle = new Text[]{new Text("End Turn"),
                 new Text(Battle.getCurrentBattle().getPlayerOne().getUserName()),
-                new Text(AI.getCurrentAIPlayer().getUserName()),
+                new Text(Battle.getCurrentBattle().getPlayerTwo().getUserName()),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMana()).concat("  /  9")),
                 new Text(Integer.toString(Battle.getCurrentBattle().getPlayerOne().getMainDeck().getHero().getHealthPoint())),
                 new Text((Integer.toString(Battle.getCurrentBattle().getPlayerTwo().getMainDeck().getHero().getHealthPoint()))),
