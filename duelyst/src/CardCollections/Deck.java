@@ -202,4 +202,7 @@ public class Deck implements Serializable {
         return cards;
     }
 
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
 }

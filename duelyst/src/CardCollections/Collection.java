@@ -380,6 +380,27 @@ public class Collection implements Serializable {
             if (heroes.size() != 0 && heroes.get(0) != null)
                 deck1.setHero(heroes.get(0));
         }
+    }
 
+    public void update(Account account) {
+        account.getCollection().updateCollectionFromServer(account.getCollection().getCards());
+        account.getCollection().updateDecksFromServer(account.getCollection().getDecks());
+        Deck deck = account.getCollection().mainDeck;
+        ArrayList<Card> cards = new ArrayList<>();
+        for (int i = 0; i < mainDeck.getCards().size(); i++) {
+            cards.add(CardMaker.getCardByName(mainDeck.getName().toLowerCase().trim()));
+        }
+        deck.setCards(cards);
+        for (int i = 0; i < account.getCollection().cards.size(); i++) {
+            Card card = CardMaker.getCardByName(account.getCollection().cards.get(i).getName().trim());
+            if (card instanceof Hero) {
+                deck.setHero((Hero) card);
+            }
+        }
+        account.getCollection().setMainDeck(deck);
+    }
+
+    public void setMainDeck(Deck mainDeck) {
+        this.mainDeck = mainDeck;
     }
 }

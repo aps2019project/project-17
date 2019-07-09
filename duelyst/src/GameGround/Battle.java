@@ -7,6 +7,7 @@ import Cards.Card;
 import Cards.Item;
 import Cards.Minion;
 import Cards.Spell;
+import Client.*;
 import Data.AI;
 import Data.GameData;
 import Data.MatchState;
@@ -700,6 +701,8 @@ public class Battle {
         if (gameMode.equals(GameMode.MULTI_PLAYER))
             gameDataPlayerTwo.setMatchState(MatchState.LOSE);
         loginOfEnding(playerOne, gameDataPlayerOne, playerTwo, gameDataPlayerTwo);
+        Client.send(new Message(playerOne.getUserName().trim() + " win earn " + price));
+        Client.send(new Message(playerTwo.getUserName().trim() + " lose"));
         currentBattle = null;
         throw new ExceptionEndGame(situationOfGame);
     }
@@ -708,6 +711,8 @@ public class Battle {
         if (gameMode.equals(GameMode.MULTI_PLAYER))
             gameDataPlayerTwo.setMatchState(MatchState.WIN);
         gameDataPlayerOne.setMatchState(MatchState.LOSE);
+        Client.send(new Message(playerTwo.getUserName().trim() + " win earn " + price));
+        Client.send(new Message(playerOne.getUserName().trim() + " lose"));
         loginOfEnding(playerTwo, gameDataPlayerTwo, playerOne, gameDataPlayerOne);
         currentBattle = null;
         throw new ExceptionEndGame(situationOfGame);
@@ -720,11 +725,13 @@ public class Battle {
                 GameController.getAccounts().get(i).changeDaric(price);
                 GameController.getAccounts().get(i).incrementNumbOfWins();
                 GameController.getAccounts().get(i).addGamaData(gameDataPlayerOne);
+                Client.send(new Message(playerOne.getUserName().trim() + " win earn " + price));
                 continue;
             }
             if (GameController.getAccounts().get(i).getUserName().equals(playerTwo.getUserName())) {
                 GameController.getAccounts().get(i).incrementNumbOfLose();
                 GameController.getAccounts().get(i).addGamaData(gameDataPlayerTwo);
+                Client.send(new Message(playerTwo.getUserName().trim() + " lose"));
             }
         }
         situationOfGame = playerOne.getUserName() + " win from " + playerTwo.getUserName() + " and earn " + currentBattle.price;

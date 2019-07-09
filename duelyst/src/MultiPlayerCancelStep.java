@@ -1,6 +1,10 @@
 import Appearance.FontAppearance;
 import Client.Client;
 import Client.Message;
+import Data.AI;
+import Data.Account;
+import GameGround.BattleKillHero;
+import com.google.gson.Gson;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -52,16 +56,23 @@ public class MultiPlayerCancelStep {
         yes.setOnMouseClicked(e -> {
             Client.send(new Message("fine multi player"));
             Object object = Client.get();
-            if((object.toString()).trim().equalsIgnoreCase("ok"))
+            Gson gson = new Gson();
+            if ((object.toString()).trim().equalsIgnoreCase("ok")) {
+                Account account = gson.fromJson(Client.get().toString(), Account.class);
+                account.getCollection().update(account);
+                account.getPlayer().setMainDeck(account.getCollection().getMainDeck());
+                AI.initializeAIStory();
+                new BattleKillHero(Account.getLoginUser().getPlayer(), account.getPlayer());
+                new BattleAppearance();
+            }
+            if ((object.toString()).trim().equalsIgnoreCase("no"))
                 new MainMenu();
-            if((object.toString()).trim().equalsIgnoreCase("no"))
-                new ShopAppearance();
         });
 
         no.setOnMouseClicked(e -> {
             Client.send(new Message("not fine multi player"));
             Client.get();
-            new ShopAppearance();
+            new MainMenu();
         });
     }
 }
