@@ -13,7 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Client implements Runnable {
     private static BlockingQueue<Object> commands = new LinkedBlockingQueue<>();
     private static BlockingQueue<Object> processedCommands = new LinkedBlockingQueue<>();
-    private static BlockingQueue<ChatDetail> chatDetails = new LinkedBlockingQueue<>();
+    private static ArrayList<ChatDetail> chatDetails = new ArrayList<>();
     private static SocketDetail socketDetail;
     private static ReaderWriter readerWriter;
 
@@ -105,7 +105,7 @@ public class Client implements Runnable {
         return new ArrayList<>(Arrays.asList(accounts));
     }
 
-    public static BlockingQueue<ChatDetail> getChatDetails() {
+    public static ArrayList<ChatDetail> getChatDetails() {
         return chatDetails;
     }
 

@@ -2,6 +2,7 @@ import Appearance.CardsDataAppearance;
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Cards.*;
+import Client.ChatRoom;
 import Data.Account;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -306,6 +307,8 @@ public class CollectionAppearance {
                     new OnlineTable();
                 case F2:
                     new OfLineTable();
+                case TAB:
+                    new ChatRoom();
             }
         });
         rightDirection.setOnMouseClicked(e -> {

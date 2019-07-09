@@ -2,6 +2,7 @@ import Appearance.CardsDataAppearance;
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Cards.*;
+import Client.ChatRoom;
 import Data.Account;
 import InstanceMaker.CardMaker;
 import controller.GameController;
@@ -320,6 +321,8 @@ class ShopAppearance {
                 new OnlineTable();
             } else if (event.getCode().equals(KeyCode.F2)) {
                 new OfLineTable();
+            }else if (event.getCode() == KeyCode.TAB) {
+                new ChatRoom();
             }
         });
     }
