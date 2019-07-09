@@ -303,12 +303,16 @@ public class CollectionAppearance {
                     break;
                 case ESCAPE:
                     new MainMenu();
+                    break;
                 case F1:
                     new OnlineTable();
+                    break;
                 case F2:
                     new OfLineTable();
+                    break;
                 case TAB:
                     new ChatRoom();
+                    break;
             }
         });
         rightDirection.setOnMouseClicked(e -> {
