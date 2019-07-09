@@ -1,11 +1,10 @@
 import Appearance.ColorAppearance;
 import Appearance.FontAppearance;
 import Client.Client;
+import Client.Message;
 import Data.Account;
-import com.sun.media.jfxmedia.effects.AudioSpectrum;
 import controller.GameController;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -25,14 +23,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import Client.*;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.nio.file.Paths;
 
 public class Main extends Application {
