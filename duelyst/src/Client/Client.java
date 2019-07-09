@@ -118,7 +118,7 @@ public class Client implements Runnable {
         return new ArrayList<>(Arrays.asList(accounts));
     }
 
-    public static ArrayList<Account> offlineAccouns() {
+    public static ArrayList<Account> offlineAccounts() {
         ArrayList<Account> totalAccounts = getAllAccountsFromServer();
         ArrayList<Account> onlineUsers = onlineAccounts();
         ArrayList<Account> accounts = new ArrayList<>();

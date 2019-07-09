@@ -84,7 +84,6 @@ public class Shop implements Serializable {
             else if (message.getData().trim().equalsIgnoreCase("ok")) {
                 this.collection.addCardToCollection(card);
                 this.collection.changeDaric(-card.getPrice());
-                System.err.println("ITS OK ...");
                 return "card successfully added";
             }
             return "something wrong happen";

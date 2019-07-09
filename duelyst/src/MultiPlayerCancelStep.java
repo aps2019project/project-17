@@ -14,8 +14,8 @@ import java.io.FileNotFoundException;
 
 public class MultiPlayerCancelStep {
     private Group root = new Group();
-    private Text yes = new Text("YES");
-    private Text no = new Text("NO");
+    private Text yes = new Text("Go to battle");
+    private Text no = new Text("cancel request");
     private Scene scene;
     private ImageView imageViewBG;
 
@@ -31,8 +31,8 @@ public class MultiPlayerCancelStep {
             imageViewBG = new ImageView(image);
             imageViewBG.fitWidthProperty().bind(scene.widthProperty());
             imageViewBG.fitHeightProperty().bind(scene.heightProperty());
-            yes.relocate(200, 500);
-            no.relocate(600, 500);
+            yes.relocate(100, 500);
+            no.relocate(700, 500);
             root.getChildren().add(imageViewBG);
             root.getChildren().addAll(yes, no);
             yes.setFont(FontAppearance.FONT_MULTIPLAYER);
@@ -52,19 +52,16 @@ public class MultiPlayerCancelStep {
     private void handleEvents() {
         yes.setOnMouseClicked(e -> {
             Client.send(new Message("fine multi player"));
-            Gson gson = new Gson();
             Object object = Client.get();
-            Message message = gson.fromJson(object.toString(), Message.class);
-            if (message.getData().equals("ok")) {
+            if((object.toString()).trim().equalsIgnoreCase("ok"))
                 new MainMenu();
-
-            } else {
+            if((object.toString()).trim().equalsIgnoreCase("no"))
                 new ShopAppearance();
-            }
         });
 
         no.setOnMouseClicked(e -> {
             Client.send(new Message("not fine multi player"));
+            Client.get();
             new ShopAppearance();
         });
     }

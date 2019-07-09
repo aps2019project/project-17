@@ -49,6 +49,6 @@ public class OfLineTable {
     }
 
     private ObservableList<Account> getAllOnlineUsers() {
-        return FXCollections.observableArrayList(Client.offlineAccouns());
+        return FXCollections.observableArrayList(Client.offlineAccounts());
     }
 }
