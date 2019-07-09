@@ -268,7 +268,12 @@ public class GameController {
      */
 
     public static void saveMinion(Minion newMinion) throws IOException {
-        CardMaker.saveMinion(newMinion);
+        Gson gson = new Gson();
+        Message message = new Message("custom card" + gson.toJson(newMinion));
+        Client.send(message);
+        Message getMessage = (Message) Client.get();
+        if (getMessage.getData().equals("custom card created"))
+            CardMaker.saveMinion(newMinion);
     }
 
     public static void saveItem(Item newItem) throws IOException {
@@ -280,7 +285,12 @@ public class GameController {
     }
 
     public static void saveEffect(Effect newEffect) throws IOException {
-        CardMaker.saveEffect(newEffect);
+        Gson gson = new Gson();
+        Message message = new Message("custom card buff" + gson.toJson(newEffect));
+        Client.send(message);
+        Message getMessage = (Message) Client.get();
+        if (getMessage.getData().equals("custom card created"))
+            CardMaker.saveEffect(newEffect);
     }
 
 }
